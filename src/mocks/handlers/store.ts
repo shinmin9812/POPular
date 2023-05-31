@@ -42,7 +42,8 @@ export const store = [
 
   // 추천 스토어 조회
   rest.get(API_PATH.STORE.GET.RECOMENDED, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(storeData));
+    const result = storeData.slice(0, 3);
+    return res(ctx.status(200), ctx.json(result));
   }),
 
   // 예약 필수 스토어 조회

@@ -4,14 +4,10 @@ export const API_PATH = {
     GET: {
       // 모든 스토어 조회
       ALL: '/store/all',
-      // 특정 옵션 스토어 조회
+      // 특정 옵션 스토어 조회 (쿼리스트링 사용)
       WITH_OPTIONS: '/store',
       // ID 조회
-      BY_ID: '/store/:storeId',
-      // 좌표 기반 조회 (쿼리스트링 사용)
-      BY_COORD: '/store/coord',
-      // 브랜드 기반 조회
-      BY_BRAND: '/store/:brand',
+      BY_ID: '/store/id/:storeId',
       // 추천 스토어 조회
       RECOMENDED: '/store/recomended',
       // 주간 스토어 조회
@@ -30,10 +26,9 @@ export const API_PATH = {
 
   USER: {
     GET: {
-      // 기업인 판별의 경우 쿼리스트링으로 판별
       ALL: '/user/all',
-      BY_ID: '/user/:userId',
-      BY_NICKNAME: '/user/:nickname',
+      BY_ID: '/user/id/:userId',
+      BY_NICKNAME: '/user/nickname/:userNickname',
     },
     POST: {},
     PUT: {},
@@ -42,12 +37,13 @@ export const API_PATH = {
 
   POST: {
     GET: {
-      // 쿼리스트링으로 게시판 판별, 미존재 시 전체 게시판에서 탐색
       ALL: '/post/all',
-      BY_ID: '/post/:postId',
-      BY_TITLE: '/post/:postTitle',
-      BY_AUTHOR: '/post/:postAuthor',
-      BY_STORE_ID: '/post/:storeId',
+      // 포스트 ID 조회
+      BY_ID: '/post/id/:postId',
+      // 특정 유저의 전체 포스트 조회
+      BY_USER: '/post/user/:userId',
+      // 포스트 게시판 조회
+      BY_BOARD: '/post/board/:boardId',
     },
     POST: {},
     PUT: {},
@@ -56,10 +52,14 @@ export const API_PATH = {
 
   COMMENT: {
     GET: {
+      // 검색 옵션은 쿼리스트링으로 판별 ex) /comment?author=elice
       ALL: '/comment/all',
-      BY_ID: '/comment/:commentId',
-      BY_AUTHOR: '/comment/:commentAuthor',
-      BY_POST_ID: '/comment/:postId',
+      // 코멘트 ID 조회
+      BY_ID: '/comment/id/:comentId',
+      // 특정 유저의 전체 코멘트
+      BY_USER: '/comment/user/:userId',
+      // 특정 포스트의 전체 코멘트
+      BY_POST: '/comment/post/:postId',
     },
     POST: {},
     PUT: {},
@@ -68,11 +68,12 @@ export const API_PATH = {
 
   NOTIFICATION: {
     GET: {
+      // 모든 알림 조회
       ALL: '/notification/all',
-      BY_ID: '/notification/:notificationId',
-      BY_USER_ID: '/notification/:userId',
-      BY_BOARD: '/notification/:userId/:board',
-      BY_STORE_ID: '/notification/:storeId',
+      // 특정 id 알림 조회
+      BY_ID: '/notification/id/:notificationId',
+      // 특정 유저의 전체 알림 조회
+      BY_USER_ID: '/notification/user/:userId',
     },
     POST: {},
     PUT: {},

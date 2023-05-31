@@ -17,7 +17,7 @@ const MapPage = () => {
     const response = await fetch('/store');
     const result: Store[] = await response.json();
 
-    const response2 = await fetch(`/store/321323`);
+    const response2 = await fetch(`/store/id/321323`);
     const result2: Store = await response2.json();
 
     console.log(result);

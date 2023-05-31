@@ -8,12 +8,12 @@ export const user = [
     return res(ctx.status(200), ctx.json(userData));
   }),
 
-  // 작성자 조회
+  // 특정 ID 유저 조회
   rest.get(API_PATH.USER.GET.BY_ID, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(userData[0]));
   }),
 
-  // 포스트 ID 조회
+  // 특정 닉네임 유저 조회
   rest.get(API_PATH.USER.GET.BY_NICKNAME, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(userData[0]));
   }),
