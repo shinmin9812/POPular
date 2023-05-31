@@ -1,6 +1,8 @@
+import { UserOnlyProfile } from './user';
+
 export interface Comment {
   id: string;
-  author: string;
+  author: UserOnlyProfile;
   content: string;
-  postId: string;
+  post: any;
 }

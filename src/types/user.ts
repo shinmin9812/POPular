@@ -1,14 +1,18 @@
 import { Brand } from './brand';
 
-export interface User {
+export interface UserOnlyProfile {
   id: string;
+  nickname: string;
+  profile?: string;
+}
+
+export interface User extends UserOnlyProfile {
   email: string;
   pw: string;
-  nickname: string;
   scrap: string[];
   phoneNumber: string;
-  follower: string[];
-  following: string[];
+  follower: UserOnlyProfile[];
+  following: UserOnlyProfile[];
   isEnterpriser: boolean;
   brand: Brand;
   allowNotification: boolean;

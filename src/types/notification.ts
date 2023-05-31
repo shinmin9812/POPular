@@ -1,4 +1,7 @@
-import { Board } from './board';
+import { BoardTypes } from './board';
+import { Comment } from './comment';
+import { Store } from './store';
+import { User } from './user';
 
 export const enum NotificationTypes {
   follow = '팔로우',
@@ -9,8 +12,8 @@ export const enum NotificationTypes {
 export interface Notification {
   id: string;
   type: NotificationTypes;
-  board: Board;
-  contentId: any;
+  board: BoardTypes;
+  content: Comment | Store | User;
   checked: boolean;
   createdAt: string;
 }

@@ -1,10 +1,11 @@
 import { BoardTypes } from './board';
 import { Comment } from './comment';
+import { User } from './user';
 
 export interface Post {
   id: string;
   title: string;
-  author: string;
+  author: User;
   board: BoardTypes;
   content: string;
   images?: string[];
