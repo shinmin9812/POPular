@@ -6,6 +6,7 @@ import MapPage from './pages/MapPage';
 import SearchPage from './pages/SearchPage';
 import CommunityPage from './pages/CommunityPage';
 import UserPage from './pages/UserPage';
+import { useAppSelector, useAppDispatch } from './Hooks/useSelectorHooks';
 
 const Router = () => {
   return (
