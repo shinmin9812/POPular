@@ -6,10 +6,8 @@ export interface Store {
   title: string;
   description: string;
   brand: Brand;
-  term: {
-    start: string;
-    end: string;
-  };
+  startDate: string;
+  endDate: string;
   hours: {
     mon: {
       start: string | null;
@@ -45,15 +43,15 @@ export interface Store {
     lat: string;
     lng: string;
   };
-  fee: number | null;
+  price: number | null;
   sns: [
     {
-      snsType: SNS;
-      name: string;
-      url: string;
+      linkType: SNS;
+      linkTitle: string;
+      link: string;
     },
   ];
   reservationRequired: boolean;
   images: string[];
-  scrap: string[];
+  scrap: number;
 }

@@ -8,10 +8,8 @@ export const storeData: Store[] = [
     description:
       "새로운 계절, 새로운 학기. 새로운 시작을 맞이한 1 대' 커뮤니티에서 블루보틀 팝업 카페를 3월 3일 금 요일부터 만나보세요! 브랜드의 철학과 바리스타의 정성이 깃든 푸어 오 베와 블루보틀에서만 경험할 수 있는 놀라(NOLA) 등의 다양한 음료와 맛있는 디저트를 선보입니다. 오픈 기념으로 준비한 익스클루시브 MD 상품과 인스 타그램 이벤트 소식도 기다려주세요! *홍대 팝업 카페는 현금 없는 매장이며 한정된 기간 동안만 운영합니다. 찾아주시는 손님분들의 너른 양 해 부탁드립니다. (사진 출처: 블루보틀커피코리아 인스타그램)",
     brand: '식품',
-    term: {
-      start: '2023-03-03',
-      end: '2023-06-03',
-    },
+    startDate: '2023-03-03',
+    endDate: '2023-06-03',
     hours: {
       mon: {
         start: '08:00',
@@ -47,12 +45,12 @@ export const storeData: Store[] = [
       lat: '126.920914',
       lng: '37.553916',
     },
-    fee: 30000,
+    price: 30000,
     sns: [
       {
-        snsType: SNS.insta,
-        name: '블루보틀 인스타그램',
-        url: 'https://www.instagram.com/bluebottlekorea/',
+        linkType: SNS.insta,
+        linkTitle: '블루보틀 인스타그램',
+        link: 'https://www.instagram.com/bluebottlekorea/',
       },
     ],
     reservationRequired: false,
@@ -61,7 +59,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/EOPbPqpNg',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/sjpksoyt',
     ],
-    scrap: ['23131', '34555', '141241'],
+    scrap: 4,
   },
   {
     id: '321323',
@@ -69,10 +67,8 @@ export const storeData: Store[] = [
     description:
       "새로운 계절, 새로운 학기. 새로운 시작을 맞이한 1 대' 커뮤니티에서 블루보틀 팝업 카페를 3월 3일 금 요일부터 만나보세요! 브랜드의 철학과 바리스타의 정성이 깃든 푸어 오 베와 블루보틀에서만 경험할 수 있는 놀라(NOLA) 등의 다양한 음료와 맛있는 디저트를 선보입니다. 오픈 기념으로 준비한 익스클루시브 MD 상품과 인스 타그램 이벤트 소식도 기다려주세요! *홍대 팝업 카페는 현금 없는 매장이며 한정된 기간 동안만 운영합니다. 찾아주시는 손님분들의 너른 양 해 부탁드립니다. (사진 출처: 블루보틀커피코리아 인스타그램)",
     brand: '식품',
-    term: {
-      start: '2023-03-03',
-      end: '2023-06-03',
-    },
+    startDate: '2023-03-03',
+    endDate: '2023-06-03',
     hours: {
       mon: {
         start: '08:00',
@@ -108,12 +104,12 @@ export const storeData: Store[] = [
       lat: '126.920914',
       lng: '37.553916',
     },
-    fee: 30000,
+    price: 30000,
     sns: [
       {
-        snsType: SNS.insta,
-        name: '블루보틀 인스타그램',
-        url: 'https://www.instagram.com/bluebottlekorea/',
+        linkType: SNS.insta,
+        linkTitle: '블루보틀 인스타그램',
+        link: 'https://www.instagram.com/bluebottlekorea/',
       },
     ],
     reservationRequired: false,
@@ -122,7 +118,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/EOPbPqpNg',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/sjpksoyt',
     ],
-    scrap: ['23131', '34555', '141241'],
+    scrap: 4,
   },
   {
     id: '451345',
@@ -130,10 +126,8 @@ export const storeData: Store[] = [
     description:
       "새로운 계절, 새로운 학기. 새로운 시작을 맞이한 1 대' 커뮤니티에서 블루보틀 팝업 카페를 3월 3일 금 요일부터 만나보세요! 브랜드의 철학과 바리스타의 정성이 깃든 푸어 오 베와 블루보틀에서만 경험할 수 있는 놀라(NOLA) 등의 다양한 음료와 맛있는 디저트를 선보입니다. 오픈 기념으로 준비한 익스클루시브 MD 상품과 인스 타그램 이벤트 소식도 기다려주세요! *홍대 팝업 카페는 현금 없는 매장이며 한정된 기간 동안만 운영합니다. 찾아주시는 손님분들의 너른 양 해 부탁드립니다. (사진 출처: 블루보틀커피코리아 인스타그램)",
     brand: '식품',
-    term: {
-      start: '2023-03-03',
-      end: '2023-06-03',
-    },
+    startDate: '2023-03-03',
+    endDate: '2023-06-03',
     hours: {
       mon: {
         start: '08:00',
@@ -169,12 +163,12 @@ export const storeData: Store[] = [
       lat: '126.920914',
       lng: '37.553916',
     },
-    fee: 30000,
+    price: 30000,
     sns: [
       {
-        snsType: SNS.insta,
-        name: '블루보틀 인스타그램',
-        url: 'https://www.instagram.com/bluebottlekorea/',
+        linkType: SNS.insta,
+        linkTitle: '블루보틀 인스타그램',
+        link: 'https://www.instagram.com/bluebottlekorea/',
       },
     ],
     reservationRequired: false,
@@ -183,7 +177,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/EOPbPqpNg',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/sjpksoyt',
     ],
-    scrap: ['23131', '34555', '141241'],
+    scrap: 4,
   },
   {
     id: '15451',
@@ -191,10 +185,8 @@ export const storeData: Store[] = [
     description:
       "새로운 계절, 새로운 학기. 새로운 시작을 맞이한 1 대' 커뮤니티에서 블루보틀 팝업 카페를 3월 3일 금 요일부터 만나보세요! 브랜드의 철학과 바리스타의 정성이 깃든 푸어 오 베와 블루보틀에서만 경험할 수 있는 놀라(NOLA) 등의 다양한 음료와 맛있는 디저트를 선보입니다. 오픈 기념으로 준비한 익스클루시브 MD 상품과 인스 타그램 이벤트 소식도 기다려주세요! *홍대 팝업 카페는 현금 없는 매장이며 한정된 기간 동안만 운영합니다. 찾아주시는 손님분들의 너른 양 해 부탁드립니다. (사진 출처: 블루보틀커피코리아 인스타그램)",
     brand: '식품',
-    term: {
-      start: '2023-03-03',
-      end: '2023-06-03',
-    },
+    startDate: '2023-03-03',
+    endDate: '2023-06-03',
     hours: {
       mon: {
         start: '08:00',
@@ -230,12 +222,12 @@ export const storeData: Store[] = [
       lat: '126.920914',
       lng: '37.553916',
     },
-    fee: 30000,
+    price: 30000,
     sns: [
       {
-        snsType: SNS.insta,
-        name: '블루보틀 인스타그램',
-        url: 'https://www.instagram.com/bluebottlekorea/',
+        linkType: SNS.insta,
+        linkTitle: '블루보틀 인스타그램',
+        link: 'https://www.instagram.com/bluebottlekorea/',
       },
     ],
     reservationRequired: false,
@@ -244,7 +236,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/EOPbPqpNg',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/sjpksoyt',
     ],
-    scrap: ['23131', '34555', '141241'],
+    scrap: 4,
   },
   {
     id: '123744',
@@ -252,10 +244,8 @@ export const storeData: Store[] = [
     description:
       "새로운 계절, 새로운 학기. 새로운 시작을 맞이한 1 대' 커뮤니티에서 블루보틀 팝업 카페를 3월 3일 금 요일부터 만나보세요! 브랜드의 철학과 바리스타의 정성이 깃든 푸어 오 베와 블루보틀에서만 경험할 수 있는 놀라(NOLA) 등의 다양한 음료와 맛있는 디저트를 선보입니다. 오픈 기념으로 준비한 익스클루시브 MD 상품과 인스 타그램 이벤트 소식도 기다려주세요! *홍대 팝업 카페는 현금 없는 매장이며 한정된 기간 동안만 운영합니다. 찾아주시는 손님분들의 너른 양 해 부탁드립니다. (사진 출처: 블루보틀커피코리아 인스타그램)",
     brand: '식품',
-    term: {
-      start: '2023-03-03',
-      end: '2023-06-03',
-    },
+    startDate: '2023-03-03',
+    endDate: '2023-06-03',
     hours: {
       mon: {
         start: '08:00',
@@ -291,12 +281,12 @@ export const storeData: Store[] = [
       lat: '126.920914',
       lng: '37.553916',
     },
-    fee: 30000,
+    price: 30000,
     sns: [
       {
-        snsType: SNS.insta,
-        name: '블루보틀 인스타그램',
-        url: 'https://www.instagram.com/bluebottlekorea/',
+        linkType: SNS.insta,
+        linkTitle: '블루보틀 인스타그램',
+        link: 'https://www.instagram.com/bluebottlekorea/',
       },
     ],
     reservationRequired: false,
@@ -305,6 +295,6 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/EOPbPqpNg',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/sjpksoyt',
     ],
-    scrap: ['23131', '34555', '141241'],
+    scrap: 4,
   },
 ];
