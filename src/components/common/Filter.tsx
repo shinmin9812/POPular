@@ -12,10 +12,12 @@ const Select = styled.select`
   margin-top: 10px;
 
   + select {
-    margin-left: 10px;
+    margin-left: 9px;
+  }
+  + button {
+    margin-left: 9px;
   }
 `;
-const Option = styled.option``;
 
 const Filter = ({
   onChange,
@@ -29,9 +31,9 @@ const Filter = ({
   return (
     <Select value={value} onChange={onChange}>
       {Options.map((option, index) => (
-        <Option key={index} value={option}>
+        <option key={index} value={option}>
           {option}
-        </Option>
+        </option>
       ))}
     </Select>
   );

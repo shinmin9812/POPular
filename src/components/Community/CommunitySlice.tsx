@@ -3,10 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   tab: '전체',
   filter: {
-    address: ' 지역',
+    address: '지역',
     category: '카테고리',
-    duration: '기간',
+    duration: { show: false, date: new Date().toString() },
   },
+  page: 1,
 };
 
 const CommunitySlice = createSlice({
@@ -23,7 +24,13 @@ const CommunitySlice = createSlice({
       state.filter.category = action.payload;
     },
     setFilterDuration(state, action) {
-      state.filter.duration = action.payload;
+      state.filter.duration.date = action.payload;
+    },
+    setFilterDurationShow(state, action) {
+      state.filter.duration.show = action.payload;
+    },
+    setPage(state, action) {
+      state.page = action.payload;
     },
   },
 });
