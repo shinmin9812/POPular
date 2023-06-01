@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaOptions, Types  } from 'mongoose';
+import { Document, SchemaOptions, Types } from 'mongoose';
 import { User } from 'src/users/user.schema';
 import { Comment } from 'src/comments/comment.schema';
 import { Store } from 'src/stores/store.schema';
@@ -20,11 +20,11 @@ export class Notification extends Document {
 	@Prop({ required: true })
 	userId: string;
 
-  @Prop({ type: Types.ObjectId, refPath: 'contentModel', required: true })
-  content: Types.ObjectId;
+	@Prop({ type: Types.ObjectId, refPath: 'contentModel', required: true })
+	content: Types.ObjectId;
 
-  @Prop({ required: true, enum: ['User', 'Comment', 'Store'] })
-  contentModel: string;
+	@Prop({ required: true, enum: ['User', 'Comment', 'Store'] })
+	contentModel: string;
 
 	@Prop({ required: true })
 	checked: boolean;

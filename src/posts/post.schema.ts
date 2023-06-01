@@ -8,9 +8,9 @@ const options: SchemaOptions = {
 };
 
 export enum BoardType {
-  Gather = 'gather',
-  Review = 'review',
-  Free = 'free',
+	Gather = 'gather',
+	Review = 'review',
+	Free = 'free',
 }
 
 @Schema(options)
@@ -18,8 +18,8 @@ export class Post extends Document {
 	@Prop({ required: true })
 	title: string;
 
-  @Prop({ type: User, required: true })
-  author: Types.ObjectId | User;
+	@Prop({ type: User, required: true })
+	author: Types.ObjectId | User;
 
 	@Prop({ required: true, enum: BoardType })
 	board: BoardType;
@@ -36,15 +36,14 @@ export class Post extends Document {
 	@Prop()
 	ratings?: string;
 
-	@Prop({ required: true, min: 1, max: 5, })
+	@Prop({ required: true, min: 1, max: 5 })
 	likes: number;
 
 	@Prop({ required: true })
 	reports: Array<string>;
- 
+
 	@Prop()
 	comments: Comment[];
-
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

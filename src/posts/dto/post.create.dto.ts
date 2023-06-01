@@ -1,44 +1,56 @@
-import { IsString, IsArray, IsNumber, IsNotEmpty, IsEnum, IsOptional, Min, Max, ValidateIf } from 'class-validator';
+import {
+	IsString,
+	IsArray,
+	IsNumber,
+	IsNotEmpty,
+	IsEnum,
+	IsOptional,
+	Min,
+	Max,
+	ValidateIf,
+} from 'class-validator';
 import { BoardType } from '../post.schema';
 
 export class PostCreateDto {
-  @IsString()
-  @IsNotEmpty()
-  title: string;
+	@IsString()
+	@IsNotEmpty()
+	title: string;
 
-  @IsString()
-  @IsNotEmpty()
-  author: string;
+	@IsString()
+	@IsNotEmpty()
+	author: string;
 
-  @IsEnum(BoardType)
-  @IsNotEmpty()
-  board: BoardType;
+	@IsEnum(BoardType)
+	@IsNotEmpty()
+	board: BoardType;
 
-  @IsString()
-  @IsNotEmpty()
-  content: string;
+	@IsString()
+	@IsNotEmpty()
+	content: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @ValidateIf((obj) => obj.board === BoardType.Review || obj.board === BoardType.Gather)
-  storeId: string;
+	@IsString()
+	@IsNotEmpty()
+	@ValidateIf(
+		obj => obj.board === BoardType.Review || obj.board === BoardType.Gather,
+	)
+	storeId: string;
 
-  @IsOptional()
-  @IsNumber()
-  @Min(1)
-  @Max(5)
-  @ValidateIf((obj) => obj.board === BoardType.Review)
-  ratings?: number;
+	@IsOptional()
+	@IsNumber()
+	@Min(1)
+	@Max(5)
+	@ValidateIf(obj => obj.board === BoardType.Review)
+	ratings?: number;
 
-  @IsArray()
-  images: string[];
+	@IsArray()
+	images: string[];
 
-  @IsNumber()
-  likes: number;
+	@IsNumber()
+	likes: number;
 
-  @IsArray()
-  reports: string[];
+	@IsArray()
+	reports: string[];
 
-  @IsArray()
-  comments: number[];
+	@IsArray()
+	comments: number[];
 }

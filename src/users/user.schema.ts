@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaOptions } from 'mongoose';
+import { Document, SchemaOptions, Schema as MongooseSchema } from 'mongoose';
+import { Notification } from 'src/notifications/notification.schema';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -13,6 +14,9 @@ export class User extends Document {
 
 	@Prop({ required: true })
 	pw: string;
+
+	@Prop({ required: true })
+	name: string;
 
 	@Prop({ required: true })
 	nickname: string;
@@ -42,10 +46,13 @@ export class User extends Document {
 	@Prop({ required: true })
 	profile: string;
 
+	@Prop({ default: '한 줄 소개를 넣어주세요!' })
+	introduce: string;
+
 	@Prop({ required: true })
 	allowNotification: boolean;
 
-	@Prop({ required: true })
+	@Prop({ type: MongooseSchema.Types.ObjectId, required: true })
 	notifications: [Notification];
 }
 

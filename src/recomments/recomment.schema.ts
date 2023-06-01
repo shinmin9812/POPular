@@ -7,7 +7,7 @@ const options: SchemaOptions = {
 };
 
 @Schema(options)
-export class Comment extends Document {
+export class Recomment extends Document {
 	@Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
 	author: MongooseSchema.Types.ObjectId;
 
@@ -16,9 +16,6 @@ export class Comment extends Document {
 
 	@Prop({ required: true })
 	isDeleted: boolean;
-
-	@Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Recomment' }] })
-	recomments: MongooseSchema.Types.ObjectId[];
 }
 
-export const CommentSchema = SchemaFactory.createForClass(Comment);
+export const RecommentSchema = SchemaFactory.createForClass(Recomment);
