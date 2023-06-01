@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaOptions } from 'mongoose';
+import { Document, SchemaOptions, Types } from 'mongoose';
 import { User } from 'src/users/user.schema';
 
 const options: SchemaOptions = {
@@ -18,8 +18,8 @@ export class Post extends Document {
 	@Prop({ required: true })
 	title: string;
 
-	@Prop({ required: true })
-	author: User;
+  @Prop({ type: User, required: true })
+  author: Types.ObjectId | User;
 
 	@Prop({ required: true, enum: BoardType })
 	board: BoardType;
@@ -27,22 +27,22 @@ export class Post extends Document {
 	@Prop({ required: true })
 	content: string;
 
-	@Prop({ required: true })
+	@Prop()
 	images?: Array<string>;
 
-	@Prop({ required: true })
+	@Prop()
 	storeId?: string;
 
-	@Prop({ required: true })
-	rating?: string;
+	@Prop()
+	ratings?: string;
 
-	@Prop({ required: true })
+	@Prop({ required: true, min: 1, max: 5, })
 	likes: number;
 
 	@Prop({ required: true })
-	report: number;
-
-	@Prop({ required: true })
+	reports: Array<string>;
+ 
+	@Prop()
 	comments: Comment[];
 
 }
