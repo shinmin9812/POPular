@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Store } from '../../../types/store';
+import { Store } from '../../../../types/store';
 
 interface Props {
   store: Store;
@@ -29,6 +29,7 @@ const InnerContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   .text-section {
     .item-title {
       font-weight: var(--weight-semi-bold);

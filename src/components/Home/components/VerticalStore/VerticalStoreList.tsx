@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import VerticalStoreItem from './VerticalStoreItem';
-import { Store } from '../../../types/store';
+import { Store } from '../../../../types/store';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -21,6 +21,11 @@ const VerticalStoreList = ({ stores, text }: Props) => {
           </Item>
         ))}
       </ItemsBox>
+      <MoreView>
+        <Link className="ItemLink" to={``}>
+          More View
+        </Link>
+      </MoreView>
     </Container>
   );
 };
@@ -45,6 +50,43 @@ const Item = styled.li`
 
   &:last-child {
     margin-bottom: 0px;
+  }
+`;
+
+const MoreView = styled.div`
+  width: 100px;
+  margin: 30px auto 0px;
+  font-size: var(--font-micro);
+  color: var(--color-light-black);
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  display: block;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 10px;
+    background-image: url('/public/images/arrow.png');
+    background-repeat: no-repeat;
+
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-39%);
+  }
+
+  .ItemLink {
+    display: inline-block;
+    width: 100%;
+    padding: 6px 0px;
+    transform: translateY(0px);
+    transition: all 0.2s;
+  }
+
+  &:hover .ItemLink {
+    transform: translateY(-3px);
   }
 `;
 

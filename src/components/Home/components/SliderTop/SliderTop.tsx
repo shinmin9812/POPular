@@ -58,7 +58,6 @@ const CustomSlider = styled(Slider)`
   }
   .slick-active {
     opacity: 1;
-
     transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
   .slick-arrow {

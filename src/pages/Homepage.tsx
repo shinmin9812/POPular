@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import SliderTop from '../components/Home/SliderTop/SliderTop';
-import SlideStoreList from '../components/Home/SlideStore/SlideStoreList';
-import VerticalStoreList from '../components/Home/VerticalStore/VerticalStoreList';
-import Line from '../components/Home/Line';
+import SliderTop from '../components/Home/components/SliderTop/SliderTop';
+import SlideStoreList from '../components/Home/components/SlideStore/SlideStoreList';
+import VerticalStoreList from '../components/Home/components/VerticalStore/VerticalStoreList';
+import ReservationStoreList from '../components/Home/components/ReservationStore/ReservationStoreList';
+import Line from '../components/Home/components/Line';
 import { Store } from '../types/store';
 
 const Container = styled.div`
@@ -38,8 +39,10 @@ const HomePage = () => {
       <Line></Line>
       <VerticalStoreList text={'주간 팝업스토어👀'} stores={stores}></VerticalStoreList>
       <Line></Line>
-      <SlideStoreList text={'추천 팝업스토어😍'} stores={stores}></SlideStoreList>
-      <SlideStoreList text={'추천 팝업스토어😍'} stores={stores}></SlideStoreList>
+      <SlideStoreList text={'최근 오픈한 팝업스토어😳'} stores={stores}></SlideStoreList>
+      <SlideStoreList text={'종료 직전 팝업스토어🔥'} stores={stores}></SlideStoreList>
+      <Line></Line>
+      <ReservationStoreList text={'예약 필수 팝업스토어💖'} stores={stores}></ReservationStoreList>
     </Container>
   );
 };

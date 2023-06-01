@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Store } from '../../../types/store';
+import { Store } from '../../../../types/store';
 
 interface Props {
   store: Store;
@@ -28,8 +28,13 @@ const Container = styled.div`
     border-radius: 8px;
     overflow: hidden;
 
+    &:hover img {
+      transform: scale(1.07);
+    }
+
     img {
       width: 100%;
+      transition: all 0.3s;
     }
   }
   .item-description {

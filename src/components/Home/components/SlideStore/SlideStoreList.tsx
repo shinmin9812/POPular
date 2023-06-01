@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import SlideStoreItem from './SlideStoreItem';
 import useHorizontalScroll from './useHorizontalScroll.tsx';
-import { Store } from '../../../types/store';
+import { Store } from '../../../../types/store';
 import { Link } from 'react-router-dom';
 
 interface Props {
