@@ -2,15 +2,21 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  label: '이름' | '이메일' | '비밀번호' | '비밀번호 확인' | '전화번호';
-  type: 'name' | 'email' | 'password' | 'number';
+  label: '이름' | '닉네임' | '이메일' | '비밀번호' | '비밀번호 확인' | '전화번호';
+  name: 'name' | 'nickname' | 'email' | 'password' | 'passwordConfirm' | 'phoneNumber';
+  type: 'text' | 'email' | 'password' | 'number';
 }
 
-const FormField = ({ label, type }: Props) => {
+const FormField = ({ label, name, type }: Props) => {
   return (
     <FieldContainer>
-      <Label>{label}</Label>
-      <Input type={type} onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e.target.value)} />
+      <Label htmlFor={name}>{label}</Label>
+      <Input
+        type={type}
+        name={name}
+        id={name}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e.target.value)}
+      />
     </FieldContainer>
   );
 };
@@ -24,6 +30,7 @@ const FieldContainer = styled.div`
 `;
 
 const Label = styled.label`
+  font-size: var(--font-small);
   width: 270px;
   padding-left: 8px;
   margin-bottom: 8px;
