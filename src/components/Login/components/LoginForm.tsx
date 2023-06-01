@@ -1,25 +1,23 @@
 import styled from 'styled-components';
-import Form from './Form';
+import FormField from './FormField';
 
 const onSubmitHandler = () => {
   console.log('로그인!');
 };
 
-const FormArea = () => {
+const LoginForm = () => {
   return (
-    <>
-      <LoginForm onSubmit={onSubmitHandler}>
-        <Form type={'email'} />
-        <Form type={'password'} />
-        <WarningMessage>이메일 형식이 올바르지 않습니다.</WarningMessage>
-        {/* <WarningMessage>이메일 또는 비밀번호가 일치하지 않습니다.</WarningMessage> */}
-        <LoginButton type="submit">로그인</LoginButton>
-      </LoginForm>
-    </>
+    <Form onSubmit={onSubmitHandler}>
+      <FormField type={'email'} />
+      <FormField type={'password'} />
+      <WarningMessage>이메일 형식이 올바르지 않습니다.</WarningMessage>
+      {/* <WarningMessage>이메일 또는 비밀번호가 일치하지 않습니다.</WarningMessage> */}
+      <LoginButton type="submit">로그인</LoginButton>
+    </Form>
   );
 };
 
-const LoginForm = styled.form`
+const Form = styled.form`
   flex-direction: column;
   align-items: center;
   display: flex;
@@ -41,4 +39,4 @@ const LoginButton = styled.button`
   cursor: pointer;
 `;
 
-export default FormArea;
+export default LoginForm;

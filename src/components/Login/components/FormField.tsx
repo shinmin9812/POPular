@@ -5,16 +5,16 @@ interface Props {
   type: 'email' | 'password';
 }
 
-const Form = ({ type }: Props) => {
+const FormField = ({ type }: Props) => {
   return (
-    <Container>
+    <FieldContainer>
       <Label>{type === 'email' ? '이메일' : '비밀번호'}</Label>
       <Input type={type} onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e.target.value)} />
-    </Container>
+    </FieldContainer>
   );
 };
 
-const Container = styled.div`
+const FieldContainer = styled.div`
   display: flex;
   width: 300px;
   justify-content: space-between;
@@ -40,4 +40,4 @@ const Input = styled.input`
   color: var(--color-black);
 `;
 
-export default Form;
+export default FormField;
