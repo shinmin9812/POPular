@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaOptions, Schema as MongooseSchema } from 'mongoose';
+import { Document, SchemaOptions } from 'mongoose';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -59,7 +59,7 @@ export class Store extends Document {
 	@Prop({ required: true })
 	price: number | null;
 
-	@Prop()
+	@Prop({ type: Array })
 	sns: [
 		{
 			linkType: string;
