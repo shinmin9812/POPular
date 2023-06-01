@@ -88,6 +88,7 @@ export const CLIENT_PATH = {
   MAP: '/map',
   SEARCH: '/search',
   COMMUNITY: '/community',
+  RECENTLIST: '/recent-list',
   USER: '/user',
   USER_DETAIL: '/user/:userId',
   LOGIN: '/login',
