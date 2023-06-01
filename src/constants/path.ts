@@ -91,6 +91,7 @@ export const CLIENT_PATH = {
   USER: '/user',
   USER_DETAIL: '/user/:userId',
   LOGIN: '/login',
+  SIGNUP: '/signup',
   NOT_FOUND: '/not_found',
   WILD_CARD: '*',
 };

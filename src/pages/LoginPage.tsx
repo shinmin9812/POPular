@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import FormArea from '../components/Login/LoginForm';
 import SignupLink from '../components/Login/SignupLink';
 
-// state에 따라 WarningMessage 출력 or null
 const LoginPage = () => {
   return (
     <Container>
