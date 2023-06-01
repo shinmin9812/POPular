@@ -14,16 +14,22 @@ interface Map {
   panTo(coord: Coord): () => void;
 }
 
+interface Marker {
+  setMap(deleted?: null): () => void;
+}
+
 export interface MapState {
   map: Map | null;
   selectedId: string;
   currentIdx: number;
+  markers: Marker[];
 }
 
 const initialState: MapState = {
   map: null,
   selectedId: '',
   currentIdx: 0,
+  markers: [],
 };
 
 const mapSlice = createSlice({
@@ -38,6 +44,9 @@ const mapSlice = createSlice({
     },
     setCurrentIdx: (state, action) => {
       state.currentIdx = action.payload;
+    },
+    setMarkers: (state, action) => {
+      state.markers = action.payload;
     },
   },
 });

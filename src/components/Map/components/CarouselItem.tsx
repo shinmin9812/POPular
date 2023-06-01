@@ -24,11 +24,15 @@ const Container = styled.div<{ idx: number }>`
 
   margin-right: 20px;
 
-  opacity: 0.8;
+  opacity: 0.9;
+
+  filter: brightness(0.6);
+  transform: scale(0.95);
 
   &.current {
     opacity: 1;
     transform: scale(1.05);
+    filter: brightness(1);
   }
 `;
 
@@ -46,15 +50,11 @@ const CarouselItem = ({ store, idx }: Props) => {
 
   function clickHandler() {
     if (seq === 'current') navigate(`/store/${store.id}`);
+    const markerPosition = new window.kakao.maps.LatLng(store.coord.lng, store.coord.lat);
 
     dispatch(mapActions.setCurrentIdx(idx));
     dispatch(mapActions.setSlectedId(store.id));
-
-    if (map) {
-      const markerPosition = new window.kakao.maps.LatLng(store.coord.lng, store.coord.lat);
-      console.log(markerPosition);
-      map.setCenter(markerPosition);
-    }
+    map!.panTo(markerPosition);
   }
 
   return (
