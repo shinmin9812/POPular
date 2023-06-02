@@ -16,7 +16,7 @@ const Router = () => {
           <Route path={CLIENT_PATH.HOME} element={<HomePage />}></Route>
           <Route path={CLIENT_PATH.MAP} element={<MapPage />}></Route>
           <Route path={CLIENT_PATH.SEARCH} element={<SearchPage />}></Route>
-          <Route path={CLIENT_PATH.COMMUNITY} element={<CommunityPage />}></Route>
+          <Route path={CLIENT_PATH.BOARD} element={<CommunityPage />}></Route>
           <Route path={CLIENT_PATH.USER_DETAIL} element={<UserPage />}></Route>
           <Route path={CLIENT_PATH.LOGIN} element={<LoginPage />}></Route>
         </Route>
