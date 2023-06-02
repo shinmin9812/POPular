@@ -19,9 +19,9 @@ import { UserModule } from './users/user.module';
 	providers: [AppService],
 })
 export class AppModule implements NestModule {
-  private readonly isDev: boolean = process.env.MODE === 'dev' ? true : false;
-  configure() {
-    //몽구스 쿼리 로거(개발 시에만 사용, 빌드시에는 this.isDev => false 처리)
-    mongoose.set('debug', this.isDev);
-  }
+	private readonly isDev: boolean = process.env.MODE === 'dev' ? true : false;
+	configure() {
+		//몽구스 쿼리 로거(개발 시에만 사용, 빌드시에는 this.isDev => false 처리)
+		mongoose.set('debug', this.isDev);
+	}
 }

@@ -55,7 +55,7 @@ export class Store extends Document {
 	@Prop({ required: true })
 	location: string;
 
-	@Prop({ type: Object, required: true })
+	@Prop({ type: coordinfo, required: true })
 	coord: coordinfo;
 
 	@Prop({ required: true, default: 0 })
