@@ -4,6 +4,8 @@ import Header from './Header/Header';
 import GlovalNavigation from './GNA/GlovalNavigation';
 
 const Wrapper = styled.div`
+  font-family: 'Noto Sans KR', sans-serif;
+
   // Common components area data
   --header-height: 80px;
   --GNA-height: 80px;
