@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaOptions, Types } from 'mongoose';
 import { User } from 'src/users/user.schema';
+import { Comment, CommentSchema } from 'src/comments/comment.schema';
+import { Store, StoreSchema } from 'src/stores/store.schema';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -27,23 +29,23 @@ export class Post extends Document {
 	@Prop({ required: true })
 	content: string;
 
-	@Prop()
+	@Prop({ required: true })
 	images?: Array<string>;
 
-	@Prop()
+	@Prop({ type: Store })
 	storeId?: string;
 
-	@Prop()
-	ratings?: string;
-
 	@Prop({ required: true, min: 1, max: 5 })
-	likes: number;
+	ratings?: number;
+
+	@Prop({ required: true })
+	likes: Array<string>;
 
 	@Prop({ required: true })
 	reports: Array<string>;
 
-	@Prop()
-	comments: Comment[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
+  comments: Types.ObjectId[] | Comment[];
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

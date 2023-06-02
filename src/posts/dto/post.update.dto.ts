@@ -1,47 +1,26 @@
-import {
-	IsString,
-	IsArray,
-	IsNumber,
-	IsNotEmpty,
-	IsEnum,
-	IsOptional,
-	Min,
-	Max,
-	ValidateIf,
-} from 'class-validator';
-import { BoardType } from '../post.schema';
+import { IsString, IsEnum, IsOptional, IsNumber, Min, Max, IsArray, ArrayMinSize } from 'class-validator';
 
 export class PostUpdateDto {
-	@IsString()
-	@IsNotEmpty()
-	title: string;
+  @IsOptional()
+  @IsString()
+  title?: string;
 
-	@IsString()
-	@IsNotEmpty()
-	author: string;
+  @IsOptional()
+  @IsString()
+  content?: string;
 
-	@IsEnum(BoardType)
-	@IsNotEmpty()
-	board: BoardType;
+  @IsOptional()
+  @IsArray()
+  @ArrayMinSize(1)
+  images?: string[];
 
-	@IsString()
-	@IsNotEmpty()
-	content: string;
+  @IsOptional()
+  @IsString()
+  storeId?: string;
 
-	@IsString()
-	@IsNotEmpty()
-	@ValidateIf(
-		obj => obj.board === BoardType.Review || obj.board === BoardType.Gather,
-	)
-	storeId: string;
-
-	@IsOptional()
-	@IsNumber()
-	@Min(1)
-	@Max(5)
-	@ValidateIf(obj => obj.board === BoardType.Review)
-	ratings?: number;
-
-	@IsArray()
-	images: string[];
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  @Max(5)
+  ratings?: number;
 }
