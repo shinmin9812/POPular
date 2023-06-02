@@ -16,7 +16,7 @@ const PostList = styled.li`
 `;
 
 const PostTitle = styled.h4`
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-semi-bold);
   font-size: var(--font-medium);
 `;
 

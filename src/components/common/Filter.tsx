@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const Select = styled.select`
-  width: 23%;
+const Select = styled.select<{ width: number }>`
+  ${(props) => `width: ${props.width}%;`}
   height: 100%;
   background-color: var(--color-gray);
   color: var(--color-white);
@@ -23,13 +23,15 @@ const Filter = ({
   onChange,
   value,
   Options,
+  width,
 }: {
-  value: string;
-  Options: string[];
+  value: string | number;
+  Options: string[] | number[];
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  width: number;
 }) => {
   return (
-    <Select value={value} onChange={onChange}>
+    <Select value={value} onChange={onChange} width={width}>
       {Options.map((option, index) => (
         <option key={index} value={option}>
           {option}
