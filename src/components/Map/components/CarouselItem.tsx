@@ -55,6 +55,12 @@ const CarouselItem = ({ store, idx }: Props) => {
     dispatch(mapActions.setCurrentIdx(idx));
     dispatch(mapActions.setSlectedId(store.id));
     map!.panTo(markerPosition);
+    dispatch(
+      mapActions.setCenter({
+        lat: store.coord.lng,
+        lng: store.coord.lat,
+      }),
+    );
   }
 
   return (

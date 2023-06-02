@@ -139,16 +139,13 @@ const Map = () => {
   const map = useSelector((state: RootState) => state.map.map);
   const selectedId = useSelector((state: RootState) => state.map.selectedId);
   const markers = useSelector((state: RootState) => state.map.markers);
+  const center = useSelector((state: RootState) => state.map.center);
 
   const { data: stores, isFetching, refetch } = useGetAllStoreQuery();
 
   // 최초 맵 렌더링
   useEffect(() => {
     const container = document.getElementById('map'); // 지도를 표시할 div
-    const center: Coord = {
-      lat: 37.566826,
-      lng: 126.9786567,
-    };
 
     const options = {
       center: new window.kakao.maps.LatLng(center.lat, center.lng),
@@ -181,6 +178,12 @@ const Map = () => {
         map!.panTo(markerPosition);
         dispatch(mapActions.setCurrentIdx(idx));
         dispatch(mapActions.setSlectedId(store.id));
+        dispatch(
+          mapActions.setCenter({
+            lat: store.coord.lng,
+            lng: store.coord.lat,
+          }),
+        );
       });
 
       const overlay = new window.kakao.maps.CustomOverlay({
@@ -200,6 +203,12 @@ const Map = () => {
     const markerPosition = new window.kakao.maps.LatLng(stores[0].coord.lng, stores[0].coord.lat);
     dispatch(mapActions.setCurrentIdx(0));
     dispatch(mapActions.setSlectedId(stores[0].id));
+    dispatch(
+      mapActions.setCenter({
+        lat: stores[0].coord.lng,
+        lng: stores[0].coord.lat,
+      }),
+    );
     map.setCenter(markerPosition);
     createMarkers();
   }, [isFetching, stores]);

@@ -22,6 +22,7 @@ export interface MapState {
   map: Map | null;
   selectedId: string;
   currentIdx: number;
+  center: Coord;
   markers: Marker[];
 }
 
@@ -29,6 +30,10 @@ const initialState: MapState = {
   map: null,
   selectedId: '',
   currentIdx: 0,
+  center: {
+    lat: 37.566826,
+    lng: 126.9786567,
+  },
   markers: [],
 };
 
@@ -47,6 +52,9 @@ const mapSlice = createSlice({
     },
     setMarkers: (state, action) => {
       state.markers = action.payload;
+    },
+    setCenter: (state, action) => {
+      state.center = action.payload;
     },
   },
 });
