@@ -11,19 +11,23 @@ const SignupForm = () => {
           <NicknameCheckMessage>다른 유저가 사용 중인 닉네임입니다.</NicknameCheckMessage>
         </NicknameLabel>
         <NicknameInput>
-          <Input
+          <input
             type="text"
             name="nickname"
             id="nickname"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e.target.value)}
           />
-          <NicknameCheckButton>중복확인</NicknameCheckButton>
+          <button>중복확인</button>
         </NicknameInput>
       </FieldContainer>
       <FormField label={'이메일'} name={'email'} type={'email'}></FormField>
       <FormField label={'비밀번호'} name={'password'} type={'password'}></FormField>
       <FormField label={'비밀번호 확인'} name={'passwordConfirm'} type={'password'}></FormField>
       <FormField label={'전화번호'} name={'phoneNumber'} type={'number'}></FormField>
+      <CheckboxContainer>
+        <input type="checkbox" name="allowNotification" id="allowNotification" />
+        <p>팔로우∙댓글∙팝업스토어 알림 허용</p>
+      </CheckboxContainer>
       <WarningMessage>이메일 형식이 올바르지 않습니다.</WarningMessage>
       <SignupButton type="submit">가입하기</SignupButton>
     </FormContainer>
@@ -36,7 +40,7 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 
 const FieldContainer = styled.div`
@@ -69,26 +73,44 @@ const NicknameInput = styled.div`
   width: 270px;
   display: flex;
   justify-content: space-between;
+
+  & input {
+    width: 180px;
+    height: 30px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid var(--color-sub);
+    border-radius: var(--border-radius-input);
+    font-size: var(--font-small);
+    color: var(--color-black);
+  }
+
+  & button {
+    width: 80px;
+    height: 30px;
+    font-size: 12px;
+    color: var(--color-white);
+    background-color: var(--color-main);
+    border-radius: var(--border-radius-button);
+  }
 `;
 
-const Input = styled.input`
-  width: 180px;
-  height: 30px;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid var(--color-sub);
-  border-radius: var(--border-radius-input);
+const CheckboxContainer = styled.div`
+  width: 270px;
   font-size: var(--font-small);
-  color: var(--color-black);
-`;
+  display: flex;
+  margin-bottom: 20px;
 
-const NicknameCheckButton = styled.button`
-  width: 80px;
-  height: 30px;
-  font-size: 12px;
-  color: var(--color-white);
-  background-color: var(--color-main);
-  border-radius: var(--border-radius-button);
+  & input {
+    accent-color: var(--color-main);
+    width: 16px;
+    height: 16px;
+    margin: 0 4px;
+  }
+
+  & p {
+    margin-left: 2px;
+  }
 `;
 
 const WarningMessage = styled.p`
