@@ -325,5 +325,6 @@ export default RecentListPage;
 const Title = styled.h1`
   font-size: var(--font-medium);
   color: var(--color-main);
-  padding: 0 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
 `;
