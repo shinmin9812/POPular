@@ -7,6 +7,7 @@ import SearchPage from './pages/SearchPage';
 import CommunityPage from './pages/CommunityPage';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
+import UserMenuPage from './pages/UserMenuPage';
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
           <Route path={CLIENT_PATH.MAP} element={<MapPage />}></Route>
           <Route path={CLIENT_PATH.SEARCH} element={<SearchPage />}></Route>
           <Route path={CLIENT_PATH.BOARD} element={<CommunityPage />}></Route>
+          <Route path={CLIENT_PATH.USER_MENU} element={<UserMenuPage />}></Route>
           <Route path={CLIENT_PATH.USER_DETAIL} element={<UserPage />}></Route>
           <Route path={CLIENT_PATH.LOGIN} element={<LoginPage />}></Route>
         </Route>
