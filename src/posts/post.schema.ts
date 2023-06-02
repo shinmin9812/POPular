@@ -20,8 +20,8 @@ export class Post extends Document {
 	@Prop({ required: true })
 	title: string;
 
-	@Prop({ type: User, required: true })
-	author: Types.ObjectId | User;
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  author: Types.ObjectId | User;
 
 	@Prop({ required: true, enum: BoardType })
 	board: BoardType;
@@ -32,8 +32,8 @@ export class Post extends Document {
 	@Prop({ required: true })
 	images?: Array<string>;
 
-	@Prop({ type: Store })
-	storeId?: string;
+  @Prop({ type: Types.ObjectId, ref: 'Store' })
+  storeId?: Types.ObjectId | Store;
 
 	@Prop({ required: true, min: 1, max: 5 })
 	ratings?: number;
@@ -44,8 +44,8 @@ export class Post extends Document {
 	@Prop({ required: true })
 	reports: Array<string>;
 
-	@Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
-	comments: Types.ObjectId[] | Comment[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
+  comments: Types.ObjectId[] | Comment[];
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
