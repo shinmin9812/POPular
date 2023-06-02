@@ -1,17 +1,19 @@
 import { Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { StoresModule } from './stores/store.module';
-import * as mongoose from 'mongoose';
+import { StoreModule } from './stores/store.module';
+import { UserModule } from './users/user.module';
 
 //{useNewUrlParser: true, userUnifiedTopology: true} 해당 부분에 대해 deprecatedError가 발생
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
 		MongooseModule.forRoot(process.env.MONGO_URI),
-		StoresModule,
+		StoreModule,
+		UserModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

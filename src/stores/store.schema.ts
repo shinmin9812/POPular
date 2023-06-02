@@ -6,6 +6,32 @@ const options: SchemaOptions = {
 	collection: 'Store',
 };
 
+class time {
+	start: string | null;
+	end: string | null;
+}
+
+class day {
+	mon: time;
+	tue: time;
+	wed: time;
+	thu: time;
+	fri: time;
+	sat: time;
+	sun: time;
+}
+
+class coordinfo {
+	lat: string;
+	lng: string;
+}
+
+class snsinfo {
+	linkType: string;
+	linkTitle: string;
+	link: string;
+}
+
 @Schema(options)
 export class Store extends Document {
 	@Prop({ required: true })
@@ -18,58 +44,28 @@ export class Store extends Document {
 	brand: string;
 
 	@Prop({ required: true })
-	startDate: string;
+	start_date: Date;
 
 	@Prop({ required: true })
-	endDate: string;
+	end_date: Date;
 
-	@Prop({ type: Object, required: true })
-	hours: {
-		mon: {
-			start: string | null;
-			end: string | null;
-		};
-		tue: {
-			start: string | null;
-			end: string | null;
-		};
-		wed: {
-			start: string | null;
-			end: string | null;
-		};
-		thu: {
-			start: string | null;
-			end: string | null;
-		};
-		fri: {
-			start: string | null;
-			end: string | null;
-		};
-	};
+	@Prop({ type: day, required: true })
+	hours: day;
 
 	@Prop({ required: true })
 	location: string;
 
-	@Prop({ type: Object, required: true })
-	coord: {
-		lat: string;
-		lng: string;
-	};
+	@Prop({ type: coordinfo, required: true })
+	coord: coordinfo;
 
-	@Prop({ required: true })
-	price: number | null;
+	@Prop({ required: true, default: 0 })
+	price: number;
 
 	@Prop({ type: Array })
-	sns: [
-		{
-			linkType: string;
-			linkTitle: string;
-			link: string;
-		},
-	];
+	sns: [snsinfo];
 
 	@Prop({ default: false })
-	reservationRequired: boolean;
+	reservation_required: boolean;
 
 	@Prop()
 	images: Array<string>;

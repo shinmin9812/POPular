@@ -1,5 +1,6 @@
-import { IsString, IsBoolean, IsNotEmpty } from 'class-validator';
+import { IsString, IsBoolean, IsNotEmpty, IsArray } from 'class-validator';
 import { UserLoginDto } from './user.login.dto';
+import { user_profile } from '../user.schema';
 
 export class UserSignupDto extends UserLoginDto {
 	@IsString()
@@ -12,9 +13,33 @@ export class UserSignupDto extends UserLoginDto {
 
 	@IsString()
 	@IsNotEmpty()
-	phoneNumber: string;
+	phone_number: string;
 
 	@IsBoolean()
 	@IsNotEmpty()
-	allowNotification: boolean;
+	allow_notification: boolean;
+
+	@IsArray()
+	follower: [user_profile];
+
+	@IsArray()
+	following: [user_profile];
+
+	@IsBoolean()
+	enterpriser: boolean;
+
+	@IsString()
+	brand: string;
+
+	@IsString()
+	profile: string;
+
+	@IsString()
+	introduce: string;
+
+	@IsArray()
+	scrap: Array<string>;
+
+	@IsArray()
+	notification: Array<object>;
 }

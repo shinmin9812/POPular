@@ -14,10 +14,7 @@ export class Comment extends Document {
 	@Prop({ required: true })
 	content: string;
 
-	@Prop({ required: true })
-	isDeleted: boolean;
-
-	@Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Recomment' }] })
+	@Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Comment' }] })
 	recomments: MongooseSchema.Types.ObjectId[];
 }
 

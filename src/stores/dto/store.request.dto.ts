@@ -4,6 +4,7 @@ import {
 	IsObject,
 	IsNumber,
 	IsBoolean,
+	IsDate,
 	IsNotEmpty,
 } from 'class-validator';
 
@@ -20,11 +21,11 @@ export class StoreRequestDto {
 	@IsNotEmpty()
 	brand: string;
 
-	@IsString()
+	@IsDate()
 	@IsNotEmpty()
 	startDate: string;
 
-	@IsString()
+	@IsDate()
 	@IsNotEmpty()
 	endDate: string;
 

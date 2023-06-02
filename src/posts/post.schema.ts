@@ -44,8 +44,8 @@ export class Post extends Document {
 	@Prop({ required: true })
 	reports: Array<string>;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
-  comments: Types.ObjectId[] | Comment[];
+	@Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
+	comments: Types.ObjectId[] | Comment[];
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

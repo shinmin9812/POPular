@@ -7,6 +7,12 @@ const options: SchemaOptions = {
 	collection: 'User',
 };
 
+export class user_profile {
+	id: string;
+	nickname: string;
+	profile: string;
+}
+
 @Schema(options)
 export class User extends Document {
 	@Prop({ required: true, unique: true })
@@ -22,37 +28,33 @@ export class User extends Document {
 	nickname: string;
 
 	@Prop({ required: true })
-	phoneNumber: string;
+	phone_number: string;
 
-	@Prop({ type: Array, required: true })
-	follower: {
-		id: string;
-		nickname: string;
-		profile: string;
-	};
+	@Prop({ type: Array<user_profile>, default: [] })
+	follower: [user_profile];
 
-	@Prop({ type: Array, required: true })
-	following: {
-		id: string;
-		nickname: string;
-	};
+	@Prop({ type: Array<user_profile>, default: [] })
+	following: [user_profile];
 
-	@Prop({ required: true })
-	isEnterpriser: boolean;
+	@Prop({ default: false })
+	enterpriser: boolean;
 
-	@Prop({ required: true })
+	@Prop({ default: '' })
 	brand: string;
 
-	@Prop({ required: true })
+	@Prop({ default: '' })
 	profile: string;
 
 	@Prop({ default: '한 줄 소개를 넣어주세요!' })
 	introduce: string;
 
 	@Prop({ required: true })
-	allowNotification: boolean;
+	allow_notification: boolean;
 
-	@Prop({ type: MongooseSchema.Types.ObjectId, required: true })
+	@Prop({ default: [] })
+	scrap: Array<string>;
+
+	@Prop({ type: Array<object>, default: [] })
 	notifications: [Notification];
 }
 

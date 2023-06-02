@@ -19,5 +19,5 @@ export class UserUpdateDto {
 
 	@IsString()
 	@IsNotEmpty()
-	phoneNumber: string;
+	phone_number: string;
 }
