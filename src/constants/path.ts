@@ -85,12 +85,31 @@ export const API_PATH = {
 
 export const CLIENT_PATH = {
   HOME: '/',
+
   MAP: '/map',
+
   SEARCH: '/search',
-  COMMUNITY: '/community',
-  USER: '/user',
-  USER_DETAIL: '/user/:userId',
+
+  BOARD: '/community/board/:category',
+  POST: '/community/post/:postId',
+  WRITE: '/community/write',
+
+  STORE_DETAIL: '/store/:storeId',
+
   LOGIN: '/login',
+  SIGNUP: '/signup',
+
+  USER_MENU: '/usermenu',
+  USER_RECENT: '/usermenu/recent',
+  USER_SCRAP: '/usermenu/scrap',
+  USER_POSTS: '/usermenu/posts',
+  USER_COMMENTS: '/usermenu/comments',
+  USER_NOTIFICATIONS: '/usermenu/notifications',
+
+  USER_DETAIL: '/user/:userId',
+  USER_UPDATE: '/user/:userId/update',
+
   NOT_FOUND: '/not_found',
+
   WILD_CARD: '*',
 };
