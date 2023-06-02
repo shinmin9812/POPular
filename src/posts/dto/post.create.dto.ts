@@ -14,43 +14,43 @@ import { BoardType } from '../post.schema';
 export class PostCreateDto {
 	@IsString()
 	@IsNotEmpty()
-	title: string;
+	readonly title: string;
 
 	@IsString()
 	@IsNotEmpty()
-	author: string;
+	readonly author: string;
 
 	@IsEnum(BoardType)
 	@IsNotEmpty()
-	board: BoardType;
+	readonly board: BoardType;
 
 	@IsString()
 	@IsNotEmpty()
-	content: string;
+	readonly content: string;
 
 	@IsString()
 	@IsNotEmpty()
 	@ValidateIf(
 		obj => obj.board === BoardType.Review || obj.board === BoardType.Gather,
 	)
-	storeId: string;
+	readonly storeId: string;
 
 	@IsOptional()
 	@IsNumber()
 	@Min(1)
 	@Max(5)
 	@ValidateIf(obj => obj.board === BoardType.Review)
-	ratings?: number;
+	readonly ratings?: number;
 
 	@IsArray()
-	images: string[];
+	readonly images: string[];
 
 	@IsNumber()
-	likes: number;
+	readonly likes: number;
 
 	@IsArray()
-	reports: string[];
+	readonly reports: string[];
 
 	@IsArray()
-	comments: number[];
+	readonly comments: number[];
 }

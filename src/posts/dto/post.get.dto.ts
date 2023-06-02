@@ -28,7 +28,7 @@ export class PostGetDto {
 	@ValidateIf(
 		obj => obj.board === BoardType.Review || obj.board === BoardType.Gather,
 	)
-	storeId: string;
+	storeId?: string;
 
 	@IsOptional()
 	@IsNumber()
@@ -38,7 +38,7 @@ export class PostGetDto {
 	ratings?: number;
 
 	@IsArray()
-	images: string[];
+	images?: string[];
 
 	@IsNumber()
 	likes: number;
