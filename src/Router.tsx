@@ -14,6 +14,8 @@ import RecentListPage from './pages/RecentListPage';
 import UserMenuPage from './pages/UserMenuPage';
 import ScrapPage from './pages/ScrapPage';
 import NotificationsPage from './pages/NotificationsPage';
+import MyPostPage from './pages/MyPostPage';
+import MyCommentPage from './pages/MyCommentPage';
 
 const Router = () => {
   return (
@@ -33,6 +35,8 @@ const Router = () => {
           <Route path={CLIENT_PATH.STORE_DETAIL} element={<StoreDetailPage />}></Route>
           <Route path={CLIENT_PATH.SIGNUP} element={<SignupPage />}></Route>
           <Route path={CLIENT_PATH.USER_RECENT} element={<RecentListPage />}></Route>
+          <Route path={CLIENT_PATH.USER_POSTS} element={<MyPostPage />}></Route>
+          <Route path={CLIENT_PATH.USER_COMMENTS} element={<MyCommentPage />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

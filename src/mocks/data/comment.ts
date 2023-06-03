@@ -1,3 +1,5 @@
+import { BoardTypes } from '../../types/board';
+
 export const commentData = [
   {
     id: '3213',
@@ -10,6 +12,15 @@ export const commentData = [
     post: {
       id: '1234',
       title: '테스트 포스트',
+      author: {
+        id: '12341231',
+        nickname: '엘리스',
+      },
+      board: BoardTypes.free,
+      content: '<p>안녕하세요</p>',
+      likes: 10,
+      report: 2,
+      updatedAt: '2023-03-21',
     },
   },
 ];
