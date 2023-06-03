@@ -1,16 +1,45 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import useFilterActions from '../../Hooks/useFilterActions';
+import useSetTabAction from '../../Hooks/useTabsActions';
 
-const Today = new Date();
+export interface initialState {
+  tab: string;
+  filter: {
+    address: string;
+    category: string;
+    duration: {
+      show: boolean;
+      StartDate: {
+        year: number;
+        month: number;
+        day: number;
+      };
+      endDate: {
+        year: number;
+        month: number;
+        day: number;
+      };
+    };
+  };
+  page: number;
+}
 
-const initialState = {
+export interface SetDate {
+  start: boolean;
+  date: number;
+}
+
+const Today: Date = new Date();
+
+const initialState: initialState = {
   tab: '전체',
   filter: {
     address: '지역',
     category: '카테고리',
     duration: {
       show: false,
-      StartDate: { year: Today.getFullYear(), month: Today.getMonth(), day: Today.getDay() },
-      endDate: { year: Today.getFullYear(), month: Today.getMonth(), day: Today.getDay() },
+      StartDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
+      endDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
     },
   },
   page: 1,
@@ -20,40 +49,28 @@ const CommunitySlice = createSlice({
   name: 'community',
   initialState,
   reducers: {
-    setTab(state, action) {
-      state.tab = action.payload;
+    setTab(state, action: PayloadAction<string>) {
+      useSetTabAction.setTab(state, action);
     },
-    setFilterAddress(state, action) {
-      state.filter.address = action.payload;
+    setFilterAddress(state, action: PayloadAction<string>) {
+      useFilterActions.setFilterAddress(state, action);
     },
-    setFilterCategory(state, action) {
-      state.filter.category = action.payload;
+    setFilterCategory(state, action: PayloadAction<string>) {
+      useFilterActions.setFilterCategory(state, action);
     },
-    setFilterDurationYear(state, action) {
-      if (action.payload.start) {
-        state.filter.duration.StartDate.year = action.payload.date;
-      } else {
-        state.filter.duration.endDate.year = action.payload.date;
-      }
+    setFilterDurationYear(state, action: PayloadAction<SetDate>) {
+      useFilterActions.setFilterDurationYear(state, action);
     },
-    setFilterDurationMonth(state, action) {
-      if (action.payload.start) {
-        state.filter.duration.StartDate.month = action.payload.date;
-      } else {
-        state.filter.duration.endDate.month = action.payload.date;
-      }
+    setFilterDurationMonth(state, action: PayloadAction<SetDate>) {
+      useFilterActions.setFilterDurationMonth(state, action);
     },
-    setFilterDurationDay(state, action) {
-      if (action.payload.start) {
-        state.filter.duration.StartDate.day = action.payload.date;
-      } else {
-        state.filter.duration.endDate.day = action.payload.date;
-      }
+    setFilterDurationDay(state, action: PayloadAction<SetDate>) {
+      useFilterActions.setFilterDurationDay(state, action);
     },
-    setFilterDurationShow(state, action) {
-      state.filter.duration.show = action.payload;
+    setFilterDurationShow(state, action: PayloadAction<boolean>) {
+      useFilterActions.setFilterDurationShow(state, action);
     },
-    setPage(state, action) {
+    setPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
     },
   },

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Filter from './Filter';
 const Duration = styled.button`
   width: 23%;
-  height: 100%;
+  height: 39px;
   background-color: var(--color-gray);
   color: var(--color-white);
   border: none;
@@ -75,6 +75,7 @@ const DateBoxContainerWrap = ({
   setDay: (date: number, start: boolean) => void;
   setShow: () => void;
 }) => {
+  console.log(startDate, endDate);
   return (
     <DateBoxContainer>
       <DateBoxWrap>
@@ -82,7 +83,7 @@ const DateBoxContainerWrap = ({
           <DateName>Start</DateName>
           <DateWrap>
             <Filter
-              value={startDate.month}
+              value={startDate.year}
               onChange={(e) => {
                 setYear(Number(e.target.value), true);
               }}
@@ -115,7 +116,7 @@ const DateBoxContainerWrap = ({
           <DateName>End</DateName>
           <DateWrap>
             <Filter
-              value={startDate.month}
+              value={startDate.year}
               onChange={(e) => {
                 setYear(Number(e.target.value), true);
               }}
@@ -170,7 +171,7 @@ const FilterDuration = ({
 }) => {
   return (
     <>
-      <Duration onClick={setShow}>기간</Duration>
+      <Duration onClick={setShow}>스토어 기간</Duration>
       {show && (
         <DateBoxContainerWrap
           setShow={setShow}
