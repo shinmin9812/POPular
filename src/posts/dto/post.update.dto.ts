@@ -1,35 +1,25 @@
-import {
-	IsString,
-	IsEnum,
-	IsOptional,
-	IsNumber,
-	Min,
-	Max,
-	IsArray,
-	ArrayMinSize,
-} from 'class-validator';
+import { IsString, IsOptional, IsNumber, Min, Max, IsArray, IsNotEmpty } from 'class-validator';
 
 export class PostUpdateDto {
-	@IsOptional()
-	@IsString()
-	title?: string;
+  @IsOptional()
+  @IsString()
+  title?: string;
 
-	@IsOptional()
-	@IsString()
-	content?: string;
+  @IsOptional()
+  @IsString()
+  content?: string;
 
-	@IsOptional()
-	@IsArray()
-	@ArrayMinSize(1)
-	images?: string[];
+  @IsOptional()
+  @IsArray()
+  images?: string[];
 
-	@IsOptional()
-	@IsString()
-	storeId?: string;
+  @IsOptional()
+  @IsString()
+  storeId?: string;
 
-	@IsOptional()
-	@IsNumber()
-	@Min(1)
-	@Max(5)
-	ratings?: number;
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  @Max(5)
+  ratings?: number;
 }

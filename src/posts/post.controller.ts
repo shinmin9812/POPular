@@ -1,47 +1,50 @@
-import {
-	Controller,
-	Get,
-	Post,
-	Put,
-	Delete,
-	Param,
-	Body,
-} from '@nestjs/common';
-import { PostService } from './post.service';
+import { Controller, Get, Post, Patch, Delete, Param, Body } from '@nestjs/common';
+import { PostsService } from './post.service';
 import { PostCreateDto } from './dto/post.create.dto';
 import { PostUpdateDto } from './dto/post.update.dto';
 
-@Controller('posts')
-export class PostController {
-	constructor(private readonly postService: PostService) {}
+@Controller('/posts')
+export class PostsController {
+  constructor(private readonly postsService: PostsService) {}
 
-	@Get()
-	async getAllPosts() {
-		const posts = await this.postService.getAllPosts();
-		return posts;
-	}
+  @Get()
+  async getAllPosts() {
+    return await this.postsService.getAllPosts();
+  }
 
-	@Get(':id')
-	async getPostById(@Param('id') id: string) {
-		const post = await this.postService.getPostById(id);
-		return post;
-	}
+  @Get('gather')
+  async getAllGatherPosts() {
+    return await this.postsService.getAllGatherPosts();
+  }
 
-	@Post()
-	async createPost(@Body() createDto: PostCreateDto) {
-		const createdPost = await this.postService.createPost(createDto);
-		return createdPost;
-	}
+  @Get('review')
+  async getAllReviewPosts() {
+    return await this.postsService.getAllReviewPosts();
+  }
 
-	@Put(':id')
-	async updatePost(@Param('id') id: string, @Body() updateDto: PostUpdateDto) {
-		const updatedPost = await this.postService.updatePost(id, updateDto);
-		return updatedPost;
-	}
+  @Get('free')
+  async getAllFreePosts() {
+    return await this.postsService.getAllFreePosts();
+  }
 
-	@Delete(':id')
-	async deletePost(@Param('id') id: string) {
-		await this.postService.deletePost(id);
-		return { message: 'Post deleted successfully' };
-	}
+  @Get(':id')
+  async getPostById(@Param('id') id: string) {
+    return await this.postsService.getPostById(id);
+  }
+
+  @Post()
+  async createPost(@Body() createDto: PostCreateDto) {
+    return await this.postsService.createPost(createDto);
+  }
+
+  @Patch(':id')
+  async updatePost(@Param('id') id: string, @Body() updateDto: PostUpdateDto) {
+    return await this.postsService.updatePost(id, updateDto);
+  }
+
+  @Delete(':id')
+  async deletePost(@Param('id') id: string) {
+    await this.postsService.deletePost(id);
+    return { message: '글이 삭제되었습니다.' };
+  }
 }

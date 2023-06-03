@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaOptions, Types } from 'mongoose';
+import { Comment } from 'src/comments/comment.schema';
+import { Store } from 'src/stores/store.schema';
 import { User } from 'src/users/user.schema';
-import { Comment, CommentSchema } from 'src/comments/comment.schema';
-import { Store, StoreSchema } from 'src/stores/store.schema';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -20,7 +20,7 @@ export class Post extends Document {
 	@Prop({ required: true })
 	title: string;
 
-	@Prop({ type: User, required: true })
+	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
 	author: Types.ObjectId | User;
 
 	@Prop({ required: true, enum: BoardType })
@@ -29,22 +29,22 @@ export class Post extends Document {
 	@Prop({ required: true })
 	content: string;
 
-	@Prop({ required: true })
-	images?: Array<string>;
+	@Prop({ default: [] })
+	images: Array<string>;
 
-	@Prop({ type: Store })
-	storeId?: string;
+	@Prop({ type: Types.ObjectId, ref: 'Store' })
+	storeId?: Types.ObjectId | Store;
 
-	@Prop({ required: true, min: 1, max: 5 })
+	@Prop({ min: 1, max: 5 })
 	ratings?: number;
 
-	@Prop({ required: true })
-	likes: Array<string>;
+	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
+	likes: Types.ObjectId[];
+	
+	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
+	reports: Types.ObjectId[];
 
-	@Prop({ required: true })
-	reports: Array<string>;
-
-	@Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
+	@Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }], default: [] })
 	comments: Types.ObjectId[] | Comment[];
 }
 
