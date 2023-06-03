@@ -8,6 +8,7 @@ import CommunityPage from './pages/CommunityPage';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import MyPostPage from './pages/MyPostPage';
+import MyCommentPage from './pages/MyCommentPage';
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
           <Route path={CLIENT_PATH.USER_DETAIL} element={<UserPage />}></Route>
           <Route path={CLIENT_PATH.LOGIN} element={<LoginPage />}></Route>
           <Route path={CLIENT_PATH.USER_POSTS} element={<MyPostPage />}></Route>
+          <Route path={CLIENT_PATH.USER_COMMENTS} element={<MyCommentPage />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
