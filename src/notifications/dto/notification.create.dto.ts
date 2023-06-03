@@ -1,4 +1,4 @@
-import { IsBoolean, IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString, ValidateIf } from "class-validator";
 import { ContentModel, NotificationType } from "../notification.schema";
 import { BoardType } from "src/posts/post.schema";
 
@@ -7,8 +7,8 @@ export class NotificationCreateDto {
   @IsNotEmpty()
   readonly type: NotificationType;
 
-  @IsOptional()
   @IsEnum(BoardType)
+  @ValidateIf(obj => obj.type === NotificationType.Comment)
   readonly board: BoardType;
 
   @IsNotEmpty()
