@@ -42,15 +42,23 @@ export class PostCreateDto {
 	@ValidateIf(obj => obj.board === BoardType.Review)
 	readonly ratings?: number;
 
+	@IsOptional()
 	@IsArray()
-	readonly images: string[];
+	@IsString({ each: true })
+	readonly images?: string[];
 
-	@IsNumber()
-	readonly likes: number;
-
+	@IsOptional()
 	@IsArray()
-	readonly reports: string[];
+	@IsString({ each: true })
+	readonly likes?: string[];
 
+	@IsOptional()
 	@IsArray()
-	readonly comments: number[];
+	@IsString({ each: true })
+	readonly reports?: string[];
+
+	@IsOptional()
+	@IsArray()
+	@IsString({ each: true })
+	readonly comments?: string[];
 }

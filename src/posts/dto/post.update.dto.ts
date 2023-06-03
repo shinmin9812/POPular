@@ -1,6 +1,10 @@
-import { IsString, IsEnum, IsOptional, IsNumber, Min, Max, IsArray, ArrayMinSize } from 'class-validator';
+import { IsString, IsOptional, IsNumber, Min, Max, IsArray, IsNotEmpty } from 'class-validator';
 
 export class PostUpdateDto {
+  @IsString()
+	@IsNotEmpty()
+	id: string;
+
   @IsOptional()
   @IsString()
   title?: string;
@@ -11,7 +15,6 @@ export class PostUpdateDto {
 
   @IsOptional()
   @IsArray()
-  @ArrayMinSize(1)
   images?: string[];
 
   @IsOptional()

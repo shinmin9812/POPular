@@ -20,8 +20,8 @@ export class Post extends Document {
 	@Prop({ required: true })
 	title: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  author: Types.ObjectId | User;
+	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
+	author: Types.ObjectId;
 
 	@Prop({ required: true, enum: BoardType })
 	board: BoardType;
@@ -29,23 +29,23 @@ export class Post extends Document {
 	@Prop({ required: true })
 	content: string;
 
-	@Prop({ required: true })
-	images?: Array<string>;
+	@Prop({ default: [] })
+	images: Array<string>;
 
-  @Prop({ type: Types.ObjectId, ref: 'Store' })
-  storeId?: Types.ObjectId | Store;
+	@Prop({ type: Types.ObjectId, ref: 'Store' })
+	storeId?: Types.ObjectId | Store;
 
-	@Prop({ required: true, min: 1, max: 5 })
+	@Prop({ min: 1, max: 5 })
 	ratings?: number;
 
-	@Prop({ required: true })
-	likes: Array<string>;
+	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
+	likes: Types.ObjectId[];
+	
+	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
+	reports: Types.ObjectId[];
 
-	@Prop({ required: true })
-	reports: Array<string>;
-
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
-  comments: Types.ObjectId[] | Comment[];
+	@Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }], default: [] })
+	comments: Types.ObjectId[] | Comment[];
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
