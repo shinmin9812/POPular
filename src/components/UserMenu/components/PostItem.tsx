@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Post } from '../../../types/post';
+import BoardTypeTag from '../../common/Board/BoardTypeTag';
 
 const Container = styled.article`
   display: flex;
@@ -45,7 +46,7 @@ const PostItem = ({ post }: Props) => {
       {
         <>
           <div className="post-header">
-            <span>{post.board}</span>
+            <BoardTypeTag boardType={post.board} />
             <p className="post-date">{post.updatedAt}</p>
           </div>
           <div className="post-title">

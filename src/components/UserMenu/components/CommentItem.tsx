@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
+import BoardTypeTag from '../../common/Board/BoardTypeTag';
+import { BoardTypes } from '../../../types/board';
 
 const Container = styled.article`
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 5px;
   width: 100%;
 
   padding: 20px 0;
@@ -15,6 +17,8 @@ const Container = styled.article`
     display: flex;
     gap: 10px;
     width: 100%;
+
+    margin-bottom: 6px;
 
     .comment-post-title {
       color: var(--color-gray);
@@ -52,7 +56,7 @@ const CommentItem = ({ comment }: Props) => {
       {
         <>
           <div className="comment-header">
-            <span>게시판</span>
+            <BoardTypeTag boardType={comment.post.board as BoardTypes} />
             <p className="comment-post-title">{comment.post.title}</p>
           </div>
           <div className="comment-content">
