@@ -75,7 +75,6 @@ const DateBoxContainerWrap = ({
   setDay: (date: number, start: boolean) => void;
   setShow: () => void;
 }) => {
-  console.log(startDate, endDate);
   return (
     <DateBoxContainer>
       <DateBoxWrap>

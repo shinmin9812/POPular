@@ -73,7 +73,6 @@ const PostContent = ({
   postContent: string;
   setPostContent: (value: string) => void;
 }) => {
-  console.log(postContent);
   return <Quill theme="snow" value={postContent} onChange={setPostContent} modules={modules} />;
 };
 

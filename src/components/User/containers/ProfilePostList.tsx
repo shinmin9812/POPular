@@ -21,11 +21,8 @@ const ProfilePostList = () => {
     return state.UserSlice.loadList;
   });
 
-  console.log(posts);
-
   useEffect(() => {
     if (posts.length === 0) {
-      console.log('시작');
       const loadPostAction = loadPost() as any;
       dispatch(loadPostAction);
       return;
@@ -34,7 +31,6 @@ const ProfilePostList = () => {
 
   useEffect(() => {
     if (posts.length !== 0 && inView) {
-      console.log('첫 로딩 이후 무한 스크롤');
       const loadPostAction = loadPost() as any;
       dispatch(loadPostAction);
       //dispatch(loadPost());

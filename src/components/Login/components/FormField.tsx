@@ -9,7 +9,7 @@ const FormField = ({ type }: Props) => {
   return (
     <FieldContainer>
       <Label>{type === 'email' ? '이메일' : '비밀번호'}</Label>
-      <Input type={type} onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e.target.value)} />
+      <Input type={type} />
     </FieldContainer>
   );
 };

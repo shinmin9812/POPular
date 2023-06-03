@@ -15,21 +15,6 @@ const Container = styled.div`
 `;
 
 const CommunityPage = () => {
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    const response = await fetch('/post/all');
-    const result: Post[] = await response.json();
-
-    const response2 = await fetch(`/post/board/free`);
-    const result2: Post = await response2.json();
-
-    console.log(result);
-    console.log(result2);
-  }
-
   const arr = [1, 2, 3, 4, 5, 6, 7];
 
   return (

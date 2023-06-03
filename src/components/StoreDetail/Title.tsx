@@ -38,7 +38,6 @@ const Container = styled.div`
 `;
 
 const Title = ({ store }: Props) => {
-  console.log(store);
   return (
     <Container>
       <div className="title-head">

@@ -11,12 +11,7 @@ const SignupForm = () => {
           <NicknameCheckMessage>다른 유저가 사용 중인 닉네임입니다.</NicknameCheckMessage>
         </NicknameLabel>
         <NicknameInput>
-          <input
-            type="text"
-            name="nickname"
-            id="nickname"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e.target.value)}
-          />
+          <input type="text" name="nickname" id="nickname" />
           <button>중복확인</button>
         </NicknameInput>
       </FieldContainer>

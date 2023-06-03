@@ -11,12 +11,7 @@ const FormField = ({ label, name, type }: Props) => {
   return (
     <FieldContainer>
       <Label htmlFor={name}>{label}</Label>
-      <Input
-        type={type}
-        name={name}
-        id={name}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e.target.value)}
-      />
+      <Input type={type} name={name} id={name} />
     </FieldContainer>
   );
 };

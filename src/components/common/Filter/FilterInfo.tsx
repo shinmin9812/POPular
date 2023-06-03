@@ -35,7 +35,6 @@ const FilterInfo = ({
   const end = `${endDate.year}-${endDate.month}-${endDate.day}`;
   const today = new Date().toLocaleDateString();
   const dateBoolean = today === new Date(start).toLocaleDateString() && today === new Date(end).toLocaleDateString();
-  console.log(today, new Date(start).toLocaleDateString(), new Date(end).toLocaleDateString());
   return (
     <FilterInfoItemWrap>
       <FilterIconWrap />

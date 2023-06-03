@@ -1,13 +1,9 @@
 import styled from 'styled-components';
 import FormField from './FormField';
 
-const onSubmitHandler = () => {
-  console.log('로그인!');
-};
-
 const LoginForm = () => {
   return (
-    <Form onSubmit={onSubmitHandler}>
+    <Form>
       <FormField type={'email'} />
       <FormField type={'password'} />
       <WarningMessage>이메일 형식이 올바르지 않습니다.</WarningMessage>

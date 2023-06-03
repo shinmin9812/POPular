@@ -13,8 +13,6 @@ const MyCommentPage = () => {
     const response = await fetch('/comment/post/123');
     const result: Comment[] = await response.json();
 
-    console.log(result);
-
     setComments(result);
   }
 

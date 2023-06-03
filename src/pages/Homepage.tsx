@@ -23,12 +23,6 @@ const HomePage = () => {
     const response = await fetch('/store/all');
     const result: Store[] = await response.json();
 
-    const response2 = await fetch('/store/recomended');
-    const result2: Store = await response2.json();
-
-    console.log(result);
-    console.log(result2);
-
     setStores(result);
   }
 
