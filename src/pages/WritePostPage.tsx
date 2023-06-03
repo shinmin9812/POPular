@@ -5,10 +5,12 @@ import PostContentContainer from '../components/WritePost/containers/PostContent
 import SearchContainerWrap from '../components/common/SearchInput/SearchInput';
 import FilterContainer from '../components/WritePost/containers/FilterContainer';
 import RatingContainer from '../components/WritePost/containers/RatingContainer';
+import WriteComplete from '../components/WritePost/components/WriteComplete';
 
 const Container = styled.div`
   width: 100%;
   height: 1000px;
+  position: relative;
 `;
 
 const WritePostPage = () => {
@@ -20,6 +22,7 @@ const WritePostPage = () => {
       <SearchContainerWrap placeholder={'스토어를 검색해주세요.'} />
       <FilterContainer />
       <RatingContainer />
+      <WriteComplete>작성하기</WriteComplete>
     </Container>
   );
 };
