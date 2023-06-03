@@ -12,24 +12,6 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
 
-  .detail-top-btn {
-    display: flex;
-    width: 100vw;
-    height: 50px;
-  }
-
-  .detail-info-btn,
-  .store-comment-btn {
-    width: 50%;
-    background-color: #ffffff;
-    border-bottom: 2px solid blue;
-    font-weight: 700;
-  }
-
-  .store-comment-btn {
-    border-bottom: 2px solid rgba(0, 0, 255, 0.2);
-  }
-
   .store-description {
     margin-top: 20px;
     font-size: 14px;
@@ -154,7 +136,7 @@ const Container = styled.div`
 
   .line {
     width: 100%;
-    border-bottom 1px solid #E7E7E7;
+    border-bottom: 1px solid #e7e7e7;
     margin: 20px 0;
   }
 `;
@@ -162,10 +144,6 @@ const Container = styled.div`
 const DetailInfo = ({ store }: Props) => {
   return (
     <Container>
-      <div className="detail-top-btn">
-        <button className="detail-info-btn">상세 정보</button>
-        <button className="store-comment-btn">후기</button>
-      </div>
       <p className="store-description">{store?.description}</p>
       <div className="line"></div>
       <ul className="store-detail-info-list">

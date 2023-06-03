@@ -32,8 +32,10 @@ const Container = styled.div`
 
   .title-img {
     align-self: center;
-    width: 100vw;
-    height: 390px;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
   }
 `;
 
