@@ -1,5 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { initialState } from '../components/Community/CommunitySlice';
+import { CommunityInitialState } from '../components/Community/CommunitySlice';
+import { WritePostInitialState } from '../components/WritePost/WritePostSlice';
+
+type initialState = CommunityInitialState | WritePostInitialState;
 
 const useSetTabAction = {
   setTab(state: initialState, action: PayloadAction<string>): void {

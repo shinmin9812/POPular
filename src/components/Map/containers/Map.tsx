@@ -14,11 +14,6 @@ declare global {
   }
 }
 
-interface Coord {
-  lat: number;
-  lng: number;
-}
-
 const Container = styled.div`
   position: fixed;
   top: var(--header-height);

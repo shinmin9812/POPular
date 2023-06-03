@@ -68,7 +68,7 @@ const Container = styled.footer`
   }
 `;
 
-const GlovalNavigation = () => {
+const GlobalNavigation = () => {
   return (
     <Container>
       <nav>
@@ -107,4 +107,4 @@ const GlovalNavigation = () => {
   );
 };
 
-export default GlovalNavigation;
+export default GlobalNavigation;
