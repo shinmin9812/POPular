@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaOptions, Types } from 'mongoose';
+import { Comment } from 'src/comments/comment.schema';
+import { Store } from 'src/stores/store.schema';
 import { User } from 'src/users/user.schema';
-import { Comment, CommentSchema } from 'src/comments/comment.schema';
-import { Store, StoreSchema } from 'src/stores/store.schema';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -21,7 +21,7 @@ export class Post extends Document {
 	title: string;
 
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
-	author: Types.ObjectId;
+	author: Types.ObjectId | User;
 
 	@Prop({ required: true, enum: BoardType })
 	board: BoardType;
