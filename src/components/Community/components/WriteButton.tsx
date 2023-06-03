@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PenIcon from '../../common/Icons/PenIcon';
+import { Link } from 'react-router-dom';
 
 const PenIconWrap = styled.span`
   margin-left: 5px;
@@ -14,12 +15,15 @@ const Button = styled.button`
   height: 39px;
   margin-left: 10px;
   background-color: var(--color-sub);
-  color: var(--color-white);
   border: none;
   border-radius: 8px;
-  font-size: 14px;
   padding: 10px;
   margin-top: 10px;
+
+  a {
+    font-size: 14px;
+    color: var(--color-white);
+  }
 
   + span {
     margin-left: 10px;
@@ -30,7 +34,7 @@ const WriteButton = () => {
   return (
     <>
       <Button>
-        글쓰기
+        <Link to="/community/write">글쓰기</Link>
         <PenIconWrap>
           <PenIcon />
         </PenIconWrap>

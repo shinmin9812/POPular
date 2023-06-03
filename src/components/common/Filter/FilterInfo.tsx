@@ -8,7 +8,7 @@ const FilterIconWrap = styled(FilterIcon)`
 const FilterInfoItem = styled.div`
   color: var(--color-sub);
   margin: 0 5px;
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-semi-bold);
   + div {
     border-left: 2px solid var(--color-sub);
     padding-left: 10px;
