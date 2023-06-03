@@ -4,8 +4,10 @@ import { Post } from '../../../types/post';
 const Container = styled.article`
   display: flex;
   flex-direction: column;
+  gap: 14px;
   width: 100%;
-  height: 80px;
+
+  padding: 20px 0;
 
   border-bottom: 2px solid var(--color-light-gray);
 
@@ -47,7 +49,7 @@ const PostItem = ({ post }: Props) => {
             <p className="post-date">{post.updatedAt}</p>
           </div>
           <div className="post-title">
-            <h2>{post.title}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</h2>
+            <h2>{post.title}</h2>
           </div>
         </>
       }

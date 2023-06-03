@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Post } from '../types/post';
 import PostList from '../components/UserMenu/components/PostList';
 
-const ScrapPage = () => {
+const MyPostPage = () => {
   const [posts, setPost] = useState<Post[]>([]);
   useEffect(() => {
     fetchData();
@@ -24,7 +24,7 @@ const ScrapPage = () => {
   );
 };
 
-export default ScrapPage;
+export default MyPostPage;
 
 const Title = styled.h1`
   font-size: var(--font-medium);
