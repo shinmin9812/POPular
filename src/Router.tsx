@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import WritePostPage from './pages/WritePostPage';
 import StoreDetailPage from './pages/StoreDetailPage';
 import SignupPage from './pages/SignupPage';
+import RecentListPage from './pages/RecentListPage';
 
 const Router = () => {
   return (
@@ -25,6 +26,7 @@ const Router = () => {
           <Route path={CLIENT_PATH.LOGIN} element={<LoginPage />}></Route>
           <Route path={CLIENT_PATH.STORE_DETAIL} element={<StoreDetailPage />}></Route>
           <Route path={CLIENT_PATH.SIGNUP} element={<SignupPage />}></Route>
+          <Route path={CLIENT_PATH.USER_RECENT} element={<RecentListPage />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
