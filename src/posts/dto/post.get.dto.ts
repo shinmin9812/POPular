@@ -1,6 +1,7 @@
 import { BoardType } from '../post.schema';
 import { User } from 'src/users/user.schema';
 import { Store } from 'src/stores/store.schema';
+import { Comment } from 'src/comments/comment.schema';
 
 export class PostGetDto {
   title: string;
@@ -10,7 +11,7 @@ export class PostGetDto {
   storeId?: string | Store;
   ratings?: number;
   images?: string[];
-  likes: string[]; 
-  reports: string[]; 
-  comments: string[]; 
+  likes: string[] | [User]; 
+  reports: string[] | [User]; 
+  comments: string[] | [Comment]; 
 }
