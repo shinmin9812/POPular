@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { mapReducer } from '../components/Map/mapSlice';
+import mapSlice from '../components/Map/mapSlice';
 import { storeAPI } from '../api/store';
 
 const store = configureStore({
   reducer: {
-    map: mapReducer,
+    map: mapSlice,
     [storeAPI.reducerPath]: storeAPI.reducer,
   },
 
