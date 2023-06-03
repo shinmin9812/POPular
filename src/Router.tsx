@@ -11,6 +11,7 @@ import WritePostPage from './pages/WritePostPage';
 import StoreDetailPage from './pages/StoreDetailPage';
 import SignupPage from './pages/SignupPage';
 import RecentListPage from './pages/RecentListPage';
+import UserMenuPage from './pages/UserMenuPage';
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
           <Route path={CLIENT_PATH.MAP} element={<MapPage />}></Route>
           <Route path={CLIENT_PATH.SEARCH} element={<SearchPage />}></Route>
           <Route path={CLIENT_PATH.BOARD} element={<CommunityPage />}></Route>
+          <Route path={CLIENT_PATH.USER_MENU} element={<UserMenuPage />}></Route>
           <Route path={CLIENT_PATH.USER_DETAIL} element={<UserPage />}></Route>
           <Route path={CLIENT_PATH.LOGIN} element={<LoginPage />}></Route>
           <Route path={CLIENT_PATH.STORE_DETAIL} element={<StoreDetailPage />}></Route>
