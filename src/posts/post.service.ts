@@ -21,7 +21,45 @@ export class PostsService {
   
       return posts;
     } catch (err) {
-      throw new InternalServerErrorException("글 목록 불러오기를 실패했습니다.");
+      throw new InternalServerErrorException("전체 글 목록 불러오기를 실패했습니다.");
+    }
+  }
+
+	async getAllGatherPosts(): Promise<Post[]> {
+    try {
+      const posts = await this.postModel.find({board: 'gather'})
+        .populate('author')
+        .populate('storeId')
+        .exec();
+  
+      return posts;
+    } catch (err) {
+      throw new InternalServerErrorException("모집게시판 글 목록 불러오기를 실패했습니다.");
+    }
+  }
+
+	async getAllReviewPosts(): Promise<Post[]> {
+    try {
+      const posts = await this.postModel.find({board: 'review'})
+        .populate('author')
+        .populate('storeId')
+        .exec();
+  
+      return posts;
+    } catch (err) {
+      throw new InternalServerErrorException("후기게시판 글 목록 불러오기를 실패했습니다.");
+    }
+  }
+
+	async getAllFreePosts(): Promise<Post[]> {
+    try {
+      const posts = await this.postModel.find({board: 'free'})
+        .populate('author')
+        .exec();
+  
+      return posts;
+    } catch (err) {
+      throw new InternalServerErrorException("자유게시판 글 목록 불러오기를 실패했습니다.");
     }
   }
 

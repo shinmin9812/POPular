@@ -12,6 +12,21 @@ export class PostsController {
     return await this.postsService.getAllPosts();
   }
 
+  @Get('gather')
+  async getAllGatherPosts() {
+    return await this.postsService.getAllGatherPosts();
+  }
+
+  @Get('review')
+  async getAllReviewPosts() {
+    return await this.postsService.getAllReviewPosts();
+  }
+
+  @Get('free')
+  async getAllFreePosts() {
+    return await this.postsService.getAllFreePosts();
+  }
+
   @Get(':id')
   async getPostById(@Param('id') id: string) {
     return await this.postsService.getPostById(id);
