@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Post } from '../types/post';
 import { useEffect } from 'react';
 
-import SearchContainerWrap from '../components/common/Search';
+import SearchContainerWrap from '../components/common/SearchInput/SearchInput';
 import WriteButton from '../components/Community/components/WriteButton';
 import TabsContainer from '../components/Community/containers/TabsContainer';
 import FilterContainer from '../components/Community/containers/FilterContainer';

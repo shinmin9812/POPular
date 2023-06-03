@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
-import Filter from '../../common/Filter';
+import Filter from '../../common/Filter/Filter';
 
 const Rating = () => {
   const rating = useAppSelector((state) => state.WritePostSlice.rating);
