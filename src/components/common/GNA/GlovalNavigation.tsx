@@ -20,6 +20,8 @@ const Container = styled.footer`
 
   border-top: 1px var(--color-light-gray) solid;
 
+  z-index: 999;
+
   nav {
     display: flex;
     justify-content: space-between;
