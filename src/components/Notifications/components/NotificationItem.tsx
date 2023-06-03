@@ -5,15 +5,7 @@ import StoreIconMini from '../../common/Icons/StoreIconMini';
 import { Content, NotificationTypes } from '../../../types/notification';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 
-const NotificationItem = ({
-  type,
-  checked,
-  content,
-}: {
-  type: NotificationTypes;
-  content: Content;
-  checked: boolean;
-}) => {
+const NotificationItem = ({ type, content }: { type: NotificationTypes; content: Content; checked: boolean }) => {
   return (
     <ItemContainer>
       {type === 'follow' && 'nickname' in content && (

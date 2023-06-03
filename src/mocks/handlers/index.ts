@@ -1,5 +1,5 @@
 import { comment } from './comment';
-import { notification } from './notifiction';
+import { notification } from './notification';
 import { post } from './post';
 import { store } from './store';
 import { user } from './user';

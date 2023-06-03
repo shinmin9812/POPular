@@ -41,7 +41,7 @@ export const store = [
   }),
 
   // 추천 스토어 조회
-  rest.get(API_PATH.STORE.GET.RECOMENDED, (req, res, ctx) => {
+  rest.get(API_PATH.STORE.GET.RECOMMENDED, (req, res, ctx) => {
     const result = storeData.slice(0, 3);
     return res(ctx.status(200), ctx.json(result));
   }),
