@@ -20,7 +20,6 @@ const SearchInput = styled.input`
   border: 3px solid #987fc0;
   border-radius: 30px;
   box-sizing: border-box;
-  width: 100%;
 `;
 
 const SearchContainerWrap = ({ placeholder }: { placeholder: string }) => {

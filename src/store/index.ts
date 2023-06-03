@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import CommunitySlice from '../components/Community/CommunitySlice';
+import WritePostSlice from '../components/WritePost/WritePostSlice';
 const store = configureStore({
-  reducer: {CommunitySlice},
+  reducer: {CommunitySlice, WritePostSlice},
 });
 
 export default store;
