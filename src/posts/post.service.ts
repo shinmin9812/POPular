@@ -12,55 +12,39 @@ export class PostsService {
     @InjectModel(Post.name) private readonly postModel: Model<Post>,
   ) {}
 
-	async getAllPosts(): Promise<Post[]> {
+	async getPostsByBoard(board?: string): Promise<Post[]> {
     try {
-      const posts = await this.postModel.find()
+      let query = this.postModel.find();
+
+      if (board) {
+        query = query.where('board', board);
+      }
+
+      const posts = await query
         .populate('author')
         .populate('storeId')
         .exec();
-  
+
       return posts;
     } catch (err) {
-      throw new InternalServerErrorException("전체 글 목록 불러오기를 실패했습니다.");
+      throw new InternalServerErrorException("글 목록 불러오기를 실패했습니다.");
     }
   }
 
-	async getAllGatherPosts(): Promise<Post[]> {
-    try {
-      const posts = await this.postModel.find({board: 'gather'})
-        .populate('author')
-        .populate('storeId')
-        .exec();
-  
-      return posts;
-    } catch (err) {
-      throw new InternalServerErrorException("모집게시판 글 목록 불러오기를 실패했습니다.");
-    }
+  async getAllPosts(): Promise<Post[]> {
+    return await this.getPostsByBoard();
   }
 
-	async getAllReviewPosts(): Promise<Post[]> {
-    try {
-      const posts = await this.postModel.find({board: 'review'})
-        .populate('author')
-        .populate('storeId')
-        .exec();
-  
-      return posts;
-    } catch (err) {
-      throw new InternalServerErrorException("후기게시판 글 목록 불러오기를 실패했습니다.");
-    }
+  async getAllGatherPosts(): Promise<Post[]> {
+    return await this.getPostsByBoard('gather');
   }
 
-	async getAllFreePosts(): Promise<Post[]> {
-    try {
-      const posts = await this.postModel.find({board: 'free'})
-        .populate('author')
-        .exec();
-  
-      return posts;
-    } catch (err) {
-      throw new InternalServerErrorException("자유게시판 글 목록 불러오기를 실패했습니다.");
-    }
+  async getAllReviewPosts(): Promise<Post[]> {
+    return await this.getPostsByBoard('review');
+  }
+
+  async getAllFreePosts(): Promise<Post[]> {
+    return await this.getPostsByBoard('free');
   }
 
   async getPostById(id: string): Promise<Post> {
@@ -88,19 +72,22 @@ export class PostsService {
       if (err.name === 'ValidationError') {
         throw new BadRequestException("잘못된 데이터를 입력하셨습니다.");
       }
+			console.error(err);
       throw new InternalServerErrorException("글 생성에 실패하였습니다.");
     }
   }
 
   async updatePost(id: string, postUpdateDto: PostUpdateDto): Promise<Post> {
     try {
-      const updatedPost = await this.postModel.findByIdAndUpdate(id, postUpdateDto, { new: true }).exec();
+      const post = await this.postModel.findById(id).exec();
       
-      if (!updatedPost) {
+      if (!post) {
         throw new NotFoundException(`'${id}' 아이디를 가진 글을 찾지 못했습니다.`);
       }
       
-      return updatedPost;
+      Object.assign(post, postUpdateDto);
+      
+      return await post.save();
     } catch (err) {
       if (err.name === 'ValidationError') {
         throw new BadRequestException("잘못된 데이터를 입력하셨습니다.");
@@ -109,7 +96,6 @@ export class PostsService {
       throw new InternalServerErrorException("글 업데이트에 실패하였습니다.");
     }
   }
-
 	async deletePost(id: string): Promise<void> {
     try {
       const deletedPost = await this.postModel.findByIdAndRemove(id).exec();
