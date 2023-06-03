@@ -3,8 +3,6 @@ import { User } from '../types/user';
 import { useEffect, useState } from 'react';
 import Profile from '../components/User/components/Profile';
 import Line from '../components/User/components/Line';
-import ProfilePostList from '../components/User/containers/ProfilePostList';
-import Filter from '../components/User/containers/Filter';
 
 const Container = styled.div`
   width: 100%;
@@ -12,12 +10,7 @@ const Container = styled.div`
   background-color: transparent;
 `;
 
-const customOptions = [
-  { value: 'NEWEST', name: '최신순' },
-  { value: 'OLDEST', name: '오래된 순' },
-];
-
-const UserPage = () => {
+const ProfilePage = () => {
   const [user, setUser] = useState<User[]>([]);
   useEffect(() => {
     fetchData();
@@ -39,10 +32,8 @@ const UserPage = () => {
     <Container>
       <Profile user={user} />
       <Line />
-      <Filter options={customOptions} />
-      <ProfilePostList />
     </Container>
   );
 };
 
-export default UserPage;
+export default ProfilePage;
