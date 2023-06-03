@@ -1,21 +1,31 @@
 import styled from 'styled-components';
-import FormArea from '../components/Login/LoginForm';
-import SignupLink from '../components/Login/SignupLink';
+import LoginForm from '../components/Login/components/LoginForm';
+import SignupLink from '../components/Login/components/SignupLink';
 
-// state에 따라 WarningMessage 출력 or null
 const LoginPage = () => {
   return (
-    <Container>
-      <FormArea />
-      <SignupLink />
-    </Container>
+    <>
+      <PageTitle>로그인</PageTitle>
+      <Container>
+        <LoginForm />
+        <SignupLink />
+      </Container>
+    </>
   );
 };
 
 export default LoginPage;
 
+const PageTitle = styled.h1`
+  text-align: center;
+  font-size: 24px;
+  font-weight: var(--weight-regular);
+  color: var(--color-main);
+  padding: 20px 0;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 250px;
+  padding-top: 170px;
 `;
