@@ -1,5 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { initialState, SetDate } from '../components/Community/CommunitySlice';
+import { CommunityInitialState, SetDate } from '../components/Community/CommunitySlice';
+import { WritePostInitialState } from '../components/WritePost/WritePostSlice';
+
+type initialState = CommunityInitialState | WritePostInitialState;
 
 const useFilterActions = {
   setFilterAddress(state: initialState, action: PayloadAction<string>) {

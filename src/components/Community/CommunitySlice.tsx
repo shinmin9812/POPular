@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import useFilterActions from '../../Hooks/useFilterActions';
 import useSetTabAction from '../../Hooks/useTabsActions';
 
-export interface initialState {
+export interface CommunityInitialState {
   tab: string;
   filter: {
     address: string;
@@ -31,7 +31,7 @@ export interface SetDate {
 
 const Today: Date = new Date();
 
-const initialState: initialState = {
+const initialState: CommunityInitialState = {
   tab: '전체',
   filter: {
     address: '지역',
