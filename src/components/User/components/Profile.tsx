@@ -87,7 +87,8 @@ const ProfileDescript = styled.div`
 
   @media all and (max-width: 500px) {
     width: 100%;
-    margin: 20px 0px 0px;
+    padding: 10px 0px 20px;
+    margin: 10px 0px 0px;
 
     .user-nickname {
       font-size: var(--font-small);
