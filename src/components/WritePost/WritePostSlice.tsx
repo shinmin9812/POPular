@@ -2,8 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import useFilterActions from '../../Hooks/useFilterActions';
 import useSetTabAction from '../../Hooks/useTabsActions';
 
-export interface CommunityInitialState {
+export interface WritePostInitialState {
   tab: string;
+  postContent: string;
+  rating: number;
   filter: {
     address: string;
     category: string;
@@ -21,7 +23,6 @@ export interface CommunityInitialState {
       };
     };
   };
-  page: number;
 }
 
 export interface SetDate {
@@ -29,10 +30,12 @@ export interface SetDate {
   date: number;
 }
 
-const Today: Date = new Date();
+const Today = new Date();
 
-const initialState: CommunityInitialState = {
-  tab: '전체',
+const initialState: WritePostInitialState = {
+  tab: '자유게시판',
+  postContent: '',
+  rating: 1,
   filter: {
     address: '지역',
     category: '카테고리',
@@ -42,11 +45,10 @@ const initialState: CommunityInitialState = {
       endDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
     },
   },
-  page: 1,
 };
 
-const CommunitySlice = createSlice({
-  name: 'community',
+const WritePostSlice = createSlice({
+  name: 'writePost',
   initialState,
   reducers: {
     setTab(state, action: PayloadAction<string>) {
@@ -70,13 +72,16 @@ const CommunitySlice = createSlice({
     setFilterDurationShow(state, action: PayloadAction<boolean>) {
       useFilterActions.setFilterDurationShow(state, action);
     },
-    setPage(state, action: PayloadAction<number>) {
-      state.page = action.payload;
+    setPostContent(state, action) {
+      state.postContent = action.payload;
+    },
+    setRating(state, action) {
+      state.rating = action.payload;
     },
   },
 });
 
-const communityActions = CommunitySlice.actions;
+const WritePostSliceActions = WritePostSlice.actions;
 
-export { communityActions };
-export default CommunitySlice.reducer;
+export { WritePostSliceActions };
+export default WritePostSlice.reducer;

@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 
-const tabs: string[] = ['전체', '자유게시판', '후기게시판', '모집게시판'];
 const Tab = styled.p<{ active: boolean }>`
   text-align: center;
   font-size: 18px;
@@ -25,8 +24,7 @@ const BoardTabs = styled.div`
   width: 100%;
 `;
 
-const TabsWrap = ({ currTab, onClick }: { currTab: string; onClick: (tab: string) => void }) => {
-  //console.log(tab);
+const TabsWrap = ({ tabs, currTab, onClick }: { tabs: string[]; currTab: string; onClick: (tab: string) => void }) => {
   return (
     <BoardTabs>
       {tabs.map((tab, index) => (

@@ -7,12 +7,14 @@ import SearchPage from './pages/SearchPage';
 import CommunityPage from './pages/CommunityPage';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
+import WritePostPage from './pages/WritePostPage';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
+          <Route path={CLIENT_PATH.WRITE} element={<WritePostPage />}></Route>
           <Route path={CLIENT_PATH.HOME} element={<HomePage />}></Route>
           <Route path={CLIENT_PATH.MAP} element={<MapPage />}></Route>
           <Route path={CLIENT_PATH.SEARCH} element={<SearchPage />}></Route>

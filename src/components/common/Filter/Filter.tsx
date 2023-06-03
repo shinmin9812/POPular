@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Select = styled.select<{ width: number }>`
   ${(props) => `width: ${props.width}%;`}
-  height: 100%;
+  height: 39px;
   background-color: var(--color-gray);
   color: var(--color-white);
   border: none;

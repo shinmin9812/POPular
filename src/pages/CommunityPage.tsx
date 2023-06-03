@@ -3,7 +3,7 @@ import { Post } from '../types/post';
 import { useEffect } from 'react';
 
 import SearchContainerWrap from '../components/common/SearchInput/SearchInput';
-import WriteButton from '../components/Community/components/Write';
+import WriteButton from '../components/Community/components/WriteButton';
 import TabsContainer from '../components/Community/containers/TabsContainer';
 import FilterContainer from '../components/Community/containers/FilterContainer';
 import FilterInfoContainer from '../components/Community/containers/FilterInfoContainer';
