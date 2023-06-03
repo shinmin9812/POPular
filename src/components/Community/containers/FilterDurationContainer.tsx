@@ -1,4 +1,4 @@
-import FilterDuration from '../../common/FilterDuration';
+import FilterDuration from '../../common/Filter/FilterDuration';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { communityActions } from '../CommunitySlice';
 

@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { communityActions } from '../CommunitySlice';
-import Filter from '../../common/Filter';
+import Filter from '../../common/Filter/Filter';
 import FilterDurationContainer from './FilterDurationContainer';
 const FilterContainer = () => {
   const filter = useAppSelector((state) => state.CommunitySlice.filter);

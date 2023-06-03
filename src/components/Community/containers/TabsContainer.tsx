@@ -1,4 +1,4 @@
-import TabsWrap from '../../common/Tabs';
+import TabsWrap from '../../common/Tabs/Tabs';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { communityActions } from '../CommunitySlice';
 
