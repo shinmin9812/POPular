@@ -1,4 +1,5 @@
 import { Brand } from './brand';
+import { Notification } from './notification';
 
 export interface UserOnlyProfile {
   id: string;
@@ -16,5 +17,5 @@ export interface User extends UserOnlyProfile {
   isEnterpriser: boolean;
   brand: Brand;
   allowNotification: boolean;
-  notifications: [];
+  notifications: Notification[];
 }
