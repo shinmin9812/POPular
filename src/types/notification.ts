@@ -1,19 +1,17 @@
-import { BoardTypes } from './board';
 import { Comment } from './comment';
 import { Store } from './store';
-import { User } from './user';
+import { UserOnlyProfile } from './user';
 
 export const enum NotificationTypes {
-  follow = '팔로우',
-  comment = '댓글',
-  ad = '광고',
+  follow = 'follow',
+  comment = 'comment',
+  ad = 'ad',
 }
 
+export type Content = UserOnlyProfile | Store | Comment;
+
 export interface Notification {
-  id: string;
   type: NotificationTypes;
-  board: BoardTypes;
-  content: Comment | Store | User;
+  content: Content;
   checked: boolean;
-  createdAt: string;
 }
