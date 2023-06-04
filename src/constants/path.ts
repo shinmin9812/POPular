@@ -30,7 +30,9 @@ export const API_PATH = {
       BY_ID: '/user/id/:userId',
       BY_NICKNAME: '/user/nickname/:userNickname',
     },
-    POST: {},
+    POST: {
+      LOGIN: '/login',
+    },
     PUT: {},
     DELETE: {},
   },
