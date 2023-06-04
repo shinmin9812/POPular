@@ -28,7 +28,6 @@ export const api = createApi({
     }),
     getReviewPostByStore: build.query({
       query: ({ storeId }) => {
-        console.log(storeId);
         return { url: `/post/store/${storeId}` };
       },
     }),

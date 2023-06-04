@@ -41,7 +41,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '1234',
+    id: '12346',
     title: '테스트 포스트',
     author: {
       id: '12341231',
@@ -77,7 +77,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '123456',
+    id: '5123451234',
     title: '테스트 포스트',
     author: {
       id: '12341231',
@@ -114,7 +114,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '123456',
+    id: '34213421',
     title: '테스트 포스트',
     author: {
       id: '12341231',
@@ -151,7 +151,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '123456',
+    id: '34565463',
     title: '테스트 포스트',
     author: {
       id: '12341231',
@@ -188,7 +188,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '123456',
+    id: '76845',
     title: '테스트 포스트',
     author: {
       id: '12341231',
@@ -225,7 +225,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '123456',
+    id: '154783',
     title: '테스트 포스트',
     author: {
       id: '12341231',
@@ -262,7 +262,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '123456',
+    id: '2456346',
     title: '테스트 포스트',
     author: {
       id: '12341231',
@@ -299,7 +299,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '123456',
+    id: '243662',
     title: '테스트 포스트',
     author: {
       id: '12341231',
@@ -336,7 +336,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '123456',
+    id: '7568567',
     title: '테스트 포스트',
     author: {
       id: '12341231',
@@ -409,7 +409,7 @@ export const postData: Post[] = [
     comments: [commentData[0]],
   },
   {
-    id: '1234',
+    id: '24535234',
     title: '테스트 포스트',
     author: {
       id: '12341231',
