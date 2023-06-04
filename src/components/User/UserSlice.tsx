@@ -12,7 +12,7 @@ const loadPost = createAsyncThunk('UserSlice/loadPost', async () => {
 });
 
 interface Props {
-  filter: string | null;
+  filter: string | number | readonly string[] | undefined;
   loadPostLoading: boolean;
   loadPostDone: boolean;
   loadPostError: string | null;
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const initialState: Props = {
-  filter: '최신순',
+  filter: 'newest',
   loadPostLoading: false,
   loadPostDone: false,
   loadPostError: null,

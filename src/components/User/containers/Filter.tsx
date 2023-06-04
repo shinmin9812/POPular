@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilter } from '../UserSlice';
+import { RootState } from '../../../store';
 
 interface Option {
   value: string;
@@ -6,9 +9,13 @@ interface Option {
 }
 
 const Filter = ({ options }: { options: Option[] }) => {
+  const filter = useSelector((state: RootState) => state.UserSlice.filter);
+  const dispatch = useDispatch();
+  console.log(filter);
+
   return (
     <Container>
-      <select>
+      <select value={filter} onChange={(e) => dispatch(setFilter(e.target.value))}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.name}
