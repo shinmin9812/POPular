@@ -22,7 +22,7 @@ const Filter = ({ options }: { options: Option[] }) => {
 const Container = styled.div`
   width: 100%;
   position: relative;
-  height: 40px;
+  height: 20px;
 
   select {
     border: none;
@@ -30,6 +30,7 @@ const Container = styled.div`
     padding: 5px 15px;
     position: absolute;
     right: 10px;
+    font-size: var(--font-micro);
   }
 `;
 

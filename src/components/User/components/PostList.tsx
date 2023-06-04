@@ -7,7 +7,7 @@ interface Props {
   posts: Post[];
 }
 
-const StoreList = ({ posts }: Props) => {
+const PostList = ({ posts }: Props) => {
   return (
     <Container>
       {posts.length > 0 ? (
@@ -34,32 +34,11 @@ const StoreList = ({ posts }: Props) => {
 };
 
 const Container = styled.div`
-  .post-items {
+  .post-item {
+    padding: 10px 0px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-
-    .post-item {
-      flex-basis: 24.2%;
-      margin-right: 1%;
-      margin-bottom: 3%;
-    }
-
-    .post-item:nth-child(4n) {
-      margin-right: 0%;
-    }
-
-    @media all and (max-width: 767px) {
-      .post-item {
-        flex-basis: 49%;
-        margin-right: 2%;
-        margin-bottom: 3%;
-      }
-
-      .post-item:nth-child(2n) {
-        margin-right: 0%;
-      }
-    }
+    flex-direction: column;
+    border-bottom: 1px solid var(--color-light-gray);
   }
 
   .nothing {
@@ -79,4 +58,4 @@ const Container = styled.div`
   }
 `;
 
-export default StoreList;
+export default PostList;

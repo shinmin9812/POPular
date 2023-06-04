@@ -10,7 +10,7 @@ const ProfileButton = ({ text, type }: Props) => {
   const buttonClassName = `ButtonType_${type}`;
   return (
     <Button className={buttonClassName}>
-      <Link className="button-link" to={''}>
+      <Link className="button-link" to={'update'}>
         {text}
       </Link>
     </Button>
