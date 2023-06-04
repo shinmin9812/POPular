@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useGetReviewPostByStoreQuery } from '../../../api/useQueries';
 import { useParams } from 'react-router-dom';
+import ReviewList from '../components/ReviewList';
 
 const Container = styled.section`
   width: 100%;
@@ -9,9 +10,12 @@ const Container = styled.section`
 
 const StoreReview = () => {
   const { storeId } = useParams();
-  const { data: posts, isFetching } = useGetReviewPostByStoreQuery({ storeId: storeId });
-  console.log(posts);
-  return <Container></Container>;
+  const { currentData: posts, isFetching } = useGetReviewPostByStoreQuery({ storeId: storeId });
+  return (
+    <Container>
+      <ReviewList posts={posts} isFetching={isFetching} />
+    </Container>
+  );
 };
 
 export default StoreReview;
