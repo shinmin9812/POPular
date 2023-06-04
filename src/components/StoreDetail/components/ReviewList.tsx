@@ -9,6 +9,13 @@ const Container = styled.section`
   li {
     list-style: none;
   }
+
+  .more-view {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 100px;
+  }
 `;
 
 const ReviewBoardLink = styled.section`
@@ -60,6 +67,9 @@ const ReviewList = ({ posts, isFetching }: Props) => {
           <Skeleton />
         </>
       )}
+      <div className="more-view">
+        <Button onClick={() => navigate('/')}>후기 더 보기</Button>
+      </div>
     </Container>
   );
 };
