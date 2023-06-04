@@ -18,7 +18,7 @@ const MemberMenu = () => {
         <MenuItem link="withdraw" title="회원탈퇴" />
       </nav>
       <div className="logo">
-        <Logo color="#bfbfbf"></Logo>
+        <Logo color="#bfbfbf" />
       </div>
     </Container>
   );
