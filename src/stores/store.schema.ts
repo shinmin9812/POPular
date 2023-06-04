@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaOptions } from 'mongoose';
+import { Document, SchemaOptions, Types } from 'mongoose';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -27,8 +27,8 @@ class coordinfo {
 }
 
 class snsinfo {
-	linkType: string;
-	linkTitle: string;
+	link_type: string;
+	link_title: string;
 	link: string;
 }
 
@@ -62,7 +62,7 @@ export class Store extends Document {
 	price: number;
 
 	@Prop({ type: Array })
-	sns: [snsinfo];
+	sns: Array<snsinfo>;
 
 	@Prop({ default: false })
 	reservation_required: boolean;
@@ -70,8 +70,8 @@ export class Store extends Document {
 	@Prop()
 	images: Array<string>;
 
-	@Prop({ default: 0 })
-	scrap: number;
+	@Prop({ type: Types.ObjectId, ref: 'User', default: 0 })
+	scrap: Types.ObjectId[];
 }
 
 export const StoreSchema = SchemaFactory.createForClass(Store);

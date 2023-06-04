@@ -8,7 +8,7 @@ import { StoreRequestDto } from './dto/store.request.dto';
 export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
-	) {}
+	) { }
 
 	async getAllStores(): Promise<Store[]> {
 		return await this.storeModel.find();
@@ -16,6 +16,10 @@ export class StoreService {
 
 	async getStoreById(_id: string): Promise<Store> {
 		return await this.storeModel.findById({ _id });
+	}
+
+	async getStoresByDate(startDate: Date, endDate: Date): Promise<Store[]> {
+		return await this.storeModel.find({ start_date: { $gte: startDate }, end_date: { $lte: endDate } })
 	}
 
 	async createStore(body: StoreRequestDto): Promise<Store> {

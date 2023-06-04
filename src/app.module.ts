@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { StoreModule } from './stores/store.module';
 import { UserModule } from './users/user.module';
+import { AuthModule } from './auth/auth.module';
 
 //{useNewUrlParser: true, userUnifiedTopology: true} 해당 부분에 대해 deprecatedError가 발생
 @Module({
@@ -14,6 +15,7 @@ import { UserModule } from './users/user.module';
 		MongooseModule.forRoot(process.env.MONGO_URI),
 		StoreModule,
 		UserModule,
+		AuthModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
