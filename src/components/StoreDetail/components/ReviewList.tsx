@@ -3,6 +3,7 @@ import { Post } from '../../../types/post';
 import ReviewPost from './ReviewPost';
 import Button from '../../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import Skeleton from './Skeleton';
 
 const Container = styled.section`
   li {
@@ -30,9 +31,7 @@ interface Props {
 
 const ReviewList = ({ posts, isFetching }: Props) => {
   const navigate = useNavigate();
-  if (!posts) {
-    return <div></div>;
-  }
+
   return (
     <Container>
       <ReviewBoardLink>
@@ -45,13 +44,22 @@ const ReviewList = ({ posts, isFetching }: Props) => {
           후기 게시판
         </Button>
       </ReviewBoardLink>
-      {posts.map((post) => {
-        return (
-          <li key={post.id}>
-            <ReviewPost post={post} />
-          </li>
-        );
-      })}
+      {posts ? (
+        posts.map((post) => {
+          return (
+            <li key={post.id}>
+              <ReviewPost post={post} />
+            </li>
+          );
+        })
+      ) : (
+        <>
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </>
+      )}
     </Container>
   );
 };

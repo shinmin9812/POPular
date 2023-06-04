@@ -41,6 +41,7 @@ const Container = styled.article`
     }
 
     .content {
+      height: 50px;
       color: #474747;
     }
   }
@@ -51,7 +52,6 @@ interface Props {
 }
 
 const ReviewPost = ({ post }: Props) => {
-  console.log(post);
   return (
     <Container>
       <img className="thumbnail" src={post.images ? post.images[0] : ''} alt={post.title} />
