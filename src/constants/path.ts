@@ -9,7 +9,7 @@ export const API_PATH = {
       // ID 조회
       BY_ID: '/store/id/:storeId',
       // 추천 스토어 조회
-      RECOMENDED: '/store/recomended',
+      RECOMMENDED: '/store/recommended',
       // 주간 스토어 조회
       WEEKLY: '/store/weekly',
       // 최신 스토어 조회

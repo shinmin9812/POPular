@@ -1,5 +1,6 @@
 import { Brand } from '../../types/brand';
 import { User } from '../../types/user';
+import { notificationData } from './notification';
 
 export const userData: User[] = [
   {
@@ -26,7 +27,7 @@ export const userData: User[] = [
     profile: 'https://image.rocketpunch.com/company/20527/elice_logo_1643264201.png?s=400x400&t=inside',
     brand: Brand.art,
     allowNotification: false,
-    notifications: [],
+    notifications: notificationData,
   },
   {
     id: '134242',

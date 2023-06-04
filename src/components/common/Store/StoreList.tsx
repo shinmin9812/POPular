@@ -4,10 +4,10 @@ import StoreItem from './StoreItem';
 import { Link } from 'react-router-dom';
 
 interface Props {
-  stores: Store[];
+  stores: Store[] | undefined;
 }
 
-const Container = styled.ul`
+const Container = styled.div`
   width: 100%;
 
   .nothing {
@@ -29,8 +29,8 @@ const Container = styled.ul`
 
 const StoreList = ({ stores }: Props) => {
   return (
-    <Container>
-      {stores.length > 0 ? (
+    <Container className="store-list">
+      {stores ? (
         <ul>
           {stores.map((store) => (
             <li key={store.id}>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import Header from './Header/Header';
-import GlovalNavigation from './GNA/GlovalNavigation';
+import GlovalNavigation from './GNA/GlobalNavigation';
 
 const Wrapper = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
