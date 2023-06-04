@@ -16,7 +16,7 @@ const Container = styled.div`
 
     object-fit: cover;
 
-    background-color: #bebebe;
+    background-color: #dcdcdc;
   }
 
   .post-info {
@@ -34,7 +34,7 @@ const Container = styled.div`
         margin-right: 6px;
 
         border-radius: 50%;
-        background-color: #bebebe;
+        background-color: #dcdcdc;
       }
 
       .user-name {
@@ -43,12 +43,12 @@ const Container = styled.div`
         height: 20px;
         margin-right: 6px;
         border-radius: 8px;
-        background-color: #bebebe;
+        background-color: #dcdcdc;
       }
 
       .user-followers {
         position: relative;
-        background-color: #bebebe;
+        background-color: #dcdcdc;
       }
     }
 
@@ -56,9 +56,8 @@ const Container = styled.div`
       position: relative;
       width: 100%;
       height: 50px;
-      color: #474747;
       border-radius: 8px;
-      background-color: #bebebe;
+      background-color: #dcdcdc;
     }
   }
 `;
@@ -70,16 +69,21 @@ const Shimmer = styled.span`
 
   height: 100%;
   width: 40%;
-  background: linear-gradient(90deg, rgba(190, 190, 190, 1) 0%, #9d9d9d 50%, rgba(190, 190, 190, 1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(220, 220, 220, 1) 0%,
+    rgba(189, 189, 189, 1) 50%,
+    rgba(220, 220, 220, 1) 100%
+  );
 
   animation: shimmer-move 0.8s infinite;
 
   @keyframes shimmer-move {
     0% {
-      left: 0;
+      left: -20%;
     }
     100% {
-      left: 100%;
+      left: 120%;
     }
   }
 `;
