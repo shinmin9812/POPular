@@ -16,6 +16,7 @@ import ScrapPage from './pages/ScrapPage';
 import NotificationsPage from './pages/NotificationsPage';
 import MyPostPage from './pages/MyPostPage';
 import MyCommentPage from './pages/MyCommentPage';
+import PostDetailPage from './pages/PostDetailPage';
 
 const Router = () => {
   return (
@@ -23,6 +24,7 @@ const Router = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path={CLIENT_PATH.WRITE} element={<WritePostPage />}></Route>
+          <Route path={CLIENT_PATH.POST} element={<PostDetailPage />}></Route>
           <Route path={CLIENT_PATH.HOME} element={<HomePage />}></Route>
           <Route path={CLIENT_PATH.MAP} element={<MapPage />}></Route>
           <Route path={CLIENT_PATH.SEARCH} element={<SearchPage />}></Route>

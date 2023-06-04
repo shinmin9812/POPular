@@ -16,10 +16,9 @@ const PostListItemContainer = () => {
     const response = await fetch('/post/all');
     const result: Post[] = await response.json();
 
-    const response2 = await fetch(`/post/board/free`);
-    const result2: Post = await response2.json();
+    //const response2 = await fetch(`/post/board/free`);
+    //const result2: Post = await response2.json();
     setPost(result);
-    console.log(result2);
   }
 
   const tab = useAppSelector((state) => state.CommunitySlice.tab);
@@ -31,6 +30,7 @@ const PostListItemContainer = () => {
           postTitle={post ? post[0].title : ''}
           storeName="어짜라고"
           postInfo={post ? `${post[0].updatedAt} | By ${post[0].author.nickname} | Likes ${post[0].likes}` : ''}
+          postId={post ? post[0].id : ''}
         />
       ))}
     </ul>

@@ -8,3 +8,6 @@ export interface Comment {
   post: any;
   board: BoardTypes;
 }
+
+
+
