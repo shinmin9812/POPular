@@ -44,6 +44,8 @@ export const API_PATH = {
       BY_USER: '/post/user/:userId',
       // 포스트 게시판 조회
       BY_BOARD: '/post/board/:boardId',
+      // 특정 스토어의 후기 조회
+      REVIEW_BY_STORE: '/post/store/:storeId',
     },
     POST: {},
     PUT: {},

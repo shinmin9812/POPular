@@ -6,7 +6,7 @@ import SlideCarousel from '../components/SlideCarousel';
 import { useDispatch, useSelector } from 'react-redux';
 import { mapActions } from '../mapSlice';
 import { RootState } from '../../../store';
-import { useGetAllStoreQuery } from '../../../api/store';
+import { useGetAllStoreQuery } from '../../../api/useQueries';
 
 declare global {
   interface Window {
