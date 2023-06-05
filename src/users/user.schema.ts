@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaOptions, Schema as MongooseSchema } from 'mongoose';
-import { Notification } from 'src/notifications/notification.schema';
+import { Document, SchemaOptions, Types } from 'mongoose';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -31,10 +30,10 @@ export class User extends Document {
 	phone_number: string;
 
 	@Prop({ type: Array<user_profile>, default: [] })
-	follower: [user_profile];
+	follower: Array<user_profile>;
 
 	@Prop({ type: Array<user_profile>, default: [] })
-	following: [user_profile];
+	following: Array<user_profile>;
 
 	@Prop({ default: false })
 	enterpriser: boolean;
@@ -51,11 +50,11 @@ export class User extends Document {
 	@Prop({ required: true })
 	allow_notification: boolean;
 
-	@Prop({ default: [] })
-	scrap: Array<string>;
+	@Prop({ type: Types.ObjectId, ref: 'Store', default: [] })
+	scrap: Types.ObjectId[];
 
-	@Prop({ type: Array<object>, default: [] })
-	notifications: [Notification];
+	@Prop({ type: Types.ObjectId, ref: 'Notification', default: [] })
+	notifications: Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,10 +1,10 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
-import { hashPassword } from 'src/utils/hassing.util';
+import { hashPassword } from '../utils/hassing.util';
 
 @Injectable()
 export class UserService {
@@ -12,12 +12,12 @@ export class UserService {
 		@InjectModel(User.name) private readonly userModel: Model<User>,
 	) {}
 
-	async findUserByEmail(email: string): Promise<User> {
-		return await this.userModel.findOne({ email });
-	}
-
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
+	}
+
+	async getUserByEmail(email: string): Promise<User> {
+		return await this.userModel.findOne({ email });
 	}
 
 	async getUserById(_id: string): Promise<User> {
@@ -43,7 +43,20 @@ export class UserService {
 	}
 
 	async updateUser(_id: string, body: UserUpdateDto): Promise<User> {
-		return await this.userModel.findByIdAndUpdate({ _id }, body, { new: true });
+		const { profile, introduce, nickname, pw, phone_number } = body;
+
+		const hashedPassword = await hashPassword(pw);
+
+		const updateUser = {
+			profile,
+			introduce,
+			nickname,
+			pw: hashedPassword,
+			phone_number,
+		};
+		return await this.userModel.findByIdAndUpdate({ _id }, updateUser, {
+			new: true,
+		});
 	}
 
 	async deleteUser(_id: string): Promise<User> {

@@ -18,6 +18,13 @@ export class StoreService {
 		return await this.storeModel.findById({ _id });
 	}
 
+	async getStoresByDate(startDate: Date, endDate: Date): Promise<Store[]> {
+		return await this.storeModel.find({
+			start_date: { $gte: startDate },
+			end_date: { $lte: endDate },
+		});
+	}
+
 	async createStore(body: StoreRequestDto): Promise<Store> {
 		return await this.storeModel.create(body);
 	}

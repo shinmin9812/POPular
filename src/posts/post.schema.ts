@@ -40,14 +40,14 @@ export class Post extends Document {
 
 	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
 	likes: Types.ObjectId[];
-	
+
 	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
 	reports: Types.ObjectId[];
 
 	@Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }], default: [] })
 	comments: Types.ObjectId[] | Comment[];
 
-	@Prop({default: 0})
+	@Prop({ default: 0 })
 	views: number;
 }
 
