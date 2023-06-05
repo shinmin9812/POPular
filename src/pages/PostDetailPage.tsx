@@ -7,6 +7,7 @@ import PostContent from '../components/PostDetail/components/PostContent';
 import LikesAndReports from '../components/PostDetail/components/LikeAndReportButton';
 import CommentsList from '../components/PostDetail/components/CommentsList';
 import Pagination from '../components/common/Pagination/Pagination';
+import CommentInput from '../components/PostDetail/components/CommentInput';
 
 const Container = styled.div`
   width: 100%;
@@ -43,6 +44,7 @@ const PostDetailPage = () => {
       <LikesAndReports />
       <CommentsList comments={post ? post[0].comments : undefined} />
       <Pagination currPage={currPage} setPage={setPage} />
+      <CommentInput />
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import ReCommentArrowIcon from '../../common/Icons/ReCommentArrowIcon';
-import { CommentAuthorName, CommentContent, CommentUpdateAt } from './CommentsList';
+import { CommentAuthorName, CommentContent, CommentUpdateAt } from './CommentItem';
 
 const ReCommentWrap = styled.ul`
   background-color: #fafafa;
@@ -14,6 +14,7 @@ const ReCommentItem = styled.li`
   padding: 15px 0 15px 15px;
   + li {
     border-top: 1px var(--color-light-gray) solid;
+    margin-bottom: 10px;
   }
 `;
 
