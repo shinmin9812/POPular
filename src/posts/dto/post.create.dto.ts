@@ -81,7 +81,7 @@ export class PostCreateDto {
 		example: '[1.png, 2.png]',
 		description: '게시글 이미지',
 	})
-	readonly images?: string[];
+	images?: string[];
 
 	@IsOptional()
 	@IsArray()
