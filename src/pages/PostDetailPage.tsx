@@ -8,6 +8,7 @@ import LikesAndReports from '../components/PostDetail/components/LikeAndReportBu
 import CommentsList from '../components/PostDetail/components/CommentsList';
 import Pagination from '../components/common/Pagination/Pagination';
 import CommentInput from '../components/PostDetail/components/CommentInput';
+import StarIcon from '../components/common/Icons/StarIcon';
 
 const Container = styled.div`
   width: 100%;
@@ -30,6 +31,10 @@ const PostDetailPage = () => {
     console.log(result2);
   }
   console.log(post);
+  const rating = [1, 2, 3];
+  // for(let i =0; i < post.rating; i++){
+  //   rating.push(i);
+  // }
   return (
     <Container>
       <PostInfo
@@ -40,6 +45,14 @@ const PostDetailPage = () => {
         likes={post ? post[0].likes : 0}
         comments={post ? post[0].comments.length : 0}
       />
+      {rating && (
+        <div>
+          평점 :
+          {rating.map((i) => (
+            <StarIcon />
+          ))}
+        </div>
+      )}
       <PostContent img={post ? post[0].author.profile : ''} content={post ? post[0].content : ''}></PostContent>
       <LikesAndReports />
       <CommentsList comments={post ? post[0].comments : undefined} />
