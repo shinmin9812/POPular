@@ -16,6 +16,15 @@ const Container = styled.section`
     width: 100%;
     margin-bottom: 100px;
   }
+
+  .no-reviews {
+    margin: 40px 0;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    text-align: center;
+  }
 `;
 
 const ReviewBoardLink = styled.section`
@@ -38,6 +47,14 @@ interface Props {
 
 const ReviewList = ({ posts, isFetching }: Props) => {
   const navigate = useNavigate();
+
+  if (!isFetching && posts.length === 0) {
+    return (
+      <Container>
+        <p className="no-reviews">해당 스토어의 후기가 없습니다!</p>
+      </Container>
+    );
+  }
 
   return (
     <Container>

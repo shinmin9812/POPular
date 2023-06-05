@@ -6,6 +6,11 @@ import { useState } from 'react';
 
 const Container = styled.section`
   width: 100%;
+
+  .review-list {
+    max-width: 500px;
+    margin: 0 auto;
+  }
 `;
 
 const StoreReview = () => {
@@ -14,7 +19,9 @@ const StoreReview = () => {
   const { currentData: posts, isFetching } = useGetReviewPostByStoreQuery({ storeId: storeId });
   return (
     <Container>
-      <ReviewList posts={posts} isFetching={isFetching} />
+      <div className="review-list">
+        <ReviewList posts={posts} isFetching={isFetching} />
+      </div>
     </Container>
   );
 };

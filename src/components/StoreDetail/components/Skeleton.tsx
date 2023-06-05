@@ -68,7 +68,7 @@ const Shimmer = styled.span`
   left: 0;
 
   height: 100%;
-  width: 40%;
+  width: 80%;
   background: linear-gradient(
     90deg,
     rgba(220, 220, 220, 1) 0%,
@@ -80,7 +80,7 @@ const Shimmer = styled.span`
 
   @keyframes shimmer-move {
     0% {
-      left: -20%;
+      left: -80%;
     }
     100% {
       left: 120%;
