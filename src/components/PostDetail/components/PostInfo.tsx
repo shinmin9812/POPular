@@ -56,6 +56,10 @@ const PostInfo = ({ boardType, title, nickName, updatedAt, likes, comments }: Po
         </ColumnWrap>
         <ColumnWrap>
           <RightInfo>
+            <span>Views</span>
+            <span>{comments}</span>
+          </RightInfo>
+          <RightInfo>
             <span>Likes</span>
             <span>{likes}</span>
           </RightInfo>

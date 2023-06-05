@@ -16,7 +16,7 @@ const FilterContainer = () => {
           setFilterCategory(e.target.value);
         }}
         Options={['카테고리', '의류', '주류', '캐릭터']}
-        width={24}
+        width={23}
       />
       <Filter
         value={filter.address}
@@ -24,7 +24,7 @@ const FilterContainer = () => {
           setFilterAddress(e.target.value);
         }}
         Options={['지역', '서울', '경기도', '충청남도']}
-        width={24}
+        width={23}
       />
       <FilterDurationContainer />
     </span>

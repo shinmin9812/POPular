@@ -28,7 +28,7 @@ const PostDetailPage = () => {
     setPost(result);
     console.log(result2);
   }
-
+  console.log(post);
   return (
     <Container>
       <PostInfo
