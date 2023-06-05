@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaOptions, Schema as MongooseSchema } from 'mongoose';
+import { Document, SchemaOptions, Schema as MongooseSchema, Types } from 'mongoose';
+import { User } from 'src/users/user.schema';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -8,13 +9,13 @@ const options: SchemaOptions = {
 
 @Schema(options)
 export class Comment extends Document {
-	@Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
-	author: MongooseSchema.Types.ObjectId;
+	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
+	author: Types.ObjectId | User;
 
 	@Prop({ required: true })
 	content: string;
 
-	@Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Comment' }] })
+	@Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Comment' }], default: [] })
 	recomments: MongooseSchema.Types.ObjectId[];
 }
 

@@ -8,17 +8,19 @@ import {
 	Min,
 	Max,
 	ValidateIf,
+	IsMongoId,
 } from 'class-validator';
 import { BoardType } from '../post.schema';
+import { Types } from 'mongoose';
 
 export class PostCreateDto {
 	@IsString()
 	@IsNotEmpty()
 	readonly title: string;
 
-	@IsString()
+	@IsMongoId()
 	@IsNotEmpty()
-	readonly author: string;
+	readonly author: Types.ObjectId;
 
 	@IsEnum(BoardType)
 	@IsNotEmpty()
@@ -28,12 +30,12 @@ export class PostCreateDto {
 	@IsNotEmpty()
 	readonly content: string;
 
-	@IsString()
+	@IsMongoId()
 	@IsNotEmpty()
 	@ValidateIf(
 		obj => obj.board === BoardType.Review || obj.board === BoardType.Gather,
 	)
-	readonly storeId: string;
+	readonly storeId: Types.ObjectId;
 
 	@IsOptional()
 	@IsNumber()
@@ -49,16 +51,16 @@ export class PostCreateDto {
 
 	@IsOptional()
 	@IsArray()
-	@IsString({ each: true })
-	readonly likes?: string[];
+	readonly likes?: Types.ObjectId[];
 
 	@IsOptional()
 	@IsArray()
-	@IsString({ each: true })
-	readonly reports?: string[];
+	readonly reports?: Types.ObjectId[];
 
 	@IsOptional()
 	@IsArray()
-	@IsString({ each: true })
-	readonly comments?: string[];
+	readonly comments?: Types.ObjectId[];
+
+	@IsNumber()
+	readonly views: number;
 }

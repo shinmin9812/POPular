@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException, NotFound
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { NotificationUpdateDto } from "./dto/notification.update.dto";
-import { Notification } from 'src/notifications/notification.schema';
+import { ContentModel, Notification, NotificationType } from 'src/notifications/notification.schema';
 import { NotificationCreateDto } from "./dto/notification.create.dto";
 
 @Injectable()
@@ -48,7 +48,14 @@ export class NotificationsService {
 
   async createNotification(notificationCreateDto: NotificationCreateDto): Promise<Notification> {
     try {
-      const createdNotification = new this.notificationModel(notificationCreateDto);
+      const createdNotification = new this.notificationModel();
+      createdNotification.type = notificationCreateDto.type;
+      createdNotification.board = notificationCreateDto.board;
+      createdNotification.userId = notificationCreateDto.userId;
+      createdNotification.content = notificationCreateDto.content;
+      createdNotification.contentModel = this.getContentModel(notificationCreateDto.type);
+
+
       return await createdNotification.save();
     } catch (err) {
       if (err.name === 'ValidationError') {
@@ -91,4 +98,19 @@ export class NotificationsService {
       throw new InternalServerErrorException('알림 삭제에 실패하였습니다.');
     }
   }
+  
+  private getContentModel(type: NotificationType): ContentModel {
+    switch (type) {
+      case NotificationType.Follow:
+        return ContentModel.User;
+      case NotificationType.Comment:
+        return ContentModel.Comment;
+      case NotificationType.Ad:
+        return ContentModel.Store;
+      
+      default:
+        throw new BadRequestException(`'${type}'은 지원되지 않는 알림 유형입니다.`);
+    }
+  }
 }
+

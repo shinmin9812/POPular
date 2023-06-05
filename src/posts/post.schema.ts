@@ -46,6 +46,9 @@ export class Post extends Document {
 
 	@Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }], default: [] })
 	comments: Types.ObjectId[] | Comment[];
+
+	@Prop({default: 0})
+	views: number;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

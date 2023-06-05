@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Param, Body, NotFoundException } from '@nestjs/common';
 import { PostsService } from './post.service';
 import { PostCreateDto } from './dto/post.create.dto';
 import { PostUpdateDto } from './dto/post.update.dto';
@@ -40,6 +40,17 @@ export class PostsController {
   @Patch(':id')
   async updatePost(@Param('id') id: string, @Body() updateDto: PostUpdateDto) {
     return await this.postsService.updatePost(id, updateDto);
+  }
+
+  @Patch(':id/views')
+  async incrementViewCount(@Param('id') id: string) {
+    const updatedPost = await this.postsService.incrementViewCount(id);
+
+    if (!updatedPost) {
+      throw new NotFoundException(`'${id}' 아이디를 가진 게시물을 찾지 못했습니다.`);
+    }
+
+    return updatedPost;
   }
 
   @Delete(':id')

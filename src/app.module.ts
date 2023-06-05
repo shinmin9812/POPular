@@ -8,6 +8,7 @@ import { StoreModule } from './stores/store.module';
 import { UserModule } from './users/user.module';
 import { PostsModule } from './posts/post.module';
 import { NotificationsModule } from './notifications/notification.module';
+import { CommentsModule } from './comments/comment.module';
 
 //{useNewUrlParser: true, userUnifiedTopology: true} 해당 부분에 대해 deprecatedError가 발생
 @Module({
@@ -17,7 +18,8 @@ import { NotificationsModule } from './notifications/notification.module';
 		StoreModule,
 		UserModule,
 		PostsModule,
-		NotificationsModule
+		NotificationsModule,
+		CommentsModule
 	],
 	controllers: [AppController],
 	providers: [AppService],

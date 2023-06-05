@@ -66,7 +66,19 @@ export class PostsService {
 
   async createPost(postCreateDto: PostCreateDto): Promise<Post> {
     try {
-      const createdPost = new this.postModel(postCreateDto);
+      const createdPost = new this.postModel();
+      createdPost.title = postCreateDto.title;
+      createdPost.author = postCreateDto.author;
+      createdPost.board = postCreateDto.board;
+      createdPost.content = postCreateDto.content;
+      createdPost.images = postCreateDto.images;
+      createdPost.storeId = postCreateDto.storeId;
+      createdPost.ratings = postCreateDto.ratings;
+      createdPost.likes = postCreateDto.likes;
+      createdPost.reports = postCreateDto.reports;
+      createdPost.comments = postCreateDto.comments;
+      createdPost.views = postCreateDto.views;
+
       return await createdPost.save();
     } catch (err) {
       if (err.name === 'ValidationError') {
@@ -96,6 +108,23 @@ export class PostsService {
       throw new InternalServerErrorException("글 업데이트에 실패하였습니다.");
     }
   }
+
+  async incrementViewCount(id: string): Promise<Post> {
+    try {
+      const post = await this.postModel.findById(id).exec();
+
+      if (!post) {
+        throw new NotFoundException(`'${id}' 아이디를 가진 게시글을 찾지 못했습니다.`);
+      }
+
+      post.views += 1;
+
+      return await post.save();
+    } catch (err) {
+      throw new InternalServerErrorException("조회수 증가에 실패하였습니다.");
+    }
+  }
+
 	async deletePost(id: string): Promise<void> {
     try {
       const deletedPost = await this.postModel.findByIdAndRemove(id).exec();
