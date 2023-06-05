@@ -5,10 +5,10 @@ import { PostsService } from './post.service';
 import { Post, PostSchema } from './post.schema';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Post.name, schema: PostSchema }]),
-  ],
-  controllers: [PostsController],
-  providers: [PostsService],
+	imports: [
+		MongooseModule.forFeature([{ name: Post.name, schema: PostSchema }]),
+	],
+	controllers: [PostsController],
+	providers: [PostsService],
 })
 export class PostsModule {}

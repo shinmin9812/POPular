@@ -1,5 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaOptions, Schema as MongooseSchema, Types } from 'mongoose';
+import {
+	Document,
+	SchemaOptions,
+	Schema as MongooseSchema,
+	Types,
+} from 'mongoose';
 import { User } from 'src/users/user.schema';
 
 const options: SchemaOptions = {
@@ -15,7 +20,10 @@ export class Comment extends Document {
 	@Prop({ required: true })
 	content: string;
 
-	@Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Comment' }], default: [] })
+	@Prop({
+		type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Comment' }],
+		default: [],
+	})
 	recomments: MongooseSchema.Types.ObjectId[];
 }
 
