@@ -1,4 +1,3 @@
-// import UserProfile from '../components/UserMenu/components/UserProfile';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';

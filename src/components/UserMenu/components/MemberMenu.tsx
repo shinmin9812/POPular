@@ -15,7 +15,7 @@ const MemberMenu = () => {
         <MenuItem link={CLIENT_PATH.USER_POSTS} title="내가 쓴 글" />
         <MenuItem link={CLIENT_PATH.USER_COMMENTS} title="내가 쓴 댓글" />
         <MenuItem link="/user/12341231/update" title="회원정보 수정" />
-        <MenuItem link="withdraw" title="회원탈퇴" />
+        <MenuItem link="deleteAccount" title="회원탈퇴" />
       </nav>
       <div className="logo">
         <Logo color="#bfbfbf" />
