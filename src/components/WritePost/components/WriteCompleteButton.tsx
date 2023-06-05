@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const WriteComplete = styled.button`
+const WriteCompleteButton = styled.button`
   background-color: var(--color-main);
   color: var(--color-white);
   font-size: var(--font-medium);
@@ -12,4 +12,4 @@ const WriteComplete = styled.button`
   bottom 10px;
 `;
 
-export default WriteComplete;
+export default WriteCompleteButton;

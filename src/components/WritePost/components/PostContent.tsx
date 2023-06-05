@@ -6,7 +6,7 @@ const Quill = styled(ReactQuill)`
   height: 500px;
   width: 100%;
   margin-top: 20px;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
 `;
 
 const modules = {

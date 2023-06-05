@@ -32,14 +32,12 @@ const Button = styled.button`
 
 const WriteButton = () => {
   return (
-    <>
-      <Button>
-        <Link to="/community/write">글쓰기</Link>
-        <PenIconWrap>
-          <PenIcon />
-        </PenIconWrap>
-      </Button>
-    </>
+    <Button>
+      <Link to="/community/write">글쓰기</Link>
+      <PenIconWrap>
+        <PenIcon />
+      </PenIconWrap>
+    </Button>
   );
 };
 
