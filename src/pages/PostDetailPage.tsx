@@ -25,12 +25,10 @@ const PostDetailPage = () => {
     const response = await fetch('/post/all');
     const result: Post[] = await response.json();
 
-    const response2 = await fetch(`/post/board/free`);
-    const result2: Post = await response2.json();
+    //const response2 = await fetch(`/post/board/free`);
+    //const result2: Post = await response2.json();
     setPost(result);
-    console.log(result2);
   }
-  console.log(post);
   const rating = [1, 2, 3];
   // for(let i =0; i < post.rating; i++){
   //   rating.push(i);
@@ -49,7 +47,7 @@ const PostDetailPage = () => {
         <div>
           평점 :
           {rating.map((i) => (
-            <StarIcon />
+            <StarIcon key={i} />
           ))}
         </div>
       )}

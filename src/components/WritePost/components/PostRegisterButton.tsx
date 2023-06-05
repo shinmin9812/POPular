@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const WriteCompleteButton = styled.button`
+const PostRegisterButton = styled.button`
   background-color: var(--color-main);
   color: var(--color-white);
   font-size: var(--font-medium);
@@ -12,4 +12,4 @@ const WriteCompleteButton = styled.button`
   bottom 10px;
 `;
 
-export default WriteCompleteButton;
+export default PostRegisterButton;
