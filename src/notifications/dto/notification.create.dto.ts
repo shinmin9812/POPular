@@ -1,6 +1,7 @@
-import { IsBoolean, IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString, ValidateIf } from "class-validator";
+import { IsEnum, IsMongoId, IsNotEmpty, ValidateIf } from "class-validator";
 import { ContentModel, NotificationType } from "../notification.schema";
 import { BoardType } from "src/posts/post.schema";
+import { Types } from "mongoose";
 
 export class NotificationCreateDto {
   @IsEnum(NotificationType)
@@ -12,12 +13,12 @@ export class NotificationCreateDto {
   readonly board: BoardType;
 
   @IsNotEmpty()
-  @IsString()
-  readonly userId: string;
+  @IsMongoId()
+  readonly userId: Types.ObjectId;
 
   @IsNotEmpty()
   @IsMongoId()
-  readonly content: string;
+  readonly content: Types.ObjectId;
 
   @IsNotEmpty()
   @IsEnum(ContentModel)
