@@ -7,11 +7,17 @@ import {
 	Param,
 	Body,
 	NotFoundException,
+	UseInterceptors,
+	UploadedFiles,
 } from '@nestjs/common';
 import { PostsService } from './post.service';
 import { PostCreateDto } from './dto/post.create.dto';
 import { PostUpdateDto } from './dto/post.update.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { multerConfig } from 'src/multer.config';
+import { MulterModule } from '@nestjs/platform-express/multer';
+import { FileFieldsInterceptor } from '@nestjs/platform-express/multer';
+import { diskStorage } from 'multer';
 
 @Controller('/posts')
 @ApiTags('Post')
@@ -50,7 +56,9 @@ export class PostsController {
 
 	@ApiOperation({ summary: '게시글 등록하기'})
 	@Post()
-	async createPost(@Body() createDto: PostCreateDto) {
+	@UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 5 }], multerConfig.storage))
+	async createPost(@Body() createDto: PostCreateDto, @UploadedFiles() files) {
+		createDto.images = files.map((file: Express.Multer.File) => file.path);
 		return await this.postsService.createPost(createDto);
 	}
 	
