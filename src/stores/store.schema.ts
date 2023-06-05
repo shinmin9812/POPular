@@ -70,7 +70,7 @@ export class Store extends Document {
 	@Prop()
 	images: Array<string>;
 
-	@Prop({ type: Types.ObjectId, ref: 'User', default: 0 })
+	@Prop({ type: Types.ObjectId, ref: 'User', default: [] })
 	scrap: Types.ObjectId[];
 }
 

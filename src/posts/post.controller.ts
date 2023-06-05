@@ -2,46 +2,82 @@ import {
 	Controller,
 	Get,
 	Post,
-	Put,
+	Patch,
 	Delete,
 	Param,
 	Body,
+	NotFoundException,
 } from '@nestjs/common';
-import { PostService } from './post.service';
+import { PostsService } from './post.service';
 import { PostCreateDto } from './dto/post.create.dto';
 import { PostUpdateDto } from './dto/post.update.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@Controller('posts')
-export class PostController {
-	constructor(private readonly postService: PostService) {}
+@Controller('/posts')
+@ApiTags('Post')
+export class PostsController {
+	constructor(private readonly postsService: PostsService) { }
 
+	@ApiOperation({ summary: '모든 게시글 찾기' })
 	@Get()
 	async getAllPosts() {
-		const posts = await this.postService.getAllPosts();
-		return posts;
+		return await this.postsService.getAllPosts();
 	}
 
+	@ApiOperation({ summary: '모집게시판 게시글 찾기' })
+	@Get('gather')
+	async getAllGatherPosts() {
+		return await this.postsService.getAllGatherPosts();
+	}
+
+	@ApiOperation({ summary: '후기게시판 게시글 찾기' })
+	@Get('review')
+	async getAllReviewPosts() {
+		return await this.postsService.getAllReviewPosts();
+	}
+
+	@ApiOperation({ summary: '자유게시판 게시글 찾기'})
+	@Get('free')
+	async getAllFreePosts() {
+		return await this.postsService.getAllFreePosts();
+	}
+
+	@ApiOperation({ summary: 'ID로 게시글 찾기'})
 	@Get(':id')
 	async getPostById(@Param('id') id: string) {
-		const post = await this.postService.getPostById(id);
-		return post;
+		return await this.postsService.getPostById(id);
 	}
 
+	@ApiOperation({ summary: '게시글 등록하기'})
 	@Post()
 	async createPost(@Body() createDto: PostCreateDto) {
-		const createdPost = await this.postService.createPost(createDto);
-		return createdPost;
+		return await this.postsService.createPost(createDto);
+	}
+	
+	@ApiOperation({ summary: '게시글 수정하기'})
+	@Patch(':id')
+	async updatePost(@Param('id') id: string, @Body() updateDto: PostUpdateDto) {
+		return await this.postsService.updatePost(id, updateDto);
 	}
 
-	@Put(':id')
-	async updatePost(@Param('id') id: string, @Body() updateDto: PostUpdateDto) {
-		const updatedPost = await this.postService.updatePost(id, updateDto);
+	@ApiOperation({ summary: '게시글 조회수 증가하기'})
+	@Patch(':id/views')
+	async incrementViewCount(@Param('id') id: string) {
+		const updatedPost = await this.postsService.incrementViewCount(id);
+
+		if (!updatedPost) {
+			throw new NotFoundException(
+				`'${id}' 아이디를 가진 게시물을 찾지 못했습니다.`,
+			);
+		}
+
 		return updatedPost;
 	}
 
+	@ApiOperation({ summary: '게시글 삭제하기'})
 	@Delete(':id')
 	async deletePost(@Param('id') id: string) {
-		await this.postService.deletePost(id);
-		return { message: 'Post deleted successfully' };
+		await this.postsService.deletePost(id);
+		return { message: '글이 삭제되었습니다.' };
 	}
 }
