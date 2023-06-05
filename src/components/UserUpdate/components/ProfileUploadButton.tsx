@@ -2,15 +2,17 @@ import styled from 'styled-components';
 
 interface Props {
   text: string;
+  name: string;
+  onChange: any;
 }
 
-const ProfileUploadButton = ({ text }: Props) => {
+const ProfileUploadButton = ({ text, name, onChange }: Props) => {
   return (
     <Button>
       <label htmlFor="file">
         <div className="btn-upload">{text}</div>
       </label>
-      <input type="file" name="file" id="file" />
+      <input type="file" name={name} id="file" onChange={onChange} />
     </Button>
   );
 };

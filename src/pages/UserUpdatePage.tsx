@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ProfileImageModify from '../components/UserUpdate/components/ProfileImageModify';
 import { SpaceLine } from '../components/UserUpdate/components/Line';
 import ProfileUpdateForm from '../components/UserUpdate/components/ProfileUpdateForm';
+import ProfileUpdatePasswordForm from '../components/UserUpdate/components/ProfileUpdatePasswordForm';
 
 const UserUpdatePage = () => {
   const [user, setUser] = useState<User[]>([]);
@@ -22,6 +23,8 @@ const UserUpdatePage = () => {
       <ProfileImageModify user={user}></ProfileImageModify>
       <SpaceLine />
       <ProfileUpdateForm />
+      <SpaceLine />
+      <ProfileUpdatePasswordForm />
     </Container>
   );
 };

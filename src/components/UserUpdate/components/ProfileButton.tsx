@@ -4,10 +4,11 @@ interface Props {
   text: string;
   type: 'blank' | 'submit' | 'cancel';
   className?: string;
+  onClick?: any;
 }
-const ProfileButton = ({ text, type, className }: Props) => {
+const ProfileButton = ({ text, type, className, onClick }: Props) => {
   return (
-    <Button type={type} className={className} text={text}>
+    <Button type={type} className={className} text={text} onClick={onClick}>
       <div>{text}</div>
     </Button>
   );

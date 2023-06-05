@@ -1,3 +1,4 @@
+import { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import ProfileUploadButton from './ProfileUploadButton';
 import ProfileButton from './ProfileButton';
@@ -12,21 +13,42 @@ const ProfileImageModify = ({ user }: Props) => {
     return null;
   }
 
+  const [userProfile, setUserProfile] = useState({
+    profile: user[0].profile,
+  });
+
+  //const { profile } = userProfile;
+  const fileHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { value, name } = e.target;
+    setUserProfile({
+      ...userProfile,
+      [name]: value,
+    });
+  };
+
+  const fileDelete = () => {
+    setUserProfile({
+      profile: '',
+    });
+  };
+
   return (
     <Container>
-      <p className="update-title">회원정보 수정</p>
-      <p className="update-description">프로필과 정보를 변경할 수 있습니다.</p>
-      <ProfileContents>
-        <ProfilImage>
-          <div className="profile-frame">
-            <img src={user[0].profile} alt={user[0].nickname} />
-          </div>
-        </ProfilImage>
-        <ProfileButtonList>
-          <ProfileUploadButton text={'사진변경'} />
-          <ProfileButton className="button-gap" text={'제거'} type={'blank'} />
-        </ProfileButtonList>
-      </ProfileContents>
+      <FormContainer>
+        <h2 className="update-title">프로필 이미지</h2>
+        <p className="update-description">프로필 이미지를 변경할 수 있습니다.</p>
+        <ProfileContents>
+          <ProfilImage>
+            <div className="profile-frame">
+              <img src={user[0].profile} alt={user[0].nickname} />
+            </div>
+          </ProfilImage>
+          <ProfileButtonList>
+            <ProfileUploadButton text={'사진변경'} name={'profile'} onChange={fileHandler} />
+            <ProfileButton className="button-gap" text={'제거'} type={'blank'} onClick={fileDelete} />
+          </ProfileButtonList>
+        </ProfileContents>
+      </FormContainer>
     </Container>
   );
 };
@@ -51,6 +73,8 @@ const Container = styled.div`
     margin-top: 7px;
   }
 `;
+
+const FormContainer = styled.form``;
 
 const ProfileContents = styled.div`
   margin-top: 40px;
