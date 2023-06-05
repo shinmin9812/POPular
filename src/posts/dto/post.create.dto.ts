@@ -8,6 +8,7 @@ import {
 	Min,
 	Max,
 	ValidateIf,
+	IsMongoId,
 } from 'class-validator';
 import { BoardType } from '../post.schema';
 
@@ -16,7 +17,7 @@ export class PostCreateDto {
 	@IsNotEmpty()
 	readonly title: string;
 
-	@IsString()
+	@IsMongoId()
 	@IsNotEmpty()
 	readonly author: string;
 
@@ -28,7 +29,7 @@ export class PostCreateDto {
 	@IsNotEmpty()
 	readonly content: string;
 
-	@IsString()
+	@IsMongoId()
 	@IsNotEmpty()
 	@ValidateIf(
 		obj => obj.board === BoardType.Review || obj.board === BoardType.Gather,
@@ -49,16 +50,13 @@ export class PostCreateDto {
 
 	@IsOptional()
 	@IsArray()
-	@IsString({ each: true })
 	readonly likes?: string[];
 
 	@IsOptional()
 	@IsArray()
-	@IsString({ each: true })
 	readonly reports?: string[];
 
 	@IsOptional()
 	@IsArray()
-	@IsString({ each: true })
 	readonly comments?: string[];
 }
