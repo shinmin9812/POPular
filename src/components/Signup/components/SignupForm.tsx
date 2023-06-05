@@ -1,106 +1,268 @@
-import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import styled from 'styled-components';
-// import FormField from './FormField';
 import autoHyphen from '../../../utils/autoHyphen';
 
 const SignupForm = () => {
-  const [name, setName] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const navigate = useNavigate();
+  const [inputs, setInputs] = useState({
+    name: '',
+    nickname: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phone: '',
+  });
+  const { name, nickname, email, password, confirmPassword, phone } = inputs;
 
-  const [nicknameCheckMessage, setNicknameCheckMessage] = useState('');
+  const [allowNotifications, setAllowNotifications] = useState(false);
+  const [emailExists, setEmailExists] = useState(false);
+  const [nicknameExists, setNicknameExists] = useState(false);
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    nickname: '',
+    password: '',
+    confirmPassword: '',
+    phone: '',
+  });
 
-  const handleNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-    // 닉네임 중복 확인 fetch
-    // 중복 시 setNicknameCheckMessage('다른 유저가 사용 중인 닉네임입니다.');
-    // 중복X && 2글자 이상 이면 setNicknameCheckMessage('사용 가능한 닉네임입니다.');
-    setNicknameCheckMessage('다른 유저가 사용 중인 닉네임입니다.');
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+    switch (name) {
+      case 'name':
+        validateName(value);
+        break;
+      case 'nickname':
+        handleNicknameChange(e);
+        break;
+      case 'email':
+        handleEmailChange(e);
+        break;
+      case 'password':
+        validatePassword(value);
+        break;
+      case 'confirmPassword':
+        validateConfirmPassword(value);
+        break;
+      case 'phone':
+        validatePhone(value);
+        break;
+    }
+  };
+
+  // 알림 설정 체크박스 변경 이벤트 핸들러
+  const handleAllowNotificationsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.target;
+    setAllowNotifications(checked);
+  };
+
+  // 중복 닉네임 체크
+  const checkNicknameExists = async (nickname: string) => {
+    try {
+      const response = await fetch('/users/checknickname', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nickname: nickname,
+        }),
+      });
+      const data = await response.json();
+      setNicknameExists(data.isExists);
+    } catch (err: any) {
+      const errorMessage = (err as Error).message;
+      console.log(errorMessage);
+    }
+  };
+
+  // 중복 이메일 체크
+  const checkEmailExists = async (email: string) => {
+    try {
+      const response = await fetch('/users/checkemail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+        }),
+      });
+      const data = await response.json();
+      setEmailExists(data.isExists);
+    } catch (err: any) {
+      const errorMessage = (err as Error).message;
+      console.log(errorMessage);
+    }
+  };
+
+  const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+    setNicknameExists(false);
+    validateNickname(value);
+
+    checkNicknameExists(value);
+  };
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+    setEmailExists(false);
+    validateEmail(value);
+
+    checkEmailExists(value);
+  };
+
+  // 이름 유효성 검사
+  const validateName = (value: string) => {
+    let error = '';
+    if (value.trim().length < 2 && value.length > 0) {
+      error = '2글자 이상 입력하세요.';
+    }
+    setErrors((prevState) => ({ ...prevState, name: error }));
+  };
+
+  // 이메일 유효성 검사
+  const validateEmail = (value: string) => {
+    const isEmailValid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    let error = '';
+    if (!isEmailValid.test(value) && value.length > 0) {
+      error = '유효한 이메일 주소를 입력하세요.';
+    }
+    setErrors((prevState) => ({ ...prevState, email: error }));
+  };
+
+  // 닉네임 유효성 검사
+  const validateNickname = (value: string) => {
+    let error = '';
+    if (value.trim().length < 2 && value.length > 0) {
+      error = '2글자 이상 입력하세요.';
+    }
+    setErrors((prevState) => ({ ...prevState, nickname: error }));
+  };
+
+  // 비밀번호 유효성 검사
+  const validatePassword = (value: string) => {
+    const isPasswordValid = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+    let error = '';
+    if (!isPasswordValid.test(value) && value.length > 0) {
+      error = '8~15자, 특수문자, 문자, 숫자를 포함해야 합니다.';
+    }
+    setErrors((prevState) => ({ ...prevState, password: error }));
+  };
+
+  // 비밀번호 확인 유효성 검사
+  const validateConfirmPassword = (value: string) => {
+    let error = '';
+    if (value !== password && value.length > 0) {
+      error = '비밀번호가 일치하지 않습니다.';
+    }
+    setErrors((prevState) => ({ ...prevState, confirmPassword: error }));
+  };
+
+  // 전화번호 유효성 검사
+  const validatePhone = (value: string) => {
+    const isPhoneValid = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/;
+    let error = '';
+    if (!isPhoneValid.test(value) && value.length > 0) {
+      error = '전화번호 형식이 올바르지 않습니다.';
+    }
+    setErrors((prevState) => ({ ...prevState, phone: error }));
+  };
+
+  // 가입하기 버튼 클릭 이벤트 핸들러
+  const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          pw: password,
+          name: name,
+          nickname: nickname,
+          phone_number: phone,
+          allow_notification: allowNotifications,
+        }),
+      });
+      if (response.ok) {
+        alert('환영합니다!');
+        navigate('/login');
+      }
+    } catch (err: any) {
+      const errorMessage = (err as Error).message;
+      console.log(errorMessage, '회원가입 실패');
+    }
+  };
+
+  const checkEveryInput = () => {
+    return Object.values(errors).every((error) => error === '') && Object.values(inputs).every((input) => input !== '');
   };
 
   return (
     <FormContainer>
-      {/* <FormField label={'이름'} name={'name'} type={'text'}></FormField> */}
       <FieldContainer>
-        <Label htmlFor="name">이름</Label>
-        <Input
-          type="text"
-          name="name"
-          id="name"
-          value={name}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-        />
+        <Label>
+          이름
+          {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
+        </Label>
+        <Input type="text" name="name" value={name} onChange={onChange} />
       </FieldContainer>
-
       <FieldContainer>
-        <NicknameLabel>
-          <Label htmlFor="nickname">닉네임</Label>
-          <NicknameCheckMessage>{nicknameCheckMessage}</NicknameCheckMessage>
-        </NicknameLabel>
-        <NicknameInput>
-          <Input type="text" name="nickname" id="nickname" value={nickname} onChange={handleNickname} />
-        </NicknameInput>
+        <Label>
+          이메일
+          {emailExists && <ErrorMessage>중복된 이메일입니다.</ErrorMessage>}
+          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+        </Label>
+        <Input type="email" name="email" value={email} onChange={onChange} />
       </FieldContainer>
-
-      {/* <FormField label={'이메일'} name={'email'} type={'email'}></FormField> */}
       <FieldContainer>
-        <Label htmlFor="email">이메일</Label>
-        <Input
-          type="email"
-          name="email"
-          id="email"
-          value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(autoHyphen(e.target.value))}
-        />
+        <Label>
+          닉네임
+          {nicknameExists && <ErrorMessage>중복된 닉네임입니다.</ErrorMessage>}
+          {errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
+        </Label>
+        <Input type="text" name="nickname" value={nickname} onChange={onChange} />
       </FieldContainer>
-
-      {/* <FormField label={'비밀번호'} name={'password'} type={'password'}></FormField> */}
       <FieldContainer>
-        <Label htmlFor="password">비밀번호</Label>
-        <Input
-          type="password"
-          name="password"
-          id="password"
-          value={password}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-        />
+        <Label>
+          비밀번호
+          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+        </Label>
+        <Input type="password" name="password" value={password} onChange={onChange} />
       </FieldContainer>
-
-      {/* <FormField label={'비밀번호 확인'} name={'passwordConfirm'} type={'password'}></FormField> */}
       <FieldContainer>
-        <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
-        <Input
-          type="password"
-          name="passwordConfirm"
-          id="passwordConfirm"
-          value={passwordConfirm}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPasswordConfirm(e.target.value)}
-        />
+        <Label>
+          비밀번호 확인
+          {errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
+        </Label>
+        <Input type="password" name="confirmPassword" value={confirmPassword} onChange={onChange} />
       </FieldContainer>
-
-      {/* <FormField label={'전화번호'} name={'phoneNumber'} type={'text'}></FormField> */}
       <FieldContainer>
-        <Label htmlFor="phoneNumber">전화번호</Label>
-        <Input
-          type="text"
-          name="phoneNumber"
-          id="phoneNumber"
-          value={phoneNumber}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhoneNumber(autoHyphen(e.target.value))}
-        />
+        <Label>
+          전화번호
+          {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
+        </Label>
+        <Input type="text" name="phone" value={autoHyphen(phone)} onChange={onChange} />
       </FieldContainer>
-
       <CheckboxContainer>
-        <Input type="checkbox" name="allowNotification" id="allowNotification" />
-        <Label htmlFor="allowNotification">팔로우∙댓글∙팝업스토어 알림 허용</Label>
+        <Checkbox type="checkbox" checked={allowNotifications} onChange={handleAllowNotificationsChange} />
+        <Label>알림 설정</Label>
       </CheckboxContainer>
-
-      <WarningMessage>이메일 형식이 올바르지 않습니다.</WarningMessage>
-      <SignupButton type="submit">가입하기</SignupButton>
+      <SignupButton onClick={handleSignup} disabled={!checkEveryInput()}>
+        가입하기
+      </SignupButton>
     </FormContainer>
   );
 };
@@ -117,41 +279,15 @@ const FormContainer = styled.form`
 const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const NicknameLabel = styled.div`
-  width: 270px;
-  display: flex;
-  justify-content: space-between;
+  margin-bottom: 8px;
 `;
 
 const Label = styled.label`
   font-size: var(--font-small);
   padding-left: 8px;
   margin: 8px 0;
-`;
-
-const NicknameCheckMessage = styled.p`
-  font-size: var(--font-micro);
-  margin-right: 4px;
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-`;
-
-const NicknameInput = styled.div`
-  width: 270px;
   display: flex;
   justify-content: space-between;
-
-  & button {
-    width: 80px;
-    height: 30px;
-    font-size: 12px;
-    color: var(--color-white);
-    background-color: var(--color-main);
-    border-radius: var(--border-radius-button);
-  }
 `;
 
 const Input = styled.input`
@@ -165,24 +301,16 @@ const Input = styled.input`
   color: var(--color-black);
 `;
 
-const CheckboxContainer = styled.div`
-  width: 270px;
-  font-size: var(--font-small);
-  display: flex;
-  margin-bottom: 20px;
-
-  & input {
-    accent-color: var(--color-main);
-    width: 16px;
-    height: 16px;
-    margin: 8px 0;
-  }
+const ErrorMessage = styled.span`
+  font-size: var(--font-micro);
 `;
 
-const WarningMessage = styled.p`
+const CheckboxContainer = styled.div`
+  width: 270px;
+`;
+
+const Checkbox = styled.input`
   font-size: var(--font-small);
-  color: var(--color-red);
-  padding-top: 10px;
 `;
 
 const SignupButton = styled.button`
@@ -193,4 +321,9 @@ const SignupButton = styled.button`
   border-radius: var(--border-radius-button);
   margin: 10px 0;
   cursor: pointer;
+
+  :disabled {
+    background-color: var(--color-gray);
+    cursor: default;
+  }
 `;
