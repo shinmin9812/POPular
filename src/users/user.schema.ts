@@ -38,8 +38,8 @@ export class User extends Document {
 	@Prop({ default: 'user' })
 	role: string;
 
-	@Prop({ default: '' })
-	brand: string;
+	@Prop({ default: [] })
+	interested_category: Array<string>;
 
 	@Prop({ default: '' })
 	profile: string;

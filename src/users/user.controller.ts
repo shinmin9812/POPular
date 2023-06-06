@@ -12,7 +12,7 @@ import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
 import { UserService } from './user.service';
 import { User } from './user.schema';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 type checknickname = {
@@ -59,6 +59,7 @@ export class UserController {
 	}
 
 	@ApiOperation({ summary: '유저 정보 수정하기(token 필요)' })
+	@ApiBearerAuth('Authorization')
 	@Patch(':id')
 	@UseGuards(AuthGuard)
 	async updateUser(
@@ -70,6 +71,7 @@ export class UserController {
 
 	@ApiOperation({ summary: '유저 스크랩 & 스토어 스크랩 등록하기' })
 	@Patch(':userId/scrapStore/:storeId')
+	@UseGuards(AuthGuard)
 	async updateScrap(
 		@Param('userId') userId: string,
 		@Param('storeId') storeId: string,
@@ -79,6 +81,7 @@ export class UserController {
 
 	@ApiOperation({ summary: '유저 스크랩 & 스토어 스크랩 취소하기' })
 	@Patch(':userId/unscrapStore/:storeId')
+	@UseGuards(AuthGuard)
 	async updateUnScrap(
 		@Param('userId') userId: string,
 		@Param('storeId') storeId: string,
@@ -88,6 +91,7 @@ export class UserController {
 
 	@ApiOperation({ summary: '유저 정보 삭제하기' })
 	@Delete(':id')
+	@UseGuards(AuthGuard)
 	async deleteUser(@Param('id') _id: string): Promise<User> {
 		return await this.userService.deleteUser(_id);
 	}

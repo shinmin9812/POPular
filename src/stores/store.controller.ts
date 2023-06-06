@@ -7,6 +7,7 @@ import {
 	Patch,
 	Post,
 	Put,
+	Query,
 } from '@nestjs/common';
 import { StoreRequestDto } from './dto/store.request.dto';
 import { StoreService } from './store.service';
@@ -24,9 +25,24 @@ export class StoreController {
 	}
 
 	@ApiOperation({ summary: 'ID로 스토어 정보 찾기' })
-	@Get(':id')
+	@Get('store/:id')
 	async getStoreById(@Param('id') _id: string) {
 		return await this.storeServcie.getStoreById(_id);
+	}
+
+	@ApiOperation({ summary: '좌표 위치 주변 스토어 정보 찾기' })
+	@Get('/coord')
+	async getStoresByCoord(@Query() query) {
+		const { x, y, distance } = query;
+		const longtitude = Number(y);
+		const latitude = Number(x);
+		const searchDistance = Number(distance);
+
+		return await this.storeServcie.getStoresByCoord(
+			longtitude,
+			latitude,
+			searchDistance,
+		);
 	}
 
 	@ApiOperation({ summary: '스토어 정보 등록하기' })

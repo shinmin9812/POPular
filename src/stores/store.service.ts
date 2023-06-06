@@ -15,7 +15,7 @@ export class StoreService {
 	}
 
 	async getStoreById(_id: string): Promise<Store> {
-		return await this.storeModel.findById({ _id });
+		return await this.storeModel.findById(_id);
 	}
 
 	async getStoresByDate(startDate: Date, endDate: Date): Promise<Store[]> {
@@ -25,8 +25,37 @@ export class StoreService {
 		});
 	}
 
+	async getStoresByCoord(
+		lng: Number,
+		lat: Number,
+		distance: Number,
+	): Promise<Store[]> {
+		return await this.storeModel.find({
+			coord: {
+				$nearSphere: {
+					$geometry: {
+						type: 'Point',
+						coordinates: [lng, lat],
+					},
+					$maxDistance: distance,
+				},
+			},
+		});
+	}
+
 	async createStore(body: StoreRequestDto): Promise<Store> {
-		return await this.storeModel.create(body);
+		const lng = body.coord.coordinates[0];
+		const lat = body.coord.coordinates[1];
+
+		const newStore = {
+			...body,
+			coord: {
+				type: 'Point',
+				coordinates: [lng, lat],
+			},
+		};
+
+		return await this.storeModel.create(newStore);
 	}
 
 	async updateStore(_id: string, body: StoreRequestDto): Promise<Store> {

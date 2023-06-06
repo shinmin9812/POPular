@@ -21,9 +21,15 @@ class day {
 	sun: time;
 }
 
+class postinfo {
+	sido: string;
+	sigungu: string;
+}
+
 class coordinfo {
-	lat: string;
-	lng: string;
+	@Prop({ default: 'Point' })
+	type: string;
+	coordinates: number[];
 }
 
 class snsinfo {
@@ -41,7 +47,7 @@ export class Store extends Document {
 	description: string;
 
 	@Prop({ required: true })
-	brand: string;
+	category: string;
 
 	@Prop({ required: true })
 	start_date: Date;
@@ -54,6 +60,9 @@ export class Store extends Document {
 
 	@Prop({ required: true })
 	location: string;
+
+	@Prop({ type: postinfo, required: true })
+	postcode: postinfo;
 
 	@Prop({ type: coordinfo, required: true })
 	coord: coordinfo;
@@ -75,3 +84,4 @@ export class Store extends Document {
 }
 
 export const StoreSchema = SchemaFactory.createForClass(Store);
+StoreSchema.index({ coord: '2dsphere' });
