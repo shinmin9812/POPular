@@ -1,13 +1,13 @@
-import { Brand } from './brand';
-import { SNS } from './sns';
+import { Category } from './category';
+import { SNSType } from './sns';
 
 export interface Store {
   id: string;
   title: string;
   description: string;
-  brand: Brand;
-  startDate: string;
-  endDate: string;
+  category: Category;
+  start_date: string;
+  end_date: string;
   hours: {
     mon: {
       start: string | null;
@@ -39,19 +39,17 @@ export interface Store {
     };
   };
   location: string;
+  postcode: {
+    sido: string;
+    sigungu: string;
+  };
   coord: {
     lat: string;
     lng: string;
   };
   price: number | null;
-  sns: [
-    {
-      linkType: SNS;
-      linkTitle: string;
-      link: string;
-    },
-  ];
-  reservationRequired: boolean;
+  sns: SNSType[];
+  reservation_required: boolean;
   images: string[];
   scrap: number;
 }

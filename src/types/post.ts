@@ -3,16 +3,16 @@ import { Comment } from './comment';
 import { User } from './user';
 
 export interface Post {
-  _id: string;
+  id: string;
   title: string;
   author: User;
   board: BoardTypes;
   content: string;
   images?: string[];
   storeId?: string;
-  ratings?: number;
-  likes: string[];
-  report: string[];
+  rating?: number;
+  likes: number;
+  report: number;
   updatedAt: string;
   comments: Comment[];
 }

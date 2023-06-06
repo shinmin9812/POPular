@@ -1,4 +1,4 @@
-export const enum Brand {
+export const enum Category {
   food = '식품',
   character = '캐릭터',
   clothes = '의류',

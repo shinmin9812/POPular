@@ -15,7 +15,7 @@ const ProfileImageModify = ({ user }: Props) => {
   };
 
   const fileDelete = () => {
-    var delConfirm = confirm('프로필 이미지를 기본으로 변경하시겠습니까?');
+    const delConfirm = confirm('프로필 이미지를 기본으로 변경하시겠습니까?');
     if (delConfirm) {
       setUserProfile('');
     }

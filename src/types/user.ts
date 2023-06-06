@@ -1,4 +1,4 @@
-import { Brand } from './brand';
+import { Category } from './category';
 import { Notification } from './notification';
 
 export interface UserOnlyProfile {
@@ -16,8 +16,7 @@ export interface User extends UserOnlyProfile {
   phone_number: string;
   follower: UserOnlyProfile[];
   following: UserOnlyProfile[];
-  isEnterpriser: boolean;
-  brand: Brand;
-  allowNotification: boolean;
+  is_enterpriser: boolean;
+  interested_category: Category[];
   notifications: Notification[];
 }
