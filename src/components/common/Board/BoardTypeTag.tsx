@@ -9,7 +9,7 @@ interface boardMapType {
 
 const boardMap = new Map<string, boardMapType>([
   [BoardTypes.free, { name: '자유게시판', color: 'var(--color-tomato)' }],
-  [BoardTypes.gether, { name: '모집게시판', color: 'var(--color-main)' }],
+  [BoardTypes.gather, { name: '모집게시판', color: 'var(--color-main)' }],
   [BoardTypes.review, { name: '후기게시판', color: 'var(--color-green)' }],
 ]);
 

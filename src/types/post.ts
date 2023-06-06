@@ -10,7 +10,7 @@ export interface Post {
   content: string;
   images?: string[];
   storeId?: string;
-  rating?: number;
+  ratings?: number;
   likes: string[];
   report: string[];
   updatedAt: string;
