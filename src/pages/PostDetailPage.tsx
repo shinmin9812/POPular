@@ -42,7 +42,7 @@ const PostDetailPage = () => {
       {post && (
         <div>
           평점 :
-          {Array(post?.ratings)
+          {Array(post?.rating)
             .fill(0)
             .map((i, index) => (
               <StarIcon key={index} />

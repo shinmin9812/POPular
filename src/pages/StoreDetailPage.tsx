@@ -52,7 +52,7 @@ const StoreDetailPage = () => {
   }, []);
 
   async function fetchData() {
-    const response = await fetch('/store/id/321323');
+    const response = await fetch('/store/id/1234');
     const result: Store = await response.json();
 
     if (!result) {
