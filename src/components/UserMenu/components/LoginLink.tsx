@@ -6,8 +6,8 @@ import NotificationIcon from '../../common/Icons/NotificationIcon';
 const LoginLink = () => {
   return (
     <LinkContainer>
-      <Link to="/">
-        <img src="/public/defaultProfile.svg" alt="profile" width={40} />
+      <Link to={CLIENT_PATH.LOGIN}>
+        <img src="defaultProfile.svg" alt="profile" width={40} />
         <p>로그인 하러 가기</p>
       </Link>
       <Link to={CLIENT_PATH.USER_NOTIFICATIONS} style={{ display: 'flex', alignItems: 'center' }}>
@@ -32,7 +32,6 @@ const LinkContainer = styled.div`
 
   & p {
     font-size: var(--font-medium);
-    font-weight: var(--weight-light);
     display: flex;
     align-items: center;
     padding: 0 8px;
