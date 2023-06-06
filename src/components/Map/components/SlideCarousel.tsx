@@ -3,6 +3,7 @@ import { Store } from '../../../types/store';
 import CarouselItem from './CarouselItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
+import { Coord, Map } from '../containers/Map';
 
 const Container = styled.div<{ currentIdx: number }>`
   position: fixed;
@@ -33,16 +34,34 @@ const Container = styled.div<{ currentIdx: number }>`
   }
 `;
 
-interface Props {
-  stores: Store[] | undefined;
+export interface MapProps {
+  map: Map;
+  setSlectedId: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentIdx: React.Dispatch<React.SetStateAction<number>>;
+  setCenter: React.Dispatch<React.SetStateAction<Coord>>;
 }
 
-const SlideCarousel = ({ stores }: Props) => {
-  const currentIdx = useSelector((state: RootState) => state.map.currentIdx);
+interface Props extends MapProps {
+  stores: Store[] | undefined;
+  currentIdx: number;
+}
+
+const SlideCarousel = ({ stores, map, currentIdx, setSlectedId, setCurrentIdx, setCenter }: Props) => {
   return stores ? (
     <Container currentIdx={currentIdx} className="carousel">
       {stores.map((store, idx) => {
-        return <CarouselItem key={idx} store={store} idx={idx} />;
+        return (
+          <CarouselItem
+            key={idx}
+            store={store}
+            idx={idx}
+            map={map}
+            currentIdx={currentIdx}
+            setSlectedId={setSlectedId}
+            setCurrentIdx={setCurrentIdx}
+            setCenter={setCenter}
+          />
+        );
       })}
     </Container>
   ) : (

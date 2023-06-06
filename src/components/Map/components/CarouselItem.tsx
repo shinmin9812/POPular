@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { mapActions } from '../mapSlice';
+import { MapProps } from './SlideCarousel';
 
-interface Props {
+interface Props extends MapProps {
   store: Store;
   idx: number;
+  currentIdx: number;
 }
 
 const Container = styled.div<{ idx: number }>`
@@ -36,12 +38,8 @@ const Container = styled.div<{ idx: number }>`
   }
 `;
 
-const CarouselItem = ({ store, idx }: Props) => {
+const CarouselItem = ({ store, map, idx, currentIdx, setSlectedId, setCurrentIdx, setCenter }: Props) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const currentIdx = useSelector((state: RootState) => state.map.currentIdx);
-
-  const map = useSelector((state: RootState) => state.map.map);
 
   let seq = '';
   if (idx === currentIdx - 1) seq = 'prev';
@@ -50,17 +48,15 @@ const CarouselItem = ({ store, idx }: Props) => {
 
   function clickHandler() {
     if (seq === 'current') navigate(`/store/${store.id}`);
-    const markerPosition = new window.kakao.maps.LatLng(store.coord.lng, store.coord.lat);
+    const markerPosition = new window.kakao.maps.LatLng(store.coord.lat, store.coord.lng);
 
-    dispatch(mapActions.setCurrentIdx(idx));
-    dispatch(mapActions.setSlectedId(store.id));
+    setCurrentIdx(idx);
+    setSlectedId(store.id);
     map!.panTo(markerPosition);
-    dispatch(
-      mapActions.setCenter({
-        lat: store.coord.lng,
-        lng: store.coord.lat,
-      }),
-    );
+    setCenter({
+      lat: +store.coord.lat,
+      lng: +store.coord.lng,
+    });
   }
 
   return (
