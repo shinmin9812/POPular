@@ -3,6 +3,24 @@ import { userData } from '../data/user';
 import { API_PATH } from '../../constants/path';
 
 export const user = [
+  rest.post('/users/checknickname', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        isExists: false,
+      }),
+    );
+  }),
+
+  rest.post('/users/checkemail', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        isExists: false,
+      }),
+    );
+  }),
+
   rest.post(API_PATH.USER.POST.LOGIN, (req, res, ctx) => {
     console.log(req.json());
     return res(
