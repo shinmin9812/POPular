@@ -36,6 +36,7 @@ const DateBoxContainer = styled.div`
   border: 1px solid #987fc0;
   border-radius: 8px;
   padding: 10px;
+  z-index: 10;
 `;
 
 const DateName = styled.span`

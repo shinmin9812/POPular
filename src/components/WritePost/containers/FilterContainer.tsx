@@ -2,6 +2,7 @@ import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks'
 import { WritePostSliceActions } from '../WritePostSlice';
 import Filter from '../../common/Filter/Filter';
 import FilterDuration from '../../common/Filter/FilterDuration';
+import FilterBox from '../../common/Filter/FilterBox';
 const FilterContainer = () => {
   const filter = useAppSelector((state) => state.WritePostSlice.filter);
   const Tab = useAppSelector((state) => state.WritePostSlice.tab);
@@ -28,7 +29,7 @@ const FilterContainer = () => {
     setDurationDay(Today.getDate(), true);
   }
   return (
-    <span>
+    <FilterBox>
       <Filter
         value={filter.category}
         onChange={(e) => {
@@ -84,7 +85,7 @@ const FilterContainer = () => {
         setMonth={setDurationMonth}
         setDay={setDurationDay}
       />
-    </span>
+    </FilterBox>
   );
 };
 

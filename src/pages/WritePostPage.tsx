@@ -3,7 +3,7 @@ import TabsContainer from '../components/WritePost/containers/TabsContainer';
 import TitleInput from '../components/WritePost/components/PostTitle';
 import PostContentContainer from '../components/WritePost/containers/PostContentContainer';
 import RatingContainer from '../components/WritePost/containers/RatingContainer';
-import WriteCompleteButton from '../components/WritePost/components/WriteCompleteButton';
+import PostRegisterButton from '../components/WritePost/components/PostRegisterButton';
 import ChoiceStoreBoxContainer from '../components/WritePost/containers/ChoiceStoreBoxContainer';
 const Container = styled.div`
   width: 100%;
@@ -19,7 +19,7 @@ const WritePostPage = () => {
       <PostContentContainer />
       <ChoiceStoreBoxContainer />
       <RatingContainer />
-      <WriteCompleteButton>작성하기</WriteCompleteButton>
+      <PostRegisterButton>작성하기</PostRegisterButton>
     </Container>
   );
 };

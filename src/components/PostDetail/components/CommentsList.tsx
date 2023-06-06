@@ -22,7 +22,7 @@ const CommentsList = ({ comments }: { comments: Comment[] | undefined }) => {
       </Title>
       <ul>
         {comments?.map((comment) => (
-          <CommentItemContainer comment={comment} />
+          <CommentItemContainer key={comment.id} comment={comment} />
         ))}
       </ul>
     </CommentBox>

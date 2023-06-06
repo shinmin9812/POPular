@@ -6,7 +6,7 @@ import { CommentAuthorName, CommentContent, CommentUpdateAt } from './CommentIte
 const ReCommentWrap = styled.ul`
   background-color: #fafafa;
   border: 1px solid #dddddd;
-  margin-top: 30px;
+  margin-top: 20px;
 `;
 
 const ReCommentItem = styled.li`
