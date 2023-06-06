@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { API_PATH } from '../../../constants/path';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -27,30 +26,34 @@ const LoginForm = () => {
     e.preventDefault();
     checkValid();
 
-    if (email && password) {
-      fetch(API_PATH.USER.POST.LOGIN, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            setErrorMessage('이메일 또는 비밀번호가 일치하지 않습니다.');
-            throw new Error('로그인에 실패했습니다.');
-          }
-        })
-        .then((data) => {
-          localStorage.setItem('token', data.token);
+    const fetchLogin = async (email: string, password: string) => {
+      try {
+        const response = await fetch('http://34.22.81.36:3000/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            pw: password,
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          localStorage.setItem('token', data.accses_token);
           navigate('/');
-        })
-        .catch((err) => console.log(err.message));
+        } else {
+          setErrorMessage('이메일 또는 비밀번호가 일치하지 않습니다.');
+          throw new Error('로그인에 실패했습니다.');
+        }
+      } catch (err: any) {
+        const errorMessage = err as Error;
+        console.log(errorMessage);
+      }
+    };
+
+    if (email && password) {
+      fetchLogin(email, password);
     }
   };
 

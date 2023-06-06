@@ -7,7 +7,7 @@ import NonMemberMenu from '../components/UserMenu/components/NonMemberMenu';
 const UserMenuPage = () => {
   const [isMember, setIsMember] = useState(false);
 
-  const checkUser = async () => {
+  const getUserInfo = async () => {
     try {
       const response = await fetch('http://34.22.81.36:3000/auth/profile', {
         method: 'GET',
@@ -18,15 +18,21 @@ const UserMenuPage = () => {
       });
       if (response.ok) {
         setIsMember(true);
-      } else setIsMember(false);
+        const data = await response.json();
+        return data;
+      } else {
+        setIsMember(false);
+        return null;
+      }
     } catch (err: any) {
       const errorMessage = err as Error;
       console.log(errorMessage);
+      return null;
     }
   };
 
   useEffect(() => {
-    checkUser();
+    getUserInfo();
   }, []);
 
   return <Container>{isMember ? <MemberMenu /> : <NonMemberMenu />}</Container>;
