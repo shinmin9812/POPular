@@ -15,7 +15,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @Controller('/comments')
 @ApiTags('Comment')
 export class CommentsController {
-	constructor(private readonly commentsService: CommentsService) { }
+	constructor(private readonly commentsService: CommentsService) {}
 
 	@ApiOperation({ summary: '모든 댓글 조회' })
 	@Get()

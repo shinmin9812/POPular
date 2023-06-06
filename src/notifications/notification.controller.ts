@@ -15,7 +15,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @Controller('/notifications')
 @ApiTags('Notification')
 export class NotificationsController {
-	constructor(private readonly notificationService: NotificationsService) { }
+	constructor(private readonly notificationService: NotificationsService) {}
 
 	@ApiOperation({ summary: '모든 알림 조회' })
 	@Get()

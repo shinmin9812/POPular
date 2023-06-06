@@ -35,14 +35,6 @@ export class StoreService {
 		});
 	}
 
-	async updateScrap(_id: string, updateScrap: number): Promise<Store> {
-		return await this.storeModel.findByIdAndUpdate(
-			{ _id },
-			{ scrap: updateScrap },
-			{ new: true },
-		);
-	}
-
 	async deleteStore(_id: string): Promise<Store> {
 		return await this.storeModel.findByIdAndDelete(_id);
 	}

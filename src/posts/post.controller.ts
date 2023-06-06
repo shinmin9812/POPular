@@ -22,7 +22,7 @@ import { diskStorage } from 'multer';
 @Controller('/posts')
 @ApiTags('Post')
 export class PostsController {
-	constructor(private readonly postsService: PostsService) { }
+	constructor(private readonly postsService: PostsService) {}
 
 	@ApiOperation({ summary: '모든 게시글 찾기' })
 	@Get()
@@ -42,33 +42,38 @@ export class PostsController {
 		return await this.postsService.getAllReviewPosts();
 	}
 
-	@ApiOperation({ summary: '자유게시판 게시글 찾기'})
+	@ApiOperation({ summary: '자유게시판 게시글 찾기' })
 	@Get('free')
 	async getAllFreePosts() {
 		return await this.postsService.getAllFreePosts();
 	}
 
-	@ApiOperation({ summary: 'ID로 게시글 찾기'})
+	@ApiOperation({ summary: 'ID로 게시글 찾기' })
 	@Get(':id')
 	async getPostById(@Param('id') id: string) {
 		return await this.postsService.getPostById(id);
 	}
 
-	@ApiOperation({ summary: '게시글 등록하기'})
+	@ApiOperation({ summary: '게시글 등록하기' })
 	@Post()
-	@UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 5 }], multerConfig.storage))
+	@UseInterceptors(
+		FileFieldsInterceptor(
+			[{ name: 'images', maxCount: 5 }],
+			multerConfig.storage,
+		),
+	)
 	async createPost(@Body() createDto: PostCreateDto, @UploadedFiles() files) {
 		createDto.images = files.map((file: Express.Multer.File) => file.path);
 		return await this.postsService.createPost(createDto);
 	}
-	
-	@ApiOperation({ summary: '게시글 수정하기'})
+
+	@ApiOperation({ summary: '게시글 수정하기' })
 	@Patch(':id')
 	async updatePost(@Param('id') id: string, @Body() updateDto: PostUpdateDto) {
 		return await this.postsService.updatePost(id, updateDto);
 	}
 
-	@ApiOperation({ summary: '게시글 조회수 증가하기'})
+	@ApiOperation({ summary: '게시글 조회수 증가하기' })
 	@Patch(':id/views')
 	async incrementViewCount(@Param('id') id: string) {
 		const updatedPost = await this.postsService.incrementViewCount(id);
@@ -82,7 +87,7 @@ export class PostsController {
 		return updatedPost;
 	}
 
-	@ApiOperation({ summary: '게시글 삭제하기'})
+	@ApiOperation({ summary: '게시글 삭제하기' })
 	@Delete(':id')
 	async deletePost(@Param('id') id: string) {
 		await this.postsService.deletePost(id);

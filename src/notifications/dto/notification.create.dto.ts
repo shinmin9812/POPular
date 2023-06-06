@@ -10,7 +10,7 @@ export class NotificationCreateDto {
 	@ApiProperty({
 		example: 'Follow',
 		description: '알림 종류',
-		required: true
+		required: true,
 	})
 	readonly type: NotificationType;
 
@@ -27,7 +27,7 @@ export class NotificationCreateDto {
 	@ApiProperty({
 		example: 'qwer2134',
 		description: '알림 대상 ID',
-		required: true
+		required: true,
 	})
 	readonly userId: Types.ObjectId;
 
@@ -36,7 +36,7 @@ export class NotificationCreateDto {
 	@ApiProperty({
 		example: '귀여운 토끼님이 팔로우하셨습니다.',
 		description: '알림 내용',
-		required: true
+		required: true,
 	})
 	readonly content: Types.ObjectId;
 
@@ -45,7 +45,7 @@ export class NotificationCreateDto {
 	@ApiProperty({
 		example: 'User',
 		description: '내용 모델',
-		required: true
+		required: true,
 	})
 	readonly contentModel: ContentModel;
 }

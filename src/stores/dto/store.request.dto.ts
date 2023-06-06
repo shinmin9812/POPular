@@ -7,6 +7,7 @@ import {
 	IsNotEmpty,
 	ValidateNested,
 } from 'class-validator';
+import { Types } from 'mongoose';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -218,11 +219,11 @@ export class StoreRequestDto {
 	})
 	images: string[];
 
-	@IsNumber()
-	@ApiProperty({
-		example: '[123, 424, 124]',
-		description: '팝업 스토어 스크랩 리스트',
-		required: true,
-	})
-	scrap: number;
+	// @IsArray()
+	// @ApiProperty({
+	// 	example: '[123, 424, 124]',
+	// 	description: '팝업 스토어 스크랩 리스트',
+	// 	required: true,
+	// })
+	// scrap: Types.ObjectId[];
 }
