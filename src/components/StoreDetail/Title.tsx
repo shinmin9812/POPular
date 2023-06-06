@@ -24,10 +24,17 @@ const Container = styled.div`
 
   .title-btns {
     display: flex;
+    align-items: center;
 
-    div + div {
+    button + button {
       margin-left: 10px;
     }
+  }
+
+  .scrap-btn,
+  .share-btn {
+    background-color: #ffffff;
+    pointer: cursor;
   }
 
   .title-img {
@@ -45,11 +52,17 @@ const Title = ({ store }: Props) => {
       <div className="title-head">
         <p className="title">{store?.title}</p>
         <div className="title-btns">
-          <div className="title-scrap">별</div>
-          <div className="title-share">공유</div>
+          <button className="scrap-btn">
+            <img src="../../public/images/scrap.svg" alt="" />
+          </button>
+          <button className="share-btn">
+            <img src="../../public/images/share.svg" alt="" />
+          </button>
         </div>
       </div>
-      <img className="title-img" src={store?.images[0]} alt="브랜드이미지" />
+      {store?.images.map((image) => (
+        <img className="title-img" src={image} alt="브랜드이미지" />
+      ))}
     </Container>
   );
 };
