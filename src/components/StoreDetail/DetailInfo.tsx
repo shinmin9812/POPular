@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Store } from '../../types/store';
+import StorePlace from './StorePlace';
 
 type Props = {
   store?: Store;
@@ -31,11 +32,13 @@ const Container = styled.div`
 
   .store-detail-info-item {
     display: flex;
+    align-items: center;
   }
 
   .item-info {
     font-size: 16px;
     font-weight: 500;
+    margin-left: 20px;
   }
 
   .store-sns-title {
@@ -65,10 +68,12 @@ const Container = styled.div`
 
   .sns-info {
     display: flex;
+    align-items: center;
   }
 
   .sns-title {
     font-size: 16px;
+    margin-left: 10px;
   }
 
   .sns-link {
@@ -79,20 +84,6 @@ const Container = styled.div`
     line-height: 28px;
     text-align: center;
     color: #652cc1;
-  }
-
-  .store-location-box {
-    width: 100%;
-    margin-top: 40px;
-  }
-
-  .store-location-title {
-    font-size: 18px;
-    font-weight: 700;
-  }
-
-  .store-location {
-    font-size: 14px;
   }
 
   .store-similar {
@@ -148,23 +139,23 @@ const DetailInfo = ({ store }: Props) => {
       <div className="line"></div>
       <ul className="store-detail-info-list">
         <li className="store-detail-info-item">
-          <img className="item-ico" src="" alt="" />
+          <img className="item-ico" src="../../images/public/calendar.svg" alt="" />
           <p className="item-info">
             {store?.startDate} ~ {store?.endDate}
           </p>
         </li>
         <li className="store-detail-info-item">
-          <img className="item-ico" src="" alt="" />
+          <img className="item-ico" src="../../images/public/clock.svg" alt="" />
           <p className="item-info">
             영업중 {store?.hours.mon.start} - {store?.hours.mon.end}
           </p>
         </li>
         <li className="store-detail-info-item">
-          <img className="item-ico" src="" alt="" />
+          <img className="item-ico" src="../../public/images/place.svg" alt="" />
           <p className="item-info">{store?.location}</p>
         </li>
         <li className="store-detail-info-item">
-          <img className="item-ico" src="" alt="" />
+          <img className="item-ico" src="../../public/images/won.svg" alt="" />
           <p className="item-info">입장료 {store?.price}원</p>
         </li>
       </ul>
@@ -172,7 +163,7 @@ const DetailInfo = ({ store }: Props) => {
       <ul className="store-sns-list">
         <li className="store-sns-item">
           <div className="sns-info">
-            <img className="sns-ico" src="" alt="" />
+            <img className="sns-ico" src="../../public/images/instagram.svg" alt="" />
             <p className="sns-title">{store?.sns[0].linkTitle}</p>
           </div>
           <a className="sns-link" href={store?.sns[0].link}>
@@ -181,7 +172,7 @@ const DetailInfo = ({ store }: Props) => {
         </li>
         <li className="store-sns-item">
           <div className="sns-info">
-            <img className="sns-ico" src="" alt="" />
+            <img className="sns-ico" src="../../public/images/instagram.svg" alt="" />
             <p className="sns-title">{store?.sns[0].linkTitle}</p>
           </div>
           <a className="sns-link" href={store?.sns[0].link}>
@@ -189,24 +180,7 @@ const DetailInfo = ({ store }: Props) => {
           </a>
         </li>
       </ul>
-      <div className="store-location-box">
-        <p className="store-location-title">오시는 길</p>
-        <img className="store-location-img" src="" alt="" />
-        <p className="store-location">{store?.location}</p>
-      </div>
-      <div className="store-similar">
-        <p className="store-similar-title">비슷한 스토어</p>
-        <ul className="similar-list">
-          <li className="similar-item">
-            <img className="item-img" src="" alt="" />
-            <p className="item-title">동팔이와 두칠이</p>
-          </li>
-          <li>
-            <img className="item-img" src="" alt="" />
-            <p className="item-title">동팔이와 두칠이</p>
-          </li>
-        </ul>
-      </div>
+      <StorePlace location={store?.location} coord={store?.coord} />
       <div className="line"></div>
       <div className="detail-bottom-btns">
         <button className="reservation-btn">예약하기</button>
