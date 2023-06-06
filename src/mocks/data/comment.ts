@@ -1,6 +1,7 @@
 import { BoardTypes } from '../../types/board';
+import { Comment } from '../../types/comment';
 
-export const commentData = [
+export const commentData: Comment[] = [
   {
     id: '3213',
     author: {

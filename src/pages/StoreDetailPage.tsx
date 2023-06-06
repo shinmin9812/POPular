@@ -3,28 +3,43 @@ import styled from 'styled-components';
 import { Store } from '../types/store';
 import Title from '../components/StoreDetail/Title';
 import DetailInfo from '../components/StoreDetail/DetailInfo';
+import StoreReview from '../components/StoreDetail/container/StoreReview';
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-
+const Container = styled.div<{ isDetail: boolean }>`
   .detail-top-btn {
     display: flex;
     width: 100%;
     height: 50px;
+
+    position: relative;
+  }
+
+  .detail-top-btn::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 2px;
+    background-color: var(--color-main);
+
+    transition: all 0.3s;
+
+    transform: ${(props) => (props.isDetail ? 'translateX(0)' : 'translateX(100%)')};
   }
 
   .detail-info-btn,
   .store-comment-btn {
-    width: 50%;
+    width: 100%;
     background-color: #ffffff;
-    border-bottom: 2px solid blue;
     font-weight: 700;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
-  .active {
-    border-bottom: 2px solid rgba(0, 0, 255, 0.2);
-  }
+  overflow-x: hidden;
 `;
 
 const StoreDetailPage = () => {
@@ -48,7 +63,7 @@ const StoreDetailPage = () => {
   }
 
   return (
-    <Container>
+    <Container isDetail={isDetail}>
       <Title store={store}></Title>
       <div className="detail-top-btn">
         <button className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'} onClick={() => setIsDetail(true)}>
@@ -61,7 +76,7 @@ const StoreDetailPage = () => {
           후기
         </button>
       </div>
-      {isDetail ? <DetailInfo store={store} /> : <div>hello</div>}
+      {isDetail ? <DetailInfo store={store} /> : <StoreReview />}
     </Container>
   );
 };

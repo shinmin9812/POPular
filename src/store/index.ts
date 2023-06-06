@@ -3,7 +3,7 @@ import CommunitySlice from '../components/Community/CommunitySlice';
 import WritePostSlice from '../components/WritePost/WritePostSlice';
 import UserSlice from '../components/User/UserSlice';
 import { mapReducer } from '../components/Map/mapSlice';
-import { storeAPI } from '../api/store';
+import { api } from '../api/useQueries';
 
 const store = configureStore({
   reducer: {
@@ -11,13 +11,13 @@ const store = configureStore({
     CommunitySlice,
     WritePostSlice,
     UserSlice,
-    [storeAPI.reducerPath]: storeAPI.reducer,
+    [api.reducerPath]: api.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(storeAPI.middleware),
+    }).concat(api.middleware),
 });
 
 export default store;
