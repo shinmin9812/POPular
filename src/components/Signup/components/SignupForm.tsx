@@ -182,7 +182,7 @@ const SignupForm = () => {
   const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('/users', {
+      const response = await fetch('http://34.22.81.36:3000/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
