@@ -1,9 +1,10 @@
+import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 interface Props {
   text: string;
   name: string;
-  onChange: any;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const ProfileUploadButton = ({ text, name, onChange }: Props) => {

@@ -29,7 +29,7 @@ const ProfileUpdatePasswordForm = () => {
           <FormInput type={'passwordcheck'} value={passwordcheck} onChange={passwordHandler} />
         </FormInner>
         <FormButton>
-          <ProfileButton className="button" text={'수정하기'} type={'submit'} />
+          <ProfileButton className="button" text={'수정하기'} theme={'submit'} />
         </FormButton>
       </FormContainer>
     </Container>

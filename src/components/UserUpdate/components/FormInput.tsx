@@ -1,19 +1,19 @@
 import styled, { css } from 'styled-components';
 
 interface Props {
-  type: 'info' | 'nickname' | 'password' | 'passwordcheck' | 'number' | 'checkbox';
+  type: 'introduce' | 'nickname' | 'password' | 'passwordcheck' | 'phone_number' | 'checkbox';
   height?: boolean;
-  value: string | number | readonly string[] | undefined;
+  value: string | readonly string[] | undefined;
   checked?: boolean;
   onChange: any;
 }
 
 const typeLabels = new Map<Props['type'], string>([
-  ['info', '한 줄 소개'],
+  ['introduce', '한 줄 소개'],
   ['nickname', '닉네임'],
   ['password', '비밀번호'],
   ['passwordcheck', '비밀번호 확인'],
-  ['number', '전화번호'],
+  ['phone_number', '전화번호'],
   ['checkbox', '알림 허용'],
 ]);
 
@@ -21,8 +21,8 @@ const FormInput = ({ type, height, checked, value, onChange }: Props) => {
   const inputType =
     type === 'nickname'
       ? 'text'
-      : type === 'number'
-      ? 'number'
+      : type === 'phone_number'
+      ? 'tel'
       : type === 'password' || type === 'passwordcheck'
       ? 'password'
       : 'checkbox';
@@ -42,13 +42,7 @@ const FormInput = ({ type, height, checked, value, onChange }: Props) => {
         </InputFrame>
       ) : (
         <InputFrame>
-          <Input
-            type={inputType}
-            checked={checked}
-            name={type}
-            // value={value}
-            onChange={onChange}
-          />
+          <Input type={inputType} checked={checked} name={type} value={value} onChange={onChange} />
         </InputFrame>
       )}
     </Container>

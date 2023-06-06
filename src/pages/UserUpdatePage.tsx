@@ -7,24 +7,31 @@ import ProfileUpdateForm from '../components/UserUpdate/components/ProfileUpdate
 import ProfileUpdatePasswordForm from '../components/UserUpdate/components/ProfileUpdatePasswordForm';
 
 const UserUpdatePage = () => {
-  const [user, setUser] = useState<User[]>([]);
+  const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     fetchData();
   }, []);
 
   async function fetchData() {
-    const response = await fetch('/user/all');
-    const result: User[] = await response.json();
+    const response = await fetch('http://34.22.81.36:3000/users/6479cd31b0b0d8f69ffcfc55');
+    const result: User = await response.json();
 
     setUser(result);
   }
+
   return (
     <Container>
-      <ProfileImageModify user={user}></ProfileImageModify>
-      <SpaceLine />
-      <ProfileUpdateForm />
-      <SpaceLine />
-      <ProfileUpdatePasswordForm />
+      {user ? (
+        <>
+          <ProfileImageModify user={user}></ProfileImageModify>
+          <SpaceLine />
+          <ProfileUpdateForm user={user} />
+          <SpaceLine />
+          <ProfileUpdatePasswordForm />
+        </>
+      ) : (
+        <div>로그인</div>
+      )}
     </Container>
   );
 };

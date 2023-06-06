@@ -5,13 +5,15 @@ export interface UserOnlyProfile {
   id: string;
   nickname: string;
   profile?: string;
+  introduce: string;
+  allow_notification: boolean;
 }
 
 export interface User extends UserOnlyProfile {
   email: string;
   pw: string;
   scrap: string[];
-  phoneNumber: string;
+  phone_number: string;
   follower: UserOnlyProfile[];
   following: UserOnlyProfile[];
   isEnterpriser: boolean;

@@ -7,14 +7,14 @@ interface Category {
 }
 
 interface Props {
-  type: 'brand' | 'notice';
+  type: 'notifications' | 'notice';
   value: string[] | boolean;
   defaultData?: Category[];
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const typeLabels = new Map<Props['type'], string>([
-  ['brand', '선호 카테고리'],
+  ['notifications', '선호 카테고리'],
   ['notice', '알림 허용'],
 ]);
 
@@ -24,12 +24,12 @@ const CheckboxInput = ({ type, value, defaultData, onChange }: Props) => {
       <Label>{typeLabels.get(type)}</Label>
       <InputInner>
         {defaultData ? (
-          defaultData.map((item) => (
-            <div className="input-item-box">
+          defaultData.map((item, index) => (
+            <div className="input-item-box" key={index}>
               <Input
                 type="checkbox"
                 value={item.value}
-                name={item.name}
+                name={type}
                 onChange={onChange}
                 id={item.name}
                 checked={Array.isArray(value) && value.includes(item.value)}
