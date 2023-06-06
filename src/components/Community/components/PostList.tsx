@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-type PostListItem = { postTitle: string; storeName?: string; postInfo: string };
+type PostListItem = { postTitle: string; storeName?: string; postInfo: string; postId: string };
 
 const PostList = styled.li`
   display: flex;
@@ -37,12 +38,14 @@ const PostInfo = styled.div`
   font-size: var(--font-small);
 `;
 
-const PostListItem = ({ postTitle, storeName, postInfo }: PostListItem) => {
+const PostListItem = ({ postTitle, storeName, postInfo, postId }: PostListItem) => {
   return (
     <PostList>
-      <PostTitle>{postTitle}</PostTitle>
-      <StoreNameWrap>{storeName && <StoreName>{storeName}</StoreName>}</StoreNameWrap>
-      <PostInfo>{postInfo}</PostInfo>
+      <Link to={`/community/post/${postId}`}>
+        <PostTitle>{postTitle}</PostTitle>
+        <StoreNameWrap>{storeName && <StoreName>{storeName}</StoreName>}</StoreNameWrap>
+        <PostInfo>{postInfo}</PostInfo>
+      </Link>
     </PostList>
   );
 };

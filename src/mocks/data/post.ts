@@ -37,7 +37,7 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: 10,
     report: 2,
-    updatedAt: '2023-03-21',
+    updatedAt: '2023-05-30 15:17:01',
     comments: [commentData[0]],
   },
   {

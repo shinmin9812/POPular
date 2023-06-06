@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { communityActions } from '../CommunitySlice';
-import Pagination from '../components/Pagination';
+import Pagination from '../../common/Pagination/Pagination';
 
 const PaginationContainer = () => {
   const page = useAppSelector((state) => state.CommunitySlice.page);
