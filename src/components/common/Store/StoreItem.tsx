@@ -9,6 +9,7 @@ interface Props {
 const Container = styled.article`
   display: flex;
   width: 100%;
+  min-width: 300px;
   max-width: 100%;
   height: 150px;
 
@@ -21,12 +22,15 @@ const Container = styled.article`
   figure {
     min-height: 100%;
     min-width: 100px;
+    aspect-ratio: 1/1;
     margin-right: 20px;
     border-radius: 6px;
     overflow: hidden;
 
     img {
+      width: 100%;
       height: 100%;
+      object-fit: cover;
       transition: transform 1s;
     }
   }
@@ -63,13 +67,7 @@ const Container = styled.article`
   }
 
   &:hover {
-    background-color: var(--color-light-gray);
-
     cursor: pointer;
-
-    img {
-      transform: scale(1.4);
-    }
   }
 `;
 
@@ -86,9 +84,9 @@ const StoreItem = ({ store }: Props) => {
         <h3 className="store-title">{store.title}</h3>
         <p className="store-location">{location}</p>
         <p className="store-date">
-          {store.startDate} - {store.endDate}
+          {store.start_date} - {store.end_date}
         </p>
-        <Tag>{store.brand}</Tag>
+        <Tag>{store.category}</Tag>
       </div>
     </Container>
   );

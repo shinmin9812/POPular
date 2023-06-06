@@ -620,7 +620,7 @@ export const storeData: Store[] = [
     ],
     reservation_required: false,
     images: [
-      'https://mblogthumb-phinf.pstatic.net/MjAyMzA1MTVfNTIg/MDAxNjg0MTI0NTI3Mjkw.eFuMbX3ZKTfF8nlgm4V50fBKYxt_I2dFH_-SNcZQw00g.6GZ8_H0E_gp3bD3fgTOXi6yQutg2-aD0fMdfz_Qja8og.JPEG.art_cream/20230515%EF%BC%BF125124.jpg?type=w800',
+      'https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202304/25/newsen/20230425101228885aoos.jpg',
     ],
     scrap: 20,
   },
