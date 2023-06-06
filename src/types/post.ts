@@ -3,7 +3,7 @@ import { Comment } from './comment';
 import { User } from './user';
 
 export interface Post {
-  id: string;
+  _id: string;
   title: string;
   author: User;
   board: BoardTypes;
@@ -11,8 +11,8 @@ export interface Post {
   images?: string[];
   storeId?: string;
   rating?: number;
-  likes: number;
-  report: number;
+  likes: string[];
+  report: string[];
   updatedAt: string;
   comments: Comment[];
 }
