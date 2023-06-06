@@ -3,7 +3,7 @@ import { Document, SchemaOptions, Types } from 'mongoose';
 import { User } from 'src/users/user.schema';
 import { Comment } from 'src/comments/comment.schema';
 import { Store } from 'src/stores/store.schema';
-import { BoardType } from 'src/posts/post.schema';
+import { BoardType } from 'src/feeds/feed.schema';
 
 const options: SchemaOptions = {
 	timestamps: true,

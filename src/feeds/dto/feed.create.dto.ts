@@ -10,11 +10,11 @@ import {
 	ValidateIf,
 	IsMongoId,
 } from 'class-validator';
-import { BoardType } from '../post.schema';
+import { BoardType } from '../feed.schema';
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class PostCreateDto {
+export class FeedCreateDto {
 	@IsString()
 	@IsNotEmpty()
 	@ApiProperty({

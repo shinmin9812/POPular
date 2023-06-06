@@ -1,6 +1,6 @@
 import { IsEnum, IsMongoId, IsNotEmpty, ValidateIf } from 'class-validator';
 import { ContentModel, NotificationType } from '../notification.schema';
-import { BoardType } from 'src/posts/post.schema';
+import { BoardType } from 'src/feeds/feed.schema';
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 
