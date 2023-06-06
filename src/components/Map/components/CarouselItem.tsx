@@ -2,10 +2,8 @@ import styled from 'styled-components';
 import { Store } from '../../../types/store';
 import StoreItem from '../../common/Store/StoreItem';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
-import { mapActions } from '../mapSlice';
 import { MapProps } from './SlideCarousel';
+import { Map } from '../containers/Map';
 
 interface Props extends MapProps {
   store: Store;
@@ -40,6 +38,7 @@ const Container = styled.div<{ idx: number }>`
 
 const CarouselItem = ({ store, map, idx, currentIdx, setSlectedId, setCurrentIdx, setCenter }: Props) => {
   const navigate = useNavigate();
+  map as Map;
 
   let seq = '';
   if (idx === currentIdx - 1) seq = 'prev';
@@ -52,7 +51,7 @@ const CarouselItem = ({ store, map, idx, currentIdx, setSlectedId, setCurrentIdx
 
     setCurrentIdx(idx);
     setSlectedId(store.id);
-    map!.panTo(markerPosition);
+    map.panTo(markerPosition);
     setCenter({
       lat: +store.coord.lat,
       lng: +store.coord.lng,

@@ -4,6 +4,7 @@ import FindCurrentPositon from '../components/FindCurrentPositon';
 import StoreList from '../../common/Store/StoreList';
 import SlideCarousel from '../components/SlideCarousel';
 import { useGetAllStoreQuery } from '../../../api/useQueries';
+import { getDistance } from '../../../utils/getDistance';
 
 declare global {
   interface Window {
@@ -20,11 +21,22 @@ interface Marker {
   setMap(deleted?: null): () => void;
 }
 
+interface Bounds {
+  getSouthWest(): {
+    La: number;
+    Ma: number;
+  };
+}
+
 export interface Map {
   getCenter(): {
     Ma: number;
     La: number;
+    getLat(): number;
+    getLng(): number;
   };
+  getLevel(): number;
+  getBounds(): Bounds;
   setCenter(coord: Coord): () => void;
   panTo(coord: Coord): () => void;
 }
@@ -39,6 +51,8 @@ const Map = () => {
     lat: 37.566826,
     lng: 126.9786567,
   });
+  const [zoom, setZoom] = useState(3);
+  const [distance, setDistance] = useState<number>(0);
 
   const { data: stores, isFetching, refetch } = useGetAllStoreQuery();
 
@@ -48,12 +62,26 @@ const Map = () => {
 
     const options = {
       center: new window.kakao.maps.LatLng(center.lat, center.lng),
-      level: 3,
+      level: zoom,
       maxLevel: 8,
     };
 
     const createdMap = new window.kakao.maps.Map(container, options);
     createdMap.relayout();
+
+    window.kakao.maps.event.addListener(createdMap, 'zoom_changed', () => {
+      const level = createdMap!.getLevel();
+      setZoom(level);
+    });
+
+    window.kakao.maps.event.addListener(createdMap, 'dragend', () => {
+      const lat = createdMap!.getCenter().getLat();
+      const lng = createdMap!.getCenter().getLng();
+      setCenter({
+        lat,
+        lng,
+      });
+    });
 
     setMap(createdMap);
   }, []);
@@ -131,7 +159,19 @@ const Map = () => {
       )}
       <FindCurrentPositon
         onClick={() => {
-          refetch();
+          const boundPoint = map!.getBounds();
+
+          const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
+
+          const distance = getDistance({
+            centerLat: center.lat,
+            centerLng: center.lng,
+            targetLat,
+            targetLng,
+          });
+
+          setDistance(distance);
+          console.log(distance);
         }}
       />
       <div className={`store-list-container ${openList ? 'open' : ''}`}>
