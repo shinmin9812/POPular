@@ -20,7 +20,7 @@ export class PostCreateDto {
 	@ApiProperty({
 		example: '홍대 팝업스토어 같이 가실 분?',
 		description: '게시글 제목',
-		required: true
+		required: true,
 	})
 	readonly title: string;
 
@@ -29,7 +29,7 @@ export class PostCreateDto {
 	@ApiProperty({
 		example: '귀여운 토끼',
 		description: '게시글 작성자',
-		required: true
+		required: true,
 	})
 	readonly author: Types.ObjectId;
 
@@ -38,7 +38,7 @@ export class PostCreateDto {
 	@ApiProperty({
 		example: 'Gather',
 		description: '게시글 올릴 게시판 종류',
-		required: true
+		required: true,
 	})
 	readonly board: BoardType;
 
@@ -47,7 +47,7 @@ export class PostCreateDto {
 	@ApiProperty({
 		example: '6월 16일 같이 가실 분 구합니다!',
 		description: '게시글 내용',
-		required: true
+		required: true,
 	})
 	readonly content: string;
 
@@ -59,7 +59,7 @@ export class PostCreateDto {
 	@ApiProperty({
 		example: 'qwerra21341',
 		description: '게시글에서 설정한 스토어 ID',
-		required: true
+		required: true,
 	})
 	readonly storeId: Types.ObjectId;
 

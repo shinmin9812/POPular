@@ -23,7 +23,7 @@ export class User extends Document {
 	@Prop({ required: true })
 	name: string;
 
-	@Prop({ required: true })
+	@Prop({ required: true, unique: true })
 	nickname: string;
 
 	@Prop({ required: true })
@@ -35,8 +35,8 @@ export class User extends Document {
 	@Prop({ type: Array<user_profile>, default: [] })
 	following: Array<user_profile>;
 
-	@Prop({ default: false })
-	enterpriser: boolean;
+	@Prop({ default: 'user' })
+	role: string;
 
 	@Prop({ default: '' })
 	brand: string;
@@ -50,7 +50,7 @@ export class User extends Document {
 	@Prop({ required: true })
 	allow_notification: boolean;
 
-	@Prop({ type: Types.ObjectId, ref: 'Store', default: [] })
+	@Prop({ type: [{ type: Types.ObjectId, ref: 'Store' }], default: [] })
 	scrap: Types.ObjectId[];
 
 	@Prop({ type: Types.ObjectId, ref: 'Notification', default: [] })

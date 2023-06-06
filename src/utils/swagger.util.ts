@@ -4,6 +4,7 @@ import {
 	DocumentBuilder,
 	SwaggerCustomOptions,
 } from '@nestjs/swagger';
+import * as fs from 'fs';
 
 const swaggerCustomOptions: SwaggerCustomOptions = {
 	//웹 페이지 새로고침해도 jwt 토큰 값 유지
@@ -30,5 +31,6 @@ export function setupSwagger(app: INestApplication): void {
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);
+	fs.writeFileSync('./swagger-spec.json', JSON.stringify(document));
 	SwaggerModule.setup('swagger', app, document, swaggerCustomOptions);
 }
