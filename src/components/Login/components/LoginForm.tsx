@@ -1,22 +1,110 @@
+import * as React from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import FormField from './FormField';
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const checkValid = () => {
+    if (!email) {
+      setErrorMessage('이메일을 입력해주세요.');
+    } else if (!password) {
+      setErrorMessage('비밀번호를 입력해주세요.');
+    } else {
+      setErrorMessage('');
+    }
+  };
+
+  const emailInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+  const passwordInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+
+  const onSubmitHandler = (e: React.MouseEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    checkValid();
+
+    const fetchLogin = async (email: string, password: string) => {
+      try {
+        const response = await fetch('http://34.22.81.36:3000/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            pw: password,
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          localStorage.setItem('token', data.accses_token);
+          navigate('/');
+        } else {
+          setErrorMessage('이메일 또는 비밀번호가 일치하지 않습니다.');
+          throw new Error('로그인에 실패했습니다.');
+        }
+      } catch (err: any) {
+        const errorMessage = err as Error;
+        console.log(errorMessage);
+      }
+    };
+
+    if (email && password) {
+      fetchLogin(email, password);
+    }
+  };
+
   return (
-    <Form>
-      <FormField type={'email'} />
-      <FormField type={'password'} />
-      <WarningMessage>이메일 형식이 올바르지 않습니다.</WarningMessage>
-      {/* <WarningMessage>이메일 또는 비밀번호가 일치하지 않습니다.</WarningMessage> */}
+    <Form onSubmit={onSubmitHandler}>
+      <FieldContainer>
+        <label>이메일</label>
+        <input type="email" value={email} onChange={emailInputHandler} />
+      </FieldContainer>
+      <FieldContainer>
+        <label>비밀번호</label>
+        <input type="password" value={password} onChange={passwordInputHandler} />
+      </FieldContainer>
+      <WarningMessage>{errorMessage}</WarningMessage>
       <LoginButton type="submit">로그인</LoginButton>
     </Form>
   );
 };
 
+export default LoginForm;
+
 const Form = styled.form`
   flex-direction: column;
   align-items: center;
   display: flex;
+`;
+
+const FieldContainer = styled.div`
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  label {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    width: 70px;
+  }
+
+  input {
+    width: 200px;
+    height: 30px;
+    padding: 8px;
+    margin: 0;
+    box-sizing: border-box;
+    border: 1px solid var(--color-sub);
+    border-radius: var(--border-radius-input);
+    font-size: var(--font-small);
+    color: var(--color-black);
+  }
 `;
 
 const WarningMessage = styled.p`
@@ -34,5 +122,3 @@ const LoginButton = styled.button`
   margin: 10px 0;
   cursor: pointer;
 `;
-
-export default LoginForm;
