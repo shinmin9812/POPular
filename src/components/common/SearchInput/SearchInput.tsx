@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import searchIcon from '../../../../public/images/searchIcon.png';
+import searchIcon from '/images/searchIcon.png';
 const SearchContainer = styled.div`
   width: 100%;
   position: relative;

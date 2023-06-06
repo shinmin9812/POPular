@@ -53,10 +53,10 @@ const Title = ({ store }: Props) => {
         <p className="title">{store?.title}</p>
         <div className="title-btns">
           <button className="scrap-btn">
-            <img src="../../public/images/scrap.svg" alt="" />
+            <img src="/images/scrap.svg" alt="" />
           </button>
           <button className="share-btn">
-            <img src="../../public/images/share.svg" alt="" />
+            <img src="/images/share.svg" alt="" />
           </button>
         </div>
       </div>

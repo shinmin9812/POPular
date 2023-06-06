@@ -68,7 +68,7 @@ const MoreView = styled.div`
     display: block;
     width: 120px;
     height: 10px;
-    background-image: url('/public/images/arrow.png');
+    background-image: url('/images/arrow.png');
     background-repeat: no-repeat;
 
     position: absolute;

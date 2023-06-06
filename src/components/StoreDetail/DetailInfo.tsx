@@ -139,23 +139,23 @@ const DetailInfo = ({ store }: Props) => {
       <div className="line"></div>
       <ul className="store-detail-info-list">
         <li className="store-detail-info-item">
-          <img className="item-ico" src="../../images/public/calendar.svg" alt="" />
+          <img className="item-ico" src="/calendar.svg" alt="" />
           <p className="item-info">
-            {store?.startDate} ~ {store?.endDate}
+            {store?.start_date} ~ {store?.end_date}
           </p>
         </li>
         <li className="store-detail-info-item">
-          <img className="item-ico" src="../../images/public/clock.svg" alt="" />
+          <img className="item-ico" src="/clock.svg" alt="" />
           <p className="item-info">
             영업중 {store?.hours.mon.start} - {store?.hours.mon.end}
           </p>
         </li>
         <li className="store-detail-info-item">
-          <img className="item-ico" src="../../public/images/place.svg" alt="" />
+          <img className="item-ico" src="/images/place.svg" alt="" />
           <p className="item-info">{store?.location}</p>
         </li>
         <li className="store-detail-info-item">
-          <img className="item-ico" src="../../public/images/won.svg" alt="" />
+          <img className="item-ico" src="/images/won.svg" alt="" />
           <p className="item-info">입장료 {store?.price}원</p>
         </li>
       </ul>
@@ -163,20 +163,20 @@ const DetailInfo = ({ store }: Props) => {
       <ul className="store-sns-list">
         <li className="store-sns-item">
           <div className="sns-info">
-            <img className="sns-ico" src="../../public/images/instagram.svg" alt="" />
-            <p className="sns-title">{store?.sns[0].linkTitle}</p>
+            <img className="sns-ico" src="/images/instagram.svg" alt="" />
+            <p className="sns-title">{store?.sns[0].link_title}</p>
           </div>
-          <a className="sns-link" href={store?.sns[0].link}>
-            {store?.sns[0].linkType}
+          <a className="sns-link" href={store?.sns[0].link_url}>
+            {store?.sns[0].link_type}
           </a>
         </li>
         <li className="store-sns-item">
           <div className="sns-info">
-            <img className="sns-ico" src="../../public/images/instagram.svg" alt="" />
-            <p className="sns-title">{store?.sns[0].linkTitle}</p>
+            <img className="sns-ico" src="/images/instagram.svg" alt="" />
+            <p className="sns-title">{store?.sns[0].link_title}</p>
           </div>
-          <a className="sns-link" href={store?.sns[0].link}>
-            {store?.sns[0].linkType}
+          <a className="sns-link" href={store?.sns[0].link_url}>
+            {store?.sns[0].link_type}
           </a>
         </li>
       </ul>
