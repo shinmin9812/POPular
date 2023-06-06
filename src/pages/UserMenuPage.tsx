@@ -1,18 +1,38 @@
-// import UserProfile from '../components/UserMenu/components/UserProfile';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import MemberMenu from '../components/UserMenu/components/MemberMenu';
 import NonMemberMenu from '../components/UserMenu/components/NonMemberMenu';
-import { API_PATH } from '../constants/path';
 
 const UserMenuPage = () => {
   const [isMember, setIsMember] = useState(false);
 
+  const getUserInfo = async () => {
+    try {
+      const response = await fetch('http://34.22.81.36:3000/auth/profile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.ok) {
+        setIsMember(true);
+        const data = await response.json();
+        return data;
+      } else {
+        setIsMember(false);
+        return null;
+      }
+    } catch (err: any) {
+      const errorMessage = err as Error;
+      console.log(errorMessage);
+      return null;
+    }
+  };
+
   useEffect(() => {
-    fetch(API_PATH.USER.GET.ALL)
-      .then((res) => res.json())
-      .then((data) => data && setIsMember(true));
+    getUserInfo();
   }, []);
 
   return <Container>{isMember ? <MemberMenu /> : <NonMemberMenu />}</Container>;

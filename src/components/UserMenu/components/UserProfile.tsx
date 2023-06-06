@@ -6,7 +6,7 @@ import NotificationIcon from '../../common/Icons/NotificationIcon';
 const UserProfile = () => {
   return (
     <ProfileContainer>
-      <Link to="/">
+      <Link to="/user/12341231">
         <img
           src="https://image.rocketpunch.com/company/20527/elice_logo_1643264201.png?s=400x400&t=inside"
           alt="profile"
