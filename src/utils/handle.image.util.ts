@@ -1,4 +1,3 @@
-import { join } from 'path';
 import * as uuid from 'uuid';
 import { saveImage } from './save.images.util';
 

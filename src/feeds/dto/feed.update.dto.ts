@@ -8,6 +8,7 @@ import {
 	IsNotEmpty,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Types } from 'mongoose';
 
 export class FeedUpdateDto {
 	@IsOptional()
@@ -51,4 +52,38 @@ export class FeedUpdateDto {
 		description: '게시글 평점',
 	})
 	ratings?: number;
+
+	@IsOptional()
+	@IsArray()
+	@ApiProperty({
+		example: '[qwer1234, rewq431]',
+		description: '게시글 좋아요 누른 유저 목록',
+	})
+	likes?: Types.ObjectId[];
+
+	@IsOptional()
+	@IsArray()
+	@ApiProperty({
+		example: '[qwer1234, rewq431]',
+		description: '게시글 신고 누른 유저 목록',
+	})
+	reports?: Types.ObjectId[];
+
+	@IsOptional()
+	@IsArray()
+	@ApiProperty({
+		example: '[저요!, 까비요]',
+		description: '게시글 댓글',
+	})
+	comments?: Types.ObjectId[];
+
+	@IsOptional()
+	@IsNumber()
+	@Min(0)
+	@ApiProperty({
+		example: '0',
+		description: '게시글 조회수',
+		default: 0,
+	})
+	views: number;
 }
