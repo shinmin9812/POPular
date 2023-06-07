@@ -9,8 +9,10 @@ import {
 	NotFoundException,
 	UseInterceptors,
 	UploadedFiles,
+	UseGuards,
+	Query,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { multerConfig } from 'src/multer.config';
 import { MulterModule } from '@nestjs/platform-express/multer';
 import { FileFieldsInterceptor } from '@nestjs/platform-express/multer';
@@ -18,6 +20,7 @@ import { diskStorage } from 'multer';
 import { FeedsService } from './feed.service';
 import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('/feeds')
 @ApiTags('Feed')
@@ -28,6 +31,12 @@ export class FeedsController {
 	@Get()
 	async getAllFeeds() {
 		return await this.feedsService.getAllFeeds();
+	}
+
+	@ApiOperation({ summary: '게시글 페이지네이션' })
+	@Get('pages')
+	async getPaginate(@Query('page') page: number = 1) {
+		return await this.feedsService.getPaginate(page);
 	}
 
 	@ApiOperation({ summary: '모집게시판 게시글 찾기' })
@@ -55,10 +64,20 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 등록하기' })
+	@ApiBearerAuth('Authorization')
 	@Post()
-	@UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 5 }], multerConfig.storage))
-	async createFeed(@Body() createDto: FeedCreateDto, @UploadedFiles() files: Express.Multer.File[]) {
-		if(!createDto.images === undefined){
+	@UseGuards(AuthGuard)
+	@UseInterceptors(
+		FileFieldsInterceptor(
+			[{ name: 'images', maxCount: 5 }],
+			multerConfig.storage,
+		),
+	)
+	async createFeed(
+		@Body() createDto: FeedCreateDto,
+		@UploadedFiles() files: Express.Multer.File[],
+	) {
+		if (createDto.images.length > 0) {
 			createDto.images = files.map((file: Express.Multer.File) => file.path);
 		}
 
@@ -66,10 +85,21 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 수정하기' })
+	@ApiBearerAuth('Authorization')
 	@Patch(':id')
-	@UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 5 }], multerConfig.storage))
-	async updateFeed(@Param('id') id: string, @Body() updateDto: FeedUpdateDto, @UploadedFiles() files: Express.Multer.File[]) {
-		if(!updateDto.images === undefined){
+	@UseGuards(AuthGuard)
+	@UseInterceptors(
+		FileFieldsInterceptor(
+			[{ name: 'images', maxCount: 5 }],
+			multerConfig.storage,
+		),
+	)
+	async updateFeed(
+		@Param('id') id: string,
+		@Body() updateDto: FeedUpdateDto,
+		@UploadedFiles() files: Express.Multer.File[],
+	) {
+		if (updateDto.images.length > 0) {
 			updateDto.images = files.map((file: Express.Multer.File) => file.path);
 		}
 		return await this.feedsService.updateFeed(id, updateDto);
@@ -90,7 +120,9 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 삭제하기' })
+	@ApiBearerAuth('Authorization')
 	@Delete(':id')
+	@UseGuards(AuthGuard)
 	async deleteFeed(@Param('id') id: string) {
 		await this.feedsService.deleteFeed(id);
 		return { message: '글이 삭제되었습니다.' };

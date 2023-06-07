@@ -50,6 +50,13 @@ export class FeedsService {
 		return await this.getFeedsByBoard('free');
 	}
 
+	async getPaginate(page: number): Promise<Feed[]> {
+		const limit = 10;
+		const offset = (page - 1) * limit;
+
+		return await this.feedModel.find().limit(limit).skip(offset);
+	}
+
 	async getFeedById(id: string): Promise<Feed> {
 		try {
 			const feed = await this.feedModel
