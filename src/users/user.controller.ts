@@ -18,7 +18,7 @@ import {
 	ApiBearerAuth,
 	ApiProperty,
 } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 
 class checknickname {
 	@ApiProperty({
@@ -85,6 +85,7 @@ export class UserController {
 	}
 
 	@ApiOperation({ summary: '유저 스크랩 & 스토어 스크랩 등록하기' })
+	@ApiBearerAuth('Authorization')
 	@Patch(':userId/scrapStore/:storeId')
 	@UseGuards(AuthGuard)
 	async updateScrap(
@@ -95,6 +96,7 @@ export class UserController {
 	}
 
 	@ApiOperation({ summary: '유저 스크랩 & 스토어 스크랩 취소하기' })
+	@ApiBearerAuth('Authorization')
 	@Patch(':userId/unscrapStore/:storeId')
 	@UseGuards(AuthGuard)
 	async updateUnScrap(
@@ -105,6 +107,7 @@ export class UserController {
 	}
 
 	@ApiOperation({ summary: '유저 정보 삭제하기' })
+	@ApiBearerAuth('Authorization')
 	@Delete(':id')
 	@UseGuards(AuthGuard)
 	async deleteUser(@Param('id') _id: string): Promise<User> {
