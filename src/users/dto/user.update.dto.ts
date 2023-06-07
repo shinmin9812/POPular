@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsArray, IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserUpdateDto {
@@ -41,4 +41,18 @@ export class UserUpdateDto {
 		required: true,
 	})
 	phone_number: string;
+
+	@IsArray()
+	@ApiProperty({
+		example: '[의류, 식품]',
+		description: '유저 선호 카테고리 목록',
+	})
+	interested_category: Array<string>;
+
+	@IsBoolean()
+	@ApiProperty({
+		example: 'true',
+		description: '유저 알림 허용 여부',
+	})
+	allow_notification: boolean;
 }
