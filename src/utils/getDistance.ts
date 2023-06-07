@@ -21,6 +21,6 @@ export function getDistance({ centerLat, centerLng, targetLat, targetLng }: Prop
     Math.cos(centerRadLat) * Math.cos(targetRadLat) * Math.sin(lngDiff / 2) * Math.sin(lngDiff / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  const distance = R * c;
+  const distance = R * c * 1000;
   return distance;
 }

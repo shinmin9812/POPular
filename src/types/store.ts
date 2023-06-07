@@ -2,7 +2,7 @@ import { Category } from './category';
 import { SNSType } from './sns';
 
 export interface Store {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: Category;
@@ -44,8 +44,7 @@ export interface Store {
     sigungu: string;
   };
   coord: {
-    lat: string;
-    lng: string;
+    coordinates: [lat: string, lng: string];
   };
   price: number | null;
   sns: SNSType[];

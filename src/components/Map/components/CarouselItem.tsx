@@ -46,15 +46,15 @@ const CarouselItem = ({ store, map, idx, currentIdx, setSlectedId, setCurrentIdx
   if (idx === currentIdx + 1) seq = 'next';
 
   function clickHandler() {
-    if (seq === 'current') navigate(`/store/${store.id}`);
-    const markerPosition = new window.kakao.maps.LatLng(store.coord.lat, store.coord.lng);
+    if (seq === 'current') navigate(`/store/${store._id}`);
+    const markerPosition = new window.kakao.maps.LatLng(store.coord.coordinates[1], store.coord.coordinates[0]);
 
     setCurrentIdx(idx);
-    setSlectedId(store.id);
+    setSlectedId(store._id);
     map.panTo(markerPosition);
     setCenter({
-      lat: +store.coord.lat,
-      lng: +store.coord.lng,
+      lat: +store.coord.coordinates[1],
+      lng: +store.coord.coordinates[0],
     });
   }
 

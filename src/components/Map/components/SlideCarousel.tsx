@@ -47,7 +47,7 @@ interface Props extends MapProps {
 }
 
 const SlideCarousel = ({ stores, map, currentIdx, setSlectedId, setCurrentIdx, setCenter }: Props) => {
-  return stores ? (
+  return Array.isArray(stores) ? (
     <Container currentIdx={currentIdx} className="carousel">
       {stores.map((store, idx) => {
         return (

@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import FindCurrentPositon from '../components/FindCurrentPositon';
 import StoreList from '../../common/Store/StoreList';
 import SlideCarousel from '../components/SlideCarousel';
-import { useGetAllStoreQuery } from '../../../api/useQueries';
 import { getDistance } from '../../../utils/getDistance';
+import { useQuery } from '@tanstack/react-query';
+import { API_PATH } from '../../../constants/path';
+import { Store } from '../../../types/store';
 
 declare global {
   interface Window {
@@ -54,7 +56,17 @@ const Map = () => {
   const [zoom, setZoom] = useState(3);
   const [distance, setDistance] = useState<number>(0);
 
-  const { data: stores, isFetching, refetch } = useGetAllStoreQuery();
+  const {
+    data: stores,
+    isFetched,
+    refetch,
+  } = useQuery<Store[]>(['allStore'], async () => {
+    const response = await fetch(
+      `${API_PATH.STORE.GET.BY_COORD}?x=${center.lat}&y=${center.lng}&distance=${distance}&page=1  `,
+    );
+    const result = await response.json();
+    return result;
+  });
 
   // 최초 맵 렌더링
   useEffect(() => {
@@ -72,6 +84,18 @@ const Map = () => {
     window.kakao.maps.event.addListener(createdMap, 'zoom_changed', () => {
       const level = createdMap!.getLevel();
       setZoom(level);
+
+      const boundPoint = createdMap!.getBounds();
+
+      const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
+
+      const distance = getDistance({
+        centerLat: center.lat,
+        centerLng: center.lng,
+        targetLat,
+        targetLng,
+      });
+      setDistance(distance);
     });
 
     window.kakao.maps.event.addListener(createdMap, 'dragend', () => {
@@ -83,6 +107,18 @@ const Map = () => {
       });
     });
 
+    const boundPoint = createdMap!.getBounds();
+
+    const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
+
+    const distance = getDistance({
+      centerLat: center.lat,
+      centerLng: center.lng,
+      targetLat,
+      targetLng,
+    });
+
+    setDistance(distance);
     setMap(createdMap);
   }, []);
 
@@ -90,11 +126,11 @@ const Map = () => {
     markers.forEach((marker) => marker.setMap(null));
 
     const createdMarkers = stores!.map((store, idx) => {
-      const markerPosition = new window.kakao.maps.LatLng(store.coord.lat, store.coord.lng);
+      const markerPosition = new window.kakao.maps.LatLng(store.coord.coordinates[1], store.coord.coordinates[0]);
       const content = document.createElement('div');
       content.className = 'custom-overlay';
-      if (selectedId === store.id) content.classList.add('selected');
-      content.id = store.id;
+      if (selectedId === store._id) content.classList.add('selected');
+      content.id = store._id;
       content.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
           <path d="M9.939 0l-.939 4.971v1.098c0 1.066-.933 1.931-2 1.931s-2-.865-2-1.932v-1.097l2.996-4.971h1.943zm-3.052 0l-2.887 4.971v1.098c0 1.066-.933 1.931-2 1.931s-2-.865-2-1.932v-1.097l4.874-4.971h2.013zm17.113 6.068c0 1.067-.934 1.932-2 1.932s-2-.933-2-2v-1.098l-2.887-4.902h2.014l4.873 4.971v1.097zm-10-1.168v1.098c0 1.066-.934 2.002-2 2.002-1.067 0-2-.933-2-2v-1.098l1.047-4.902h1.905l1.048 4.9zm2.004-4.9l2.994 5.002v1.098c0 1.067-.932 1.9-1.998 1.9s-2-.933-2-2v-1.098l-.939-4.902h1.943zm4.996 12v7h-18v-7h18zm2-2h-22v14h22v-14z"/>
@@ -104,10 +140,10 @@ const Map = () => {
       content.addEventListener('click', () => {
         map!.panTo(markerPosition);
         setCurrentIdx(idx);
-        setSlectedId(store.id);
+        setSlectedId(store._id);
         setCenter({
-          lat: +store.coord.lat,
-          lng: +store.coord.lng,
+          lat: +store.coord.coordinates[1],
+          lng: +store.coord.coordinates[1],
         });
       });
 
@@ -123,18 +159,19 @@ const Map = () => {
   }
 
   useEffect(() => {
-    if (isFetching || !stores || !map || !markers) return;
+    if (!isFetched || !stores || !map) return;
+    if (stores.length === 0) return;
 
-    const markerPosition = new window.kakao.maps.LatLng(stores[0].coord.lat, stores[0].coord.lng);
+    const markerPosition = new window.kakao.maps.LatLng(stores[0].coord.coordinates[1], stores[0].coord.coordinates[0]);
     setCurrentIdx(0);
-    setSlectedId(stores[0].id);
+    setSlectedId(stores[0]._id);
     setCenter({
-      lat: +stores[0].coord.lat,
-      lng: +stores[0].coord.lng,
+      lat: +stores[0].coord.coordinates[1],
+      lng: +stores[0].coord.coordinates[0],
     }),
       map.setCenter(markerPosition);
     createMarkers();
-  }, [isFetching, stores]);
+  }, [isFetched, stores]);
 
   // 스토어 업데이트 시 맵 변경사항
   useEffect(() => {
@@ -145,9 +182,7 @@ const Map = () => {
   return (
     <Container>
       <div id="map" style={{ width: '100%', height: '100%' }} />
-      {isFetching ? (
-        <div className="loading"></div>
-      ) : (
+      {isFetched && stores && stores.length > 0 && (
         <SlideCarousel
           setSlectedId={setSlectedId}
           setCurrentIdx={setCurrentIdx}
@@ -159,32 +194,22 @@ const Map = () => {
       )}
       <FindCurrentPositon
         onClick={() => {
-          const boundPoint = map!.getBounds();
-
-          const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
-
-          const distance = getDistance({
-            centerLat: center.lat,
-            centerLng: center.lng,
-            targetLat,
-            targetLng,
-          });
-
-          setDistance(distance);
-          console.log(distance);
+          refetch();
         }}
       />
-      <div className={`store-list-container ${openList ? 'open' : ''}`}>
-        <div
-          className="opner"
-          onClick={() => {
-            setOpenList(!openList);
-          }}
-        />
-        <div className="content">
-          <StoreList stores={stores} />
+      {stores && (
+        <div className={`store-list-container ${openList ? 'open' : ''}`}>
+          <div
+            className="opner"
+            onClick={() => {
+              setOpenList(!openList);
+            }}
+          />
+          <div className="content">
+            <StoreList stores={stores} />
+          </div>
         </div>
-      </div>
+      )}
     </Container>
   );
 };
