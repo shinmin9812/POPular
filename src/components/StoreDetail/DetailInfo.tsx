@@ -139,13 +139,13 @@ const DetailInfo = ({ store }: Props) => {
       <div className="line"></div>
       <ul className="store-detail-info-list">
         <li className="store-detail-info-item">
-          <img className="item-ico" src="/calendar.svg" alt="" />
+          <img className="item-ico" src="/images/calendar.svg" alt="" />
           <p className="item-info">
             {store?.start_date} ~ {store?.end_date}
           </p>
         </li>
         <li className="store-detail-info-item">
-          <img className="item-ico" src="/clock.svg" alt="" />
+          <img className="item-ico" src="/images/clock.svg" alt="" />
           <p className="item-info">
             영업중 {store?.hours.mon.start} - {store?.hours.mon.end}
           </p>
