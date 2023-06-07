@@ -6,11 +6,13 @@ import {
 	Param,
 	Patch,
 	Post,
+	UseGuards,
 } from '@nestjs/common';
 import { CommentsService } from './comment.service';
 import { CommentCreateDto } from './dto/comment.create.dto';
 import { CommentUpdateDto } from './dto/comment.update.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('/comments')
 @ApiTags('Comment')
@@ -30,13 +32,17 @@ export class CommentsController {
 	}
 
 	@ApiOperation({ summary: '댓글 추가하기' })
+	@ApiBearerAuth('Authorization')
 	@Post()
-	async createPost(@Body() createDto: CommentCreateDto) {
+	@UseGuards(AuthGuard)
+	async createComment(@Body() createDto: CommentCreateDto) {
 		return await this.commentsService.createComment(createDto);
 	}
 
 	@ApiOperation({ summary: '댓글 수정하기' })
+	@ApiBearerAuth('Authorization')
 	@Patch(':id')
+	@UseGuards(AuthGuard)
 	async updateComment(
 		@Param('id') id: string,
 		@Body() updateDto: CommentUpdateDto,
@@ -45,7 +51,9 @@ export class CommentsController {
 	}
 
 	@ApiOperation({ summary: '댓글 삭제하기' })
+	@ApiBearerAuth('Authorization')
 	@Delete(':id')
+	@UseGuards(AuthGuard)
 	async deleteComment(@Param('id') id: string) {
 		await this.commentsService.deleteComment(id);
 		return { message: '댓글이 삭제되었습니다.' };
