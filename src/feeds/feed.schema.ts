@@ -16,7 +16,7 @@ export enum BoardType {
 }
 
 @Schema(options)
-export class Post extends Document {
+export class Feed extends Document {
 	@Prop({ required: true })
 	title: string;
 
@@ -51,4 +51,4 @@ export class Post extends Document {
 	views: number;
 }
 
-export const PostSchema = SchemaFactory.createForClass(Post);
+export const FeedSchema = SchemaFactory.createForClass(Feed);

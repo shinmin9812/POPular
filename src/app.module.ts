@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { StoreModule } from './stores/store.module';
 import { UserModule } from './users/user.module';
-import { PostsModule } from './posts/post.module';
+import { FeedsModule } from './feeds/feed.module';
 import { NotificationsModule } from './notifications/notification.module';
 import { CommentsModule } from './comments/comment.module';
 import { AuthModule } from './auth/auth.module';
@@ -18,7 +18,7 @@ import { AuthModule } from './auth/auth.module';
 		MongooseModule.forRoot(process.env.MONGO_URI),
 		StoreModule,
 		UserModule,
-		PostsModule,
+		FeedsModule,
 		NotificationsModule,
 		CommentsModule,
 		AuthModule,
