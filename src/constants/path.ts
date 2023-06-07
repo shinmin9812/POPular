@@ -3,21 +3,23 @@ export const API_PATH = {
   STORE: {
     GET: {
       // 모든 스토어 조회
-      ALL: '/store/all',
+      ALL: 'http://34.22.81.36:3000/stores/all',
       // 특정 옵션 스토어 조회 (쿼리스트링 사용)
-      WITH_OPTIONS: '/store',
+      WITH_OPTIONS: '/stores',
       // ID 조회
-      BY_ID: '/store/id/:storeId',
+      BY_ID: '/stores/id/:storeId',
       // 추천 스토어 조회
-      RECOMMENDED: '/store/recommended',
+      RECOMMENDED: '/stores/recommended',
       // 주간 스토어 조회
-      WEEKLY: '/store/weekly',
+      WEEKLY: '/stores/weekly',
       // 최신 스토어 조회
-      RECENT: '/store/recent',
+      RECENT: '/stores/recent',
       // 마감 임박 스토어 조회
-      LAST_MINUTE: '/store/recent/last_minute',
+      LAST_MINUTE: '/stores/recent/last_minute',
       // 예약 필수 스토어 조회
-      RESERVATOIN_REQUIRED: '/store/recent/reservation_required',
+      RESERVATOIN_REQUIRED: '/stores/recent/reservation_required',
+      // 좌표 기반 조회
+      BY_COORD: 'http://34.22.81.36:3000/stores/coord',
     },
     POST: {},
     PUT: {},
