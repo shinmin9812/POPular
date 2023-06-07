@@ -9,6 +9,9 @@ import { Model } from 'mongoose';
 import { Feed } from './feed.schema';
 import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
+import * as cheerio from 'cheerio';
+import { extractImages } from 'src/utils/extract.images.util';
+import { handleImages } from 'src/utils/handle.images.util';
 
 @Injectable()
 export class FeedsService {
@@ -74,12 +77,20 @@ export class FeedsService {
 
 	async createFeed(feedCreateDto: FeedCreateDto): Promise<Feed> {
 		try {
+			const base64Images = extractImages(feedCreateDto.content);
+			const imageMapping = await handleImages(base64Images);
+
+			let updatedContent = feedCreateDto.content;
+			for (const [imgData, imageUrl] of Object.entries(imageMapping)) {
+					updatedContent = updatedContent.replace(imgData, imageUrl);
+			}
+
 			const createdFeed = new this.feedModel();
 			createdFeed.title = feedCreateDto.title;
 			createdFeed.author = feedCreateDto.author;
 			createdFeed.board = feedCreateDto.board;
-			createdFeed.content = feedCreateDto.content;
-			createdFeed.images = feedCreateDto.images;
+			createdFeed.content = updatedContent;
+			createdFeed.images = Object.values(imageMapping);
 			createdFeed.storeId = feedCreateDto.storeId;
 			createdFeed.ratings = feedCreateDto.ratings;
 			createdFeed.likes = [];
