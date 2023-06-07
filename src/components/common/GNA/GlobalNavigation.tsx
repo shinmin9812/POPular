@@ -8,6 +8,7 @@ import { CLIENT_PATH } from '../../../constants/path';
 import UserIcon from '../Icons/UserIcon';
 
 const Container = styled.footer`
+  display: none;
   position: fixed;
   bottom: 0;
 
@@ -65,6 +66,10 @@ const Container = styled.footer`
     &:hover {
       cursor: pointer;
     }
+  }
+
+  @media all and (max-width: 767px) {
+    display: block;
   }
 `;
 

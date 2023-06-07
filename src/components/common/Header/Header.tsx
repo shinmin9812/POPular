@@ -2,6 +2,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { CLIENT_PATH } from '../../../constants/path';
 import PrevIcon from '../Icons/PrevIcon';
+import { NavLink } from 'react-router-dom';
+import HeaderSearchBox from './HeaderSearchBox';
+import HeaderProfile from './HeaderProfile';
 
 const Container = styled.header`
   position: fixed;
@@ -31,7 +34,7 @@ const Container = styled.header`
 
     margin: 0 auto;
 
-    button {
+    .prev-btn {
       position: absolute;
       top: 50%;
       left: 0;
@@ -53,6 +56,71 @@ const Container = styled.header`
       }
     }
   }
+
+  @media all and (min-width: 768px) {
+    .inner {
+      justify-content: flex-start;
+      align-items: end;
+      height: fit-content;
+
+      .prev-btn {
+        display: none;
+      }
+
+      .logo {
+        margin-right: 40px;
+
+        font-size: 30px;
+
+        color: var(--color-main);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        flex-grow: 1;
+
+        .links {
+          display: flex;
+          gap: 40px;
+          font-size: 18px;
+          color: var(--color-gray);
+
+          a {
+            transition: all 0.5s;
+
+            &.active {
+              color: var(--color-main);
+
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+
+      .sub-links {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-30%);
+      }
+    }
+  }
+
+  @media all and (max-width: 767px) {
+    .prev-btn {
+      display: block;
+    }
+    nav,
+    .sub-links {
+      display: none;
+    }
+  }
 `;
 
 const Header = () => {
@@ -63,11 +131,28 @@ const Header = () => {
     <Container>
       <div className="inner">
         {!isHome && (
-          <button onClick={() => navigate(-1)}>
+          <button className="prev-btn" onClick={() => navigate(-1)}>
             <PrevIcon />
           </button>
         )}
-        <Link to={CLIENT_PATH.HOME}>LOGO</Link>
+        <Link className="logo" to={CLIENT_PATH.HOME}>
+          POPular
+        </Link>
+
+        <nav>
+          <div className="links">
+            <NavLink to={CLIENT_PATH.MAP} className={({ isActive }) => (isActive ? 'active' : '')}>
+              지도
+            </NavLink>
+            <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
+              커뮤니티
+            </NavLink>
+          </div>
+        </nav>
+        <div className="sub-links">
+          <HeaderSearchBox />
+          <HeaderProfile />
+        </div>
       </div>
     </Container>
   );
