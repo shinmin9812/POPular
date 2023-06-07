@@ -20,8 +20,8 @@ export class StoreController {
 
 	@ApiOperation({ summary: '모든 스토어 정보 찾기' })
 	@Get()
-	async getAllStore() {
-		return await this.storeServcie.getAllStores();
+	async getAllStore(@Query() page: StoreRequestDto) {
+		return await this.storeServcie.getAllStores(page);
 	}
 
 	@ApiOperation({ summary: 'ID로 스토어 정보 찾기' })

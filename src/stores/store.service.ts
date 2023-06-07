@@ -3,15 +3,21 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Store } from './store.schema';
 import { StoreRequestDto } from './dto/store.request.dto';
-
+import { Page } from '../page/page';
 @Injectable()
 export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
 	) {}
 
-	async getAllStores(): Promise<Store[]> {
-		return await this.storeModel.find();
+	async getAllStores(page: StoreRequestDto): Promise<Page<Store>> {
+		const total = await this.storeModel.count();
+		const stores = await this.storeModel.find({
+			take: page.getLimit(),
+			skip: page.getOffset(),
+		});
+
+		return new Page(total, page.pageSize, stores);
 	}
 
 	async getStoreById(_id: string): Promise<Store> {

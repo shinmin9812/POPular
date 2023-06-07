@@ -12,16 +12,31 @@ import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
 import { UserService } from './user.service';
 import { User } from './user.schema';
-import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import {
+	ApiOperation,
+	ApiTags,
+	ApiBearerAuth,
+	ApiProperty,
+} from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 
-type checknickname = {
+class checknickname {
+	@ApiProperty({
+		example: '귀여운 토끼',
+		description: '중복 체크할 닉네임',
+		required: true,
+	})
 	nickname: string;
-};
+}
 
-type checkemail = {
+class checkemail {
+	@ApiProperty({
+		example: 'elice@elice.com',
+		description: '중복 체크할 이메일',
+		required: true,
+	})
 	email: string;
-};
+}
 
 @Controller('/users')
 @ApiTags('User')

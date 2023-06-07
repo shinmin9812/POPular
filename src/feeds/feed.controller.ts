@@ -22,7 +22,7 @@ import { FeedUpdateDto } from './dto/feed.update.dto';
 @Controller('/feeds')
 @ApiTags('Feed')
 export class FeedsController {
-	constructor(private readonly feedsService: FeedsService) { }
+	constructor(private readonly feedsService: FeedsService) {}
 
 	@ApiOperation({ summary: '모든 게시글 찾기' })
 	@Get()
@@ -42,40 +42,57 @@ export class FeedsController {
 		return await this.feedsService.getAllReviewFeeds();
 	}
 
-	@ApiOperation({ summary: '자유게시판 게시글 찾기'})
+	@ApiOperation({ summary: '자유게시판 게시글 찾기' })
 	@Get('free')
 	async getAllFreeFeeds() {
 		return await this.feedsService.getAllFreeFeeds();
 	}
 
-	@ApiOperation({ summary: 'ID로 게시글 찾기'})
+	@ApiOperation({ summary: 'ID로 게시글 찾기' })
 	@Get(':id')
 	async getFeedById(@Param('id') id: string) {
 		return await this.feedsService.getFeedById(id);
 	}
 
-	@ApiOperation({ summary: '게시글 등록하기'})
+	@ApiOperation({ summary: '게시글 등록하기' })
 	@Post()
-	@UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 5 }], multerConfig.storage))
-	async createFeed(@Body() createDto: FeedCreateDto, @UploadedFiles() files: Express.Multer.File[]) {
-		if(createDto.images.length > 0){
+	@UseInterceptors(
+		FileFieldsInterceptor(
+			[{ name: 'images', maxCount: 5 }],
+			multerConfig.storage,
+		),
+	)
+	async createFeed(
+		@Body() createDto: FeedCreateDto,
+		@UploadedFiles() files: Express.Multer.File[],
+	) {
+		if (createDto.images.length > 0) {
 			createDto.images = files.map((file: Express.Multer.File) => file.path);
 		}
-	
+
 		return await this.feedsService.createFeed(createDto);
 	}
-	
-	@ApiOperation({ summary: '게시글 수정하기'})
+
+	@ApiOperation({ summary: '게시글 수정하기' })
 	@Patch(':id')
-	@UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 5 }], multerConfig.storage))
-	async updateFeed(@Param('id') id: string, @Body() updateDto: FeedUpdateDto, @UploadedFiles() files: Express.Multer.File[]) {
-		if(updateDto.images.length > 0){
+	@UseInterceptors(
+		FileFieldsInterceptor(
+			[{ name: 'images', maxCount: 5 }],
+			multerConfig.storage,
+		),
+	)
+	async updateFeed(
+		@Param('id') id: string,
+		@Body() updateDto: FeedUpdateDto,
+		@UploadedFiles() files: Express.Multer.File[],
+	) {
+		if (updateDto.images.length > 0) {
 			updateDto.images = files.map((file: Express.Multer.File) => file.path);
 		}
 		return await this.feedsService.updateFeed(id, updateDto);
 	}
 
-	@ApiOperation({ summary: '게시글 조회수 증가하기'})
+	@ApiOperation({ summary: '게시글 조회수 증가하기' })
 	@Patch(':id/views')
 	async incrementViewCount(@Param('id') id: string) {
 		const updatedFeed = await this.feedsService.incrementViewCount(id);
@@ -89,7 +106,7 @@ export class FeedsController {
 		return updatedFeed;
 	}
 
-	@ApiOperation({ summary: '게시글 삭제하기'})
+	@ApiOperation({ summary: '게시글 삭제하기' })
 	@Delete(':id')
 	async deleteFeed(@Param('id') id: string) {
 		await this.feedsService.deleteFeed(id);
