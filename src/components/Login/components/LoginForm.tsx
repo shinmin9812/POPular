@@ -40,7 +40,7 @@ const LoginForm = () => {
         });
         if (response.ok) {
           const data = await response.json();
-          localStorage.setItem('token', data.accses_token);
+          localStorage.setItem('token', data.token);
           navigate('/');
         } else {
           setErrorMessage('이메일 또는 비밀번호가 일치하지 않습니다.');
