@@ -2,7 +2,7 @@ import { Category } from './category';
 import { SNSType } from './sns';
 
 export interface Store {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: Category;

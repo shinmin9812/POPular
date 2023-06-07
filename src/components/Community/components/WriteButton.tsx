@@ -31,9 +31,10 @@ const Button = styled.button`
 `;
 
 const WriteButton = () => {
+  const token = localStorage.getItem('token');
   return (
     <Button>
-      <Link to="/community/write">글쓰기</Link>
+      <Link to={token ? '/community/write' : '/login'}>글쓰기</Link>
       <PenIconWrap>
         <PenIcon />
       </PenIconWrap>

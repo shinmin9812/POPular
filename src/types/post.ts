@@ -3,7 +3,7 @@ import { Comment } from './comment';
 import { User, UserOnlyProfile } from './user';
 
 export interface Post {
-  id: string;
+  _id: string;
   title: string;
   author: User;
   board: BoardTypes;

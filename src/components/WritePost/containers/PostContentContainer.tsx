@@ -7,6 +7,7 @@ const PostContentContainer = () => {
   const setPostContent = (content: string) => {
     return dispatch(WritePostSliceActions.setPostContent(content));
   };
+  console.log(postContent);
   return <PostContent postContent={postContent} setPostContent={setPostContent} />;
 };
 

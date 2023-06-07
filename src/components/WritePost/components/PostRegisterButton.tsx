@@ -5,11 +5,9 @@ const PostRegisterButton = styled.button`
   color: var(--color-white);
   font-size: var(--font-medium);
   font-weight: var(--weight-regular);
-  position: absolute;
   border-radius: 8px;
   padding: 15px;
-  right: 10px;
-  bottom 10px;
+  margin-left: 70%;
 `;
 
 export default PostRegisterButton;

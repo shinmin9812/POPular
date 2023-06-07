@@ -24,11 +24,11 @@ const PostDetailPage = () => {
   }, []);
 
   async function fetchData() {
-    const response = await fetch(`http://34.22.81.36:3000/posts/${postId}`);
+    const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}`);
     const result: Post = await response.json();
     setPost(result);
   }
-
+  console.log(post);
   return (
     <Container>
       <PostInfo
