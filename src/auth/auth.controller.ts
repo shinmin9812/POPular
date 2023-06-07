@@ -9,6 +9,7 @@ import {
 	UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { UserService } from 'src/users/user.service';
 import { UserLoginDto } from 'src/users/dto/user.login.dto';
 import { AuthGuard } from './auth.guard';
 import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -16,7 +17,10 @@ import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
-	constructor(private authService: AuthService) {}
+	constructor(
+		private authService: AuthService,
+		private userService: UserService,
+	) {}
 
 	@ApiOperation({ summary: '유저 로그인 토큰 발급' })
 	@HttpCode(HttpStatus.OK)
@@ -27,10 +31,13 @@ export class AuthController {
 	}
 
 	@ApiOperation({ summary: '유저 로그인 토큰 인증' })
-	@ApiBearerAuth()
+	@ApiBearerAuth('Authorization')
 	@UseGuards(AuthGuard)
 	@Get('profile')
 	async getProfile(@Request() req) {
-		return req.user;
+		if (req.user) {
+			const result = await this.userService.getUserById(req.user.sub);
+			return result;
+		}
 	}
 }

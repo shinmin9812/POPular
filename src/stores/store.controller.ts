@@ -41,15 +41,6 @@ export class StoreController {
 		return await this.storeServcie.updateStore(_id, body);
 	}
 
-	@ApiOperation({ summary: '스토어 스크랩 리스트 수정하기' })
-	@Patch('/:id/scrap/:scrap')
-	async updateScrap(
-		@Param('id') _id: string,
-		@Param('scrap') updateScrap: number,
-	) {
-		return await this.storeServcie.updateScrap(_id, updateScrap);
-	}
-
 	@ApiOperation({ summary: '스토어 정보 삭제하기' })
 	@Delete(':id')
 	async delete(@Param('id') _id: string) {

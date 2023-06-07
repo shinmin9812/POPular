@@ -15,6 +15,14 @@ import { User } from './user.schema';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 
+type checknickname = {
+	nickname: string;
+};
+
+type checkemail = {
+	email: string;
+};
+
 @Controller('/users')
 @ApiTags('User')
 export class UserController {
@@ -32,6 +40,18 @@ export class UserController {
 		return await this.userService.getUserById(_id);
 	}
 
+	@ApiOperation({ summary: '유저 닉네임 중복 여부 확인하기' })
+	@Post('/checknickname')
+	async checkNickname(@Body() body: checknickname): Promise<string> {
+		return await this.userService.checkDuplicateNickname(body.nickname);
+	}
+
+	@ApiOperation({ summary: '유저 이메일 중복 여부 확인하기' })
+	@Post('/checkemail')
+	async checkEmail(@Body() body: checkemail): Promise<string> {
+		return await this.userService.checkDuplicateEmail(body.email);
+	}
+
 	@ApiOperation({ summary: '유저 정보 등록하기' })
 	@Post()
 	async createUser(@Body() body: UserSignupDto): Promise<User> {
@@ -46,6 +66,24 @@ export class UserController {
 		@Body() body: UserUpdateDto,
 	): Promise<User> {
 		return await this.userService.updateUser(_id, body);
+	}
+
+	@ApiOperation({ summary: '유저 스크랩 & 스토어 스크랩 등록하기' })
+	@Patch(':userId/scrapStore/:storeId')
+	async updateScrap(
+		@Param('userId') userId: string,
+		@Param('storeId') storeId: string,
+	): Promise<any> {
+		return await this.userService.updateScrap(userId, storeId);
+	}
+
+	@ApiOperation({ summary: '유저 스크랩 & 스토어 스크랩 취소하기' })
+	@Patch(':userId/unscrapStore/:storeId')
+	async updateUnScrap(
+		@Param('userId') userId: string,
+		@Param('storeId') storeId: string,
+	): Promise<any> {
+		return await this.userService.updateUnscrap(userId, storeId);
 	}
 
 	@ApiOperation({ summary: '유저 정보 삭제하기' })
