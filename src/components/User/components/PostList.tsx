@@ -35,10 +35,16 @@ const PostList = ({ posts }: Props) => {
 
 const Container = styled.div`
   .post-item {
-    padding: 10px 0px;
+    box-sizing: border-box;
+    padding: 10px 10px;
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid var(--color-light-gray);
+    transition: all 0.3s;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .nothing {

@@ -27,7 +27,7 @@ const initialState: Props = {
   loadList: [],
 };
 
-const UserSlice = createSlice({
+const UserSlice: any = createSlice({
   name: 'user',
   initialState,
   reducers: {

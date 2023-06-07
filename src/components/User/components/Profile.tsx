@@ -21,15 +21,16 @@ const Profile = ({ user }: Props) => {
         </UserProfile>
         <ProfileList>
           <ProfileFollow title={'게시물'} number={33} />
-          <ProfileFollow title={'팔로워'} number={434232} />
-          <ProfileFollow title={'팔로잉'} number={14342} />
+          <ProfileFollow title={'팔로워'} number={user[0].follower.length} />
+          <ProfileFollow title={'팔로잉'} number={user[0].following.length} />
         </ProfileList>
       </ProfileInfo>
       <ProfileDescript>
         <p className="user-nickname">{user[0].nickname}</p>
-        <p className="user-introduce">안녕하세요. 000을 좋아하는 xxx입니다.</p>
+        <p className="user-introduce">{user[0].introduce}</p>
         <div className="button-position">
           <ProfileButton text={'프로필수정'} type={'profileEdit'} />
+          <ProfileButton text={'팔로우'} type={'follow'} />
         </div>
       </ProfileDescript>
     </Container>

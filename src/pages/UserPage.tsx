@@ -29,6 +29,7 @@ const UserPage = () => {
 
     setUser(result);
   }
+
   return (
     <Container>
       <Profile user={user} />
