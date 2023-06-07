@@ -17,7 +17,7 @@ export function setupSwagger(app: INestApplication): void {
 	const config = new DocumentBuilder()
 		.setTitle('POPular API')
 		.setDescription('POPular API입니다.')
-		.setVersion('4.0')
+		.setVersion('1.0')
 		.addBearerAuth(
 			{
 				type: 'http',

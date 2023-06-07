@@ -15,7 +15,7 @@ export class StoreService {
 	}
 
 	async getPaginate(page: number): Promise<Store[]> {
-		const limit = 10;
+		const limit = 20;
 		const offset = (page - 1) * limit;
 
 		return await this.storeModel.find().limit(limit).skip(offset);
