@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class PostUpdateDto {
+export class FeedUpdateDto {
 	@IsOptional()
 	@IsString()
 	@ApiProperty({
