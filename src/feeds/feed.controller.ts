@@ -56,17 +56,9 @@ export class FeedsController {
 
 	@ApiOperation({ summary: '게시글 등록하기' })
 	@Post()
-	@UseInterceptors(
-		FileFieldsInterceptor(
-			[{ name: 'images', maxCount: 5 }],
-			multerConfig.storage,
-		),
-	)
-	async createFeed(
-		@Body() createDto: FeedCreateDto,
-		@UploadedFiles() files: Express.Multer.File[],
-	) {
-		if (createDto.images.length > 0) {
+	@UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 5 }], multerConfig.storage))
+	async createFeed(@Body() createDto: FeedCreateDto, @UploadedFiles() files: Express.Multer.File[]) {
+		if(!createDto.images === undefined){
 			createDto.images = files.map((file: Express.Multer.File) => file.path);
 		}
 
@@ -75,18 +67,9 @@ export class FeedsController {
 
 	@ApiOperation({ summary: '게시글 수정하기' })
 	@Patch(':id')
-	@UseInterceptors(
-		FileFieldsInterceptor(
-			[{ name: 'images', maxCount: 5 }],
-			multerConfig.storage,
-		),
-	)
-	async updateFeed(
-		@Param('id') id: string,
-		@Body() updateDto: FeedUpdateDto,
-		@UploadedFiles() files: Express.Multer.File[],
-	) {
-		if (updateDto.images.length > 0) {
+	@UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 5 }], multerConfig.storage))
+	async updateFeed(@Param('id') id: string, @Body() updateDto: FeedUpdateDto, @UploadedFiles() files: Express.Multer.File[]) {
+		if(!updateDto.images === undefined){
 			updateDto.images = files.map((file: Express.Multer.File) => file.path);
 		}
 		return await this.feedsService.updateFeed(id, updateDto);
