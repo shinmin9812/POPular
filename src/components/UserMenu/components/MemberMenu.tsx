@@ -1,10 +1,18 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { CLIENT_PATH } from '../../../constants/path';
 import UserProfile from './UserProfile';
 import MenuItem from './MenuItem';
 import Logo from '../../common/Icons/DummyLogo';
 
 const MemberMenu = () => {
+  const navigate = useNavigate();
+  const handleLogout = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    alert('Bye!');
+    navigate('/');
+  };
   return (
     <>
       <UserProfile />
@@ -15,7 +23,9 @@ const MemberMenu = () => {
         <MenuItem link={CLIENT_PATH.USER_POSTS} title="내가 쓴 글" />
         <MenuItem link={CLIENT_PATH.USER_COMMENTS} title="내가 쓴 댓글" />
         <MenuItem link="/user/12341231/update" title="회원정보 수정" />
-        <div className="logout">로그아웃</div>
+        <div className="logout" onClick={handleLogout}>
+          로그아웃
+        </div>
         <div>회원탈퇴</div>
       </MenuList>
       <LogoContainer>
