@@ -80,7 +80,7 @@ const MemberMenu = () => {
         <MenuItem link={CLIENT_PATH.USER_SCRAP} title="위시리스트" />
         <MenuItem link={CLIENT_PATH.USER_POSTS} title="내가 쓴 글" />
         <MenuItem link={CLIENT_PATH.USER_COMMENTS} title="내가 쓴 댓글" />
-        <MenuItem link="/user/12341231/update" title="회원정보 수정" />
+        <MenuItem link={`/user/${userId}/update`} title="회원정보 수정" />
         <div className="logout" onClick={handleLogout}>
           로그아웃
         </div>
