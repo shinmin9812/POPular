@@ -35,7 +35,7 @@ const Container = styled.div`
 const StorePlace = ({ location, coord }: Place) => {
   useEffect(() => {
     const container = document.getElementById('store-detail-map');
-    const latLng = new window.kakao.maps.LatLng(coord?.lng, coord?.lat);
+    const latLng = new window.kakao.maps.LatLng(coord?.lat, coord?.lng);
     const options = {
       center: latLng,
       level: 3,
