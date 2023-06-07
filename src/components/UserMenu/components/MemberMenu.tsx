@@ -4,8 +4,13 @@ import { CLIENT_PATH } from '../../../constants/path';
 import UserProfile from './UserProfile';
 import MenuItem from './MenuItem';
 import Logo from '../../common/Icons/DummyLogo';
+import { useEffect, useState } from 'react';
 
 const MemberMenu = () => {
+  const [profileImage, setProfileImage] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [userId, setUserId] = useState('');
+
   const navigate = useNavigate();
   const handleLogout = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -24,6 +29,9 @@ const MemberMenu = () => {
         },
       });
       const data = await response.json();
+      setProfileImage('/defaultProfile.svg');
+      setNickname(data.nickname);
+      setUserId(data._id);
       return data;
     } catch (err: any) {
       const errorMessage = err as Error;
@@ -59,11 +67,15 @@ const MemberMenu = () => {
     }
   };
 
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   return (
     <>
-      <UserProfile />
+      <UserProfile profileImage={profileImage} nickname={nickname} userId={userId} />
       <MenuList>
-        <MenuItem link="/user/12341231" title="내 프로필 보기" />
+        <MenuItem link={`/user/${userId}`} title="내 프로필 보기" />
         <MenuItem link={CLIENT_PATH.USER_RECENT} title="최근 본 스토어" />
         <MenuItem link={CLIENT_PATH.USER_SCRAP} title="위시리스트" />
         <MenuItem link={CLIENT_PATH.USER_POSTS} title="내가 쓴 글" />

@@ -3,16 +3,20 @@ import styled from 'styled-components';
 import { CLIENT_PATH } from '../../../constants/path';
 import NotificationIcon from '../../common/Icons/NotificationIcon';
 
-const UserProfile = () => {
+const UserProfile = ({
+  profileImage,
+  nickname,
+  userId,
+}: {
+  profileImage: string;
+  nickname: string;
+  userId: string;
+}) => {
   return (
     <ProfileContainer>
-      <Link to="/user/12341231">
-        <img
-          src="https://image.rocketpunch.com/company/20527/elice_logo_1643264201.png?s=400x400&t=inside"
-          alt="profile"
-          width={40}
-        />
-        <p>엘리스</p>
+      <Link to={`/user/${userId}`}>
+        <img src={profileImage} alt="profileImage" width={40} />
+        <p>{nickname}</p>
       </Link>
       <Link to={CLIENT_PATH.USER_NOTIFICATIONS} style={{ display: 'flex', alignItems: 'center' }}>
         <NotificationIcon />
