@@ -37,49 +37,24 @@ export class UserService {
 	}
 
 	async createUser(body: UserSignupDto): Promise<User> {
-		const { email, pw, name, nickname, phone_number, allow_notification } =
-			body;
-
+		const pw = body.pw;
 		const hashedPassword = await hashPassword(pw);
 
-		const isNicknameDuplicate = await this.checkDuplicateNickname(nickname);
-		if (isNicknameDuplicate) {
-			throw new BadRequestException('다른 유저가 사용중인 닉네임입니다.');
-		}
-
-		const isEmailDuplicate = await this.checkDuplicateEmail(email);
-		if (isEmailDuplicate) {
-			throw new BadRequestException('이미 등록된 이메일입니다.');
-		}
-
 		const newUser = {
-			email,
+			...body,
 			pw: hashedPassword,
-			name,
-			nickname,
-			phone_number,
-			allow_notification,
 		};
 
 		return await this.userModel.create(newUser);
 	}
 
 	async updateUser(_id: string, body: UserUpdateDto): Promise<User> {
-		const { profile, introduce, nickname, pw, phone_number } = body;
-
+		const pw = body.pw;
 		const hashedPassword = await hashPassword(pw);
 
-		const isNicknameDuplicate = await this.checkDuplicateNickname(nickname);
-		if (isNicknameDuplicate) {
-			throw new BadRequestException('다른 유저가 사용중인 닉네임입니다.');
-		}
-
 		const updateUser = {
-			profile,
-			introduce,
-			nickname,
+			...body,
 			pw: hashedPassword,
-			phone_number,
 		};
 		return await this.userModel.findByIdAndUpdate({ _id }, updateUser, {
 			new: true,

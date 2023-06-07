@@ -4,7 +4,6 @@ import { Feed, FeedSchema } from './feed.schema';
 import { FeedsController } from './feed.controller';
 import { FeedsService } from './feed.service';
 
-
 @Module({
 	imports: [
 		MongooseModule.forFeature([{ name: Feed.name, schema: FeedSchema }]),

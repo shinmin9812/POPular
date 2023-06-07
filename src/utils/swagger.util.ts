@@ -26,7 +26,7 @@ export function setupSwagger(app: INestApplication): void {
 				name: 'Authorization',
 				in: 'header',
 			},
-			'access-token',
+			'token',
 		)
 		.build();
 

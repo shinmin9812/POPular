@@ -61,24 +61,42 @@ class day {
 	sun: time;
 }
 
-class coordinfo {
+class postinfo {
 	@IsString()
 	@IsNotEmpty()
 	@ApiProperty({
-		example: '37.41422',
-		description: '스토어 위도',
+		example: '대구',
+		description: '스토어 위치(시)',
 		required: true,
 	})
-	lat: string;
+	sido: string;
 
 	@IsString()
 	@IsNotEmpty()
 	@ApiProperty({
-		example: '127.1234',
-		description: '스토어 경도',
+		example: '중구',
+		description: '스토어 위치(군/구)',
 		required: true,
 	})
-	lng: string;
+	sigungu: string;
+}
+
+class coordinfo {
+	@IsString()
+	@ApiProperty({
+		example: 'Point',
+		description: '스토어 위치 검색용(Point 고정)',
+		required: true,
+	})
+	type: string;
+
+	@IsArray()
+	@ApiProperty({
+		example: '[127.23414, 34.1234]',
+		description: '스토어 위치 검색용(좌표)',
+		required: true,
+	})
+	coordinates: number[];
 }
 
 class snsinfo {
@@ -136,7 +154,7 @@ export class StoreRequestDto {
 		description: '팝업 스토어 종류',
 		required: true,
 	})
-	brand: string;
+	category: string;
 
 	@IsDate()
 	@IsNotEmpty()
@@ -179,7 +197,16 @@ export class StoreRequestDto {
 	@ValidateNested()
 	@IsNotEmpty()
 	@ApiProperty({
-		example: '{ 34.21231, 125.23141 }',
+		example: '{ sido: 대구, sigungu: 중구 }',
+		description: '팝업 스토어 시, 군/구',
+		required: true,
+	})
+	postcode: postinfo;
+
+	@ValidateNested()
+	@IsNotEmpty()
+	@ApiProperty({
+		example: '{ type: Point, coordinates: [127.6346, 34.1245](경도, 위도 순) }',
 		description: '팝업 스토어 위치 좌표',
 		required: true,
 	})
@@ -219,11 +246,11 @@ export class StoreRequestDto {
 	})
 	images: string[];
 
-	// @IsArray()
-	// @ApiProperty({
-	// 	example: '[123, 424, 124]',
-	// 	description: '팝업 스토어 스크랩 리스트',
-	// 	required: true,
-	// })
-	// scrap: Types.ObjectId[];
+	@IsArray()
+	@ApiProperty({
+		example: '[123, 424, 124]',
+		description: '팝업 스토어 스크랩 리스트',
+		required: true,
+	})
+	scrap: Types.ObjectId[];
 }

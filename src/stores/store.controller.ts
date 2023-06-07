@@ -7,6 +7,8 @@ import {
 	Patch,
 	Post,
 	Put,
+	Query,
+	Req,
 } from '@nestjs/common';
 import { StoreRequestDto } from './dto/store.request.dto';
 import { StoreService } from './store.service';
@@ -23,10 +25,40 @@ export class StoreController {
 		return await this.storeServcie.getAllStores();
 	}
 
+	@ApiOperation({ summary: '스토어 페이지네이션 검색' })
+	@Get('pages')
+	async getPaginate(@Query('page') page: number = 1) {
+		return await this.storeServcie.getPaginate(page);
+	}
+
 	@ApiOperation({ summary: 'ID로 스토어 정보 찾기' })
-	@Get(':id')
+	@Get('store/:id')
 	async getStoreById(@Param('id') _id: string) {
 		return await this.storeServcie.getStoreById(_id);
+	}
+
+	@ApiOperation({ summary: '날짜로 스토어 정보 찾기' })
+	@Get('date/:start/:end')
+	async getStoresByDate(
+		@Param('start') startDate: Date,
+		@Param('end') endDate: Date,
+	) {
+		return await this.storeServcie.getStoresByDate(startDate, endDate);
+	}
+
+	@ApiOperation({ summary: '좌표 위치 주변 스토어 정보 찾기' })
+	@Get('/coord')
+	async getStoresByCoord(@Query() query) {
+		const { x, y, distance } = query;
+		const longtitude = Number(y);
+		const latitude = Number(x);
+		const searchDistance = Number(distance);
+
+		return await this.storeServcie.getStoresByCoord(
+			longtitude,
+			latitude,
+			searchDistance,
+		);
 	}
 
 	@ApiOperation({ summary: '스토어 정보 등록하기' })
