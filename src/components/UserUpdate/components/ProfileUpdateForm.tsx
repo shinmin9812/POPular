@@ -5,32 +5,44 @@ import ProfileButton from './ProfileButton';
 import CheckboxInput from './CheckboxInput';
 import { User } from '../../../types/user';
 import autoHyphen from '../../../utils/autoHyphen';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   user: User;
 }
 
-interface Category {
+interface CategoryType {
   value: string;
   name: string;
 }
 
-const preferCategory: Category[] = [
-  { value: '의류', name: 'cloth' },
-  { value: '주류', name: 'alcohol' },
+// 카테고리 목록 가져오기
+const preferCategory: CategoryType[] = [
+  { value: '식품', name: 'food' },
   { value: '캐릭터', name: 'character' },
+  { value: '의류', name: 'clothes' },
+  { value: '주류', name: 'drink' },
+  { value: '연예', name: 'entertainment' },
+  { value: '디자인', name: 'design' },
+  { value: '전자기기', name: 'tech' },
+  { value: '스포츠', name: 'sport' },
+  { value: '금융', name: 'finance' },
+  { value: '예술', name: 'art' },
+  { value: '기타', name: 'other' },
 ];
 
 const ProfileUpdateForm = ({ user }: Props) => {
   const [inputs, setInputs] = useState({
+    profile: user.profile,
+    pw: user.pw,
     introduce: user.introduce,
     nickname: user.nickname,
     phone_number: user.phone_number,
-    notifications: user.notifications,
-    notice: user.allow_notification,
+    interested_category: user.interested_category,
+    allow_notification: user.allow_notification,
   });
 
-  const { introduce, nickname, phone_number, notifications, notice } = inputs;
+  const { introduce, nickname, phone_number, interested_category, allow_notification } = inputs;
   const [checkNickname, setCheckNickname] = useState(false);
   const [errors, setErrors] = useState({
     nickname: '',
@@ -58,22 +70,22 @@ const ProfileUpdateForm = ({ user }: Props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = e.target;
     switch (name) {
-      case 'notice':
+      case 'allow_notification':
         setInputs({
           ...inputs,
-          notice: (e.target as HTMLInputElement).checked,
+          allow_notification: (e.target as HTMLInputElement).checked,
         });
         break;
-      case 'notifications':
-        let newNotifications: any;
+      case 'interested_category':
+        let newCategory: any;
         if ((e.target as HTMLInputElement).checked) {
-          newNotifications = [...inputs.notifications, value];
+          newCategory = [...inputs.interested_category, value];
         } else {
-          newNotifications = inputs.notifications.filter((item) => item !== (value as any));
+          newCategory = inputs.interested_category.filter((item) => item !== (value as any));
         }
         setInputs({
           ...inputs,
-          notifications: newNotifications,
+          interested_category: newCategory,
         });
         break;
       case 'nickname':
@@ -121,17 +133,21 @@ const ProfileUpdateForm = ({ user }: Props) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const userId = '';
+    const { userId } = useParams();
+    const token = localStorage.getItem('token');
+
     fetch(`http://34.22.81.36:3000/users/${userId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(inputs),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        alert('회원정보 수정이 완료되었습니다.');
       })
       .catch((error) => {
         console.log(error.message);
@@ -154,12 +170,17 @@ const ProfileUpdateForm = ({ user }: Props) => {
           <FormInput type={'phone_number'} value={autoHyphen(phone_number)} onChange={handleChange} />
           {errors.phone_number && <ErrorNotice>{errors.phone_number}</ErrorNotice>}
           <CheckboxInput
-            type={'notifications'}
-            value={notifications as any}
+            type={'interested_category'}
+            value={interested_category as any}
             defaultData={preferCategory}
             onChange={handleChange}
           />
-          <CheckboxInput type={'notice'} value={notice} onChange={handleChange} />
+          <CheckboxInput
+            type={'allow_notification'}
+            value={allow_notification}
+            onChange={handleChange}
+            btnName={'알림'}
+          />
         </FormInner>
         <FormButton>
           <ProfileButton className="button" text={'수정하기'} theme={'submit'} />

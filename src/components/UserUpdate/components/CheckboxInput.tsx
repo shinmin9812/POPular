@@ -7,18 +7,19 @@ interface Category {
 }
 
 interface Props {
-  type: 'notifications' | 'notice';
+  type: 'interested_category' | 'allow_notification';
   value: string[] | boolean;
   defaultData?: Category[];
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  btnName?: string;
 }
 
 const typeLabels = new Map<Props['type'], string>([
-  ['notifications', '선호 카테고리'],
-  ['notice', '알림 허용'],
+  ['interested_category', '선호 카테고리'],
+  ['allow_notification', '알림 허용'],
 ]);
 
-const CheckboxInput = ({ type, value, defaultData, onChange }: Props) => {
+const CheckboxInput = ({ type, value, defaultData, onChange, btnName }: Props) => {
   return (
     <Container>
       <Label>{typeLabels.get(type)}</Label>
@@ -47,7 +48,7 @@ const CheckboxInput = ({ type, value, defaultData, onChange }: Props) => {
               onChange={onChange}
               checked={Boolean(value)}
             />
-            <label htmlFor={type}>{type}</label>
+            <label htmlFor={type}>{btnName}</label>
           </div>
         )}
       </InputInner>
@@ -73,7 +74,8 @@ const Label = styled.label`
 const InputInner = styled.div`
   width: 100%;
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 6px;
 
   .input-item-box {
     height: 30px;
