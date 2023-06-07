@@ -73,7 +73,7 @@ export class UserController {
 		return await this.userService.createUser(body);
 	}
 
-	@ApiOperation({ summary: '유저 정보 수정하기(token 필요)' })
+	@ApiOperation({ summary: '유저 정보 수정하기' })
 	@ApiBearerAuth('Authorization')
 	@Patch(':id')
 	@UseGuards(AuthGuard)

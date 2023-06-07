@@ -59,11 +59,6 @@ export class UserService {
 
 		const hashedPassword = await hashPassword(pw);
 
-		const isNicknameDuplicate = await this.checkDuplicateNickname(nickname);
-		if (isNicknameDuplicate) {
-			throw new BadRequestException('다른 유저가 사용중인 닉네임입니다.');
-		}
-
 		const updateUser = {
 			profile,
 			introduce,
