@@ -12,7 +12,7 @@ const VerticalStoreItem = ({ store }: Props) => {
         <div className={'text-section'}>
           <p className={'item-title'}>{store.title}</p>
           <p className={'item-period'}>
-            {store.startDate} ~ {store.endDate}
+            {store.start_date} ~ {store.end_date}
           </p>
         </div>
         <div className={'image-section'}>

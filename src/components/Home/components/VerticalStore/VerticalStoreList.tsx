@@ -13,7 +13,7 @@ const VerticalStoreList = ({ stores, text }: Props) => {
     <Container>
       <h2>{text}</h2>
       <ItemsBox>
-        {stores.map((store) => (
+        {stores.slice(0, 5).map((store) => (
           <Item key={store.id}>
             <Link to={`/store/${store.id}`}>
               <VerticalStoreItem store={store}></VerticalStoreItem>

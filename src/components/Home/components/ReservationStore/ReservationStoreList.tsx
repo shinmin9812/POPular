@@ -12,27 +12,15 @@ const ReservationStoreList = ({ stores, text }: Props) => {
   return (
     <Container>
       <h2>{text}</h2>
-      {stores.length >= 4 ? (
-        <ItemsBox>
-          {stores.slice(0, 4).map((store) => (
-            <Item key={store.id}>
-              <Link to={`/store/${store.id}`}>
-                <ReservationStoreItem store={store} />
-              </Link>
-            </Item>
-          ))}
-        </ItemsBox>
-      ) : (
-        <ItemsBox>
-          {stores.map((store) => (
-            <Item key={store.id}>
-              <Link to={`/store/${store.id}`}>
-                <ReservationStoreItem store={store} />
-              </Link>
-            </Item>
-          ))}
-        </ItemsBox>
-      )}
+      <ItemsBox>
+        {stores.slice(0, 4).map((store) => (
+          <Item key={store.id}>
+            <Link to={`/store/${store.id}`}>
+              <ReservationStoreItem store={store} />
+            </Link>
+          </Item>
+        ))}
+      </ItemsBox>
     </Container>
   );
 };

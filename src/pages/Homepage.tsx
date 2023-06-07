@@ -4,7 +4,7 @@ import SliderTop from '../components/Home/components/SliderTop/SliderTop';
 import SlideStoreList from '../components/Home/components/SlideStore/SlideStoreList';
 import VerticalStoreList from '../components/Home/components/VerticalStore/VerticalStoreList';
 import ReservationStoreList from '../components/Home/components/ReservationStore/ReservationStoreList';
-import Line from '../components/Home/components/Line';
+import { Line } from '../components/Home/components/Line';
 import { Store } from '../types/store';
 
 const Container = styled.div`

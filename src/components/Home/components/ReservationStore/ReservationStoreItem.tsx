@@ -15,7 +15,7 @@ const ReservationStoreItem = ({ store }: Props) => {
         <div className={'item-description'}>
           <p className={'item-title'}>{store.title}</p>
           <p className={'item-period'}>
-            {store.startDate} ~ {store.endDate}
+            {store.start_date} ~ {store.end_date}
           </p>
         </div>
       </InnerContent>
@@ -29,6 +29,7 @@ const InnerContent = styled.div`
   .item-image {
     border-radius: 8px;
     overflow: hidden;
+    height: 200px;
 
     &:hover img {
       transform: scale(1.07);
@@ -36,6 +37,9 @@ const InnerContent = styled.div`
     img {
       transition: all 0.3s;
       width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
   }
 

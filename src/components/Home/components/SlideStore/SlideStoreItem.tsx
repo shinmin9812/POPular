@@ -14,7 +14,7 @@ const SlideStoreItem = ({ store }: Props) => {
       <div className={'item-description'}>
         <p className={'item-title'}>{store.title}</p>
         <p className={'item-period'}>
-          {store.startDate} ~ {store.endDate}
+          {store.start_date} ~ {store.end_date}
         </p>
       </div>
     </Container>
