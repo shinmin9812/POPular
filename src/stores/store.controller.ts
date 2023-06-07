@@ -8,10 +8,12 @@ import {
 	Post,
 	Put,
 	Query,
+	Req,
 } from '@nestjs/common';
 import { StoreRequestDto } from './dto/store.request.dto';
 import { StoreService } from './store.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 
 @Controller('/stores')
 @ApiTags('Store')
@@ -20,8 +22,12 @@ export class StoreController {
 
 	@ApiOperation({ summary: '모든 스토어 정보 찾기' })
 	@Get()
-	async getAllStore(@Query() page: StoreRequestDto) {
-		return await this.storeServcie.getAllStores(page);
+	async getAllStore() {
+		return await this.storeServcie.getAllStores();
+	}
+
+	async getPaginate(@Query('page') page: number = 1) {
+		return await this.storeServcie.getPaginate(page);
 	}
 
 	@ApiOperation({ summary: 'ID로 스토어 정보 찾기' })

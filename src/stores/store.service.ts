@@ -3,21 +3,22 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Store } from './store.schema';
 import { StoreRequestDto } from './dto/store.request.dto';
-import { Page } from '../page/page';
+
 @Injectable()
 export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
 	) {}
 
-	async getAllStores(page: StoreRequestDto): Promise<Page<Store>> {
-		const total = await this.storeModel.count();
-		const stores = await this.storeModel.find({
-			take: page.getLimit(),
-			skip: page.getOffset(),
-		});
+	async getAllStores(): Promise<Store[]> {
+		return await this.storeModel.find();
+	}
 
-		return new Page(total, page.pageSize, stores);
+	async getPaginate(page: number): Promise<Store[]> {
+		const limit = 10;
+		const offset = (page - 1) * limit;
+
+		return await this.storeModel.find().limit(limit).skip(offset);
 	}
 
 	async getStoreById(_id: string): Promise<Store> {
