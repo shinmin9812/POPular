@@ -37,34 +37,24 @@ export class UserService {
 	}
 
 	async createUser(body: UserSignupDto): Promise<User> {
-		const { email, pw, name, nickname, phone_number, allow_notification } =
-			body;
-
+		const pw = body.pw;
 		const hashedPassword = await hashPassword(pw);
 
 		const newUser = {
-			email,
+			...body,
 			pw: hashedPassword,
-			name,
-			nickname,
-			phone_number,
-			allow_notification,
 		};
 
 		return await this.userModel.create(newUser);
 	}
 
 	async updateUser(_id: string, body: UserUpdateDto): Promise<User> {
-		const { profile, introduce, nickname, pw, phone_number } = body;
-
+		const pw = body.pw;
 		const hashedPassword = await hashPassword(pw);
 
 		const updateUser = {
-			profile,
-			introduce,
-			nickname,
+			...body,
 			pw: hashedPassword,
-			phone_number,
 		};
 		return await this.userModel.findByIdAndUpdate({ _id }, updateUser, {
 			new: true,
