@@ -49,7 +49,7 @@ export class FeedCreateDto {
 		description: '게시글 내용',
 		required: true,
 	})
-	readonly content: string;
+	content: string;
 
 	@IsMongoId()
 	@IsNotEmpty()
