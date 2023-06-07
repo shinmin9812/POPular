@@ -33,7 +33,7 @@ const Filter = ({
   return (
     <Select value={value} onChange={onChange} width={width}>
       {Options.map((option, index) => (
-        <option key={index} value={option}>
+        <option key={index} value={option} disabled={index === 0}>
           {option}
         </option>
       ))}

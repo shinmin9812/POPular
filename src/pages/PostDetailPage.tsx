@@ -8,7 +8,7 @@ import LikesAndReports from '../components/PostDetail/components/LikeAndReportBu
 import CommentsList from '../components/PostDetail/components/CommentsList';
 import Pagination from '../components/common/Pagination/Pagination';
 import CommentInput from '../components/PostDetail/components/CommentInput';
-import StarIcon from '../components/common/Icons/StarIcon';
+import UpdateAndDelete from '../components/PostDetail/components/UpdateAndDeleteButtons';
 import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
@@ -24,11 +24,11 @@ const PostDetailPage = () => {
   }, []);
 
   async function fetchData() {
-    const response = await fetch(`http://34.22.81.36:3000/posts/${postId}`);
+    const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}`);
     const result: Post = await response.json();
     setPost(result);
   }
-
+  console.log(post);
   return (
     <Container>
       <PostInfo
@@ -39,17 +39,12 @@ const PostDetailPage = () => {
         likes={post ? post.likes.length : 0}
         comments={post ? post.comments.length : 0}
       />
-      {post && (
-        <div>
-          평점 :
-          {Array(post?.rating)
-            .fill(0)
-            .map((i, index) => (
-              <StarIcon key={index} />
-            ))}
-        </div>
-      )}
-      <PostContent img={post ? post.author.profile : ''} content={post ? post.content : ''}></PostContent>
+      <UpdateAndDelete />
+      <PostContent
+        img={post ? post.author.profile : ''}
+        content={post ? post.content : ''}
+        rating={Array(post?.rating).fill(0)}
+      ></PostContent>
       <LikesAndReports />
       <CommentsList comments={post ? post.comments : undefined} />
       <Pagination currPage={currPage} setPage={setPage} />

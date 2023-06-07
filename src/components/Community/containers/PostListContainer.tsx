@@ -11,25 +11,25 @@ async function fetchData(tab: string, setPosts: React.Dispatch<React.SetStateAct
   switch (tab) {
     case '전체':
       console.log(tab);
-      response = await fetch(`http://34.22.81.36:3000/posts`);
+      response = await fetch(`http://34.22.81.36:3000/feeds`);
       result = await response.json();
       break;
     case '자유게시판':
       console.log(tab);
 
-      response = await fetch(`http://34.22.81.36:3000/posts/free`);
+      response = await fetch(`http://34.22.81.36:3000/feeds/free`);
       result = await response.json();
       break;
     case '모집게시판':
       console.log(tab);
 
-      response = await fetch(`http://34.22.81.36:3000/posts/gather`);
+      response = await fetch(`http://34.22.81.36:3000/feeds/gather`);
       result = await response.json();
       break;
     case '후기게시판':
       console.log(tab);
 
-      response = await fetch(`http://34.22.81.36:3000/posts/review`);
+      response = await fetch(`http://34.22.81.36:3000/feeds/review`);
       result = await response.json();
       break;
   }
@@ -43,7 +43,7 @@ const PostListItemContainer = () => {
   useEffect(() => {
     fetchData(tab, setPosts);
   }, [tab]);
-
+  console.log(posts);
   return (
     <ul>
       {posts?.map((post) => (
@@ -51,7 +51,7 @@ const PostListItemContainer = () => {
           key={post._id}
           postTitle={post.title}
           //storeName="어짜라고"
-          postInfo={`${new Date(post.updatedAt).toISOString().slice(0, 10)} | By ${post.author.nickname} | Likes ${
+          postInfo={`${new Date(post.updatedAt).toISOString().slice(0, 10)} | By ${post.author} | Likes ${
             post.likes.length
           }`}
           postId={post._id}

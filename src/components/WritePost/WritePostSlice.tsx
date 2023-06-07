@@ -4,46 +4,59 @@ import useSetTabAction from '../../Hooks/useTabsActions';
 
 export interface WritePostInitialState {
   tab: string;
+  postTitle: string;
   postContent: string;
-  rating: number;
-  filter: {
-    address: string;
-    category: string;
-    duration: {
-      show: boolean;
-      StartDate: {
-        year: number;
-        month: number;
-        day: number;
-      };
-      endDate: {
-        year: number;
-        month: number;
-        day: number;
-      };
+  ratings: number;
+  addressFilter: {
+    value: string;
+    use: boolean;
+  };
+  categoryFilter: {
+    value: string;
+    use: boolean;
+  };
+  durationFilter: {
+    show: boolean;
+    use: boolean;
+    StartDate: {
+      year: number;
+      month: number;
+      day: number;
+    };
+    endDate: {
+      year: number;
+      month: number;
+      day: number;
     };
   };
 }
 
 export interface SetDate {
-  start: boolean;
-  date: number;
+  year: number;
+  month: number;
+  day: number;
 }
 
 const Today = new Date();
 
 const initialState: WritePostInitialState = {
   tab: '자유게시판',
+  postTitle: '',
   postContent: '',
-  rating: 1,
-  filter: {
-    address: '지역',
-    category: '카테고리',
-    duration: {
-      show: false,
-      StartDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
-      endDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
-    },
+  ratings: 0,
+  addressFilter: {
+    value: '지역',
+    use: false,
+  },
+  categoryFilter: {
+    value: '카테고리',
+    use: false,
+  },
+  durationFilter: {
+    show: false,
+    use: false,
+    StartDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
+    endDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
   },
 };
 
@@ -54,29 +67,39 @@ const WritePostSlice = createSlice({
     setTab(state, action: PayloadAction<string>) {
       useSetTabAction.setTab(state, action);
     },
-    setFilterAddress(state, action: PayloadAction<string>) {
-      useFilterActions.setFilterAddress(state, action);
+    setFilterAddressValue(state, action: PayloadAction<string>) {
+      state.addressFilter.value = action.payload;
     },
-    setFilterCategory(state, action: PayloadAction<string>) {
-      useFilterActions.setFilterCategory(state, action);
+    setFilterAddressUse(state, action: PayloadAction<boolean>) {
+      state.addressFilter.use = action.payload;
     },
-    setFilterDurationYear(state, action: PayloadAction<SetDate>) {
-      useFilterActions.setFilterDurationYear(state, action);
+    setFilterCategoryValue(state, action: PayloadAction<string>) {
+      state.categoryFilter.value = action.payload;
     },
-    setFilterDurationMonth(state, action: PayloadAction<SetDate>) {
-      useFilterActions.setFilterDurationMonth(state, action);
+    setFilterCategoryUse(state, action: PayloadAction<boolean>) {
+      state.categoryFilter.use = action.payload;
     },
-    setFilterDurationDay(state, action: PayloadAction<SetDate>) {
-      useFilterActions.setFilterDurationDay(state, action);
+    setFilterStartDate(state, action: PayloadAction<SetDate>) {
+      state.durationFilter.StartDate = action.payload;
+    },
+    setFilterEndDate(state, action: PayloadAction<SetDate>) {
+      state.durationFilter.endDate = action.payload;
+    },
+    setFilterDurationUse(state, action: PayloadAction<boolean>) {
+      state.durationFilter.use = action.payload;
     },
     setFilterDurationShow(state, action: PayloadAction<boolean>) {
-      useFilterActions.setFilterDurationShow(state, action);
+      state.durationFilter.show = action.payload;
+    },
+
+    setPostTitle(state, action) {
+      state.postTitle = action.payload;
     },
     setPostContent(state, action) {
       state.postContent = action.payload;
     },
     setRating(state, action) {
-      state.rating = action.payload;
+      state.ratings = action.payload;
     },
   },
 });

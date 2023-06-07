@@ -3,11 +3,10 @@ import TabsContainer from '../components/WritePost/containers/TabsContainer';
 import TitleInput from '../components/WritePost/components/PostTitle';
 import PostContentContainer from '../components/WritePost/containers/PostContentContainer';
 import RatingContainer from '../components/WritePost/containers/RatingContainer';
-import PostRegisterButton from '../components/WritePost/components/PostRegisterButton';
 import ChoiceStoreBoxContainer from '../components/WritePost/containers/ChoiceStoreBoxContainer';
+import PostRegisterButtonContainer from '../components/WritePost/containers/PostRegisterButtonContainer';
 const Container = styled.div`
   width: 100%;
-  height: 1000px;
   position: relative;
 `;
 
@@ -19,7 +18,7 @@ const WritePostPage = () => {
       <PostContentContainer />
       <ChoiceStoreBoxContainer />
       <RatingContainer />
-      <PostRegisterButton>작성하기</PostRegisterButton>
+      <PostRegisterButtonContainer />
     </Container>
   );
 };
