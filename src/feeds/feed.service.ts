@@ -82,15 +82,17 @@ export class FeedsService {
 			createdFeed.images = feedCreateDto.images;
 			createdFeed.storeId = feedCreateDto.storeId;
 			createdFeed.ratings = feedCreateDto.ratings;
-			createdFeed.likes = feedCreateDto.likes;
-			createdFeed.reports = feedCreateDto.reports;
-			createdFeed.comments = feedCreateDto.comments;
-			createdFeed.views = feedCreateDto.views;
+			createdFeed.likes = [];
+			createdFeed.reports = [];
+			createdFeed.comments = [];
+			createdFeed.views = 0;
 
 			return await createdFeed.save();
 		} catch (err) {
 			if (err.name === 'ValidationError') {
+				console.log(err);
 				throw new BadRequestException('잘못된 데이터를 입력하셨습니다.');
+				
 			}
 			console.error(err);
 			throw new InternalServerErrorException('글 생성에 실패하였습니다.');

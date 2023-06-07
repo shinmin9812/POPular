@@ -81,7 +81,7 @@ export class FeedCreateDto {
 		example: '[1.png, 2.png]',
 		description: '게시글 이미지',
 	})
-	images?: string[];
+	images?: Array<string>;
 
 	@IsOptional()
 	@IsArray()
@@ -107,10 +107,13 @@ export class FeedCreateDto {
 	})
 	readonly comments?: Types.ObjectId[];
 
+	@IsOptional()
 	@IsNumber()
+	@Min(0)
 	@ApiProperty({
-		example: '4',
+		example: '0',
 		description: '게시글 조회수',
+		default: 0,
 	})
 	readonly views: number;
 }
