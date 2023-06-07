@@ -13,8 +13,8 @@ const PostList = ({ posts }: Props) => {
       {posts.length > 0 ? (
         <ul className="post-items">
           {posts.map((post) => (
-            <li className="post-item" key={post.id}>
-              <Link to={`/posts/${post.id}`}>
+            <li className="post-item" key={post._id}>
+              <Link to={`/posts/${post._id}`}>
                 <PostItem post={post} />
               </Link>
             </li>
