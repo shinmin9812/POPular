@@ -3,7 +3,7 @@ export const API_PATH = {
   STORE: {
     GET: {
       // 모든 스토어 조회
-      ALL: 'http://34.22.81.36:3000/stores/all',
+      ALL: 'http://34.22.81.36:3000/stores',
       // 특정 옵션 스토어 조회 (쿼리스트링 사용)
       WITH_OPTIONS: '/stores',
       // ID 조회
@@ -116,6 +116,31 @@ export const CLIENT_PATH = {
   USER_UPDATE: '/user/:userId/update',
 
   ADMIN: '/admin',
+
+  ADMIN_STORE: {
+    STATISTICS: '/admin/store/statistics',
+    ADD: '/admin/store/add',
+    EDIT: '/admin/store/edit',
+    DELETE: '/admin/store/delete',
+  },
+
+  ADMIN_USER: {
+    STATISTICS: '/admin/user/statistics',
+    ADD: '/admin/user/add',
+    EDIT: '/admin/user/edit',
+    DELETE: '/admin/user/delete',
+  },
+
+  ADMIN_FEED: {
+    STATISTICS: '/admin/feed/statistics',
+    EDIT: '/admin/feed/edit',
+    DELETE: '/admin/feed/delete',
+  },
+
+  ADMIN_NOTIFICATION: {
+    SEND: '/admin/notification/send',
+    EDIT: '/admin/notification/edit',
+  },
 
   NOT_FOUND: '/not_found',
 

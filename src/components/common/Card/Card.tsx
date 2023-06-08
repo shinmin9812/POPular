@@ -1,0 +1,23 @@
+import React from 'react';
+
+import styled from 'styled-components';
+
+const Container = styled.div`
+  width: fit-content;
+  height: fit-content;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.2);
+`;
+
+interface Props {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const Card = ({ children, className }: Props) => {
+  return <Container className={className}>{children}</Container>;
+};
+
+export default Card;

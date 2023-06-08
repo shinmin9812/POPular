@@ -6,8 +6,8 @@ const Container = styled.div``;
 
 const OutletWrapper = styled.div`
   min-height: 100vh;
-  width: calc(100vw - 300px);
-  margin-left: 300px;
+  width: 100vw;
+  padding: 30px 30px 30px 360px;
   background-color: #fcf6ff;
 `;
 

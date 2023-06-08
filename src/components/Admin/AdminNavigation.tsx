@@ -1,67 +1,25 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import StoreIconMini from '../common/Icons/StoreIconMini';
 import AccodionList from '../common/Accordion/AccodionList';
+import { CLIENT_PATH } from '../../constants/path';
 
 const Container = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 2.5vh;
+  left: 2.5vh;
 
   width: 300px;
-  height: 100vh;
+  height: 95vh;
 
-  padding: 20px 0;
+  padding: 20px;
 
   font-family: 'Noto Sans KR', sans-serif;
 
-  background-color: #ffffff;
-  box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.2);
-  /* transition: all 1s; */
+  background-color: #8241d0;
+  background-image: linear-gradient(43deg, #d42d62 0%, #c850c0 30%, #e096ef 100%);
 
-  .management-item {
-    h2 {
-      display: flex;
-      align-items: center;
-      width: 100%;
-
-      padding: 14px;
-
-      border-radius: 10px;
-
-      font-size: 16px;
-      font-weight: 400;
-      color: #242424;
-
-      /* transition: background-color 0.3s; */
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
-    .accordion {
-      height: 0;
-      overflow: hidden;
-      font-size: 16px;
-      gap: 14px;
-    }
-
-    &.on {
-      h2 {
-        background-color: #fcf6ff;
-        font-weight: 700;
-      }
-
-      .accordion {
-        display: flex;
-        flex-direction: column;
-        height: fit-content;
-        background-color: #f4e6fc;
-        padding: 10px 20px;
-      }
-    }
-  }
+  border-radius: 20px;
+  box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.4);
 `;
 
 const Accodions = [
@@ -70,19 +28,19 @@ const Accodions = [
     list: [
       {
         name: '스토어 통계',
-        path: '/admin/store/statistics',
+        path: CLIENT_PATH.ADMIN_STORE.STATISTICS,
       },
       {
         name: '스토어 추가',
-        path: '/admin/store/add',
+        path: CLIENT_PATH.ADMIN_STORE.ADD,
       },
       {
         name: '스토어 수정',
-        path: '/admin/store/edit',
+        path: CLIENT_PATH.ADMIN_STORE.EDIT,
       },
       {
         name: '스토어 삭제',
-        path: '/admin/store/delete',
+        path: CLIENT_PATH.ADMIN_STORE.DELETE,
       },
     ],
   },
@@ -91,19 +49,19 @@ const Accodions = [
     list: [
       {
         name: '유저 통계',
-        path: '/admin/user/statistics',
+        path: CLIENT_PATH.ADMIN_USER.STATISTICS,
       },
       {
         name: '유저 추가',
-        path: '/admin/user/add',
+        path: CLIENT_PATH.ADMIN_USER.ADD,
       },
       {
         name: '유저 수정',
-        path: '/admin/user/edit',
+        path: CLIENT_PATH.ADMIN_USER.EDIT,
       },
       {
         name: '유저 삭제',
-        path: '/admin/user/delete',
+        path: CLIENT_PATH.ADMIN_USER.DELETE,
       },
     ],
   },
@@ -112,15 +70,15 @@ const Accodions = [
     list: [
       {
         name: '피드 통계',
-        path: '/admin/feed/statistics',
+        path: CLIENT_PATH.ADMIN_FEED.STATISTICS,
       },
       {
         name: '피드 수정',
-        path: '/admin/feed/edit',
+        path: CLIENT_PATH.ADMIN_FEED.EDIT,
       },
       {
         name: '피드 삭제',
-        path: '/admin/feed/delete',
+        path: CLIENT_PATH.ADMIN_FEED.DELETE,
       },
     ],
   },
@@ -129,11 +87,11 @@ const Accodions = [
     list: [
       {
         name: '알림 보내기',
-        path: '/admin/notification/send',
+        path: CLIENT_PATH.ADMIN_NOTIFICATION.SEND,
       },
       {
-        name: '유저 수정',
-        path: '/admin/notification/edit',
+        name: '림 수정',
+        path: CLIENT_PATH.ADMIN_NOTIFICATION.EDIT,
       },
     ],
   },

@@ -3,20 +3,13 @@ import styled from 'styled-components';
 import AccodionItem, { AccodionItemType } from './AccodionItem';
 
 const Container = styled.ul`
-  position: fixed;
-  top: 0;
-  left: 0;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
 
-  width: 300px;
-  height: 100vh;
-
-  padding: 20px 0;
-
-  font-family: 'Noto Sans KR', sans-serif;
-
-  background-color: #ffffff;
-  box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.2);
-  /* transition: all 1s; */
+  a {
+    color: #f5c0ff;
+  }
 
   .management-item {
     h2 {
@@ -25,14 +18,14 @@ const Container = styled.ul`
       width: 100%;
 
       padding: 14px;
+      margin: 10px 0;
 
-      border-radius: 10px;
+      border-radius: 20px;
 
-      font-size: 16px;
-      font-weight: 400;
-      color: #242424;
+      font-size: 20px;
+      font-weight: 500;
 
-      /* transition: background-color 0.3s; */
+      transition: all 0.2s;
 
       &:hover {
         cursor: pointer;
@@ -43,12 +36,14 @@ const Container = styled.ul`
       height: 0;
       overflow: hidden;
       font-size: 16px;
-      gap: 14px;
+      gap: 20px;
     }
 
     &.on {
       h2 {
-        background-color: #fcf6ff;
+        background-color: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(20px);
+        font-size: 24px;
         font-weight: 700;
       }
 
@@ -56,8 +51,18 @@ const Container = styled.ul`
         display: flex;
         flex-direction: column;
         height: fit-content;
-        background-color: #f4e6fc;
         padding: 10px 20px;
+
+        a {
+          width: fit-content;
+          transform-origin: left center;
+          transition: all 0.2s;
+
+          &.active {
+            color: #fff;
+            transform: scale(1.1);
+          }
+        }
       }
     }
   }
