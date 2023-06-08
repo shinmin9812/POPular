@@ -125,7 +125,7 @@ class snsinfo {
 		description: '스토어 SNS 링크 주소',
 		required: true,
 	})
-	link: string;
+	link_url: string;
 }
 
 export class StoreRequestDto {

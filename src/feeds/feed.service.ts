@@ -17,12 +17,15 @@ export class FeedsService {
 	constructor(
 		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
 	) {}
-	
+
 	async getAllFeeds(): Promise<Feed[]> {
 		try {
-			const feeds = await this.feedModel.find().populate('author').populate('storeId').exec();
+			const feeds = await this.feedModel
+				.find()
+				.populate('author')
+				.populate('store_id')
+				.exec();
 			return feeds;
-			
 		} catch (err) {
 			throw new InternalServerErrorException(
 				'글 목록 불러오기를 실패했습니다.',
@@ -38,7 +41,7 @@ export class FeedsService {
 				query = query.where('board', board);
 			}
 
-			const feeds = await query.populate('author').populate('storeId').exec();
+			const feeds = await query.populate('author').populate('store_id').exec();
 
 			return feeds;
 		} catch (err) {
@@ -61,7 +64,7 @@ export class FeedsService {
 	}
 
 	async getPaginate(page: number): Promise<Feed[]> {
-		const limit = 10;
+		const limit = 7;
 		const offset = (page - 1) * limit;
 
 		return await this.feedModel.find().limit(limit).skip(offset);
@@ -72,15 +75,15 @@ export class FeedsService {
 			const feed = await this.feedModel
 				.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true })
 				.populate('author')
-				.populate('storeId')
+				.populate('store_id')
 				.exec();
-	
+
 			if (!feed) {
 				throw new NotFoundException(
 					`'${id}' 아이디를 가진 글을 찾지 못했습니다.`,
 				);
 			}
-	
+
 			return feed;
 		} catch (err) {
 			throw new BadRequestException(
@@ -96,7 +99,7 @@ export class FeedsService {
 
 			let updatedContent = feedCreateDto.content;
 			for (const [imgData, imageUrl] of Object.entries(imageMapping)) {
-					updatedContent = updatedContent.replace(imgData, imageUrl);
+				updatedContent = updatedContent.replace(imgData, imageUrl);
 			}
 
 			const createdFeed = new this.feedModel();
@@ -105,7 +108,7 @@ export class FeedsService {
 			createdFeed.board = feedCreateDto.board;
 			createdFeed.content = updatedContent;
 			createdFeed.images = Object.values(imageMapping);
-			createdFeed.storeId = feedCreateDto.storeId;
+			createdFeed.store_id = feedCreateDto.store_id;
 			createdFeed.ratings = feedCreateDto.ratings;
 			createdFeed.likes = [];
 			createdFeed.reports = [];
@@ -117,7 +120,6 @@ export class FeedsService {
 			if (err.name === 'ValidationError') {
 				console.log(err);
 				throw new BadRequestException('잘못된 데이터를 입력하셨습니다.');
-				
 			}
 			console.error(err);
 			throw new InternalServerErrorException('글 생성에 실패하였습니다.');
@@ -127,32 +129,32 @@ export class FeedsService {
 	async updateFeed(id: string, feedUpdateDto: FeedUpdateDto): Promise<Feed> {
 		try {
 			const feed = await this.feedModel.findById(id).exec();
-	
+
 			if (!feed) {
 				throw new NotFoundException(
 					`'${id}' 아이디를 가진 글을 찾지 못했습니다.`,
 				);
 			}
-	
+
 			const base64Images = extractImages(feedUpdateDto.content);
 			const imageMapping = await handleImages(base64Images);
-	
+
 			let updatedContent = feedUpdateDto.content;
 			for (const [imgData, imageUrl] of Object.entries(imageMapping)) {
-					updatedContent = updatedContent.replace(imgData, imageUrl);
+				updatedContent = updatedContent.replace(imgData, imageUrl);
 			}
-	
+
 			feedUpdateDto.content = updatedContent;
 			feedUpdateDto.images = Object.values(imageMapping);
-	
+
 			Object.assign(feed, feedUpdateDto);
-	
+
 			return await feed.save();
 		} catch (err) {
 			if (err.name === 'ValidationError') {
 				throw new BadRequestException('잘못된 데이터를 입력하셨습니다.');
 			}
-	
+
 			throw new InternalServerErrorException('글 업데이트에 실패하였습니다.');
 		}
 	}
