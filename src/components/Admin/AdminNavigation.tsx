@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import StoreIconMini from '../common/Icons/StoreIconMini';
+import AccodionList from '../common/Accordion/AccodionList';
 
 const Container = styled.div`
   position: fixed;
@@ -9,13 +11,13 @@ const Container = styled.div`
   width: 300px;
   height: 100vh;
 
-  padding: 20px;
+  padding: 20px 0;
 
   font-family: 'Noto Sans KR', sans-serif;
 
   background-color: #ffffff;
   box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.2);
-  transition: all 1s;
+  /* transition: all 1s; */
 
   .management-item {
     h2 {
@@ -42,10 +44,7 @@ const Container = styled.div`
       height: 0;
       overflow: hidden;
       font-size: 16px;
-
-      .accordion-item {
-        padding: 6px 10px 6px 20px;
-      }
+      gap: 14px;
     }
 
     &.on {
@@ -55,12 +54,90 @@ const Container = styled.div`
       }
 
       .accordion {
+        display: flex;
+        flex-direction: column;
         height: fit-content;
-        transition: all 1s;
+        background-color: #f4e6fc;
+        padding: 10px 20px;
       }
     }
   }
 `;
+
+const Accodions = [
+  {
+    title: '팝업 스토어 관리',
+    list: [
+      {
+        name: '스토어 통계',
+        path: '/admin/store/statistics',
+      },
+      {
+        name: '스토어 추가',
+        path: '/admin/store/add',
+      },
+      {
+        name: '스토어 수정',
+        path: '/admin/store/edit',
+      },
+      {
+        name: '스토어 삭제',
+        path: '/admin/store/delete',
+      },
+    ],
+  },
+  {
+    title: '유저 관리',
+    list: [
+      {
+        name: '유저 통계',
+        path: '/admin/user/statistics',
+      },
+      {
+        name: '유저 추가',
+        path: '/admin/user/add',
+      },
+      {
+        name: '유저 수정',
+        path: '/admin/user/edit',
+      },
+      {
+        name: '유저 삭제',
+        path: '/admin/user/delete',
+      },
+    ],
+  },
+  {
+    title: '피드 관리',
+    list: [
+      {
+        name: '피드 통계',
+        path: '/admin/feed/statistics',
+      },
+      {
+        name: '피드 수정',
+        path: '/admin/feed/edit',
+      },
+      {
+        name: '피드 삭제',
+        path: '/admin/feed/delete',
+      },
+    ],
+  },
+  {
+    title: '알림 관리',
+    list: [
+      {
+        name: '알림 보내기',
+        path: '/admin/notification/send',
+      },
+      {
+        name: '유저 수정',
+        path: '/admin/notification/edit',
+      },
+    ],
+  },
+];
 
 const AdminNavigation = () => {
   const [selectedMenu, setSelectedMenu] = useState<string>('');
@@ -68,53 +145,7 @@ const AdminNavigation = () => {
   return (
     <Container>
       <nav>
-        <ul className="management-list">
-          <li className={`management-item store-management ${selectedMenu === 'store' ? 'on' : ''}`}>
-            <h2
-              onClick={() => {
-                setSelectedMenu(`${selectedMenu === 'store' ? '' : 'store'}`);
-              }}
-            >
-              팝업 스토어 관리
-            </h2>
-            <ul className={`accordion`}>
-              <li className="accordion-item">
-                <h3>스토어 통계</h3>
-              </li>
-              <li className="accordion-item">
-                <h3>스토어 삭제</h3>
-              </li>
-              <li className="accordion-item">
-                <h3>스토어 수정</h3>
-              </li>
-              <li className="accordion-item">
-                <h3>스토어 삭제</h3>
-              </li>
-            </ul>
-          </li>
-          <li
-            className={`management-item user-management ${selectedMenu === 'user' ? 'on' : ''}`}
-            onClick={() => {
-              setSelectedMenu(`${selectedMenu === 'user' ? '' : 'user'}`);
-            }}
-          >
-            <h2>유저 관리</h2>
-            <ul className={`accordion`}>
-              <li className="accordion-item">
-                <h3>유저 통계</h3>
-              </li>
-              <li className="accordion-item">
-                <h3>유저 정보 수정</h3>
-              </li>
-              <li className="accordion-item">
-                <h3>유저 삭제</h3>
-              </li>
-            </ul>
-          </li>
-          <li className="post-management"></li>
-          <li className="notification-management"></li>
-          <li className="-management"></li>
-        </ul>
+        <AccodionList selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} Accodions={Accodions} />
       </nav>
     </Container>
   );
