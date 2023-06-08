@@ -13,10 +13,6 @@ import {
 	Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { multerConfig } from 'src/multer.config';
-import { MulterModule } from '@nestjs/platform-express/multer';
-import { FileFieldsInterceptor } from '@nestjs/platform-express/multer';
-import { diskStorage } from 'multer';
 import { FeedsService } from './feed.service';
 import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
@@ -67,20 +63,9 @@ export class FeedsController {
 	@ApiBearerAuth('Authorization')
 	@Post()
 	@UseGuards(AuthGuard)
-	@UseInterceptors(
-		FileFieldsInterceptor(
-			[{ name: 'images', maxCount: 5 }],
-			multerConfig.storage,
-		),
-	)
 	async createFeed(
 		@Body() createDto: FeedCreateDto,
-		@UploadedFiles() files: Express.Multer.File[],
 	) {
-		if (createDto.images.length > 0) {
-			createDto.images = files.map((file: Express.Multer.File) => file.path);
-		}
-
 		return await this.feedsService.createFeed(createDto);
 	}
 
@@ -88,20 +73,10 @@ export class FeedsController {
 	@ApiBearerAuth('Authorization')
 	@Patch(':id')
 	@UseGuards(AuthGuard)
-	@UseInterceptors(
-		FileFieldsInterceptor(
-			[{ name: 'images', maxCount: 5 }],
-			multerConfig.storage,
-		),
-	)
 	async updateFeed(
 		@Param('id') id: string,
 		@Body() updateDto: FeedUpdateDto,
-		@UploadedFiles() files: Express.Multer.File[],
 	) {
-		if (updateDto.images.length > 0) {
-			updateDto.images = files.map((file: Express.Multer.File) => file.path);
-		}
 		return await this.feedsService.updateFeed(id, updateDto);
 	}
 
