@@ -1,9 +1,8 @@
 import { Post } from './post';
-import { UserOnlyProfile } from './user';
 
 export interface Comment {
-  id: string;
-  author: UserOnlyProfile;
+  _id: string;
+  author: string;
   content: string;
   parent: {
     type: Post | Comment;

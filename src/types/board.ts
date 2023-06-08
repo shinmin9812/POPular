@@ -8,7 +8,7 @@ export const enum BoardTypes {
 }
 
 export interface Board {
-  id: string;
+  _id: string;
   title: BoardTypes;
   posts: Post[];
 }

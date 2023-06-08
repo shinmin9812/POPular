@@ -1,6 +1,8 @@
 import { Category } from './category';
 import { SNSType } from './sns';
 
+type DateType = string | null;
+
 export interface Store {
   _id: string;
   title: string;
@@ -10,32 +12,32 @@ export interface Store {
   end_date: string;
   hours: {
     mon: {
-      start: string | null;
-      end: string | null;
+      start: DateType;
+      end: DateType;
     };
     tue: {
-      start: string | null;
-      end: string | null;
+      start: DateType;
+      end: DateType;
     };
     wed: {
-      start: string | null;
-      end: string | null;
+      start: DateType;
+      end: DateType;
     };
     thu: {
-      start: string | null;
-      end: string | null;
+      start: DateType;
+      end: DateType;
     };
     fri: {
-      start: string | null;
-      end: string | null;
+      start: DateType;
+      end: DateType;
     };
     sat: {
-      start: string | null;
-      end: string | null;
+      start: DateType;
+      end: DateType;
     };
     sun: {
-      start: string | null;
-      end: string | null;
+      start: DateType;
+      end: DateType;
     };
   };
   location: string;
@@ -46,9 +48,9 @@ export interface Store {
   coord: {
     coordinates: [lat: string, lng: string];
   };
-  price: number | null;
+  price: number;
   sns: SNSType[];
   reservation_required: boolean;
   images: string[];
-  scrap: number;
+  scraps: string[];
 }
