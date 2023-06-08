@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import FindCurrentPositon from '../components/FindCurrentPositon';
-import StoreList from '../../common/Store/StoreList';
 import SlideCarousel from '../components/SlideCarousel';
 import { getDistance } from '../../../utils/getDistance';
 import { useQuery } from '@tanstack/react-query';
 import { API_PATH } from '../../../constants/path';
 import { Store } from '../../../types/store';
+import StoreSheet from '../components/StoreSheet';
 
 declare global {
   interface Window {
@@ -197,19 +197,7 @@ const Map = () => {
           refetch();
         }}
       />
-      {stores && (
-        <div className={`store-list-container ${openList ? 'open' : ''}`}>
-          <div
-            className="opner"
-            onClick={() => {
-              setOpenList(!openList);
-            }}
-          />
-          <div className="content">
-            <StoreList stores={stores} />
-          </div>
-        </div>
-      )}
+      {stores && <StoreSheet openList={openList} setOpenList={setOpenList} stores={stores} />}
     </Container>
   );
 };
@@ -217,10 +205,10 @@ const Map = () => {
 const Container = styled.div`
   position: fixed;
   top: var(--header-height);
-  left: 0;
+  right: 0;
 
-  height: calc(100vh - var(--header-height) - var(--GNA-height));
-  width: 100vw;
+  height: calc(100vh - var(--header-height));
+  width: calc(100vw - 500px);
   overflow: hidden;
 
   .custom-overlay {
@@ -256,64 +244,6 @@ const Container = styled.div`
     }
   }
 
-  .store-list-container {
-    position: fixed;
-
-    width: 100%;
-    height: calc(100vh - (var(--header-height) * 3));
-
-    bottom: calc(-100% + (var(--GNA-height) * 4) + 50px);
-
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-
-    background-color: var(--color-white);
-    z-index: 500;
-
-    transition: bottom 1s;
-
-    .opner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      top: -50px;
-      left: 0;
-      width: 100%;
-      height: 50px;
-      z-index: 500;
-
-      border-top-left-radius: 20px;
-      border-bottom: 1px solid var(--color-light-gray);
-    }
-
-    .opner::after {
-      content: '';
-      height: 5px;
-      width: 10%;
-      min-width: 80px;
-      display: block;
-      background-color: #c9c9c9;
-    }
-
-    .opner:hover {
-      cursor: pointer;
-    }
-
-    .content {
-      height: calc(100% + var(--GNA-height) - 50px);
-      background-color: var(--color-white);
-
-      .store-list {
-        height: 100%;
-        overflow-y: scroll;
-      }
-    }
-
-    &.open {
-      bottom: calc(var(--GNA-height) * 2);
-    }
-  }
-
   @keyframes appearOverlay {
     0% {
       top: 10px;
@@ -323,6 +253,11 @@ const Container = styled.div`
       top: 0;
       opacity: 1;
     }
+  }
+
+  @media all and (max-width: 767px) {
+    height: calc(100vh - var(--header-height) - var(--GNA-height));
+    width: 100vw;
   }
 `;
 

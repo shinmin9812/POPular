@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Container = styled.button`
   position: fixed;
   top: 160px;
-  left: 50%;
+  left: calc(65vw);
 
   width: 130px;
   height: 35px;
@@ -27,6 +27,10 @@ const Container = styled.button`
     cursor: pointer;
 
     transform: translateX(-50%) scale(1.2);
+  }
+
+  @media all and (max-width: 767px) {
+    left: 50%;
   }
 `;
 
