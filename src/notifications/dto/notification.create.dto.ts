@@ -1,5 +1,5 @@
 import { IsEnum, IsMongoId, IsNotEmpty, ValidateIf } from 'class-validator';
-import { ContentModel, NotificationType } from '../notification.schema';
+import { NotificationType } from '../notification.schema';
 import { BoardType } from 'src/feeds/feed.schema';
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
@@ -34,18 +34,9 @@ export class NotificationCreateDto {
 	@IsNotEmpty()
 	@IsMongoId()
 	@ApiProperty({
-		example: '귀여운 토끼님이 팔로우하셨습니다.',
-		description: '알림 내용',
+		example: 'qwer2134',
+		description: '알림에서 참조할 데이터 ID (Follow: User / Comment/Recomment: Comment / Ad: Store)',
 		required: true,
 	})
 	readonly content: Types.ObjectId;
-
-	@IsNotEmpty()
-	@IsEnum(ContentModel)
-	@ApiProperty({
-		example: 'User',
-		description: '내용 모델',
-		required: true,
-	})
-	readonly contentModel: ContentModel;
 }

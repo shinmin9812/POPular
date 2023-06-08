@@ -5,6 +5,7 @@ import {
 	Schema as MongooseSchema,
 	Types,
 } from 'mongoose';
+import { Feed } from 'src/feeds/feed.schema';
 import { User } from 'src/users/user.schema';
 
 const options: SchemaOptions = {
@@ -19,6 +20,9 @@ export class Comment extends Document {
 
 	@Prop({ required: true })
 	content: string;
+
+	@Prop({ type: Types.ObjectId, refPath: 'type' })
+	parent: Types.ObjectId | Feed | Comment;
 
 	@Prop({
 		type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Comment' }],

@@ -11,33 +11,25 @@ const options: SchemaOptions = {
 };
 
 export enum NotificationType {
-	Follow = 'follow',
-	Comment = 'comment',
-	Ad = 'ad',
-}
-
-export enum ContentModel {
-	User = 'User',
+	Follow = 'Follow',
 	Comment = 'Comment',
-	Store = 'Store',
+	Recomment = 'Comment',
+	Ad = 'Store',
 }
 
 @Schema(options)
 export class Notification extends Document {
-	@Prop({ required: true, enum: NotificationType })
+	@Prop({ type: String, required: true, enum: Object.values(NotificationType) })
 	type: NotificationType;
 
 	@Prop()
 	board?: BoardType;
 
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
-	userId: Types.ObjectId | User;
+	user_id: Types.ObjectId | User;
 
-	@Prop({ type: Types.ObjectId, refPath: 'contentModel', required: true })
+	@Prop({ type: Types.ObjectId, refPath: 'type', required: true })
 	content: Types.ObjectId | User | Comment | Store;
-
-	@Prop({ required: true, enum: ContentModel })
-	contentModel: ContentModel;
 
 	@Prop({ default: false })
 	checked: boolean;
