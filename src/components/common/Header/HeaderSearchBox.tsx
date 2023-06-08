@@ -42,7 +42,7 @@ const Container = styled.div`
 const HeaderSearchBox = () => {
   return (
     <Container>
-      <input type="text"></input>
+      <input type="text" placeholder="팝업 스토어 "></input>
       <SearchIcon />
     </Container>
   );

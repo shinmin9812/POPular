@@ -86,10 +86,10 @@ const Container = styled.header`
           display: flex;
           gap: 40px;
           font-size: 18px;
-          color: var(--color-gray);
 
           a {
             transition: all 0.5s;
+            color: var(--color-light-black);
 
             &.active {
               color: var(--color-main);
@@ -107,7 +107,7 @@ const Container = styled.header`
         position: absolute;
         top: 50%;
         right: 0;
-        transform: translateY(-30%);
+        transform: translateY(-40%);
       }
     }
   }
