@@ -69,11 +69,11 @@ export class UserService {
 		const userObjId = new Types.ObjectId(userId);
 
 		if (user && store) {
-			if (!user.scrap.includes(storeObjId)) {
-				user.scrap.push(storeObjId);
+			if (!user.scraps.includes(storeObjId)) {
+				user.scraps.push(storeObjId);
 			}
-			if (!store.scrap.includes(userObjId)) {
-				store.scrap.push(userObjId);
+			if (!store.scraps.includes(userObjId)) {
+				store.scraps.push(userObjId);
 			}
 
 			user.save();
@@ -91,15 +91,15 @@ export class UserService {
 		const userObjId = new Types.ObjectId(userId);
 
 		if (user && store) {
-			const sIndex = user.scrap.indexOf(storeObjId);
-			const uIndex = store.scrap.indexOf(userObjId);
+			const sIndex = user.scraps.indexOf(storeObjId);
+			const uIndex = store.scraps.indexOf(userObjId);
 
 			if (sIndex !== -1) {
-				user.scrap.splice(sIndex, 1);
+				user.scraps.splice(sIndex, 1);
 			}
 
 			if (uIndex !== -1) {
-				store.scrap.splice(uIndex, 1);
+				store.scraps.splice(uIndex, 1);
 			}
 
 			await user.save();

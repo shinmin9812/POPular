@@ -47,7 +47,7 @@ export class UserUpdateDto {
 		example: '[의류, 식품]',
 		description: '유저 선호 카테고리 목록',
 	})
-	interested_category: Array<string>;
+	interested_category: string[];
 
 	@IsBoolean()
 	@ApiProperty({

@@ -35,7 +35,7 @@ class coordinfo {
 class snsinfo {
 	link_type: string;
 	link_title: string;
-	link: string;
+	link_url: string;
 }
 
 @Schema(options)
@@ -71,16 +71,16 @@ export class Store extends Document {
 	price: number;
 
 	@Prop({ type: Array })
-	sns: Array<snsinfo>;
+	sns: snsinfo[];
 
 	@Prop({ default: false })
 	reservation_required: boolean;
 
 	@Prop()
-	images: Array<string>;
+	images: string[];
 
 	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
-	scrap: Types.ObjectId[];
+	scraps: Types.ObjectId[];
 }
 
 export const StoreSchema = SchemaFactory.createForClass(Store);

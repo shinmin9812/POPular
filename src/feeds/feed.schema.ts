@@ -33,7 +33,7 @@ export class Feed extends Document {
 	images: Array<string>;
 
 	@Prop({ type: Types.ObjectId, ref: 'Store' })
-	storeId?: Types.ObjectId | Store;
+	store_id?: Types.ObjectId | Store;
 
 	@Prop({ min: 1, max: 5 })
 	ratings?: number;
