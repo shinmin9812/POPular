@@ -105,20 +105,6 @@ export class FeedsController {
 		return await this.feedsService.updateFeed(id, updateDto);
 	}
 
-	@ApiOperation({ summary: '게시글 조회수 증가하기' })
-	@Patch(':id/views')
-	async incrementViewCount(@Param('id') id: string) {
-		const updatedFeed = await this.feedsService.incrementViewCount(id);
-
-		if (!updatedFeed) {
-			throw new NotFoundException(
-				`'${id}' 아이디를 가진 게시물을 찾지 못했습니다.`,
-			);
-		}
-
-		return updatedFeed;
-	}
-
 	@ApiOperation({ summary: '게시글 삭제하기' })
 	@ApiBearerAuth('Authorization')
 	@Delete(':id')
