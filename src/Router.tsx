@@ -20,6 +20,7 @@ import PostDetailPage from './pages/PostDetailPage';
 import UserUpdatePage from './pages/UserUpdatePage';
 import AdminLayout from './components/Admin/AdminLayout';
 import AdminPage from './pages/Admin/AdminPage';
+import AdminStoreAddPage from './pages/Admin/AdminStoreAddPage';
 
 const Router = () => {
   return (
@@ -49,7 +50,7 @@ const Router = () => {
           <Route path={CLIENT_PATH.ADMIN} element={<AdminPage />} />
 
           <Route path={CLIENT_PATH.ADMIN_STORE.STATISTICS} element={<AdminPage />} />
-          <Route path={CLIENT_PATH.ADMIN_STORE.ADD} element={<AdminPage />} />
+          <Route path={CLIENT_PATH.ADMIN_STORE.ADD} element={<AdminStoreAddPage />} />
           <Route path={CLIENT_PATH.ADMIN_STORE.EDIT} element={<AdminPage />} />
           <Route path={CLIENT_PATH.ADMIN_STORE.DELETE} element={<AdminPage />} />
 

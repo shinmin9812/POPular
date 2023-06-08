@@ -9,6 +9,7 @@ const OutletWrapper = styled.div`
   width: 100vw;
   padding: 30px 30px 30px 360px;
   background-color: #fcf6ff;
+  font-family: 'Noto Sans KR', sans-serif;
 `;
 
 const AdminLayout = () => {

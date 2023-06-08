@@ -22,6 +22,7 @@ const Container = styled.ul`
 
       border-radius: 20px;
 
+      opacity: 0.9;
       font-size: 20px;
       font-weight: 500;
 
@@ -29,6 +30,7 @@ const Container = styled.ul`
 
       &:hover {
         cursor: pointer;
+        transform: translateY(-5px);
       }
     }
 

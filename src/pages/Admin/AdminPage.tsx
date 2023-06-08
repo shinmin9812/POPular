@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
-import { getAllStores, useGetAllStores } from '../../api/storeApi';
+import { getAllStores } from '../../api/storeApi';
 import { useQueries } from '@tanstack/react-query';
+import { Store } from '../../types/store';
+import dayjs from 'dayjs';
 
 const Container = styled.div`
   display: grid;
@@ -40,21 +42,20 @@ const Container = styled.div`
 `;
 
 const AdminPage = () => {
-  const [{ data: allStores }] = useQueries({
-    queries: [
-      {
-        queryKey: ['allStores'],
-        queryFn: getAllStores,
-        suspense: true,
-      },
-    ],
-  });
-  console.log(allStores);
+  // const [{ data: allStores }] = useQueries<[{ data: Store[] }]>({
+  //   queries: [
+  //     {
+  //       queryKey: ['allStores'],
+  //       queryFn: getAllStores,
+  //       suspense: true,
+  //     },
+  //   ],
+  // });
 
   return (
     <Container>
       <Card className="users-data data-section">
-        <p className="title">유저 관리하기</p>
+        <p className="title">유저 통계</p>
       </Card>
       <Card className="stores-data data-section">
         <p className="title">스토어 통계</p>

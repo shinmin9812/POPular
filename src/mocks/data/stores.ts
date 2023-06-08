@@ -63,7 +63,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/EOPbPqpNg',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1592/sjpksoyt',
     ],
-    scrap: [],
+    scraps: ['1234'],
   },
   {
     _id: '1234',
@@ -124,7 +124,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1597/JAgpwtxAI',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1597/EsRfNmfKm',
     ],
-    scrap: [],
+    scraps: [],
   },
   {
     _id: '12345',
@@ -190,7 +190,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/2187/kqKQVYFkr',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/2187/GmladGii',
     ],
-    scrap: [],
+    scraps: [],
   },
   {
     _id: '48564568',
@@ -253,7 +253,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/2198/qtkMDbLmt',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/2198/HMkUEgkEZ',
     ],
-    scrap: [],
+    scraps: [],
   },
   {
     _id: '1241411',
@@ -314,7 +314,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/2237/SdewUjkl',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/2237/gVYtBizIc',
     ],
-    scrap: [],
+    scraps: [],
   },
   {
     _id: '45678',
@@ -374,7 +374,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1925/NTOWmEwVj',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/1925/ketnfnWv',
     ],
-    scrap: [],
+    scraps: [],
   },
   {
     _id: '542326',
@@ -432,7 +432,7 @@ export const storeData: Store[] = [
     ],
     reservation_required: false,
     images: ['https://d1g40zvx7d8icp.cloudfront.net/live/store/2251/PbLvIIgvi'],
-    scrap: [],
+    scraps: [],
   },
   {
     _id: '487683',
@@ -494,7 +494,7 @@ export const storeData: Store[] = [
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/2114/mKBvAkHgr',
       'https://d1g40zvx7d8icp.cloudfront.net/live/store/2114/hgluOhIZ',
     ],
-    scrap: [],
+    scraps: [],
   },
   {
     _id: '76536',
@@ -552,7 +552,7 @@ export const storeData: Store[] = [
     ],
     reservation_required: false,
     images: ['https://d1g40zvx7d8icp.cloudfront.net/live/store/2105/nJGjuVBC'],
-    scrap: [],
+    scraps: [],
   },
   {
     _id: '24566242',
@@ -612,6 +612,6 @@ export const storeData: Store[] = [
     images: [
       'https://img1.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202304/25/newsen/20230425101228885aoos.jpg',
     ],
-    scrap: [],
+    scraps: [],
   },
 ];

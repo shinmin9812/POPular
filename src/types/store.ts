@@ -50,5 +50,11 @@ export interface Store {
   sns: SNSType[];
   reservation_required: boolean;
   images: string[];
-  scrap: string[];
+  scraps: string[];
+}
+
+type imageDeletedStore = Omit<Store, 'images'>;
+
+export interface PostedStore extends imageDeletedStore {
+  images: any[];
 }

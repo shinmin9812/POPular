@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AccodionList from '../common/Accordion/AccodionList';
 import { CLIENT_PATH } from '../../constants/path';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   position: fixed;
@@ -97,8 +98,20 @@ const Accodions = [
   },
 ];
 
+const MenuMap = new Map<string, string>([
+  ['store', '팝업 스토어 관리'],
+  ['user', '유저 관리'],
+  ['feed', '피드 관리'],
+  ['notification', '알림 관리'],
+]);
 const AdminNavigation = () => {
+  const { pathname } = useLocation();
   const [selectedMenu, setSelectedMenu] = useState<string>('');
+
+  useEffect(() => {
+    const currentMenu = pathname.split('/')[2];
+    setSelectedMenu(MenuMap.get(currentMenu) as string);
+  }, []);
 
   return (
     <Container>
