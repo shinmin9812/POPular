@@ -44,8 +44,7 @@ export interface Store {
     sigungu: string;
   };
   coord: {
-    lat: string;
-    lng: string;
+    coordinates: [lat: string, lng: string];
   };
   price: number | null;
   sns: SNSType[];
