@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 import FilterDateBox from './FilterDateBox';
+interface date {
+  year: number;
+  month: number;
+  day: number;
+}
 
 const Duration = styled.button`
   width: 23%;
@@ -27,9 +32,9 @@ const FilterDuration = ({
 }: {
   show: boolean;
   setShow: () => void;
-  setStartDate: (date: { year: number; month: number; day: number }) => void;
-  setEndDate: (date: { year: number; month: number; day: number }) => void;
-  startDateTarget: { year: number; month: number; day: number };
+  setStartDate: (date: date) => void;
+  setEndDate: (date: date) => void;
+  startDateTarget: date;
   setStartDateTarget: React.Dispatch<
     React.SetStateAction<{
       year: number;
@@ -37,7 +42,7 @@ const FilterDuration = ({
       day: number;
     }>
   >;
-  endDateTarget: { year: number; month: number; day: number };
+  endDateTarget: date;
   setEndDateTarget: React.Dispatch<
     React.SetStateAction<{
       year: number;

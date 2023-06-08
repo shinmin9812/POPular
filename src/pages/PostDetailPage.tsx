@@ -7,6 +7,7 @@ import PostContent from '../components/PostDetail/components/PostContent';
 import LikesAndReports from '../components/PostDetail/components/LikeAndReportButton';
 import CommentsList from '../components/PostDetail/components/CommentsList';
 import Pagination from '../components/common/Pagination/Pagination';
+import PaginationContainer from '../components/Community/containers/PaginationContainer';
 import CommentInput from '../components/PostDetail/components/CommentInput';
 import UpdateAndDelete from '../components/PostDetail/components/UpdateAndDeleteButtons';
 import { useParams } from 'react-router-dom';
@@ -47,7 +48,7 @@ const PostDetailPage = () => {
       ></PostContent>
       <LikesAndReports />
       <CommentsList comments={post ? post.comments : undefined} />
-      <Pagination currPage={currPage} setPage={setPage} />
+      <PaginationContainer />
       <CommentInput />
     </Container>
   );

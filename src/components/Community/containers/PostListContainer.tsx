@@ -2,48 +2,56 @@ import PostListItem from '../components/PostList';
 import { Post } from '../../../types/post';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../Hooks/useSelectorHooks';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
 
-async function fetchData(tab: string, setPosts: React.Dispatch<React.SetStateAction<Post[] | undefined>>) {
+async function fetchData(
+  tab: string,
+  page: number,
+  setPosts: React.Dispatch<React.SetStateAction<Post[] | undefined>>,
+  navigate: NavigateFunction,
+) {
   // const response = await fetch('/post/all');
   // const result: Post[] = await response.json();
   let response;
   let result;
   switch (tab) {
     case '전체':
-      console.log(tab);
-      response = await fetch(`http://34.22.81.36:3000/feeds`);
+      response = await fetch(`http://34.22.81.36:3000/feeds/pages?page=${page}`);
       result = await response.json();
+      console.log(result);
+      navigate('/community/board/all');
       break;
     case '자유게시판':
-      console.log(tab);
-
       response = await fetch(`http://34.22.81.36:3000/feeds/free`);
       result = await response.json();
+      navigate('/community/board/free');
+
       break;
     case '모집게시판':
-      console.log(tab);
-
       response = await fetch(`http://34.22.81.36:3000/feeds/gather`);
       result = await response.json();
+      navigate('/community/board/gather');
       break;
     case '후기게시판':
-      console.log(tab);
-
       response = await fetch(`http://34.22.81.36:3000/feeds/review`);
       result = await response.json();
+      navigate('/community/board/review');
       break;
   }
   setPosts(result);
 }
 
 const PostListItemContainer = () => {
+  const navigate = useNavigate();
+
   const tab = useAppSelector((state) => state.CommunitySlice.tab);
+  const page = useAppSelector((state) => state.CommunitySlice.page);
   const [posts, setPosts] = useState<Post[]>();
 
   useEffect(() => {
-    fetchData(tab, setPosts);
-  }, [tab]);
-  console.log(posts);
+    fetchData(tab, page, setPosts, navigate);
+  }, [tab, page]);
+
   return (
     <ul>
       {posts?.map((post) => (

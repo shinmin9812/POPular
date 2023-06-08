@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import Filter from './Filter';
 
+interface date {
+  year: number;
+  month: number;
+  day: number;
+}
+
 const DateWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -52,10 +58,10 @@ const day = [
 ];
 
 const DateValidation = (
-  startDate: { year: number; month: number; day: number },
-  endDate: { year: number; month: number; day: number },
-  setStartDate: (date: { year: number; month: number; day: number }) => void,
-  setEndDate: (date: { year: number; month: number; day: number }) => void,
+  startDate: date,
+  endDate: date,
+  setStartDate: (date: date) => void,
+  setEndDate: (date: date) => void,
   durationFilterUse: (use: boolean) => void,
 ) => {
   const start = `${startDate.year}-${startDate.month}-${startDate.day}`;
@@ -79,9 +85,9 @@ const FilterDateBox = ({
   setFilterDurationUse,
 }: {
   setShow: () => void;
-  setStartDate: (date: { year: number; month: number; day: number }) => void;
-  setEndDate: (date: { year: number; month: number; day: number }) => void;
-  startDateTarget: { year: number; month: number; day: number };
+  setStartDate: (date: date) => void;
+  setEndDate: (date: date) => void;
+  startDateTarget: date;
   setStartDateTarget: React.Dispatch<
     React.SetStateAction<{
       year: number;
@@ -89,7 +95,7 @@ const FilterDateBox = ({
       day: number;
     }>
   >;
-  endDateTarget: { year: number; month: number; day: number };
+  endDateTarget: date;
   setEndDateTarget: React.Dispatch<
     React.SetStateAction<{
       year: number;

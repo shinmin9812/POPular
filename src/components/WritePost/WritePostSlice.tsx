@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import useFilterActions from '../../Hooks/useFilterActions';
-import useSetTabAction from '../../Hooks/useTabsActions';
 
 export interface WritePostInitialState {
   tab: string;
@@ -65,7 +63,7 @@ const WritePostSlice = createSlice({
   initialState,
   reducers: {
     setTab(state, action: PayloadAction<string>) {
-      useSetTabAction.setTab(state, action);
+      state.tab = action.payload;
     },
     setFilterAddressValue(state, action: PayloadAction<string>) {
       state.addressFilter.value = action.payload;
