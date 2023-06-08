@@ -108,7 +108,7 @@ export class FeedsService {
 			createdFeed.board = feedCreateDto.board;
 			createdFeed.content = updatedContent;
 			createdFeed.images = Object.values(imageMapping);
-			createdFeed.storeId = feedCreateDto.storeId;
+			createdFeed.store_id = feedCreateDto.store_id;
 			createdFeed.ratings = feedCreateDto.ratings;
 			createdFeed.likes = [];
 			createdFeed.reports = [];

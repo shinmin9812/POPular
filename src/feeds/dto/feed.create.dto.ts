@@ -61,7 +61,7 @@ export class FeedCreateDto {
 		description: '게시글에서 설정한 스토어 ID',
 		required: true,
 	})
-	readonly storeId: Types.ObjectId;
+	readonly store_id: Types.ObjectId;
 
 	@IsOptional()
 	@IsNumber()
