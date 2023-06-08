@@ -61,18 +61,13 @@ export class FeedsController {
 
 	@ApiOperation({ summary: '게시글 등록하기' })
 	@Post()
-	async createFeed(
-		@Body() createDto: FeedCreateDto,
-	) {
+	async createFeed(@Body() createDto: FeedCreateDto) {
 		return await this.feedsService.createFeed(createDto);
 	}
 
 	@ApiOperation({ summary: '게시글 수정하기' })
 	@Patch(':id')
-	async updateFeed(
-		@Param('id') id: string,
-		@Body() updateDto: FeedUpdateDto,
-	) {
+	async updateFeed(@Param('id') id: string, @Body() updateDto: FeedUpdateDto) {
 		return await this.feedsService.updateFeed(id, updateDto);
 	}
 

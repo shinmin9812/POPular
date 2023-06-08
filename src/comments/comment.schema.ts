@@ -20,6 +20,12 @@ export class Comment extends Document {
 	@Prop({ required: true })
 	content: string;
 
+	@Prop({ required: true })
+	parent: {
+		type: string;
+		id: Types.ObjectId;
+	};
+
 	@Prop({
 		type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Comment' }],
 		default: [],
