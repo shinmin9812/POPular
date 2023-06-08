@@ -28,10 +28,10 @@ const Container = styled.div`
 
   svg {
     position: absolute;
-    right: 4px;
-    top: 1px;
+    right: 2px;
+    top: 0px;
     transform: scale(0.6);
-    fill: var(--color-gray);
+    fill: var(--color-sub);
 
     &:hover {
       cursor: pointer;
@@ -42,7 +42,7 @@ const Container = styled.div`
 const HeaderSearchBox = () => {
   return (
     <Container>
-      <input type="text" placeholder="팝업 스토어 "></input>
+      <input type="text"></input>
       <SearchIcon />
     </Container>
   );
