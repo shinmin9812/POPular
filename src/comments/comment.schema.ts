@@ -12,6 +12,13 @@ const options: SchemaOptions = {
 	collection: 'Comment',
 };
 
+class parentinfo {
+	@Prop({ type: String, required: true })
+	type: string;
+
+	@Prop({ type: Types.ObjectId, ref: 'Feed | Comment', required: true })
+	id: Types.ObjectId;
+}
 @Schema(options)
 export class Comment extends Document {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
@@ -21,10 +28,7 @@ export class Comment extends Document {
 	content: string;
 
 	@Prop({ required: true })
-	parent: {
-		type: string;
-		id: Types.ObjectId;
-	};
+	parent: parentinfo;
 
 	@Prop({
 		type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Comment' }],
