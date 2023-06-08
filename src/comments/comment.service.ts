@@ -54,7 +54,7 @@ export class CommentsService {
 			const createdComment = new this.commentModel();
 			createdComment.author = commentCreateDto.author;
 			createdComment.content = commentCreateDto.content;
-			createdComment.recomments = commentCreateDto.recomments;
+			createdComment.recomments = [];
 
 			return await createdComment.save();
 		} catch (err) {
