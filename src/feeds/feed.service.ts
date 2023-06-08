@@ -61,7 +61,7 @@ export class FeedsService {
 	}
 
 	async getPaginate(page: number): Promise<Feed[]> {
-		const limit = 10;
+		const limit = 7;
 		const offset = (page - 1) * limit;
 
 		return await this.feedModel.find().limit(limit).skip(offset);

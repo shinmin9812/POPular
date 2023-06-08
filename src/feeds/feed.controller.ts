@@ -60,9 +60,7 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 등록하기' })
-	@ApiBearerAuth('Authorization')
 	@Post()
-	@UseGuards(AuthGuard)
 	async createFeed(
 		@Body() createDto: FeedCreateDto,
 	) {
@@ -70,9 +68,7 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 수정하기' })
-	@ApiBearerAuth('Authorization')
 	@Patch(':id')
-	@UseGuards(AuthGuard)
 	async updateFeed(
 		@Param('id') id: string,
 		@Body() updateDto: FeedUpdateDto,
@@ -81,9 +77,7 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 삭제하기' })
-	@ApiBearerAuth('Authorization')
 	@Delete(':id')
-	@UseGuards(AuthGuard)
 	async deleteFeed(@Param('id') id: string) {
 		await this.feedsService.deleteFeed(id);
 		return { message: '글이 삭제되었습니다.' };
