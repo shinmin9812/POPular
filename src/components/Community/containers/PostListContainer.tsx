@@ -18,7 +18,6 @@ async function fetchData(
     case '전체':
       response = await fetch(`http://34.22.81.36:3000/feeds/pages?page=${page}`);
       result = await response.json();
-      console.log(result);
       navigate('/community/board/all');
       break;
     case '자유게시판':
@@ -50,7 +49,7 @@ const PostListItemContainer = () => {
 
   useEffect(() => {
     fetchData(tab, page, setPosts, navigate);
-  }, [tab, page]);
+  }, [tab, page, navigate]);
 
   return (
     <ul>

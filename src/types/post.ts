@@ -1,6 +1,7 @@
 import { BoardTypes } from './board';
 import { Comment } from './comment';
 import { User, UserOnlyProfile } from './user';
+import { Store } from './store';
 
 export interface Post {
   _id: string;
@@ -9,10 +10,11 @@ export interface Post {
   board: BoardTypes;
   content: string;
   images?: string[];
-  storeId?: string;
-  rating?: number;
+  store_id?: Store;
+  ratings?: number;
   likes: UserOnlyProfile[];
   report: UserOnlyProfile[];
   updatedAt: string;
   comments: Comment[];
+  views: number
 }

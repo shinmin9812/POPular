@@ -4,6 +4,7 @@ import Tag from '../Tag/Tag';
 
 interface Props {
   store: Store;
+  onClick?: () => void;
 }
 
 const Container = styled.article`
@@ -71,12 +72,12 @@ const Container = styled.article`
   }
 `;
 
-const StoreItem = ({ store }: Props) => {
+const StoreItem = ({ store, onClick }: Props) => {
   // 주소지에서 상위 2단계만 추출
   const location = store.location.split(' ').slice(0, 2).join(' ');
 
   return (
-    <Container>
+    <Container onClick={onClick}>
       <figure>
         <img src={store.images[0]} alt={store.title} />
       </figure>

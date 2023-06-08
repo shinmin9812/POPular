@@ -15,11 +15,15 @@ const ButtonWrap = styled.div`
   justify-content: flex-end;
 `;
 
-const UpdateAndDelete = () => {
+const UpdateAndDelete = ({ deletePost, updatePost }: { deletePost: () => void; updatePost: () => void }) => {
   return (
     <ButtonWrap>
-      <Button update={true}>글 수정</Button>
-      <Button update={false}>글 삭제</Button>
+      <Button update={true} onClick={updatePost}>
+        글 수정
+      </Button>
+      <Button update={false} onClick={deletePost}>
+        글 삭제
+      </Button>
     </ButtonWrap>
   );
 };

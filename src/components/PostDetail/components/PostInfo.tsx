@@ -9,6 +9,7 @@ interface PostInfoType {
   updatedAt: string;
   likes: number;
   comments: number;
+  views: number;
 }
 
 const PostInfoWrap = styled.div`
@@ -45,7 +46,7 @@ const RightInfo = styled.div`
   font-size: var(--font-small);
 `;
 
-const PostInfo = ({ boardType, title, nickName, updatedAt, likes, comments }: PostInfoType) => {
+const PostInfo = ({ boardType, title, nickName, updatedAt, likes, comments, views }: PostInfoType) => {
   return (
     <PostInfoWrap>
       <BoardTypeTag boardType={boardType} />
@@ -57,7 +58,7 @@ const PostInfo = ({ boardType, title, nickName, updatedAt, likes, comments }: Po
         <ColumnWrap>
           <RightInfo>
             <span>Views</span>
-            <span>{comments}</span>
+            <span>{views}</span>
           </RightInfo>
           <RightInfo>
             <span>Likes</span>

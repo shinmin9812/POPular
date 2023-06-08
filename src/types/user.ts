@@ -2,7 +2,7 @@ import { Category } from './category';
 import { Notification } from './notification';
 
 export interface UserOnlyProfile {
-  id: string;
+  _id: string;
   nickname: string;
   profile?: string;
   introduce: string;

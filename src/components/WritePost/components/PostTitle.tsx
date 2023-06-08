@@ -14,13 +14,18 @@ const TitleInputWrap = styled.div`
   font-weight: var(--weight-semi-bold);
 `;
 
-const TitleInput = () => {
+const PostTitle = ({ value, onChange }: { value: string; onChange: (title: string) => void }) => {
   return (
     <TitleInputWrap>
       제목
-      <Input />
+      <Input
+        value={value}
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
+      />
     </TitleInputWrap>
   );
 };
 
-export default TitleInput;
+export default PostTitle;

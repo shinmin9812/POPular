@@ -55,7 +55,7 @@ const FilterContainer = () => {
             setFilterCategoryValue(e.target.value);
             setFilterCategoryUse(true);
           }}
-          Options={['카테고리', '의류', '주류', '캐릭터']}
+          Options={['카테고리', 'food', 'other', 'clothes']}
           width={23}
         />
         <Filter

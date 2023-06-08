@@ -13,7 +13,7 @@ const PaginationContainer = () => {
     (async () => {
       const response = await fetch(`http://34.22.81.36:3000/feeds`);
       const result = await response.json();
-      setTotalPage(Array.from({ length: Math.ceil(result.length / 10) }, (_, index) => index + 1));
+      setTotalPage(Array.from({ length: Math.ceil(result.length / 7) }, (_, index) => index + 1));
     })();
   }, []);
   return <Pagination currPage={page} setPage={setPage} totalPage={totalPage} />;

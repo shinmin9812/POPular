@@ -38,8 +38,8 @@ const FilterContainer = () => {
   const Today: Date = new Date();
   // 자유게시판으로 이동 시 필터 초기화
   if (Tab === '자유게시판') {
-    setFilterAddressValue('지역');
-    setFilterCategoryValue('카테고리');
+    // setFilterAddressValue('지역');
+    // setFilterCategoryValue('카테고리');
     // setDurationYear(Today.getFullYear());
     // setDurationYear(Today.getFullYear(), true);
     // setDurationMonth(Today.getMonth() + 1);
