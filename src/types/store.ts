@@ -50,5 +50,5 @@ export interface Store {
   sns: SNSType[];
   reservation_required: boolean;
   images: string[];
-  scrap: number;
+  scrap: string[];
 }
