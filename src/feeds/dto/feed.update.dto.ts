@@ -41,7 +41,7 @@ export class FeedUpdateDto {
 		example: 'qwerra21341',
 		description: '게시글에서 설정한 스토어 ID',
 	})
-	storeId?: string;
+	store_id?: string;
 
 	@IsOptional()
 	@IsNumber()
