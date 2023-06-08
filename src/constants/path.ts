@@ -115,6 +115,8 @@ export const CLIENT_PATH = {
   USER_DETAIL: '/user/:userId',
   USER_UPDATE: '/user/:userId/update',
 
+  ADMIN: '/admin',
+
   NOT_FOUND: '/not_found',
 
   WILD_CARD: '*',

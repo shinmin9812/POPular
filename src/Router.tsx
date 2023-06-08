@@ -18,6 +18,8 @@ import MyPostPage from './pages/MyPostPage';
 import MyCommentPage from './pages/MyCommentPage';
 import PostDetailPage from './pages/PostDetailPage';
 import UserUpdatePage from './pages/UserUpdatePage';
+import AdminLayout from './components/Admin/AdminLayout';
+import AdminPage from './pages/Admin/AdminPage';
 
 const Router = () => {
   return (
@@ -41,6 +43,11 @@ const Router = () => {
           <Route path={CLIENT_PATH.USER_POSTS} element={<MyPostPage />}></Route>
           <Route path={CLIENT_PATH.USER_COMMENTS} element={<MyCommentPage />}></Route>
           <Route path={CLIENT_PATH.USER_UPDATE} element={<UserUpdatePage />}></Route>
+        </Route>
+      </Routes>
+      <Routes>
+        <Route element={<AdminLayout />}>
+          <Route path={CLIENT_PATH.ADMIN} element={<AdminPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
