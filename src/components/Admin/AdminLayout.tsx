@@ -8,7 +8,7 @@ const OutletWrapper = styled.div`
   min-height: 100vh;
   width: calc(100vw - 300px);
   margin-left: 300px;
-  background-color: #f0f0f0;
+  background-color: #fcf6ff;
 `;
 
 const AdminLayout = () => {
