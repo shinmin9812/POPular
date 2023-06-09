@@ -5,7 +5,7 @@ import {
 	InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Feed } from './feed.schema';
 import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
@@ -136,27 +136,55 @@ export class FeedsService {
 				);
 			}
 
-			const base64Images = extractImages(feedUpdateDto.content);
-			const imageMapping = await handleImages(base64Images);
-
-			let updatedContent = feedUpdateDto.content;
-			for (const [imgData, imageUrl] of Object.entries(imageMapping)) {
-				updatedContent = updatedContent.replace(imgData, imageUrl);
+			if(feedUpdateDto.like || feedUpdateDto.report || feedUpdateDto.comment ) {
+				throw new BadRequestException('좋아요, 신고, 댓글 관련 Patch는 해당 API를 이용해주세요.');
 			}
 
-			feedUpdateDto.content = updatedContent;
-			feedUpdateDto.images = Object.values(imageMapping);
+			if(feedUpdateDto.content) {
+				const base64Images = extractImages(feedUpdateDto.content);
+				const imageMapping = await handleImages(base64Images);
+				let updatedContent = feedUpdateDto.content;
+				for (const [imgData, imageUrl] of Object.entries(imageMapping)) {
+					updatedContent = updatedContent.replace(imgData, imageUrl);
+				}
+				feedUpdateDto.content = updatedContent;
+				feedUpdateDto.images = Object.values(imageMapping);
+			}
 
 			Object.assign(feed, feedUpdateDto);
+			
 
 			return await feed.save();
 		} catch (err) {
 			if (err.name === 'ValidationError') {
 				throw new BadRequestException('잘못된 데이터를 입력하셨습니다.');
 			}
-
 			throw new InternalServerErrorException('글 업데이트에 실패하였습니다.');
 		}
+	}
+
+	async addLike(feedId: Types.ObjectId, like: Types.ObjectId): Promise<Feed> {
+		return this.feedModel.findByIdAndUpdate(feedId, { $push: { likes: like }}, { new: true }).exec();
+	}
+	
+	async removeLike(feedId: Types.ObjectId, like: Types.ObjectId): Promise<Feed> {
+		return this.feedModel.findByIdAndUpdate(feedId, { $pull: { likes: like }}, { new: true }).exec();
+	}
+
+	async addReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
+		return this.feedModel.findByIdAndUpdate(feedId, { $push: { reports: report }}, { new: true }).exec();
+	}
+	
+	async removeReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
+		return this.feedModel.findByIdAndUpdate(feedId, { $pull: { reports: report }}, { new: true }).exec();
+	}
+	
+	async addComment(feedId: Types.ObjectId, comment: Types.ObjectId): Promise<Feed> {
+		return this.feedModel.findByIdAndUpdate(feedId, { $push: { comments: comment }}, { new: true }).exec();
+	}
+	
+	async removeComment(feedId: Types.ObjectId, comment: Types.ObjectId): Promise<Feed> {
+		return this.feedModel.findByIdAndUpdate(feedId, { $pull: { comments: comment }}, { new: true }).exec();
 	}
 
 	async deleteFeed(id: string): Promise<void> {

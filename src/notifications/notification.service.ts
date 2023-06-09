@@ -8,9 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { NotificationUpdateDto } from './dto/notification.update.dto';
 import {
-	ContentModel,
 	Notification,
-	NotificationType,
 } from 'src/notifications/notification.schema';
 import { NotificationCreateDto } from './dto/notification.create.dto';
 
@@ -66,16 +64,17 @@ export class NotificationsService {
 			const createdNotification = new this.notificationModel();
 			createdNotification.type = notificationCreateDto.type;
 			createdNotification.board = notificationCreateDto.board;
-			createdNotification.userId = notificationCreateDto.userId;
-			createdNotification.content = notificationCreateDto.content;
-			createdNotification.contentModel = this.getContentModel(
-				notificationCreateDto.type,
-			);
+			createdNotification.user_id = notificationCreateDto.user_id;
+			createdNotification.content_comment = notificationCreateDto.content_comment;
+			createdNotification.content_user = notificationCreateDto.content_user;
+			createdNotification.content_store = notificationCreateDto.content_store;
 
 			return await createdNotification.save();
 		} catch (err) {
 			if (err.name === 'ValidationError') {
+				console.log(err);
 				throw new BadRequestException('잘못된 데이터를 입력하셨습니다.');
+				
 			}
 			console.error(err);
 			throw new InternalServerErrorException('알림 생성에 실패하였습니다.');
@@ -123,19 +122,4 @@ export class NotificationsService {
 		}
 	}
 
-	private getContentModel(type: NotificationType): ContentModel {
-		switch (type) {
-			case NotificationType.Follow:
-				return ContentModel.User;
-			case NotificationType.Comment:
-				return ContentModel.Comment;
-			case NotificationType.Ad:
-				return ContentModel.Store;
-
-			default:
-				throw new BadRequestException(
-					`'${type}'은 지원되지 않는 알림 유형입니다.`,
-				);
-		}
-	}
 }
