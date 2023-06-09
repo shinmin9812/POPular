@@ -16,7 +16,7 @@ import { handleImages } from 'src/utils/handle.images.util';
 export class FeedsService {
 	constructor(
 		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
-	) { }
+	) {}
 
 	async getAllFeeds(): Promise<Feed[]> {
 		try {
@@ -24,6 +24,7 @@ export class FeedsService {
 				.find()
 				.populate('author')
 				.populate('store_id')
+				.populate('comment')
 				.exec();
 			return feeds;
 		} catch (err) {
@@ -83,6 +84,7 @@ export class FeedsService {
 				.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true })
 				.populate('author')
 				.populate('store_id')
+				.populate('comment')
 				.exec();
 
 			if (!feed) {

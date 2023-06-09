@@ -20,7 +20,7 @@ import { Types } from 'mongoose';
 @Controller('/feeds')
 @ApiTags('Feed')
 export class FeedsController {
-	constructor(private readonly feedsService: FeedsService) { }
+	constructor(private readonly feedsService: FeedsService) {}
 
 	@ApiOperation({ summary: '모든 게시글 조회' })
 	@Get()

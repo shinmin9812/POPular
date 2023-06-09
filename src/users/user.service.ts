@@ -13,7 +13,7 @@ export class UserService {
 	constructor(
 		@InjectModel(User.name) private readonly userModel: Model<User>,
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
-	) { }
+	) {}
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -129,13 +129,13 @@ export class UserService {
 			_id: user._id.toString(),
 			nickname: user.nickname,
 			profile: user.profile,
-		}
+		};
 
 		const followerInfo = {
 			_id: target._id.toString(),
 			nickname: target.nickname,
 			profile: target.profile,
-		}
+		};
 
 		if (!user.following.includes(followerInfo)) {
 			user.following.push(followerInfo);
@@ -159,13 +159,13 @@ export class UserService {
 			_id: user._id.toString(),
 			nickname: user.nickname,
 			profile: user.profile,
-		}
+		};
 
 		const followerInfo = {
 			_id: target._id.toString(),
 			nickname: target.nickname,
 			profile: target.profile,
-		}
+		};
 
 		const userIndex = user.following.indexOf(followerInfo);
 		const targetIndex = target.follower.indexOf(followingInfo);
@@ -182,7 +182,6 @@ export class UserService {
 
 		return user;
 	}
-
 
 	async deleteUser(_id: string): Promise<User> {
 		return await this.userModel.findByIdAndDelete(_id);

@@ -28,13 +28,13 @@ export class Notification extends Document {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
 	user_id: Types.ObjectId | User;
 
-	@Prop({ type: Types.ObjectId, refPath: 'User' })
+	@Prop({ type: Types.ObjectId, ref: 'User' })
 	content_user?: Types.ObjectId | User;
 
-	@Prop({ type: Types.ObjectId, refPath: 'Store' })
+	@Prop({ type: Types.ObjectId, ref: 'Store' })
 	content_store?: Types.ObjectId | Store;
 
-	@Prop({ type: Types.ObjectId, refPath: 'Comment' })
+	@Prop({ type: Types.ObjectId, ref: 'Comment' })
 	content_comment?: Types.ObjectId | Comment;
 
 	@Prop({ default: false })

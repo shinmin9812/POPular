@@ -41,7 +41,7 @@ class checkemail {
 @Controller('/users')
 @ApiTags('User')
 export class UserController {
-	constructor(private readonly userService: UserService) { }
+	constructor(private readonly userService: UserService) {}
 
 	@ApiOperation({ summary: '모든 유저 정보 찾기' })
 	@Get()
@@ -110,7 +110,10 @@ export class UserController {
 	@ApiBearerAuth('Authorization')
 	@Patch(':userId/follow/:targetId')
 	@UseGuards(AuthGuard)
-	async updateFollow(@Param('userId') userId: string, @Param('targetId') targetId: string): Promise<User> {
+	async updateFollow(
+		@Param('userId') userId: string,
+		@Param('targetId') targetId: string,
+	): Promise<User> {
 		return await this.userService.updateFollow(userId, targetId);
 	}
 
@@ -118,7 +121,10 @@ export class UserController {
 	@ApiBearerAuth('Authorization')
 	@Patch(':userId/unfollow/:targetId')
 	@UseGuards(AuthGuard)
-	async updateUnfollow(@Param('userId') userId: string, @Param('targetId') targetId: string): Promise<User> {
+	async updateUnfollow(
+		@Param('userId') userId: string,
+		@Param('targetId') targetId: string,
+	): Promise<User> {
 		return await this.userService.updateUnfollow(userId, targetId);
 	}
 

@@ -23,7 +23,7 @@ export class parentinfo {
 	type: ParentType;
 
 	@Prop({ type: Types.ObjectId, refPath: 'type', required: true })
-	id: Types.ObjectId | Feed | Comment;
+	id: Types.ObjectId;
 }
 
 @Schema(options)
