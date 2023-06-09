@@ -81,15 +81,11 @@ export class UserController {
 	@ApiBearerAuth('Authorization')
 	@Patch(':id')
 	@UseGuards(AuthGuard)
-	@UseInterceptors(FileInterceptor('image', multerOptions('profile')))
 	async updateUser(
 		@Param('id') _id: string,
 		@Body() body: UserUpdateDto,
-		@UploadedFile() file: Express.Multer.File,
 	): Promise<User> {
-		const pathName = file.path;
-		console.log(pathName);
-		return await this.userService.updateUser(_id, body, pathName);
+		return await this.userService.updateUser(_id, body);
 	}
 
 	@ApiOperation({ summary: '유저 스크랩 & 스토어 스크랩 등록하기' })

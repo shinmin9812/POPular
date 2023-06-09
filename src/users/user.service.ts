@@ -48,17 +48,12 @@ export class UserService {
 		return await this.userModel.create(newUser);
 	}
 
-	async updateUser(
-		_id: string,
-		body: UserUpdateDto,
-		pathName: string,
-	): Promise<User> {
+	async updateUser(_id: string, body: UserUpdateDto): Promise<User> {
 		const pw = body.pw;
 		const hashedPassword = await hashPassword(pw);
 
 		const updateUser = {
 			...body,
-			profile: pathName,
 			pw: hashedPassword,
 		};
 

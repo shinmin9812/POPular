@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Store } from './store.schema';
 import { StoreRequestDto } from './dto/store.request.dto';
+import { handleImages } from 'src/utils/handle.images.util';
 
 @Injectable()
 export class StoreService {
@@ -51,11 +52,15 @@ export class StoreService {
 	}
 
 	async createStore(body: StoreRequestDto): Promise<Store> {
+		const base64Images = body.images;
+		const imageMapping = await handleImages(base64Images);
+
 		const lng = body.coord.coordinates[0];
 		const lat = body.coord.coordinates[1];
 
 		const newStore = {
 			...body,
+			images: Object.values(imageMapping),
 			coord: {
 				type: 'Point',
 				coordinates: [lng, lat],
