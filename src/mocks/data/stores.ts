@@ -47,7 +47,7 @@ export const storeData: Store[] = [
       sigungu: '마포구',
     },
     coord: {
-      coordinates: ['37.553916', '126.920914'],
+      coordinates: [37.553916, 126.920914],
     },
     price: 30000,
     sns: [
@@ -109,7 +109,7 @@ export const storeData: Store[] = [
       sigungu: '마포구',
     },
     coord: {
-      coordinates: ['37.5411320', '127.065924'],
+      coordinates: [37.541132, 127.065924],
     },
     price: 7000,
     sns: [
@@ -170,7 +170,7 @@ export const storeData: Store[] = [
       sigungu: '영등포구',
     },
     coord: {
-      coordinates: ['37.5260354', '126.928279'],
+      coordinates: [37.5260354, 126.928279],
     },
     price: 0,
     sns: [
@@ -236,7 +236,7 @@ export const storeData: Store[] = [
       sigungu: '성동구',
     },
     coord: {
-      coordinates: ['37.5424435', '127.055968'],
+      coordinates: [37.5424435, 127.055968],
     },
     price: 0,
     sns: [
@@ -299,7 +299,7 @@ export const storeData: Store[] = [
       sigungu: '강남구',
     },
     coord: {
-      coordinates: ['37.5285474', '127.040029'],
+      coordinates: [37.5285474, 127.040029],
     },
     price: 0,
     sns: [
@@ -359,7 +359,7 @@ export const storeData: Store[] = [
       sigungu: '서대문구',
     },
     coord: {
-      coordinates: ['37.5567461', '126.936556'],
+      coordinates: [37.5567461, 126.936556],
     },
     price: 0,
     sns: [
@@ -420,7 +420,7 @@ export const storeData: Store[] = [
       sigungu: '종로구',
     },
     coord: {
-      coordinates: ['37.5805664', '126.981956'],
+      coordinates: [37.5805664, 126.981956],
     },
     price: 0,
     sns: [
@@ -478,7 +478,7 @@ export const storeData: Store[] = [
       sigungu: '성동구',
     },
     coord: {
-      coordinates: ['37.5487625', '127.048945'],
+      coordinates: [37.5487625, 127.048945],
     },
     price: 0,
     sns: [
@@ -540,7 +540,7 @@ export const storeData: Store[] = [
       sigungu: '영등포구',
     },
     coord: {
-      coordinates: ['37.5227210', '126.904945'],
+      coordinates: [37.522721, 126.904945],
     },
     price: 0,
     sns: [
@@ -598,7 +598,7 @@ export const storeData: Store[] = [
       sigungu: '중구',
     },
     coord: {
-      coordinates: ['35.8666358', '128.590630'],
+      coordinates: [35.8666358, 128.59063],
     },
     price: 0,
     sns: [

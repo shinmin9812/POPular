@@ -38,6 +38,8 @@ const AdminStoreEditPage = () => {
 
   const [openForm, setOpenForm] = useState<boolean>(false);
 
+  console.log(allStores);
+
   return (
     <Container>
       <Card className="edit-store">

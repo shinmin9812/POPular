@@ -148,7 +148,7 @@ const StoreForm = () => {
 
   const { mutate, isLoading, isError, error, isSuccess } = usePostStore();
 
-  console.log(watch());
+  // console.log(watch());
 
   return (
     <Container
@@ -176,7 +176,7 @@ const StoreForm = () => {
       <label className="textarea-input">
         스토어 설명
         <textarea
-          maxLength={200}
+          maxLength={400}
           {...register('description', {
             required: '스토어 설명을 입력해주세요!',
           })}
