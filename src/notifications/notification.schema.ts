@@ -28,7 +28,7 @@ export class Notification extends Document {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
 	user_id: Types.ObjectId | User;
 
-	@Prop({ type: Types.ObjectId, refPath: 'User'})
+	@Prop({ type: Types.ObjectId, refPath: 'User' })
 	content_user?: Types.ObjectId | User;
 
 	@Prop({ type: Types.ObjectId, refPath: 'Store' })

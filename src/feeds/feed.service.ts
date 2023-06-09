@@ -136,11 +136,13 @@ export class FeedsService {
 				);
 			}
 
-			if(feedUpdateDto.like || feedUpdateDto.report || feedUpdateDto.comment ) {
-				throw new BadRequestException('좋아요, 신고, 댓글 관련 Patch는 해당 API를 이용해주세요.');
+			if (feedUpdateDto.like || feedUpdateDto.report || feedUpdateDto.comment) {
+				throw new BadRequestException(
+					'좋아요, 신고, 댓글 관련 Patch는 해당 API를 이용해주세요.',
+				);
 			}
 
-			if(feedUpdateDto.content) {
+			if (feedUpdateDto.content) {
 				const base64Images = extractImages(feedUpdateDto.content);
 				const imageMapping = await handleImages(base64Images);
 				let updatedContent = feedUpdateDto.content;
@@ -152,7 +154,6 @@ export class FeedsService {
 			}
 
 			Object.assign(feed, feedUpdateDto);
-			
 
 			return await feed.save();
 		} catch (err) {
@@ -164,27 +165,62 @@ export class FeedsService {
 	}
 
 	async addLike(feedId: Types.ObjectId, like: Types.ObjectId): Promise<Feed> {
-		return this.feedModel.findByIdAndUpdate(feedId, { $push: { likes: like }}, { new: true }).exec();
-	}
-	
-	async removeLike(feedId: Types.ObjectId, like: Types.ObjectId): Promise<Feed> {
-		return this.feedModel.findByIdAndUpdate(feedId, { $pull: { likes: like }}, { new: true }).exec();
+		return this.feedModel
+			.findByIdAndUpdate(feedId, { $push: { likes: like } }, { new: true })
+			.exec();
 	}
 
-	async addReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
-		return this.feedModel.findByIdAndUpdate(feedId, { $push: { reports: report }}, { new: true }).exec();
+	async removeLike(
+		feedId: Types.ObjectId,
+		like: Types.ObjectId,
+	): Promise<Feed> {
+		return this.feedModel
+			.findByIdAndUpdate(feedId, { $pull: { likes: like } }, { new: true })
+			.exec();
 	}
-	
-	async removeReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
-		return this.feedModel.findByIdAndUpdate(feedId, { $pull: { reports: report }}, { new: true }).exec();
+
+	async addReport(
+		feedId: Types.ObjectId,
+		report: Types.ObjectId,
+	): Promise<Feed> {
+		return this.feedModel
+			.findByIdAndUpdate(feedId, { $push: { reports: report } }, { new: true })
+			.exec();
 	}
-	
-	async addComment(feedId: Types.ObjectId, comment: Types.ObjectId): Promise<Feed> {
-		return this.feedModel.findByIdAndUpdate(feedId, { $push: { comments: comment }}, { new: true }).exec();
+
+	async removeReport(
+		feedId: Types.ObjectId,
+		report: Types.ObjectId,
+	): Promise<Feed> {
+		return this.feedModel
+			.findByIdAndUpdate(feedId, { $pull: { reports: report } }, { new: true })
+			.exec();
 	}
-	
-	async removeComment(feedId: Types.ObjectId, comment: Types.ObjectId): Promise<Feed> {
-		return this.feedModel.findByIdAndUpdate(feedId, { $pull: { comments: comment }}, { new: true }).exec();
+
+	async addComment(
+		feedId: Types.ObjectId,
+		comment: Types.ObjectId,
+	): Promise<Feed> {
+		return this.feedModel
+			.findByIdAndUpdate(
+				feedId,
+				{ $push: { comments: comment } },
+				{ new: true },
+			)
+			.exec();
+	}
+
+	async removeComment(
+		feedId: Types.ObjectId,
+		comment: Types.ObjectId,
+	): Promise<Feed> {
+		return this.feedModel
+			.findByIdAndUpdate(
+				feedId,
+				{ $pull: { comments: comment } },
+				{ new: true },
+			)
+			.exec();
 	}
 
 	async deleteFeed(id: string): Promise<void> {

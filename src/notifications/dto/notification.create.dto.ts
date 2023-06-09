@@ -1,4 +1,10 @@
-import { IsEnum, IsMongoId, IsNotEmpty, IsOptional, ValidateIf } from 'class-validator';
+import {
+	IsEnum,
+	IsMongoId,
+	IsNotEmpty,
+	IsOptional,
+	ValidateIf,
+} from 'class-validator';
 import { NotificationType } from '../notification.schema';
 import { BoardType } from 'src/feeds/feed.schema';
 import { Types } from 'mongoose';
@@ -15,7 +21,11 @@ export class NotificationCreateDto {
 	readonly type: NotificationType;
 
 	@IsEnum(BoardType)
-	@ValidateIf(obj => obj.type === NotificationType.COMMENT || obj.type === NotificationType.RECOMMENT)
+	@ValidateIf(
+		obj =>
+			obj.type === NotificationType.COMMENT ||
+			obj.type === NotificationType.RECOMMENT,
+	)
 	@ApiProperty({
 		example: 'gather',
 		description: '알림이 온 게시판 종류',
@@ -55,6 +65,10 @@ export class NotificationCreateDto {
 		description: '알림에서 참조할 데이터 ID(Comment, Recomment 타입 - comment)',
 		required: true,
 	})
-	@ValidateIf(obj => obj.type === NotificationType.COMMENT || obj.type === NotificationType.RECOMMENT)
+	@ValidateIf(
+		obj =>
+			obj.type === NotificationType.COMMENT ||
+			obj.type === NotificationType.RECOMMENT,
+	)
 	content_comment: Types.ObjectId;
 }

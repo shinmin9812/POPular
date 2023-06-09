@@ -91,12 +91,30 @@ export class CommentsService {
 		}
 	}
 
-	async addRecomment(commentId: Types.ObjectId, recomment: Types.ObjectId): Promise<Comment> {
-		return this.commentModel.findByIdAndUpdate(commentId, { $push: { recomments: recomment }}, { new: true }).exec();
+	async addRecomment(
+		commentId: Types.ObjectId,
+		recomment: Types.ObjectId,
+	): Promise<Comment> {
+		return this.commentModel
+			.findByIdAndUpdate(
+				commentId,
+				{ $push: { recomments: recomment } },
+				{ new: true },
+			)
+			.exec();
 	}
-	
-	async removeRecomment(commentId: Types.ObjectId, recomment: Types.ObjectId): Promise<Comment> {
-		return this.commentModel.findByIdAndUpdate(commentId, { $pull: { recomments: recomment }}, { new: true }).exec();
+
+	async removeRecomment(
+		commentId: Types.ObjectId,
+		recomment: Types.ObjectId,
+	): Promise<Comment> {
+		return this.commentModel
+			.findByIdAndUpdate(
+				commentId,
+				{ $pull: { recomments: recomment } },
+				{ new: true },
+			)
+			.exec();
 	}
 
 	async deleteComment(id: string): Promise<void> {

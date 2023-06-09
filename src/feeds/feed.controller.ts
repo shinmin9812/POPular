@@ -66,51 +66,72 @@ export class FeedsController {
 
 	@ApiOperation({ summary: '게시글 수정하기' })
 	@Patch(':id')
-	async updateFeed(@Param('id') id: string, @Body() updateDto: FeedUpdateDto): Promise<Feed> {
+	async updateFeed(
+		@Param('id') id: string,
+		@Body() updateDto: FeedUpdateDto,
+	): Promise<Feed> {
 		return await this.feedsService.updateFeed(id, updateDto);
 	}
 
 	@ApiOperation({ summary: '게시글 좋아요 추가' })
 	@Patch(':id/like')
-  async addLike(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
-    const { like } = updateFeedDto;
-    return this.feedsService.addLike(feedId, like);
-  }
+	async addLike(
+		@Param('id') feedId: Types.ObjectId,
+		@Body() updateFeedDto: FeedUpdateDto,
+	): Promise<Feed> {
+		const { like } = updateFeedDto;
+		return this.feedsService.addLike(feedId, like);
+	}
 
 	@ApiOperation({ summary: '게시글 좋아요 삭제' })
 	@Delete(':id/like')
-  async removeLike(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
-    const { like } = updateFeedDto;
-    return this.feedsService.removeLike(feedId, like);
-  }
+	async removeLike(
+		@Param('id') feedId: Types.ObjectId,
+		@Body() updateFeedDto: FeedUpdateDto,
+	): Promise<Feed> {
+		const { like } = updateFeedDto;
+		return this.feedsService.removeLike(feedId, like);
+	}
 
 	@ApiOperation({ summary: '게시글 신고 추가' })
 	@Patch(':id/report')
-  async addReport(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
-    const { report } = updateFeedDto;
-    return this.feedsService.addReport(feedId, report);
-  }
+	async addReport(
+		@Param('id') feedId: Types.ObjectId,
+		@Body() updateFeedDto: FeedUpdateDto,
+	): Promise<Feed> {
+		const { report } = updateFeedDto;
+		return this.feedsService.addReport(feedId, report);
+	}
 
 	@ApiOperation({ summary: '게시글 신고 삭제' })
 	@Delete(':id/report')
-  async removeReport(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
-    const { report } = updateFeedDto;
-    return this.feedsService.removeReport(feedId, report);
-  }
+	async removeReport(
+		@Param('id') feedId: Types.ObjectId,
+		@Body() updateFeedDto: FeedUpdateDto,
+	): Promise<Feed> {
+		const { report } = updateFeedDto;
+		return this.feedsService.removeReport(feedId, report);
+	}
 
 	@ApiOperation({ summary: '게시글 댓글 추가' })
 	@Patch(':id/comment')
-  async addComment(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
-    const { comment } = updateFeedDto;
-    return this.feedsService.addComment(feedId, comment);
-  }
+	async addComment(
+		@Param('id') feedId: Types.ObjectId,
+		@Body() updateFeedDto: FeedUpdateDto,
+	): Promise<Feed> {
+		const { comment } = updateFeedDto;
+		return this.feedsService.addComment(feedId, comment);
+	}
 
 	@ApiOperation({ summary: '게시글 댓글 삭제' })
 	@Delete(':id/comment')
-  async removeComment(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
-    const { comment } = updateFeedDto;
-    return this.feedsService.removeComment(feedId, comment);
-  }
+	async removeComment(
+		@Param('id') feedId: Types.ObjectId,
+		@Body() updateFeedDto: FeedUpdateDto,
+	): Promise<Feed> {
+		const { comment } = updateFeedDto;
+		return this.feedsService.removeComment(feedId, comment);
+	}
 
 	@ApiOperation({ summary: '게시글 삭제하기' })
 	@Delete(':id')
