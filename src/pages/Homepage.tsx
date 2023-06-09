@@ -6,6 +6,8 @@ import VerticalStoreList from '../components/Home/components/VerticalStore/Verti
 import ReservationStoreList from '../components/Home/components/ReservationStore/ReservationStoreList';
 import { Line } from '../components/Home/components/Line';
 import { Store } from '../types/store';
+import CategoryBox from '../components/Home/components/PreferredCategory/CategoryBox';
+// import CasouselSlideList from '../components/Home/components/CarouselStore/CasouselSlideList';
 
 const Container = styled.div`
   width: 100%;
@@ -20,9 +22,9 @@ const HomePage = () => {
   }, []);
 
   async function fetchData() {
-    const response = await fetch('/store/all');
+    //const response = await fetch('/store/all');
+    const response = await fetch('http://34.22.81.36:3000/stores');
     const result: Store[] = await response.json();
-
     setStores(result);
   }
 
@@ -32,7 +34,7 @@ const HomePage = () => {
       <SlideStoreList text={'추천 팝업스토어😍'} stores={stores}></SlideStoreList>
       <Line></Line>
       <VerticalStoreList text={'주간 팝업스토어👀'} stores={stores}></VerticalStoreList>
-      <Line></Line>
+      <CategoryBox />
       <SlideStoreList text={'최근 오픈한 팝업스토어😳'} stores={stores}></SlideStoreList>
       <SlideStoreList text={'종료 직전 팝업스토어🔥'} stores={stores}></SlideStoreList>
       <Line></Line>

@@ -16,8 +16,8 @@ const SlideStoreList = ({ stores, text }: Props) => {
       <h2>{text}</h2>
       <ul ref={scrollRef}>
         {stores.map((store) => (
-          <li key={store.id}>
-            <Link to={`/store/${store.id}`}>
+          <li key={store._id}>
+            <Link to={`/store/${store._id}`}>
               <SlideStoreItem store={store} />
             </Link>
           </li>

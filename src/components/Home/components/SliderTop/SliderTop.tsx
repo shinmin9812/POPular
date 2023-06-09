@@ -3,29 +3,53 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  centerMode: true,
-  centerPadding: '50px',
-  adaptiveHeight: true,
-};
 const SliderTop = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: '50px',
+    adaptiveHeight: true,
+  };
   return (
     <SlideFrame>
       <SlideBox>
         <CustomSlider {...settings}>
           <SlideItem>
-            <SlideContent></SlideContent>
+            <SlideContent className="slide-01">
+              <TextBox>
+                <p className="innertext-1">요즘 많이가는 핫플!</p>
+                <p className="innertext-2">'무직타이거' 팝업스토어</p>
+                <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
+              </TextBox>
+              <InnerImage></InnerImage>
+              <Object></Object>
+            </SlideContent>
           </SlideItem>
           <SlideItem>
-            <SlideContent></SlideContent>
+            <SlideContent className="slide-02">
+              <TextBox>
+                <p className="innertext-1">요즘 많이가는 핫플!</p>
+                <p className="innertext-2">'무직타이거' 팝업스토어</p>
+                <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
+              </TextBox>
+              <InnerImage></InnerImage>
+              <Object></Object>
+            </SlideContent>
           </SlideItem>
           <SlideItem>
-            <SlideContent></SlideContent>
+            <SlideContent className="slide-03">
+              <TextBox>
+                <p className="innertext-1">요즘 많이가는 핫플!</p>
+                <p className="innertext-2">'무직타이거' 팝업스토어</p>
+                <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
+              </TextBox>
+              <InnerImage></InnerImage>
+              <Object></Object>
+            </SlideContent>
           </SlideItem>
         </CustomSlider>
       </SlideBox>
@@ -49,6 +73,67 @@ const SlideContent = styled.div`
   background-color: orange;
   border-radius: 8px;
   margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+
+  &.slide-01 {
+    background-color: lemonchiffon;
+  }
+
+  &.slide-02 {
+    background-color: lightblue;
+  }
+
+  &.slide-03 {
+    background-color: #d4c2dc;
+  }
+`;
+const TextBox = styled.div`
+  position: absolute;
+  top: 27%;
+  left: 15%;
+  z-index: 5;
+
+  .innertext-1 {
+    font-size: var(--font-small);
+  }
+
+  .innertext-2 {
+    margin-top: 5px;
+    font-size: var(--font-medium);
+    font-weight: var(--weight-semi-bold);
+  }
+
+  .innertext-3 {
+    margin-top: 20px;
+    font-size: var(--font-micro);
+  }
+`;
+
+const InnerImage = styled.div`
+  position: absolute;
+  right: 0px;
+  background: linear-gradient(to right, lemonchiffon, lemonchiffon 10%, transparent),
+    url('/images/main-back.jpeg') no-repeat;
+  opacity: 0.4;
+  z-index: 3;
+  background-size: contain;
+  background-position: center top;
+  width: 340px;
+  height: 500px;
+`;
+
+const Object = styled.div`
+  background: url('/images/tiger.png') no-repeat;
+  z-index: 20;
+  width: 130px;
+  height: 130px;
+  background-size: contain;
+  z-index: 4;
+
+  position: absolute;
+  bottom: 0;
+  right: 20%;
 `;
 
 const CustomSlider = styled(Slider)`
@@ -73,6 +158,10 @@ const CustomSlider = styled(Slider)`
   .slick-dots li.slick-active button:before {
     color: var(--color-sub);
   }
+
+  /* .slick-active .object-item {
+
+  } */
 `;
 
 export default SliderTop;

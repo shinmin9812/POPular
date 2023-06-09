@@ -14,8 +14,8 @@ const ReservationStoreList = ({ stores, text }: Props) => {
       <h2>{text}</h2>
       <ItemsBox>
         {stores.slice(0, 4).map((store) => (
-          <Item key={store.id}>
-            <Link to={`/store/${store.id}`}>
+          <Item key={store._id}>
+            <Link to={`/store/${store._id}`}>
               <ReservationStoreItem store={store} />
             </Link>
           </Item>
