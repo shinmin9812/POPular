@@ -1,11 +1,17 @@
-import { Post } from './post';
+import { User } from './user';
+
+export const enum CommentParentType {
+  feed = 'Feed',
+  comment = 'Comment',
+}
 
 export interface Comment {
   _id: string;
-  author: string;
+  author: User;
   content: string;
   parent: {
-    type: Post | Comment;
+    type: CommentParentType;
+    id: string;
   };
   recomments?: Comment[];
 }

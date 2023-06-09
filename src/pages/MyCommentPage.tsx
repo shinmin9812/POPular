@@ -9,18 +9,17 @@ const MyCommentPage = () => {
     fetchData();
   }, []);
 
-  async function fetchData() {
-    const response = await fetch('/comment/post/123');
+  const fetchData = async () => {
+    const response = await fetch('http://34.22.81.36:3000/comments');
     const result: Comment[] = await response.json();
-
     setComments(result);
-  }
+  };
 
   return (
-    <div>
+    <>
       <Title>내가 쓴 댓글</Title>
       <CommentList comments={comments} />
-    </div>
+    </>
   );
 };
 
