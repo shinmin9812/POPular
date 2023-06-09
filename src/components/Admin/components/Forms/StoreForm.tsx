@@ -1,142 +1,33 @@
 import styled from 'styled-components';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useRef } from 'react';
-import Button from '../common/Button/Button';
+import Button from '../../../common/Button/Button';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { PostedStore, Store } from '../../types/store';
-import { Category } from '../../types/category';
-import { SNS } from '../../types/sns';
+import { PostedStore } from '../../../../types/store';
+import { Category } from '../../../../types/category';
+import { SNS } from '../../../../types/sns';
+import { usePostStore } from '../../../../api/storeApi';
 
-const Container = styled.form`
-  display: flex;
-  flex-direction: column;
+const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-  gap: 20px;
+function changeAllStartTime(setValue: any, time: string): void {
+  week.forEach((day) => setValue(`hours.${day}.start`, time));
+}
 
-  font-size: 20px;
-  font-weight: 300;
+function changeAllEndTime(setValue: any, time: string): void {
+  week.forEach((day) => setValue(`hours.${day}.end`, time));
+}
 
-  label {
-    margin-left: 10px;
-
-    font-size: 20px;
-    font-weight: 300;
-
-    input,
-    textarea {
-      width: 300px;
-      margin-right: 10px;
-
-      font-family: sans-serif;
-
-      padding: 0 10px;
-
-      margin-top: 10px;
-      margin-left: 10px;
-
-      font-size: 20px;
-
-      border: none;
-      border-bottom: 1px solid #c2c2c2;
-
-      transition: all 0.5s;
-
-      &[type='time'],
-      &[type='date'] {
-        width: 140px;
-      }
-
-      &[type='checkbox'] {
-        width: 30px;
-      }
-
-      &:focus {
-        outline: none;
-        border-bottom: 1px solid #b937e5;
-        background-color: #f1f1f1;
-      }
-    }
-
-    select {
-      width: 100px;
-      height: 30px;
-
-      margin-left: 10px;
-      padding-top: 3px;
-
-      border-radius: 10px;
-      border: solid 1px #c2c2c2;
-
-      text-align: center;
-
-      -moz-appearance: none;
-      -webkit-appearance: none;
-      appearance: none;
-
-      &:focus {
-        border: solid 1px #b937e5;
-      }
-    }
-
-    &.textarea-input {
-      display: flex;
-      flex-direction: column;
-
-      textarea {
-        height: 200px;
-        padding: 10px;
-        margin-left: 0;
-      }
-    }
+function closedDayHandler(setValue: any, e: any, day: string) {
+  e.target.closest('label')?.classList.toggle('closed');
+  if (!e.target.checked) {
+    setValue(`hours.${day}.start`, null);
+    setValue(`hours.${day}.end`, null);
+  } else {
+    setValue(`hours.${day}.start`, '12:00');
+    setValue(`hours.${day}.end`, '12:00');
   }
-
-  .sns {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-
-    select {
-      margin-top: 20px;
-    }
-
-    button {
-      margin-left: 10px;
-      width: 100px;
-    }
-  }
-
-  strong {
-    margin-left: 10px;
-
-    font-size: 14px;
-    color: #ef4f4f;
-  }
-
-  .hours {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    margin: 20px 0;
-  }
-
-  .imgs {
-    display: flex;
-    flex-direction: column;
-
-    input {
-      font-size: 14px;
-    }
-  }
-
-  .submit {
-    height: 40px;
-    margin-top: 20px;
-    border-radius: 10px;
-    background-color: #652cc1;
-    color: #fff;
-  }
-`;
+}
 
 const StoreForm = () => {
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -145,6 +36,8 @@ const StoreForm = () => {
   const snsNameRef = useRef<HTMLInputElement | null>(null);
   const snsSelectRef = useRef<HTMLSelectElement | null>(null);
   const imageRef = useRef<HTMLInputElement | null>(null);
+  const targettedStartDate = useRef<HTMLInputElement | null>(null);
+  const targettedEndDate = useRef<HTMLInputElement | null>(null);
 
   const methods = useForm<PostedStore>({
     defaultValues: {
@@ -189,12 +82,14 @@ const StoreForm = () => {
         sigungu: '',
       },
       coord: {
-        coordinates: ['0', '0'],
+        coordinates: [0, 0],
+        type: 'Point',
       },
       price: 0,
       sns: [],
       reservation_required: false,
       images: [],
+      scraps: [],
     },
   });
 
@@ -209,7 +104,7 @@ const StoreForm = () => {
     formState: { errors },
   } = methods;
 
-  console.log(watch());
+  const { ref } = register('location');
 
   const { fields: imageFeilds, append: appendImages } = useFieldArray({
     control,
@@ -220,8 +115,6 @@ const StoreForm = () => {
     control,
     name: 'sns',
   });
-
-  const { ref } = register('location');
 
   async function postcodeHandler(data: any) {
     if (!locationRef.current) return;
@@ -241,18 +134,23 @@ const StoreForm = () => {
     setValue('location', result);
     setValue('postcode.sido', sido);
     setValue('postcode.sigungu', sigungu);
-    setValue('coord.coordinates.0', documents[0].x);
-    setValue('coord.coordinates.1', documents[0].y);
+    setValue('coord.coordinates.0', +documents[0].x);
+    setValue('coord.coordinates.1', +documents[0].y);
   }
+
+  const { mutate, isLoading, isError, error, isSuccess } = usePostStore();
+
+  console.log(watch());
 
   return (
     <Container
       onSubmit={handleSubmit((data) => {
         if (data.end_date < data.start_date) {
-          setError('end_date', {
+          return setError('end_date', {
             message: '종료일은 시작일 이후여야합니다!',
           });
         }
+        mutate(data);
       })}
     >
       <label>
@@ -316,41 +214,114 @@ const StoreForm = () => {
       <div className="hours">
         <p>운영시간</p>
         <label>
+          <input type="time" defaultValue="00:00" ref={targettedStartDate} />
+          <input type="time" defaultValue="12:00" ref={targettedEndDate} />
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelectorAll<HTMLInputElement>('label.closed').forEach((el) => {
+                el.classList.remove('closed');
+                const checkbox = el.querySelector<HTMLInputElement>('input[type="checkbox"]');
+                checkbox!.checked = true;
+              });
+
+              const startDate = targettedStartDate.current?.value as string;
+              const endDate = targettedEndDate.current?.value as string;
+
+              changeAllStartTime(setValue, startDate);
+              changeAllEndTime(setValue, endDate);
+            }}
+          >
+            일괄 적용
+          </Button>
+        </label>
+        <label className="closed">
+          <input
+            type="checkbox"
+            onChange={(e) => {
+              closedDayHandler(setValue, e, 'mon');
+            }}
+          />
           월요일
-          <input type="time" {...register('hours.mon.start')} />
-          <input type="time" {...register('hours.mon.end')} />
+          <input className="start-time" type="time" {...register('hours.mon.start')} />
+          <input className="end-time" type="time" {...register('hours.mon.end')} />
         </label>
-        <label>
+        <label className="closed">
+          <input
+            type="checkbox"
+            onChange={(e) => {
+              closedDayHandler(setValue, e, 'tue');
+            }}
+          />
           화요일
-          <input type="time" {...register('hours.tue.start')} />
-          <input type="time" {...register('hours.tue.end')} />
+          <input className="start-time" type="time" {...register('hours.tue.start')} />
+          <input className="end-time" type="time" {...register('hours.tue.end')} />
         </label>
-        <label>
+        <label className="closed">
+          <input
+            type="checkbox"
+            onChange={(e) => {
+              closedDayHandler(setValue, e, 'wed');
+            }}
+          />
           수요일
-          <input type="time" {...register('hours.wed.start')} />
-          <input type="time" {...register('hours.wed.end')} />
+          <input className="start-time" type="time" {...register('hours.wed.start')} />
+          <input className="end-time" type="time" {...register('hours.wed.end')} />
         </label>
-        <label>
+        <label className="closed">
+          <input
+            type="checkbox"
+            onChange={(e) => {
+              closedDayHandler(setValue, e, 'thu');
+            }}
+          />
           목요일
-          <input type="time" {...register('hours.wed.start')} />
-          <input type="time" {...register('hours.wed.end')} />
+          <input className="start-time" type="time" {...register('hours.thu.start')} />
+          <input className="end-time" type="time" {...register('hours.thu.end')} />
         </label>
-        <label>
+        <label className="closed">
+          <input
+            type="checkbox"
+            onChange={(e) => {
+              closedDayHandler(setValue, e, 'fri');
+            }}
+          />
           금요일
-          <input type="time" {...register('hours.fri.start')} />
-          <input type="time" {...register('hours.fri.end')} />
+          <input className="start-time" type="time" {...register('hours.fri.start')} />
+          <input className="end-time" type="time" {...register('hours.fri.end')} />
         </label>
-        <label>
+        <label className="closed">
+          <input
+            type="checkbox"
+            onChange={(e) => {
+              closedDayHandler(setValue, e, 'sat');
+            }}
+          />
           토요일
-          <input type="time" {...register('hours.sat.start')} />
-          <input type="time" {...register('hours.sat.end')} />
+          <input className="start-time" type="time" {...register('hours.sat.start')} />
+          <input className="end-time" type="time" {...register('hours.sat.end')} />
         </label>
-        <label>
+        <label className="closed">
+          <input
+            type="checkbox"
+            onChange={(e) => {
+              closedDayHandler(setValue, e, 'sun');
+            }}
+          />
           일요일
-          <input type="time" {...register('hours.sun.start')} />
-          <input type="time" {...register('hours.sun.end')} />
+          <input className="start-time" type="time" {...register('hours.sun.start')} />
+          <input className="end-time" type="time" {...register('hours.sun.end')} />
         </label>
       </div>
+      <label>
+        입장료
+        <input
+          type="number"
+          {...register('price', {
+            valueAsNumber: true,
+          })}
+        />
+      </label>
       <label>
         <Button
           onClick={(e) => {
@@ -435,5 +406,145 @@ const StoreForm = () => {
     </Container>
   );
 };
+
+const Container = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+
+  font-size: 20px;
+  font-weight: 300;
+
+  label {
+    margin-left: 10px;
+
+    font-size: 20px;
+    font-weight: 300;
+
+    input,
+    textarea {
+      width: 300px;
+      margin-right: 10px;
+
+      font-family: sans-serif;
+
+      padding: 0 10px;
+
+      margin-top: 10px;
+      margin-left: 10px;
+
+      font-size: 20px;
+
+      border: none;
+      border-bottom: 1px solid #c2c2c2;
+
+      transition: all 0.5s;
+
+      &[type='time'],
+      &[type='date'] {
+        width: 140px;
+      }
+
+      &[type='checkbox'] {
+        width: 30px;
+      }
+
+      &:focus {
+        outline: none;
+        border-bottom: 1px solid #b937e5;
+        background-color: #f1f1f1;
+      }
+    }
+
+    select {
+      width: 100px;
+      height: 30px;
+
+      margin-left: 10px;
+      padding-top: 3px;
+
+      border-radius: 10px;
+      border: solid 1px #c2c2c2;
+
+      text-align: center;
+
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+
+      &:focus {
+        border: solid 1px #b937e5;
+      }
+    }
+
+    &.textarea-input {
+      display: flex;
+      flex-direction: column;
+
+      textarea {
+        height: 200px;
+        padding: 10px;
+        margin-left: 0;
+      }
+    }
+
+    &.closed {
+      opacity: 0.3;
+      input[type='time'] {
+        pointer-events: none;
+        opacity: 0.4;
+      }
+    }
+  }
+
+  .sns {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+
+    select {
+      margin-top: 20px;
+    }
+
+    button {
+      margin-left: 10px;
+      width: 100px;
+    }
+  }
+
+  strong {
+    position: relative;
+    margin-left: 10px;
+
+    font-size: 14px;
+    color: #ef4f4f;
+  }
+
+  .hours {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    margin: 20px 0;
+  }
+
+  .imgs {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      font-size: 14px;
+    }
+  }
+
+  .submit {
+    height: 40px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: #652cc1;
+    color: #fff;
+  }
+`;
 
 export default StoreForm;

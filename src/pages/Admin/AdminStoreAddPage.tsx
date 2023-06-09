@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
-import StoreForm from '../../components/Admin/StoreForm';
+import StoreForm from '../../components/Admin/components/Forms/StoreForm';
 
 const Container = styled.div`
   .add-store {

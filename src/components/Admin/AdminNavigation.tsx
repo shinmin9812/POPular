@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import AccodionList from '../common/Accordion/AccodionList';
 import { CLIENT_PATH } from '../../constants/path';
 import { useLocation } from 'react-router-dom';
+import AdminCard from './components/AdminCard';
 
 const Container = styled.div`
   position: fixed;
@@ -17,7 +18,7 @@ const Container = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
 
   background-color: #8241d0;
-  background-image: linear-gradient(43deg, #d42d62 0%, #c850c0 30%, #e096ef 100%);
+  background-image: linear-gradient(43deg, #d42d62 0%, #c850c0 30%, #d15ee0 100%);
 
   border-radius: 20px;
   box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.4);
@@ -104,6 +105,7 @@ const MenuMap = new Map<string, string>([
   ['feed', '피드 관리'],
   ['notification', '알림 관리'],
 ]);
+
 const AdminNavigation = () => {
   const { pathname } = useLocation();
   const [selectedMenu, setSelectedMenu] = useState<string>('');
@@ -115,6 +117,7 @@ const AdminNavigation = () => {
 
   return (
     <Container>
+      <AdminCard />
       <nav>
         <AccodionList selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} Accodions={Accodions} />
       </nav>
