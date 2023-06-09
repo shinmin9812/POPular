@@ -147,6 +147,7 @@ const Header = () => {
             <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
               커뮤니티
             </NavLink>
+            <NavLink to={'/admin'}>관리자</NavLink>
           </div>
         </nav>
         <div className="sub-links">

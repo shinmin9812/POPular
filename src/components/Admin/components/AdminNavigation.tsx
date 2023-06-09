@@ -13,7 +13,7 @@ const Container = styled.div`
   width: 300px;
   height: fit-content;
 
-  padding: 20px;
+  padding: 20px 20px 40px 20px;
 
   font-family: 'Noto Sans KR', sans-serif;
 
@@ -22,6 +22,25 @@ const Container = styled.div`
 
   border-radius: 20px;
   box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.4);
+
+  .home {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+
+    a {
+      font-weight: 500;
+      opacity: 0.6;
+      color: #fff;
+      transition: all 0.3s;
+    }
+
+    &:hover {
+      a {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const Accodions = [
@@ -123,6 +142,10 @@ const AdminNavigation = () => {
       <nav>
         <AccodionList selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} Accodions={Accodions} />
       </nav>
+
+      <div className="home">
+        <a href="/">사이트로 이동</a>
+      </div>
     </Container>
   );
 };
