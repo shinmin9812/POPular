@@ -11,6 +11,7 @@ const ChoiceButton = styled.button<{ choice: boolean }>`
   height: 30px;
   width: 60px;
   margin-bottom: 20px;
+  margin-right: 20px;
   border-radius: 8px;
 `;
 

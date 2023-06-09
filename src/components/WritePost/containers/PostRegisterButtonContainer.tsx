@@ -23,6 +23,9 @@ const PostRegisterButtonContainer = () => {
   const setChoiceStoreId = (id: string) => {
     return dispatch(WritePostSliceActions.setChoiceStoreId(id));
   };
+  const setIsUpdate = (isUpdate: { use: boolean; id: string }) => {
+    return dispatch(WritePostSliceActions.setIsUpdate(isUpdate));
+  };
 
   const [isMember, setIsMember] = useState();
 
@@ -37,7 +40,6 @@ const PostRegisterButtonContainer = () => {
       ...(currTab !== 'free' && { store_id: choiceStoreId }),
       ...(currTab === 'review' && { ratings: ratings }),
     };
-    console.log(data);
 
     try {
       let response: Response;
@@ -64,6 +66,7 @@ const PostRegisterButtonContainer = () => {
         setPostTitle('');
         setPostContent('');
         setChoiceStoreId('');
+        setIsUpdate({ use: false, id: '' });
         navigate('/community/board/all');
       }
     } catch (err) {

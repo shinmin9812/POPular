@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import StoreItem from '../../common/Store/StoreItem';
 import { Store } from '../../../types/store';
 import filterFunc from '../../../Hooks/filterFunc';
-
+import ChoiceStoreList from '../components/ChoiceStoreList';
 const ChoiceStoreBoxContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const choiceStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
@@ -38,7 +38,7 @@ const ChoiceStoreBoxContainer = () => {
         <SearchContainerWrap placeholder={'스토어를 검색해주세요.'} />
         <FilterContainer />
         <FilterInfoContainer />
-        <ul>
+        <ChoiceStoreList>
           {stores ? (
             filterFunc(
               stores,
@@ -56,7 +56,7 @@ const ChoiceStoreBoxContainer = () => {
           ) : (
             <li></li>
           )}
-        </ul>
+        </ChoiceStoreList>
       </div>
     );
   } else return <div></div>;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
-import CommentInput from './CommentInput';
+import CommentInputContainer from '../containers/CommentInputContainer';
 import ReComment from './ReCommentList';
 
 const CommentWrap = styled.div`
@@ -38,7 +38,6 @@ export const CommentUpdateAt = styled.span`
 
 const CommentItem = ({
   comment,
-  UpdateAt,
   reCommentInput,
   setReCommentInput,
 }: //  ReComment
@@ -52,14 +51,13 @@ const CommentItem = ({
     <Li>
       <div onClick={setReCommentInput}>
         <CommentWrap>
-          <CommentAuthorName>{comment.author.nickname}</CommentAuthorName>
+          {/* <CommentAuthorName>{comment.author.nickname}</CommentAuthorName>
           <CommentContent>{comment.content}</CommentContent>
-          <CommentUpdateAt>{UpdateAt}</CommentUpdateAt>
+          <CommentUpdateAt>{UpdateAt}</CommentUpdateAt> */}
+          API 연결 필요
         </CommentWrap>
-        <ReComment />
-        {/* {ReComment && <ReComment />} */}
       </div>
-      {reCommentInput && <CommentInput />}
+      {reCommentInput && <CommentInputContainer commentId={'6482e9eba2a8bb6725d8ae49'} />}
     </Li>
   );
 };

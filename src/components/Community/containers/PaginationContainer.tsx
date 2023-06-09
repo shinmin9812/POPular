@@ -1,7 +1,7 @@
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { communityActions } from '../CommunitySlice';
 import Pagination from '../../common/Pagination/Pagination';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const PaginationContainer = () => {
   const page = useAppSelector((state) => state.CommunitySlice.page);

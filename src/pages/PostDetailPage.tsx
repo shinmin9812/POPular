@@ -6,12 +6,10 @@ import StoreWrap from '../components/PostDetail/components/StoreWrap';
 import StoreItem from '../components/common/Store/StoreItem';
 import PostContent from '../components/PostDetail/components/PostContent';
 import CommentsList from '../components/PostDetail/components/CommentsList';
-import PaginationContainer from '../components/Community/containers/PaginationContainer';
-import CommentInput from '../components/PostDetail/components/CommentInput';
 import UpdateAndDeleteContainer from '../components/PostDetail/containers/UpdateAndDeleteButtonContainer';
 import LikesAndReportsContainer from '../components/PostDetail/containers/LikeAndReportButtonContainer';
 import { useParams } from 'react-router-dom';
-
+import CommentInputContainer from '../components/PostDetail/containers/CommentInputContainer';
 const Container = styled.div`
   width: 100%;
 `;
@@ -20,7 +18,6 @@ const PostDetailPage = () => {
   const postId = useParams().postId;
   const [post, setPost] = useState<Post | null>(null);
 
-  const [currPage, setPage] = useState(1);
   useEffect(() => {
     fetchData();
   }, []);
@@ -54,8 +51,7 @@ const PostDetailPage = () => {
       <UpdateAndDeleteContainer />
       <LikesAndReportsContainer />
       <CommentsList comments={post ? post.comments : undefined} />
-      <PaginationContainer />
-      <CommentInput />
+      <CommentInputContainer />
     </Container>
   );
 };

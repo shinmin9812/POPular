@@ -62,26 +62,29 @@ const PostListItemContainer = () => {
     fetchData(tab, setPosts, navigate);
   }, [tab, page, navigate]);
 
+  // 필터 사용 유무
+  const useFilter = filterCategory.use || filterAddress.use || filterDateUse;
+
+  //에러 발생 fix 예정
+  const originalPost: Post[] | undefined = useMemo(() => {
+    if (useFilter) {
+      // 필터링된 스토어리스트
+      const useFilterStoreList =
+        stores && filterFunc(stores, filterAddress, filterCategory, filterStartDate, filterEndDate, filterDateUse);
+      // 필터링된 게시글들
+      const useFilterPosts = posts?.filter((post) =>
+        useFilterStoreList?.some((store) => store._id === post.store_id?._id),
+      );
+      return useFilterPosts;
+    } else {
+      return posts;
+    }
+  }, [useFilter]);
+
   useEffect(() => {
     // 탭 이동 시 페이지 초기화
     setPage(1);
-  }, [tab, setPage]);
-
-  let originalPost: Post[] | undefined;
-  // 필터 사용 유무
-  const useFilter = filterCategory.use || filterAddress.use || filterDateUse;
-  if (useFilter) {
-    // 필터링된 스토어리스트
-    const useFilterStoreList =
-      stores && filterFunc(stores, filterAddress, filterCategory, filterStartDate, filterEndDate, filterDateUse);
-    // 필터링된 게시글들
-    const useFilterPosts = posts?.filter((post) =>
-      useFilterStoreList?.some((store) => store._id === post.store_id?._id),
-    );
-    originalPost = useFilterPosts;
-  } else {
-    originalPost = posts;
-  }
+  }, [tab, setPage, originalPost]);
 
   const dividedPost: Post[][] = useMemo(() => {
     const post: Post[][] = [];

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Comment } from '../../../types/comment';
 import ReCommentArrowIcon from '../../common/Icons/ReCommentArrowIcon';
 import { CommentAuthorName, CommentContent, CommentUpdateAt } from './CommentItem';
 
