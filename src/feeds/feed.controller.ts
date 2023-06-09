@@ -73,7 +73,7 @@ export class FeedsController {
 		return await this.feedsService.updateFeed(id, updateDto);
 	}
 
-	@ApiOperation({ summary: '게시글 좋아요 추가' })
+	@ApiOperation({ summary: '게시글 좋아요 추가 및 삭제' })
 	@Patch(':id/like')
 	async addLike(
 		@Param('id') feedId: Types.ObjectId,
@@ -83,17 +83,8 @@ export class FeedsController {
 		return this.feedsService.addLike(feedId, like);
 	}
 
-	@ApiOperation({ summary: '게시글 좋아요 삭제' })
-	@Delete(':id/like')
-	async removeLike(
-		@Param('id') feedId: Types.ObjectId,
-		@Body() updateFeedDto: FeedUpdateDto,
-	): Promise<Feed> {
-		const { like } = updateFeedDto;
-		return this.feedsService.removeLike(feedId, like);
-	}
 
-	@ApiOperation({ summary: '게시글 신고 추가' })
+	@ApiOperation({ summary: '게시글 신고 추가 및 삭제' })
 	@Patch(':id/report')
 	async addReport(
 		@Param('id') feedId: Types.ObjectId,
@@ -103,15 +94,6 @@ export class FeedsController {
 		return this.feedsService.addReport(feedId, report);
 	}
 
-	@ApiOperation({ summary: '게시글 신고 삭제' })
-	@Delete(':id/report')
-	async removeReport(
-		@Param('id') feedId: Types.ObjectId,
-		@Body() updateFeedDto: FeedUpdateDto,
-	): Promise<Feed> {
-		const { report } = updateFeedDto;
-		return this.feedsService.removeReport(feedId, report);
-	}
 
 	@ApiOperation({ summary: '게시글 댓글 추가' })
 	@Patch(':id/comment')

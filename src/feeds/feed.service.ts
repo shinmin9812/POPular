@@ -82,7 +82,20 @@ export class FeedsService {
 				.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true })
 				.populate('author')
 				.populate('store_id')
-				.populate('comments')
+				.populate({path: 'comments',
+										populate: [{
+											path: 'recomments',
+											model: 'Comment',
+											populate: {
+												path: 'author',
+												model: 'User'
+											}
+										},
+										{
+											path: 'author',
+											model: 'User'
+										}]
+									})
 				.exec();
 
 			if (!feed) {
@@ -172,35 +185,26 @@ export class FeedsService {
 	}
 
 	async addLike(feedId: Types.ObjectId, like: Types.ObjectId): Promise<Feed> {
+		const liked = (await this.feedModel.findById(feedId)).likes.find((e)=> e === like)
+		if(liked){
+			return this.feedModel
+			.findByIdAndUpdate(feedId, { $pull: { likes: like } }, { new: true })
+			.exec();
+		}
 		return this.feedModel
 			.findByIdAndUpdate(feedId, { $push: { likes: like } }, { new: true })
 			.exec();
 	}
 
-	async removeLike(
-		feedId: Types.ObjectId,
-		like: Types.ObjectId,
-	): Promise<Feed> {
-		return this.feedModel
-			.findByIdAndUpdate(feedId, { $pull: { likes: like } }, { new: true })
+	async addReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
+		const reported = (await this.feedModel.findById(feedId)).reports.find((e)=> e === report)
+		if(reported){
+			return this.feedModel
+			.findByIdAndUpdate(feedId, { $pull: { reports: report } }, { new: true })
 			.exec();
-	}
-
-	async addReport(
-		feedId: Types.ObjectId,
-		report: Types.ObjectId,
-	): Promise<Feed> {
+		}
 		return this.feedModel
 			.findByIdAndUpdate(feedId, { $push: { reports: report } }, { new: true })
-			.exec();
-	}
-
-	async removeReport(
-		feedId: Types.ObjectId,
-		report: Types.ObjectId,
-	): Promise<Feed> {
-		return this.feedModel
-			.findByIdAndUpdate(feedId, { $pull: { reports: report } }, { new: true })
 			.exec();
 	}
 
