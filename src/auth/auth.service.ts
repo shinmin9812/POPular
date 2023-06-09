@@ -10,16 +10,20 @@ export class AuthService {
 		private jwtService: JwtService,
 	) {}
 
-	async login(email: string, password: string): Promise<any> {
+	async login(email: string, password: string): Promise<object> {
 		const user = await this.userService.getUserByEmail(email);
 
-		if (!comparePasswords(password, user?.pw)) {
-			throw new UnauthorizedException();
-		}
+		const isMatch = await comparePasswords(password, user.pw);
 
-		const payload = { sub: user._id, username: user.email };
-		return {
-			token: await this.jwtService.signAsync(payload),
-		};
+		if (isMatch) {
+			const payload = { sub: user._id, username: user.email };
+			return {
+				token: await this.jwtService.signAsync(payload),
+			};
+		} else {
+			throw new Error(
+				'비밀번호가 틀렸습니다. 이메일 또는 비밀번호를 확인하세요.',
+			);
+		}
 	}
 }
