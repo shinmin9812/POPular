@@ -16,7 +16,7 @@ import { handleImages } from 'src/utils/handle.images.util';
 export class FeedsService {
 	constructor(
 		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
-	) {}
+	) { }
 
 	async getAllFeeds(): Promise<Feed[]> {
 		try {
@@ -63,12 +63,19 @@ export class FeedsService {
 		return await this.getFeedsByBoard('free');
 	}
 
-	async getPaginate(page: number): Promise<Feed[]> {
-		const limit = 7;
-		const offset = (page - 1) * limit;
+	// async getPaginate(id: string, page: number): Promise<Feed[]> {
+	// 	const limit = 7;
+	// 	const offset = (page - 1) * limit;
 
-		return await this.feedModel.find().limit(limit).skip(offset);
-	}
+	// 	const feeds = await this.feedModel
+	// 		.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true })
+	// 		.populate('author')
+	// 		.populate('store_id')
+	// 		.limit(limit)
+	// 		.skip(offset);
+
+	// 	return feeds;
+	// }
 
 	async getFeedById(id: string): Promise<Feed> {
 		try {

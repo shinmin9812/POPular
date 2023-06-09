@@ -7,8 +7,6 @@ import {
 	Body,
 	Patch,
 	UseGuards,
-	UseInterceptors,
-	UploadedFile,
 } from '@nestjs/common';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
@@ -21,8 +19,6 @@ import {
 	ApiProperty,
 } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { multerOptions } from 'src/utils/multer.util';
 
 class checknickname {
 	@ApiProperty({
@@ -45,7 +41,7 @@ class checkemail {
 @Controller('/users')
 @ApiTags('User')
 export class UserController {
-	constructor(private readonly userService: UserService) {}
+	constructor(private readonly userService: UserService) { }
 
 	@ApiOperation({ summary: '모든 유저 정보 찾기' })
 	@Get()
@@ -108,6 +104,22 @@ export class UserController {
 		@Param('storeId') storeId: string,
 	): Promise<User> {
 		return await this.userService.updateUnscrap(userId, storeId);
+	}
+
+	@ApiOperation({ summary: '유저 팔로우하기' })
+	@ApiBearerAuth('Authorization')
+	@Patch(':userId/follow/:targetId')
+	@UseGuards(AuthGuard)
+	async updateFollow(@Param('userId') userId: string, @Param('targetId') targetId: string): Promise<User> {
+		return await this.userService.updateFollow(userId, targetId);
+	}
+
+	@ApiOperation({ summary: '유저 언팔로우하기' })
+	@ApiBearerAuth('Authorization')
+	@Patch(':userId/unfollow/:targetId')
+	@UseGuards(AuthGuard)
+	async updateUnfollow(@Param('userId') userId: string, @Param('targetId') targetId: string): Promise<User> {
+		return await this.userService.updateUnfollow(userId, targetId);
 	}
 
 	@ApiOperation({ summary: '유저 정보 삭제하기' })

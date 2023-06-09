@@ -20,7 +20,7 @@ import { Types } from 'mongoose';
 @Controller('/feeds')
 @ApiTags('Feed')
 export class FeedsController {
-	constructor(private readonly feedsService: FeedsService) {}
+	constructor(private readonly feedsService: FeedsService) { }
 
 	@ApiOperation({ summary: '모든 게시글 조회' })
 	@Get()
@@ -28,11 +28,11 @@ export class FeedsController {
 		return await this.feedsService.getAllFeeds();
 	}
 
-	@ApiOperation({ summary: '게시글 페이지네이션' })
-	@Get('pages')
-	async getPaginate(@Query('page') page: number = 1) {
-		return await this.feedsService.getPaginate(page);
-	}
+	// @ApiOperation({ summary: '게시글 페이지네이션' })
+	// @Get(':id/pages')
+	// async getPaginate(@Param('id') _id: string, @Query('page') page: number = 1) {
+	// 	return await this.feedsService.getPaginate(_id, page);
+	// }
 
 	@ApiOperation({ summary: '모든 모집게시판 조회' })
 	@Get('gather')

@@ -1,18 +1,19 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { User } from './user.schema';
+import { User, user_profile } from './user.schema';
 import { Store } from 'src/stores/store.schema';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
 import { hashPassword } from '../utils/hassing.util';
+import { handleImage } from 'src/utils/handle.image.util';
 
 @Injectable()
 export class UserService {
 	constructor(
 		@InjectModel(User.name) private readonly userModel: Model<User>,
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
-	) {}
+	) { }
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -49,12 +50,18 @@ export class UserService {
 	}
 
 	async updateUser(_id: string, body: UserUpdateDto): Promise<User> {
+		//유저 프로필
+		const base64Image = body.profile;
+		const imageUrl = await handleImage(base64Image, './uploads', '');
+
+		//변경 비밀번호 해싱
 		const pw = body.pw;
 		const hashedPassword = await hashPassword(pw);
 
 		const updateUser = {
 			...body,
 			pw: hashedPassword,
+			profile: imageUrl,
 		};
 
 		return await this.userModel.findByIdAndUpdate({ _id }, updateUser, {
@@ -113,6 +120,69 @@ export class UserService {
 
 		return user;
 	}
+
+	async updateFollow(user_id: string, target_id: string): Promise<User> {
+		const user = await this.userModel.findById(user_id);
+		const target = await this.userModel.findById(target_id);
+
+		const followingInfo = {
+			_id: user._id.toString(),
+			nickname: user.nickname,
+			profile: user.profile,
+		}
+
+		const followerInfo = {
+			_id: target._id.toString(),
+			nickname: target.nickname,
+			profile: target.profile,
+		}
+
+		if (!user.following.includes(followerInfo)) {
+			user.following.push(followerInfo);
+		}
+
+		if (!target.follower.includes(followingInfo)) {
+			target.follower.push(followingInfo);
+		}
+
+		user.save();
+		target.save();
+
+		return user;
+	}
+
+	async updateUnfollow(user_id: string, target_id: string): Promise<User> {
+		const user = await this.userModel.findById(user_id);
+		const target = await this.userModel.findById(target_id);
+
+		const followingInfo = {
+			_id: user._id.toString(),
+			nickname: user.nickname,
+			profile: user.profile,
+		}
+
+		const followerInfo = {
+			_id: target._id.toString(),
+			nickname: target.nickname,
+			profile: target.profile,
+		}
+
+		const userIndex = user.following.indexOf(followerInfo);
+		const targetIndex = target.follower.indexOf(followingInfo);
+
+		if (userIndex !== -1) {
+			target.follower.splice(userIndex, 1);
+		}
+		if (targetIndex !== -1) {
+			user.following.splice(targetIndex, 1);
+		}
+
+		user.save();
+		target.save();
+
+		return user;
+	}
+
 
 	async deleteUser(_id: string): Promise<User> {
 		return await this.userModel.findByIdAndDelete(_id);

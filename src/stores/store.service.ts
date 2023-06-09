@@ -9,7 +9,7 @@ import { handleImages } from 'src/utils/handle.images.util';
 export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
-	) {}
+	) { }
 
 	async getAllStores(): Promise<Store[]> {
 		return await this.storeModel.find();
