@@ -11,9 +11,9 @@ const options: SchemaOptions = {
 };
 
 export enum BoardType {
-	Gather = 'gather',
-	Review = 'review',
-	Free = 'free',
+	GATHER = 'gather',
+	REVIEW = 'review',
+	FREE = 'free',
 }
 
 @Schema(options)

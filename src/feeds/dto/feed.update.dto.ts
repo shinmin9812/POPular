@@ -6,6 +6,7 @@ import {
 	Max,
 	IsArray,
 	IsNotEmpty,
+	IsMongoId,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Types } from 'mongoose';
@@ -54,28 +55,28 @@ export class FeedUpdateDto {
 	ratings?: number;
 
 	@IsOptional()
-	@IsArray()
+	@IsMongoId()
 	@ApiProperty({
-		example: '[qwer1234, rewq431]',
-		description: '게시글 좋아요 누른 유저 목록',
+		example: '6479cd31b0b0d8f69ffcfc55',
+		description: '게시글 좋아요 누른 유저 ID',
 	})
-	likes?: Types.ObjectId[];
+	like: Types.ObjectId;
 
 	@IsOptional()
-	@IsArray()
+	@IsMongoId()
 	@ApiProperty({
-		example: '[qwer1234, rewq431]',
-		description: '게시글 신고 누른 유저 목록',
+		example: '6479cd31b0b0d8f69ffcfc55',
+		description: '게시글 신고 누른 유저 ID',
 	})
-	reports?: Types.ObjectId[];
+	report: Types.ObjectId;
 
 	@IsOptional()
-	@IsArray()
+	@IsMongoId()
 	@ApiProperty({
-		example: '[저요!, 까비요]',
-		description: '게시글 댓글',
+		example: '647d4230f130cbfd139325a1',
+		description: '댓글 ID',
 	})
-	comments?: Types.ObjectId[];
+	comment: Types.ObjectId;
 
 	@IsOptional()
 	@IsNumber()
