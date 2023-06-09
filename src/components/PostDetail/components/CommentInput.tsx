@@ -22,11 +22,19 @@ const RegisterButton = styled.button`
   height: 40px;
 `;
 
-const CommentInput = () => {
+const CommentInput = ({
+  value,
+  onChange,
+  onClick,
+}: {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick: () => void;
+}) => {
   return (
     <CommentInputWrap>
-      <Input placeholder="댓글을 입력해주세요" />
-      <RegisterButton>등록하기</RegisterButton>
+      <Input placeholder="댓글을 입력해주세요" onChange={onChange} value={value} />
+      <RegisterButton onClick={onClick}>등록하기</RegisterButton>
     </CommentInputWrap>
   );
 };

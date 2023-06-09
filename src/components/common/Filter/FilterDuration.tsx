@@ -7,7 +7,7 @@ interface date {
 }
 
 const Duration = styled.button`
-  width: 23%;
+  width: 33%;
   height: 39px;
   background-color: var(--color-gray);
   color: var(--color-white);

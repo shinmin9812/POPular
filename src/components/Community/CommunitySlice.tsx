@@ -24,7 +24,10 @@ export interface CommunityInitialState {
       day: number;
     };
   };
-  page: number;
+  page: {
+    currPage: number;
+    totalPage: number[];
+  };
 }
 
 export interface SetDate {
@@ -56,7 +59,10 @@ const initialState: CommunityInitialState = {
     StartDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
     endDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
   },
-  page: 1,
+  page: {
+    currPage: 1,
+    totalPage: [1],
+  },
 };
 
 const CommunitySlice = createSlice({
@@ -67,7 +73,10 @@ const CommunitySlice = createSlice({
       state.tab = action.payload;
     },
     setPage(state, action: PayloadAction<number>) {
-      state.page = action.payload;
+      state.page.currPage = action.payload;
+    },
+    setTotalPage(state, action: PayloadAction<number[]>) {
+      state.page.totalPage = action.payload;
     },
     setFilterAddressValue(state, action: PayloadAction<string>) {
       state.addressFilter.value = action.payload;

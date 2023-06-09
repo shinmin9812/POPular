@@ -2,9 +2,9 @@ import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks'
 import { communityActions } from '../CommunitySlice';
 import Filter from '../../common/Filter/Filter';
 import FilterDuration from '../../common/Filter/FilterDuration';
-import WriteButton from '../components/WriteButton';
 import FilterBox from '../../common/Filter/FilterBox';
 import { useState } from 'react';
+import { address, category } from '../../../constants/filterOptions';
 
 const FilterContainer = () => {
   const durationFilterValue = useAppSelector((state) => state.CommunitySlice.durationFilter);
@@ -38,8 +38,8 @@ const FilterContainer = () => {
   const Today: Date = new Date();
   // 자유게시판으로 이동 시 필터 초기화
   if (Tab === '자유게시판') {
-    setFilterAddressValue('지역');
-    setFilterCategoryValue('카테고리');
+    // setFilterAddressValue('지역');
+    // setFilterCategoryValue('카테고리');
     // setDurationYear(Today.getFullYear());
     // setDurationYear(Today.getFullYear(), true);
     // setDurationMonth(Today.getMonth() + 1);
@@ -56,8 +56,8 @@ const FilterContainer = () => {
             setFilterCategoryValue(e.target.value);
             setFilterCategoryUse(true);
           }}
-          Options={['카테고리', '의류', '주류', '캐릭터']}
-          width={23}
+          Options={category}
+          width={33}
         />
         <Filter
           value={addressFilterValue.value}
@@ -65,26 +65,8 @@ const FilterContainer = () => {
             setFilterAddressValue(e.target.value);
             setFilterAddressUse(true);
           }}
-          Options={[
-            '지역',
-            '서울',
-            '부산',
-            '대구',
-            '인천',
-            '광주',
-            '대전',
-            '울산',
-            '세종',
-            '경기도',
-            '강원도',
-            '충청도',
-            '전라북도',
-            '전라남도',
-            '경상북도',
-            '경상남도',
-            '제주',
-          ]}
-          width={23}
+          Options={address}
+          width={33}
         />
         <FilterDuration
           show={durationFilterValue.show}
@@ -99,7 +81,6 @@ const FilterContainer = () => {
           endDateTarget={endDateTarget}
           setEndDateTarget={setEndDateTarget}
         />
-        <WriteButton />
       </FilterBox>
     );
   }

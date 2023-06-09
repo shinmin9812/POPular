@@ -1,37 +1,29 @@
 import SearchContainerWrap from '../../common/SearchInput/SearchInput';
 import FilterContainer from './FilterContainer';
 import FilterInfoContainer from './FilterInfoContainer';
-import { useAppSelector } from '../../../Hooks/useSelectorHooks';
+import ChoiceStoreItemContainer from './ChoiceStoreItemContainer';
+import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
+import { WritePostSliceActions } from '../WritePostSlice';
 import { useState, useEffect } from 'react';
 import StoreItem from '../../common/Store/StoreItem';
 import { Store } from '../../../types/store';
-
-const AddressfilterFuc = (arr: Store[], standard: string) => {
-  if (standard === '지역') return arr;
-  const regex = new RegExp(`[${standard}]`, 'g');
-  return arr.filter((store) => store.postcode.sido.match(regex));
-};
-const CategoryfilterFuc = (arr: Store[], standard: string) => {
-  if (standard === '카테고리') return arr;
-  return arr.filter((store) => store.category === standard);
-};
-const durationfilterFuc = (arr: Store[], targetStartDate: string, targetEndDate: string) => {
-  return arr.filter(
-    (store) =>
-      new Date(store.start_date) <= new Date(targetEndDate) && new Date(targetStartDate) <= new Date(store.end_date),
-  );
-};
-
+import filterFunc from '../../../Hooks/filterFunc';
+import ChoiceStoreList from '../components/ChoiceStoreList';
 const ChoiceStoreBoxContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
-  const FilterCategory = useAppSelector((state) => state.WritePostSlice.categoryFilter.value);
-  const FilterAddress = useAppSelector((state) => state.WritePostSlice.addressFilter.value);
-  const FilterDate = useAppSelector((state) => state.WritePostSlice.durationFilter);
-  const filterStartrDate = `${FilterDate.StartDate.year}-${FilterDate.StartDate.month}-${FilterDate.StartDate.day}`;
-  const filterEndDate = `${FilterDate.StartDate.year}-${FilterDate.StartDate.month}-${FilterDate.StartDate.day}`;
+  const choiceStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
+  const dispatch = useAppDispatch();
+  const setChoiceStoreId = (id: string) => {
+    return dispatch(WritePostSliceActions.setChoiceStoreId(id));
+  };
+  const filterCategory = useAppSelector((state) => state.WritePostSlice.categoryFilter);
+  const filterAddress = useAppSelector((state) => state.WritePostSlice.addressFilter);
+  const filterDate = useAppSelector((state) => state.WritePostSlice.durationFilter);
+  const filterDateUse = useAppSelector((state) => state.WritePostSlice.durationFilter.use);
+  const filterStartDate = `${filterDate.StartDate.year}-${filterDate.StartDate.month}-${filterDate.StartDate.day}`;
+  const filterEndDate = `${filterDate.endDate.year}-${filterDate.endDate.month}-${filterDate.endDate.day}`;
 
   const [stores, setStores] = useState<Store[]>();
-  const [choiceStore, setChoiceStore] = useState(true);
   async function fetchData() {
     const response = await fetch('http://34.22.81.36:3000/stores');
     const result = await response.json();
@@ -40,28 +32,31 @@ const ChoiceStoreBoxContainer = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
   if (tab !== '자유게시판') {
     return (
       <div>
         <SearchContainerWrap placeholder={'스토어를 검색해주세요.'} />
         <FilterContainer />
         <FilterInfoContainer />
-        <ul>
+        <ChoiceStoreList>
           {stores ? (
-            stores.map((store: Store) => (
-              <StoreItem
-                key={store._id}
-                store={store}
-                // onClick={() => {
-                //   setChoiceStore(true);
-                // }}
-              />
+            filterFunc(
+              stores,
+              filterAddress,
+              filterCategory,
+              filterStartDate,
+              filterEndDate,
+              filterDateUse,
+              choiceStoreId,
+            ).map((store: Store) => (
+              <ChoiceStoreItemContainer key={store._id} setChoiceStoreId={setChoiceStoreId} storeId={store._id}>
+                <StoreItem store={store} />
+              </ChoiceStoreItemContainer>
             ))
           ) : (
             <li></li>
           )}
-        </ul>
+        </ChoiceStoreList>
       </div>
     );
   } else return <div></div>;

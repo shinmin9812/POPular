@@ -5,6 +5,7 @@ export interface WritePostInitialState {
   postTitle: string;
   postContent: string;
   ratings: number;
+  choiceStoreId: string;
   addressFilter: {
     value: string;
     use: boolean;
@@ -27,6 +28,10 @@ export interface WritePostInitialState {
       day: number;
     };
   };
+  isUpdate: {
+    use: boolean;
+    id: string;
+  };
 }
 
 export interface SetDate {
@@ -35,13 +40,19 @@ export interface SetDate {
   day: number;
 }
 
+export interface isUpdate {
+  use: boolean;
+  id: string;
+}
+
 const Today = new Date();
 
 const initialState: WritePostInitialState = {
   tab: '자유게시판',
   postTitle: '',
   postContent: '',
-  ratings: 0,
+  ratings: 1,
+  choiceStoreId: '',
   addressFilter: {
     value: '지역',
     use: false,
@@ -55,6 +66,10 @@ const initialState: WritePostInitialState = {
     use: false,
     StartDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
     endDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
+  },
+  isUpdate: {
+    use: false,
+    id: '',
   },
 };
 
@@ -90,14 +105,20 @@ const WritePostSlice = createSlice({
       state.durationFilter.show = action.payload;
     },
 
-    setPostTitle(state, action) {
+    setPostTitle(state, action: PayloadAction<string>) {
       state.postTitle = action.payload;
     },
-    setPostContent(state, action) {
+    setPostContent(state, action: PayloadAction<string>) {
       state.postContent = action.payload;
     },
-    setRating(state, action) {
+    setRating(state, action: PayloadAction<number>) {
       state.ratings = action.payload;
+    },
+    setChoiceStoreId(state, action: PayloadAction<string>) {
+      state.choiceStoreId = action.payload;
+    },
+    setIsUpdate(state, action: PayloadAction<isUpdate>) {
+      state.isUpdate = action.payload;
     },
   },
 });

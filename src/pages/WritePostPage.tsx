@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import TabsContainer from '../components/WritePost/containers/TabsContainer';
-import TitleInput from '../components/WritePost/components/PostTitle';
+import PostTitleContainer from '../components/WritePost/containers/PostTitleContainer';
 import PostContentContainer from '../components/WritePost/containers/PostContentContainer';
 import RatingContainer from '../components/WritePost/containers/RatingContainer';
 import ChoiceStoreBoxContainer from '../components/WritePost/containers/ChoiceStoreBoxContainer';
@@ -14,7 +14,7 @@ const WritePostPage = () => {
   return (
     <Container>
       <TabsContainer />
-      <TitleInput />
+      <PostTitleContainer />
       <PostContentContainer />
       <ChoiceStoreBoxContainer />
       <RatingContainer />

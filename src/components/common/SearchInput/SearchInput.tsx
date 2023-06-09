@@ -1,15 +1,16 @@
 import styled from 'styled-components';
-import searchIcon from '/images/searchIcon.png';
+import SearchIcon from '../Icons/SearchIcon';
+
 const SearchContainer = styled.div`
   width: 100%;
   position: relative;
-`;
-
-const SearchIconImg = styled.img`
-  src: ${searchIcon};
-  position: absolute;
-  top: 17px;
-  left: 10px;
+  svg {
+    width: 25px;
+    fill: var(--color-gray);
+    position: absolute;
+    top: 16px;
+    left: 10px;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -25,7 +26,7 @@ const SearchInput = styled.input`
 const SearchContainerWrap = ({ placeholder }: { placeholder: string }) => {
   return (
     <SearchContainer>
-      <SearchIconImg src={searchIcon} />
+      <SearchIcon />
       <SearchInput placeholder={placeholder} />
     </SearchContainer>
   );

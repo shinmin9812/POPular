@@ -1,25 +1,23 @@
 import styled from 'styled-components';
-import { BoardTypes } from '../types/board';
 import { Post } from '../types/post';
 import { useEffect, useState } from 'react';
 import PostInfo from '../components/PostDetail/components/PostInfo';
+import StoreWrap from '../components/PostDetail/components/StoreWrap';
+import StoreItem from '../components/common/Store/StoreItem';
 import PostContent from '../components/PostDetail/components/PostContent';
-import LikesAndReports from '../components/PostDetail/components/LikeAndReportButton';
 import CommentsList from '../components/PostDetail/components/CommentsList';
-import Pagination from '../components/common/Pagination/Pagination';
-import PaginationContainer from '../components/Community/containers/PaginationContainer';
-import CommentInput from '../components/PostDetail/components/CommentInput';
-import UpdateAndDelete from '../components/PostDetail/components/UpdateAndDeleteButtons';
+import UpdateAndDeleteContainer from '../components/PostDetail/containers/UpdateAndDeleteButtonContainer';
+import LikesAndReportsContainer from '../components/PostDetail/containers/LikeAndReportButtonContainer';
 import { useParams } from 'react-router-dom';
-
+import CommentInputContainer from '../components/PostDetail/containers/CommentInputContainer';
 const Container = styled.div`
   width: 100%;
 `;
 
 const PostDetailPage = () => {
   const postId = useParams().postId;
-  const [post, setPost] = useState<Post>();
-  const [currPage, setPage] = useState(1);
+  const [post, setPost] = useState<Post | null>(null);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -29,27 +27,31 @@ const PostDetailPage = () => {
     const result: Post = await response.json();
     setPost(result);
   }
-  console.log(post);
+  // post가 null일 경우 로딩 상태를 표시
+  if (post === null) {
+    return <div>Loading...</div>;
+  }
   return (
     <Container>
       <PostInfo
-        boardType={post ? post.board : BoardTypes.free}
-        title={post ? post.title : ''}
-        nickName={post ? post.author.nickname : ''}
-        updatedAt={post ? post.updatedAt : ''}
-        likes={post ? post.likes.length : 0}
-        comments={post ? post.comments.length : 0}
+        boardType={post.board}
+        title={post.title}
+        nickName={post.author.nickname}
+        updatedAt={post.updatedAt}
+        likes={post.likes.length}
+        views={post.views}
+        comments={post.comments.length}
       />
-      <UpdateAndDelete />
-      <PostContent
-        img={post ? post.author.profile : ''}
-        content={post ? post.content : ''}
-        rating={Array(post?.rating).fill(0)}
-      ></PostContent>
-      <LikesAndReports />
+      {post.store_id && (
+        <StoreWrap>
+          <StoreItem store={post.store_id} />
+        </StoreWrap>
+      )}
+      <PostContent content={post ? post.content : ''} rating={post ? post.ratings : 0}></PostContent>
+      <UpdateAndDeleteContainer />
+      <LikesAndReportsContainer />
       <CommentsList comments={post ? post.comments : undefined} />
-      <PaginationContainer />
-      <CommentInput />
+      <CommentInputContainer />
     </Container>
   );
 };

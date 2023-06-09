@@ -4,7 +4,7 @@ import Filter from '../../common/Filter/Filter';
 import Rating from '../components/Rating';
 
 const RatingContainer = () => {
-  const rating = useAppSelector((state) => state.WritePostSlice.rating);
+  const rating = useAppSelector((state) => state.WritePostSlice.ratings);
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const dispatch = useAppDispatch();
   const setRating = (rating: number) => dispatch(WritePostSliceActions.setRating(rating));

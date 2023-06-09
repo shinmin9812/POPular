@@ -6,21 +6,20 @@ const PostContentWrap = styled.div`
   border-radius: 8px;
 `;
 
-const Img = styled.img`
-  width: 60%;
-  height: 60%;
-`;
-
-const PostContent = ({ img, content, rating }: { img: string | undefined; content: string; rating: number[] }) => {
+const PostContent = ({ content, rating }: { content: string; rating: number | undefined }) => {
   return (
     <PostContentWrap>
-      <div>
-        평점:
-        {rating.map((i, index) => (
-          <StarIcon key={index} />
-        ))}
-      </div>
-      <Img src={img} />
+      {rating && (
+        <div>
+          평점:
+          {Array(rating)
+            .fill(0)
+            .map((i, index) => (
+              <StarIcon key={index} />
+            ))}
+        </div>
+      )}
+
       <div dangerouslySetInnerHTML={{ __html: content }} />
     </PostContentWrap>
   );
