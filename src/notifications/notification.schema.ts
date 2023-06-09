@@ -11,10 +11,10 @@ const options: SchemaOptions = {
 };
 
 export enum NotificationType {
-	Follow = 'Follow',
-	Comment = 'Comment',
-	Recomment = 'Comment',
-	Ad = 'Store',
+	FOLLOW = 'follow',
+	COMMENT = 'comment',
+	RECOMMENT = 'recomment',
+	AD = 'ad',
 }
 
 @Schema(options)
@@ -28,8 +28,14 @@ export class Notification extends Document {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
 	user_id: Types.ObjectId | User;
 
-	@Prop({ type: Types.ObjectId, refPath: 'type', required: true })
-	content: Types.ObjectId | User | Comment | Store;
+	@Prop({ type: Types.ObjectId, refPath: 'User'})
+	content_user?: Types.ObjectId | User;
+
+	@Prop({ type: Types.ObjectId, refPath: 'Store' })
+	content_store?: Types.ObjectId | Store;
+
+	@Prop({ type: Types.ObjectId, refPath: 'Comment' })
+	content_comment?: Types.ObjectId | Comment;
 
 	@Prop({ default: false })
 	checked: boolean;

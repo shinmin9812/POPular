@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment } from './comment.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CommentCreateDto } from './dto/comment.create.dto';
 import { CommentUpdateDto } from './dto/comment.update.dto';
 
@@ -54,6 +54,7 @@ export class CommentsService {
 			const createdComment = new this.commentModel();
 			createdComment.author = commentCreateDto.author;
 			createdComment.content = commentCreateDto.content;
+			createdComment.parent = commentCreateDto.parent;
 			createdComment.recomments = [];
 
 			return await createdComment.save();
@@ -88,6 +89,14 @@ export class CommentsService {
 
 			throw new InternalServerErrorException('댓글 업데이트에 실패하였습니다.');
 		}
+	}
+
+	async addRecomment(commentId: Types.ObjectId, recomment: Types.ObjectId): Promise<Comment> {
+		return this.commentModel.findByIdAndUpdate(commentId, { $push: { recomments: recomment }}, { new: true }).exec();
+	}
+	
+	async removeRecomment(commentId: Types.ObjectId, recomment: Types.ObjectId): Promise<Comment> {
+		return this.commentModel.findByIdAndUpdate(commentId, { $pull: { recomments: recomment }}, { new: true }).exec();
 	}
 
 	async deleteComment(id: string): Promise<void> {

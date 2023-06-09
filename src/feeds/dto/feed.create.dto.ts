@@ -54,7 +54,7 @@ export class FeedCreateDto {
 	@IsMongoId()
 	@IsNotEmpty()
 	@ValidateIf(
-		obj => obj.board === BoardType.Review || obj.board === BoardType.Gather,
+		obj => obj.board === BoardType.REVIEW || obj.board === BoardType.GATHER,
 	)
 	@ApiProperty({
 		example: 'qwerra21341',
@@ -67,7 +67,7 @@ export class FeedCreateDto {
 	@IsNumber()
 	@Min(1)
 	@Max(5)
-	@ValidateIf(obj => obj.board === BoardType.Review)
+	@ValidateIf(obj => obj.board === BoardType.REVIEW)
 	@ApiProperty({
 		example: '3.5',
 		description: '게시글 평점',

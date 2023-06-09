@@ -10,9 +10,11 @@ import {
 } from '@nestjs/common';
 import { CommentsService } from './comment.service';
 import { CommentCreateDto } from './dto/comment.create.dto';
-import { CommentUpdateDto } from './dto/comment.update.dto';
+import { CommentUpdateDto, RecommentDto } from './dto/comment.update.dto';
 import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
+import { Types } from 'mongoose';
+import { Comment } from './comment.schema';
 
 @Controller('/comments')
 @ApiTags('Comment')
@@ -48,6 +50,18 @@ export class CommentsController {
 		@Body() updateDto: CommentUpdateDto,
 	) {
 		return await this.commentsService.updateComment(id, updateDto);
+	}
+
+	@ApiOperation({ summary: '대댓글 추가' })
+	@Patch(':id/recomment')
+	async addRecomment(@Param('id') commentId: Types.ObjectId, @Body() recommentDto: RecommentDto): Promise<Comment> {
+		return this.commentsService.addRecomment(commentId, recommentDto.recomment);
+	}
+	
+	@ApiOperation({ summary: '대댓글 삭제' })
+	@Delete(':id/recomment')
+	async removeRecomment(@Param('id') commentId: Types.ObjectId, @Body() recommentDto: RecommentDto): Promise<Comment> {
+		return this.commentsService.removeRecomment(commentId, recommentDto.recomment);
 	}
 
 	@ApiOperation({ summary: '댓글 삭제하기' })

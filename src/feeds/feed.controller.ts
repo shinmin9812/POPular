@@ -7,8 +7,6 @@ import {
 	Param,
 	Body,
 	NotFoundException,
-	UseInterceptors,
-	UploadedFiles,
 	UseGuards,
 	Query,
 } from '@nestjs/common';
@@ -16,14 +14,15 @@ import { ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { FeedsService } from './feed.service';
 import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
-import { AuthGuard } from '../auth/auth.guard';
+import { Feed } from './feed.schema';
+import { Types } from 'mongoose';
 
 @Controller('/feeds')
 @ApiTags('Feed')
 export class FeedsController {
 	constructor(private readonly feedsService: FeedsService) {}
 
-	@ApiOperation({ summary: '모든 게시글 찾기' })
+	@ApiOperation({ summary: '모든 게시글 조회' })
 	@Get()
 	async getAllFeeds() {
 		return await this.feedsService.getAllFeeds();
@@ -35,19 +34,19 @@ export class FeedsController {
 		return await this.feedsService.getPaginate(page);
 	}
 
-	@ApiOperation({ summary: '모집게시판 게시글 찾기' })
+	@ApiOperation({ summary: '모든 모집게시판 조회' })
 	@Get('gather')
 	async getAllGatherFeeds() {
 		return await this.feedsService.getAllGatherFeeds();
 	}
 
-	@ApiOperation({ summary: '후기게시판 게시글 찾기' })
+	@ApiOperation({ summary: '모든 후기게시판 조회' })
 	@Get('review')
 	async getAllReviewFeeds() {
 		return await this.feedsService.getAllReviewFeeds();
 	}
 
-	@ApiOperation({ summary: '자유게시판 게시글 찾기' })
+	@ApiOperation({ summary: '모든 자유게시판 조회' })
 	@Get('free')
 	async getAllFreeFeeds() {
 		return await this.feedsService.getAllFreeFeeds();
@@ -61,15 +60,57 @@ export class FeedsController {
 
 	@ApiOperation({ summary: '게시글 등록하기' })
 	@Post()
-	async createFeed(@Body() createDto: FeedCreateDto) {
+	async createFeed(@Body() createDto: FeedCreateDto): Promise<Feed> {
 		return await this.feedsService.createFeed(createDto);
 	}
 
 	@ApiOperation({ summary: '게시글 수정하기' })
 	@Patch(':id')
-	async updateFeed(@Param('id') id: string, @Body() updateDto: FeedUpdateDto) {
+	async updateFeed(@Param('id') id: string, @Body() updateDto: FeedUpdateDto): Promise<Feed> {
 		return await this.feedsService.updateFeed(id, updateDto);
 	}
+
+	@ApiOperation({ summary: '게시글 좋아요 추가' })
+	@Patch(':id/like')
+  async addLike(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
+    const { like } = updateFeedDto;
+    return this.feedsService.addLike(feedId, like);
+  }
+
+	@ApiOperation({ summary: '게시글 좋아요 삭제' })
+	@Delete(':id/like')
+  async removeLike(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
+    const { like } = updateFeedDto;
+    return this.feedsService.removeLike(feedId, like);
+  }
+
+	@ApiOperation({ summary: '게시글 신고 추가' })
+	@Patch(':id/report')
+  async addReport(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
+    const { report } = updateFeedDto;
+    return this.feedsService.addReport(feedId, report);
+  }
+
+	@ApiOperation({ summary: '게시글 신고 삭제' })
+	@Delete(':id/report')
+  async removeReport(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
+    const { report } = updateFeedDto;
+    return this.feedsService.removeReport(feedId, report);
+  }
+
+	@ApiOperation({ summary: '게시글 댓글 추가' })
+	@Patch(':id/comment')
+  async addComment(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
+    const { comment } = updateFeedDto;
+    return this.feedsService.addComment(feedId, comment);
+  }
+
+	@ApiOperation({ summary: '게시글 댓글 삭제' })
+	@Delete(':id/comment')
+  async removeComment(@Param('id') feedId: Types.ObjectId, @Body() updateFeedDto: FeedUpdateDto): Promise<Feed> {
+    const { comment } = updateFeedDto;
+    return this.feedsService.removeComment(feedId, comment);
+  }
 
 	@ApiOperation({ summary: '게시글 삭제하기' })
 	@Delete(':id')

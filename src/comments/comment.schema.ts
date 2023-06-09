@@ -13,13 +13,19 @@ const options: SchemaOptions = {
 	collection: 'Comment',
 };
 
-class parentinfo {
-	@Prop({ type: String, required: true })
-	type: string;
-
-	@Prop({ type: Types.ObjectId, ref: 'Feed | Comment', required: true })
-	id: Types.ObjectId;
+export enum ParentType {
+	FEED = 'Feed',
+	COMMENT = 'Comment',
 }
+
+export class parentinfo {
+	@Prop({ type: String, required: true })
+	type: ParentType;
+
+	@Prop({ type: Types.ObjectId, refPath: 'type', required: true })
+	id: Types.ObjectId | Feed | Comment;
+}
+
 @Schema(options)
 export class Comment extends Document {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
@@ -32,10 +38,10 @@ export class Comment extends Document {
 	parent: parentinfo;
 
 	@Prop({
-		type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Comment' }],
+		type: [{ type: Types.ObjectId, ref: 'Comment' }],
 		default: [],
 	})
-	recomments: MongooseSchema.Types.ObjectId[];
+	recomments: Types.ObjectId[];
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);
