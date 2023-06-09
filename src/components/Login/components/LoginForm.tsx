@@ -41,6 +41,7 @@ const LoginForm = () => {
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem('token', data.token);
+          alert('반갑습니다💜');
           navigate('/');
         } else {
           setErrorMessage('이메일 또는 비밀번호가 일치하지 않습니다.');
@@ -61,11 +62,11 @@ const LoginForm = () => {
     <Form onSubmit={onSubmitHandler}>
       <FieldContainer>
         <label>이메일</label>
-        <input type="email" value={email} onChange={emailInputHandler} />
+        <input type="email" placeholder="elice@elice.com" value={email} onChange={emailInputHandler} />
       </FieldContainer>
       <FieldContainer>
         <label>비밀번호</label>
-        <input type="password" value={password} onChange={passwordInputHandler} />
+        <input type="password" placeholder="●●●●●●●●" value={password} onChange={passwordInputHandler} />
       </FieldContainer>
       <WarningMessage>{errorMessage}</WarningMessage>
       <LoginButton type="submit">로그인</LoginButton>
@@ -104,6 +105,17 @@ const FieldContainer = styled.div`
     border-radius: var(--border-radius-input);
     font-size: var(--font-small);
     color: var(--color-black);
+
+    :focus {
+      border: 1.5px solid var(--color-main);
+      outline: none;
+    }
+
+    ::placeholder {
+      color: var(--color-gray);
+      font-size: var(--font-small);
+      font-style: italic;
+    }
   }
 `;
 
