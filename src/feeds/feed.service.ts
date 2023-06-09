@@ -24,7 +24,7 @@ export class FeedsService {
 				.find()
 				.populate('author')
 				.populate('store_id')
-				.populate('comment')
+				.populate('comments')
 				.exec();
 			return feeds;
 		} catch (err) {
@@ -42,7 +42,7 @@ export class FeedsService {
 				query = query.where('board', board);
 			}
 
-			const feeds = await query.populate('author').populate('store_id').exec();
+			const feeds = await query.populate('author').populate('store_id').populate('comments').exec();
 
 			return feeds;
 		} catch (err) {
@@ -82,7 +82,7 @@ export class FeedsService {
 				.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true })
 				.populate('author')
 				.populate('store_id')
-				.populate('comment')
+				.populate('comments')
 				.exec();
 
 			if (!feed) {
