@@ -4,6 +4,7 @@ import Filter from '../../common/Filter/Filter';
 import FilterDuration from '../../common/Filter/FilterDuration';
 import FilterBox from '../../common/Filter/FilterBox';
 import { useState } from 'react';
+import { address, category } from '../../../constants/filterOptions';
 
 const FilterContainer = () => {
   const durationFilterValue = useAppSelector((state) => state.CommunitySlice.durationFilter);
@@ -55,7 +56,7 @@ const FilterContainer = () => {
             setFilterCategoryValue(e.target.value);
             setFilterCategoryUse(true);
           }}
-          Options={['카테고리', '의류', '주류', '캐릭터']}
+          Options={category}
           width={33}
         />
         <Filter
@@ -64,25 +65,7 @@ const FilterContainer = () => {
             setFilterAddressValue(e.target.value);
             setFilterAddressUse(true);
           }}
-          Options={[
-            '지역',
-            '서울',
-            '부산',
-            '대구',
-            '인천',
-            '광주',
-            '대전',
-            '울산',
-            '세종',
-            '경기도',
-            '강원도',
-            '충청도',
-            '전라북도',
-            '전라남도',
-            '경상북도',
-            '경상남도',
-            '제주',
-          ]}
+          Options={address}
           width={33}
         />
         <FilterDuration

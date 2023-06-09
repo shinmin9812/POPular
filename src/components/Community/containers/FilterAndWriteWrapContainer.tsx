@@ -5,7 +5,6 @@ const FilterAndWriteButtonWrapContainer = ({ children }: { children: JSX.Element
   const Tab = useAppSelector((state) => state.CommunitySlice.tab);
   1;
   const isFreeTab = Tab === '자유게시판';
-  console.log(isFreeTab);
   return <FilterAndWriteButtonWrap isFreeTab={isFreeTab}>{children}</FilterAndWriteButtonWrap>;
 };
 

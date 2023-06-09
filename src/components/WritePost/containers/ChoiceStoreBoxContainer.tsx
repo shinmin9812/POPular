@@ -7,34 +7,7 @@ import { WritePostSliceActions } from '../WritePostSlice';
 import { useState, useEffect } from 'react';
 import StoreItem from '../../common/Store/StoreItem';
 import { Store } from '../../../types/store';
-
-const filterFunc = (
-  arr: Store[],
-  address: {
-    value: string;
-    use: boolean;
-  },
-  category: {
-    value: string;
-    use: boolean;
-  },
-  targetStartDate: string,
-  targetEndDate: string,
-  DateFilterUse: boolean,
-  choiceStoreId: string,
-) => {
-  if (choiceStoreId.length > 0) {
-    return arr.filter((store) => store._id === choiceStoreId);
-  }
-  return arr.filter(
-    (store) =>
-      (address.use ? store.postcode.sido === address.value : store) &&
-      (category.use ? store.category === category.value : store) &&
-      (DateFilterUse
-        ? new Date(store.start_date) <= new Date(targetEndDate) && new Date(targetStartDate) <= new Date(store.end_date)
-        : store),
-  );
-};
+import filterFunc from '../../../Hooks/filterFunc';
 
 const ChoiceStoreBoxContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
@@ -43,15 +16,14 @@ const ChoiceStoreBoxContainer = () => {
   const setChoiceStoreId = (id: string) => {
     return dispatch(WritePostSliceActions.setChoiceStoreId(id));
   };
-  const FilterCategory = useAppSelector((state) => state.WritePostSlice.categoryFilter);
-  const FilterAddress = useAppSelector((state) => state.WritePostSlice.addressFilter);
-  const FilterDate = useAppSelector((state) => state.WritePostSlice.durationFilter);
-  const FilterDateUse = useAppSelector((state) => state.WritePostSlice.durationFilter.use);
-  const filterStartDate = `${FilterDate.StartDate.year}-${FilterDate.StartDate.month}-${FilterDate.StartDate.day}`;
-  const filterEndDate = `${FilterDate.endDate.year}-${FilterDate.endDate.month}-${FilterDate.endDate.day}`;
+  const filterCategory = useAppSelector((state) => state.WritePostSlice.categoryFilter);
+  const filterAddress = useAppSelector((state) => state.WritePostSlice.addressFilter);
+  const filterDate = useAppSelector((state) => state.WritePostSlice.durationFilter);
+  const filterDateUse = useAppSelector((state) => state.WritePostSlice.durationFilter.use);
+  const filterStartDate = `${filterDate.StartDate.year}-${filterDate.StartDate.month}-${filterDate.StartDate.day}`;
+  const filterEndDate = `${filterDate.endDate.year}-${filterDate.endDate.month}-${filterDate.endDate.day}`;
 
   const [stores, setStores] = useState<Store[]>();
-  //const [choiceStore, setChoiceStore] = useState<string>();
   async function fetchData() {
     const response = await fetch('http://34.22.81.36:3000/stores');
     const result = await response.json();
@@ -70,18 +42,15 @@ const ChoiceStoreBoxContainer = () => {
           {stores ? (
             filterFunc(
               stores,
-              FilterAddress,
-              FilterCategory,
+              filterAddress,
+              filterCategory,
               filterStartDate,
               filterEndDate,
-              FilterDateUse,
+              filterDateUse,
               choiceStoreId,
             ).map((store: Store) => (
               <ChoiceStoreItemContainer key={store._id} setChoiceStoreId={setChoiceStoreId} storeId={store._id}>
-                <StoreItem
-                  store={store}
-                  // 스토어 선택 취소 가능하게 하기
-                />
+                <StoreItem store={store} />
               </ChoiceStoreItemContainer>
             ))
           ) : (
