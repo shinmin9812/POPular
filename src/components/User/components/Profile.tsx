@@ -48,7 +48,11 @@ const Profile = () => {
       <ProfileInfo>
         <UserProfile>
           <div className="profile-frame">
-            <img src={user.profile} alt={user.nickname} />
+            {user.profile === '' ? (
+              <img src={'/defaultProfile.svg'} className="default-style" />
+            ) : (
+              <img src={user.profile} alt={user.nickname} className="profile-style" />
+            )}
           </div>
         </UserProfile>
         <ProfileList>
@@ -84,12 +88,21 @@ const UserProfile = styled.div`
   .profile-frame {
     width: 60px;
     height: 60px;
-    background-color: #999;
+    background-color: #fff;
     border-radius: 50%;
     overflow: hidden;
+    position: relative;
 
-    img {
+    .default-style {
+      width: 100%;
+    }
+
+    .profile-style {
       width: 100px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 `;

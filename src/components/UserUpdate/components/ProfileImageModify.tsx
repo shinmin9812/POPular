@@ -76,9 +76,9 @@ const ProfileImageModify = ({ user }: Props) => {
           <ProfilImage>
             <div className="profile-frame">
               {user.profile === '' ? (
-                <img src={'/defaultProfile.svg'} />
+                <img src={'/defaultProfile.svg'} className="default-style" />
               ) : (
-                <img src={user.profile} alt={user.nickname} />
+                <img src={user.profile} alt={user.nickname} className="profile-style" />
               )}
             </div>
           </ProfilImage>
@@ -129,10 +129,18 @@ const ProfilImage = styled.div`
     background-color: #fff;
     border-radius: 50%;
     overflow: hidden;
+    position: relative;
 
-    img {
+    .default-style {
+      width: 100%;
+    }
+
+    .profile-style {
       width: 100px;
-      display: flex;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 `;
