@@ -46,11 +46,18 @@ export interface Store {
     sigungu: string;
   };
   coord: {
-    coordinates: [lat: string, lng: string];
+    coordinates: [lat: number, lng: number];
+    type?: 'Point';
   };
   price: number;
   sns: SNSType[];
   reservation_required: boolean;
   images: string[];
   scraps: string[];
+}
+
+type imageDeletedStore = Omit<Store, 'images' | '_id'>;
+
+export interface PostedStore extends imageDeletedStore {
+  images: any[];
 }

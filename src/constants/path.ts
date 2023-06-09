@@ -1,27 +1,28 @@
+const API_BASE_URL = 'http://34.22.81.36:3000';
+
 export const API_PATH = {
-  API_BASE_URL: '/api',
   STORE: {
     GET: {
       // 모든 스토어 조회
-      ALL: 'http://34.22.81.36:3000/stores/all',
+      ALL: `${API_BASE_URL}/stores`,
       // 특정 옵션 스토어 조회 (쿼리스트링 사용)
-      WITH_OPTIONS: '/stores',
+      WITH_OPTIONS: `${API_BASE_URL}/stores`,
       // ID 조회
-      BY_ID: '/stores/id/:storeId',
+      BY_ID: `${API_BASE_URL}/stores/id/:storeId`,
       // 추천 스토어 조회
-      RECOMMENDED: '/stores/recommended',
+      RECOMMENDED: `${API_BASE_URL}/stores/recommended`,
       // 주간 스토어 조회
-      WEEKLY: '/stores/weekly',
+      WEEKLY: `${API_BASE_URL}/stores/weekly`,
       // 최신 스토어 조회
-      RECENT: '/stores/recent',
+      RECENT: `${API_BASE_URL}/stores/recent`,
       // 마감 임박 스토어 조회
-      LAST_MINUTE: '/stores/recent/last_minute',
+      LAST_MINUTE: `${API_BASE_URL}/stores/recent/last_minute`,
       // 예약 필수 스토어 조회
-      RESERVATOIN_REQUIRED: '/stores/recent/reservation_required',
+      RESERVATOIN_REQUIRED: `${API_BASE_URL}/stores/recent/reservation_required`,
       // 좌표 기반 조회
-      BY_COORD: 'http://34.22.81.36:3000/stores/coord',
+      BY_COORD: `${API_BASE_URL}/stores/coord`,
     },
-    POST: {},
+    POST: `${API_BASE_URL}/stores`,
     PUT: {},
     DELETE: {},
   },
@@ -114,6 +115,33 @@ export const CLIENT_PATH = {
 
   USER_DETAIL: '/user/:userId',
   USER_UPDATE: '/user/:userId/update',
+
+  ADMIN: '/admin',
+
+  ADMIN_STORE: {
+    STATISTICS: '/admin/store/statistics',
+    ADD: '/admin/store/add',
+    EDIT: '/admin/store/edit',
+    DELETE: '/admin/store/delete',
+  },
+
+  ADMIN_USER: {
+    STATISTICS: '/admin/user/statistics',
+    ADD: '/admin/user/add',
+    EDIT: '/admin/user/edit',
+    DELETE: '/admin/user/delete',
+  },
+
+  ADMIN_FEED: {
+    STATISTICS: '/admin/feed/statistics',
+    EDIT: '/admin/feed/edit',
+    DELETE: '/admin/feed/delete',
+  },
+
+  ADMIN_NOTIFICATION: {
+    SEND: '/admin/notification/send',
+    EDIT: '/admin/notification/edit',
+  },
 
   NOT_FOUND: '/not_found',
 
