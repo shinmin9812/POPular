@@ -84,7 +84,7 @@ export class CommentsService {
 				console.log(err);
 				throw new BadRequestException('잘못된 데이터를 입력하셨습니다.');
 			}
-			console.log(err)
+			console.log(err);
 			throw new InternalServerErrorException('댓글 생성에 실패하였습니다.');
 		}
 	}

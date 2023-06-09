@@ -83,7 +83,6 @@ export class FeedsController {
 		return this.feedsService.addLike(feedId, like);
 	}
 
-
 	@ApiOperation({ summary: '게시글 신고 추가 및 삭제' })
 	@Patch(':id/report')
 	async addReport(
@@ -93,7 +92,6 @@ export class FeedsController {
 		const { report } = updateFeedDto;
 		return this.feedsService.addReport(feedId, report);
 	}
-
 
 	@ApiOperation({ summary: '게시글 댓글 추가' })
 	@Patch(':id/comment')
