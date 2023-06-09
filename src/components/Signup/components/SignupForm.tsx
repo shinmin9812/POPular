@@ -16,8 +16,6 @@ const SignupForm = () => {
   const { name, nickname, email, password, confirmPassword, phone } = inputs;
 
   const [allowNotifications, setAllowNotifications] = useState(false);
-  const [emailExists, setEmailExists] = useState(false);
-  const [nicknameExists, setNicknameExists] = useState(false);
   const [errors, setErrors] = useState({
     name: '',
     email: '',
@@ -64,7 +62,7 @@ const SignupForm = () => {
   // 중복 닉네임 체크
   const checkNicknameExists = async (nickname: string) => {
     try {
-      const response = await fetch('/users/checknickname', {
+      const response = await fetch('http://34.22.81.36:3000/users/checknickname', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -72,7 +70,9 @@ const SignupForm = () => {
         }),
       });
       const data = await response.json();
-      setNicknameExists(data.isExists);
+      if (data.isExists) {
+        setErrors((prevState) => ({ ...prevState, nickname: '다른 유저가 사용중인 닉네임입니다.' }));
+      }
     } catch (err: any) {
       const errorMessage = (err as Error).message;
       console.log(errorMessage);
@@ -82,7 +82,7 @@ const SignupForm = () => {
   // 중복 이메일 체크
   const checkEmailExists = async (email: string) => {
     try {
-      const response = await fetch('/users/checkemail', {
+      const response = await fetch('http://34.22.81.36:3000/users/checkemail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -90,7 +90,9 @@ const SignupForm = () => {
         }),
       });
       const data = await response.json();
-      setEmailExists(data.isExists);
+      if (data.isExists) {
+        setErrors((prevState) => ({ ...prevState, email: '이미 가입된 이메일입니다.' }));
+      }
     } catch (err: any) {
       const errorMessage = (err as Error).message;
       console.log(errorMessage);
@@ -103,9 +105,7 @@ const SignupForm = () => {
       ...inputs,
       [name]: value,
     });
-    setNicknameExists(false);
     validateNickname(value);
-
     checkNicknameExists(value);
   };
 
@@ -115,9 +115,7 @@ const SignupForm = () => {
       ...inputs,
       [name]: value,
     });
-    setEmailExists(false);
     validateEmail(value);
-
     checkEmailExists(value);
   };
 
@@ -152,13 +150,16 @@ const SignupForm = () => {
   // 비밀번호 유효성 검사
   const validatePassword = (value: string) => {
     const isPasswordValid = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+    if (value === confirmPassword) {
+      setErrors((prevState) => ({ ...prevState, confirmPassword: '' }));
+    } else setErrors((prevState) => ({ ...prevState, confirmPassword: '비밀번호가 일치하지 않습니다.' }));
+
     let error = '';
     if (!isPasswordValid.test(value) && value.length > 0) {
       error = '8~15자, 특수문자, 문자, 숫자를 포함해야 합니다.';
     }
     setErrors((prevState) => ({ ...prevState, password: error }));
   };
-
   // 비밀번호 확인 유효성 검사
   const validateConfirmPassword = (value: string) => {
     let error = '';
@@ -222,7 +223,6 @@ const SignupForm = () => {
       <FieldContainer>
         <Label>
           이메일
-          {emailExists && <ErrorMessage>중복된 이메일입니다.</ErrorMessage>}
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
         </Label>
         <Input type="email" name="email" value={email} onChange={onChange} />
@@ -230,7 +230,6 @@ const SignupForm = () => {
       <FieldContainer>
         <Label>
           닉네임
-          {nicknameExists && <ErrorMessage>중복된 닉네임입니다.</ErrorMessage>}
           {errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
         </Label>
         <Input type="text" name="nickname" value={nickname} onChange={onChange} />
@@ -303,14 +302,17 @@ const Input = styled.input`
 
 const ErrorMessage = styled.span`
   font-size: var(--font-micro);
+  color: var(--color-red);
 `;
 
 const CheckboxContainer = styled.div`
   width: 270px;
+  display: flex;
 `;
 
 const Checkbox = styled.input`
   font-size: var(--font-small);
+  accent-color: var(--color-main);
 `;
 
 const SignupButton = styled.button`
