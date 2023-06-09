@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import AccodionList from '../common/Accordion/AccodionList';
-import { CLIENT_PATH } from '../../constants/path';
+import AccodionList from '../../common/Accordion/AccodionList';
+import { CLIENT_PATH } from '../../../constants/path';
 import { useLocation } from 'react-router-dom';
-import AdminCard from './components/AdminCard';
+import AdminCard from './AdminCard';
 
 const Container = styled.div`
   position: fixed;
@@ -92,7 +92,7 @@ const Accodions = [
         path: CLIENT_PATH.ADMIN_NOTIFICATION.SEND,
       },
       {
-        name: '림 수정',
+        name: '알림 수정',
         path: CLIENT_PATH.ADMIN_NOTIFICATION.EDIT,
       },
     ],

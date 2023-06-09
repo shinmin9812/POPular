@@ -106,12 +106,20 @@ const StoreForm = () => {
 
   const { ref } = register('location');
 
-  const { fields: imageFeilds, append: appendImages } = useFieldArray({
+  const {
+    fields: imageFeilds,
+    append: appendImages,
+    remove: removeImage,
+  } = useFieldArray({
     control,
     name: 'images',
   });
 
-  const { fields: snsFields, append: appendSns } = useFieldArray({
+  const {
+    fields: snsFields,
+    append: appendSns,
+    remove: removeSns,
+  } = useFieldArray({
     control,
     name: 'sns',
   });
@@ -368,18 +376,38 @@ const StoreForm = () => {
                   message: 'sns명을 입력해주세요!',
                 });
               }
-              clearErrors('sns');
               appendSns({
-                link_type: snsSelectRef.current?.value as string,
-                link_url: snsUrlRef.current?.value as string,
                 link_title: snsNameRef.current.value,
+                link_type: snsSelectRef.current!.value,
+                link_url: snsUrlRef.current.value,
               });
+              clearErrors('sns');
             }}
           >
             추가
           </Button>
         </div>
       </label>
+      <div className="sns-list">
+        {watch().sns &&
+          watch().sns.map((item, idx) => {
+            return (
+              <div className="sns-item">
+                <p>{item.link_type}</p>
+                <p>{item.link_title}</p>
+                <p>{item.link_url}</p>
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    removeSns(idx);
+                  }}
+                >
+                  삭제
+                </Button>
+              </div>
+            );
+          })}
+      </div>
       <strong>{errors?.sns?.message}</strong>
       <label className="imgs">
         이미지 추가하기
@@ -396,6 +424,24 @@ const StoreForm = () => {
           }}
         />
       </label>
+      <div className="preview">
+        {watch().images &&
+          watch().images.map((image, idx) => {
+            return (
+              <figure>
+                <img src={image}></img>
+                <span
+                  className="delete"
+                  onClick={() => {
+                    removeImage(idx);
+                  }}
+                >
+                  x
+                </span>
+              </figure>
+            );
+          })}
+      </div>
       <label>
         예약 필수
         <input type="checkbox" {...register('reservation_required')} />
@@ -535,6 +581,54 @@ const Container = styled.form`
 
     input {
       font-size: 14px;
+    }
+  }
+
+  .sns-list {
+    margin-left: 20px;
+    font-size: 16px;
+
+    .sns-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      margin-bottom: 10px;
+    }
+  }
+
+  .preview {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    figure {
+      position: relative;
+      width: 100px;
+      aspect-ratio: 1/1;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .delete {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        background-color: #ef4f4f;
+        color: #fff;
+        text-align: center;
+        font-weight: 800;
+        line-height: 0.8;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 

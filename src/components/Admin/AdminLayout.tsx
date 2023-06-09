@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import AdminNavigation from './AdminNavigation';
+import AdminNavigation from './components/AdminNavigation';
 
 const Container = styled.div``;
 

@@ -4,7 +4,7 @@ import StoreForm from '../../components/Admin/components/Forms/StoreForm';
 
 const Container = styled.div`
   .add-store {
-    width: 600px;
+    width: 700px;
     .title {
       margin-bottom: 20px;
 
