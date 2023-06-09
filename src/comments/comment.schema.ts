@@ -22,8 +22,8 @@ export class parentinfo {
 	@Prop({ type: String, required: true })
 	type: ParentType;
 
-	@Prop({ type: Types.ObjectId, refPath: 'type', required: true })
-	id: Types.ObjectId | Feed | Comment;
+	@Prop({ type: Types.ObjectId , refPath: 'type', required: true })
+	id: Types.ObjectId;
 }
 
 @Schema(options)
