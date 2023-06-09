@@ -100,6 +100,7 @@ const Accodions = [
 ];
 
 const MenuMap = new Map<string, string>([
+  ['dashboard', '대시보드'],
   ['store', '팝업 스토어 관리'],
   ['user', '유저 관리'],
   ['feed', '피드 관리'],
@@ -112,6 +113,7 @@ const AdminNavigation = () => {
 
   useEffect(() => {
     const currentMenu = pathname.split('/')[2];
+    if (!currentMenu) return setSelectedMenu('대시보드');
     setSelectedMenu(MenuMap.get(currentMenu) as string);
   }, []);
 

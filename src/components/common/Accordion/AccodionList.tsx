@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import AccodionItem, { AccodionItemType } from './AccodionItem';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.ul`
   display: flex;
@@ -82,8 +83,19 @@ interface Props {
 }
 
 const AccodionList = ({ setSelectedMenu, selectedMenu, Accodions }: Props) => {
+  const navigate = useNavigate();
   return (
     <Container className="management-list">
+      <li className={`management-item 대시보드-management ${selectedMenu === '대시보드' ? 'on' : ''}`}>
+        <h2
+          onClick={() => {
+            setSelectedMenu('대시보드');
+            navigate('/admin');
+          }}
+        >
+          대시보드
+        </h2>
+      </li>
       {Accodions.map((item) => {
         return (
           <li
