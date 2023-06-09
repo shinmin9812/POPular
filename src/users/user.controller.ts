@@ -7,6 +7,8 @@ import {
 	Body,
 	Patch,
 	UseGuards,
+	UseInterceptors,
+	UploadedFile,
 } from '@nestjs/common';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
@@ -19,6 +21,8 @@ import {
 	ApiProperty,
 } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerOptions } from 'src/utils/multer.util';
 
 class checknickname {
 	@ApiProperty({
@@ -91,7 +95,7 @@ export class UserController {
 	async updateScrap(
 		@Param('userId') userId: string,
 		@Param('storeId') storeId: string,
-	): Promise<any> {
+	): Promise<User> {
 		return await this.userService.updateScrap(userId, storeId);
 	}
 
@@ -102,7 +106,7 @@ export class UserController {
 	async updateUnScrap(
 		@Param('userId') userId: string,
 		@Param('storeId') storeId: string,
-	): Promise<any> {
+	): Promise<User> {
 		return await this.userService.updateUnscrap(userId, storeId);
 	}
 

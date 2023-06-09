@@ -241,7 +241,7 @@ export class StoreRequestDto {
 
 	@IsArray()
 	@ApiProperty({
-		example: '[{1.png, 2.png}]',
+		example: '[1.png, 2.png]',
 		description: '팝업 스토어 이미지',
 	})
 	images: string[];
@@ -250,7 +250,6 @@ export class StoreRequestDto {
 	@ApiProperty({
 		example: '[123, 424, 124]',
 		description: '팝업 스토어 스크랩 리스트',
-		required: true,
 	})
-	scrap: Types.ObjectId[];
+	scraps?: Types.ObjectId[];
 }

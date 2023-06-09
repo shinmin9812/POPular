@@ -4,9 +4,9 @@ import { ApiProperty } from '@nestjs/swagger';
 export class UserUpdateDto {
 	@IsString()
 	@ApiProperty({
-		example: '1.png',
-		description: '유저 프로필 사진',
-		required: true,
+		type: 'string',
+		format: 'binary',
+		description: '이미지 파일',
 	})
 	profile: string;
 

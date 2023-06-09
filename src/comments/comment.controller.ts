@@ -54,14 +54,23 @@ export class CommentsController {
 
 	@ApiOperation({ summary: '대댓글 추가' })
 	@Patch(':id/recomment')
-	async addRecomment(@Param('id') commentId: Types.ObjectId, @Body() recommentDto: RecommentDto): Promise<Comment> {
+	async addRecomment(
+		@Param('id') commentId: Types.ObjectId,
+		@Body() recommentDto: RecommentDto,
+	): Promise<Comment> {
 		return this.commentsService.addRecomment(commentId, recommentDto.recomment);
 	}
-	
+
 	@ApiOperation({ summary: '대댓글 삭제' })
 	@Delete(':id/recomment')
-	async removeRecomment(@Param('id') commentId: Types.ObjectId, @Body() recommentDto: RecommentDto): Promise<Comment> {
-		return this.commentsService.removeRecomment(commentId, recommentDto.recomment);
+	async removeRecomment(
+		@Param('id') commentId: Types.ObjectId,
+		@Body() recommentDto: RecommentDto,
+	): Promise<Comment> {
+		return this.commentsService.removeRecomment(
+			commentId,
+			recommentDto.recomment,
+		);
 	}
 
 	@ApiOperation({ summary: '댓글 삭제하기' })
