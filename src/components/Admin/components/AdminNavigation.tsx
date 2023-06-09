@@ -11,7 +11,7 @@ const Container = styled.div`
   left: 2.5vh;
 
   width: 300px;
-  height: 95vh;
+  height: fit-content;
 
   padding: 20px;
 
