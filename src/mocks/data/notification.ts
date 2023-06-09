@@ -1,12 +1,12 @@
 import { BoardTypes } from '../../types/board';
-import { Notification, NotificationTypes } from '../../types/notification';
+import { Notification, NotificationType } from '../../types/notification';
 import { storeData } from './stores';
 
 export const notificationData: Notification[] = [
   {
-    type: NotificationTypes.follow,
+    type: NotificationType.Follow,
     content: {
-      id: '134242',
+      _id: '134242',
       nickname: '체셔',
       introduce: '안녕하세요',
       allow_notification: true,
@@ -14,7 +14,7 @@ export const notificationData: Notification[] = [
     checked: false,
   },
   {
-    type: NotificationTypes.comment,
+    type: NotificationType.Comment,
     content: {
       id: '134242',
       author: {
@@ -30,7 +30,7 @@ export const notificationData: Notification[] = [
     checked: false,
   },
   {
-    type: NotificationTypes.ad,
+    type: NotificationType.ad,
     content: storeData[0],
     checked: false,
   },
