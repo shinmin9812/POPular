@@ -13,6 +13,7 @@ const settings = {
   centerPadding: '50px',
   adaptiveHeight: true,
 };
+
 const SliderTop = () => {
   return (
     <SlideFrame>

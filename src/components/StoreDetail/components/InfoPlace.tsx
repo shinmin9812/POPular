@@ -3,12 +3,7 @@ import { useEffect } from 'react';
 
 type Place = {
   location: string | undefined;
-  coord:
-    | {
-        lat: string;
-        lng: string;
-      }
-    | undefined;
+  coordinates: [string, string];
 };
 
 const Container = styled.div`
@@ -32,10 +27,10 @@ const Container = styled.div`
   }
 `;
 
-const StorePlace = ({ location, coord }: Place) => {
+const InfoPlace = ({ location, coordinates }: Place) => {
   useEffect(() => {
     const container = document.getElementById('store-detail-map');
-    const latLng = new window.kakao.maps.LatLng(coord?.lat, coord?.lng);
+    const latLng = new window.kakao.maps.LatLng(coordinates[1], coordinates[0]);
     const options = {
       center: latLng,
       level: 3,
@@ -49,7 +44,7 @@ const StorePlace = ({ location, coord }: Place) => {
     });
 
     marker.setMap(map);
-  }, [coord]);
+  }, [coordinates]);
 
   return (
     <Container>
@@ -60,4 +55,4 @@ const StorePlace = ({ location, coord }: Place) => {
   );
 };
 
-export default StorePlace;
+export default InfoPlace;
