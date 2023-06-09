@@ -81,7 +81,7 @@ export class Store extends Document {
 	images: string[];
 
 	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
-	scraps: Types.ObjectId[];
+	scraps?: Types.ObjectId[];
 }
 
 const schema = SchemaFactory.createForClass(Store);

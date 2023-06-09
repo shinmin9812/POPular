@@ -250,7 +250,6 @@ export class StoreRequestDto {
 	@ApiProperty({
 		example: '[123, 424, 124]',
 		description: '팝업 스토어 스크랩 리스트',
-		required: true,
 	})
-	scrap: Types.ObjectId[];
+	scraps?: Types.ObjectId[];
 }
