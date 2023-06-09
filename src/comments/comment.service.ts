@@ -19,15 +19,12 @@ import path from 'path';
 export class CommentsService {
 	constructor(
 		@InjectModel(Comment.name) private readonly commentModel: Model<Comment>,
-		@Inject(forwardRef(()=> FeedsService)) private feedsService: FeedsService,
+		@Inject(forwardRef(() => FeedsService)) private feedsService: FeedsService,
 	) {}
 
 	async getAllComments(): Promise<Comment[]> {
 		try {
-			const comments = await this.commentModel
-			.find()
-			.populate('author')
-			.exec();
+			const comments = await this.commentModel.find().populate('author').exec();
 
 			return comments;
 		} catch (err) {
@@ -74,10 +71,13 @@ export class CommentsService {
 			createdComment.recomments = [];
 
 			const savedComment = await createdComment.save();
-			if(savedComment.parent.type === "Comment"){
+			if (savedComment.parent.type === 'Comment') {
 				await this.addRecomment(savedComment.parent.id, savedComment._id);
 			} else {
-				await this.feedsService.addComment(savedComment.parent.id, savedComment._id);
+				await this.feedsService.addComment(
+					savedComment.parent.id,
+					savedComment._id,
+				);
 			}
 			return savedComment;
 		} catch (err) {

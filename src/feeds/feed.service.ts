@@ -16,7 +16,7 @@ import { handleImages } from 'src/utils/handle.images.util';
 export class FeedsService {
 	constructor(
 		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
-	) {}
+	) { }
 
 	async getAllFeeds(): Promise<Feed[]> {
 		try {
@@ -24,7 +24,7 @@ export class FeedsService {
 				.find()
 				.populate('author')
 				.populate('store_id')
-				.populate('comment')
+				.populate('comments')
 				.exec();
 			return feeds;
 		} catch (err) {
@@ -42,7 +42,7 @@ export class FeedsService {
 				query = query.where('board', board);
 			}
 
-			const feeds = await query.populate('author').populate('store_id').exec();
+			const feeds = await query.populate('author').populate('store_id').populate('comments').exec();
 
 			return feeds;
 		} catch (err) {
@@ -68,7 +68,12 @@ export class FeedsService {
 		const limit = 7;
 		const offset = (page - 1) * limit;
 
-		return await this.feedModel.find().limit(limit).skip(offset);
+		const feeds = await this.feedModel
+			.find()
+			.limit(limit)
+			.skip(offset);
+
+		return feeds;
 	}
 
 	async getFeedById(id: string): Promise<Feed> {
@@ -77,7 +82,7 @@ export class FeedsService {
 				.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true })
 				.populate('author')
 				.populate('store_id')
-				.populate('comment')
+				.populate('comments')
 				.exec();
 
 			if (!feed) {

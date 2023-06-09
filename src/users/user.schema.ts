@@ -7,7 +7,7 @@ const options: SchemaOptions = {
 };
 
 export class user_profile {
-	id: string;
+	_id: string;
 	nickname: string;
 	profile: string;
 }
@@ -29,11 +29,11 @@ export class User extends Document {
 	@Prop({ required: true })
 	phone_number: string;
 
-	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
-	follower: Types.ObjectId[];
+	@Prop({ default: [] })
+	follower: user_profile[];
 
-	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
-	following: Types.ObjectId[];
+	@Prop({ default: [] })
+	following: user_profile[];
 
 	@Prop({ default: 'user' })
 	role: string;

@@ -8,7 +8,7 @@ import { FeedsModule } from 'src/feeds/feed.module';
 @Module({
 	imports: [
 		MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
-		forwardRef(()=> FeedsModule)
+		forwardRef(() => FeedsModule),
 	],
 	controllers: [CommentsController],
 	providers: [CommentsService],
