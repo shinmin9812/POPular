@@ -60,7 +60,7 @@ const PostListItemContainer = () => {
 
   useEffect(() => {
     fetchData(tab, setPosts, navigate);
-  }, [tab, page, navigate]);
+  }, [tab, navigate]);
 
   // 필터 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDateUse;
@@ -79,7 +79,7 @@ const PostListItemContainer = () => {
     } else {
       return posts;
     }
-  }, [useFilter]);
+  }, [useFilter, posts, stores, filterAddress, filterCategory, filterStartDate, filterEndDate, filterDateUse]);
 
   useEffect(() => {
     // 탭 이동 시 페이지 초기화
