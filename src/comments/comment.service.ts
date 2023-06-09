@@ -66,8 +66,7 @@ export class CommentsService {
 			const createdComment = new this.commentModel();
 			createdComment.author = commentCreateDto.author;
 			createdComment.content = commentCreateDto.content;
-			createdComment.parent.type = commentCreateDto.parent.type;
-			createdComment.parent.id = commentCreateDto.parent.id;
+			createdComment.parent = commentCreateDto.parent;
 			createdComment.recomments = [];
 
 			const savedComment = await createdComment.save();
@@ -85,6 +84,7 @@ export class CommentsService {
 				console.log(err);
 				throw new BadRequestException('잘못된 데이터를 입력하셨습니다.');
 			}
+			console.log(err)
 			throw new InternalServerErrorException('댓글 생성에 실패하였습니다.');
 		}
 	}
