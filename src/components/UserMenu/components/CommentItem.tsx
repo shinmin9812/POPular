@@ -2,6 +2,50 @@ import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import { BoardTypes } from '../../../types/board';
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+interface Props {
+  comment: Comment;
+  parentType: string;
+  parentId: string;
+}
+
+const fetchFeedData = async (id: string) => {
+  const response = await fetch(`http://34.22.81.36:3000/feeds/${id}`);
+  const data = await response.json();
+  return data;
+};
+
+const CommentItem = ({ comment, parentType, parentId }: Props) => {
+  const [feedTitle, setFeedTitle] = useState('');
+  const { isLoading, error, data } = useQuery(['feedData'], () => fetchFeedData(parentId), {
+    enabled: parentType === 'Feed' && !!parentId,
+  });
+
+  useEffect(() => {
+    if (parentType === 'Feed' && !isLoading && !error && data) {
+      setFeedTitle(data.title);
+    }
+  }, [parentType, parentId, isLoading, error, data]);
+
+  return (
+    <Container>
+      <div className="comment-header">
+        <BoardTypeTag boardType={'free' as BoardTypes} />
+        <p className="comment-post-title">{feedTitle}</p>
+      </div>
+      <div className="comment-content">
+        <h2>{comment.content}</h2>
+      </div>
+      <div className="comment-date">
+        <p>2023-03-02</p>
+      </div>
+    </Container>
+  );
+};
+
+export default CommentItem;
 
 const Container = styled.article`
   display: flex;
@@ -45,30 +89,3 @@ const Container = styled.article`
     }
   }
 `;
-
-interface Props {
-  comment: Comment;
-}
-
-const CommentItem = ({ comment }: Props) => {
-  return (
-    <Container>
-      {
-        <>
-          <div className="comment-header">
-            <BoardTypeTag boardType={comment.post.board as BoardTypes} />
-            <p className="comment-post-title">{comment.post.title}</p>
-          </div>
-          <div className="comment-content">
-            <h2>{comment.content}</h2>
-          </div>
-          <div className="comment-date">
-            <p>2023-03-02</p>
-          </div>
-        </>
-      }
-    </Container>
-  );
-};
-
-export default CommentItem;
