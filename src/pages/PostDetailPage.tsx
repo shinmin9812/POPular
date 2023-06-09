@@ -34,7 +34,6 @@ const PostDetailPage = () => {
   if (post === null) {
     return <div>Loading...</div>;
   }
-  console.log(post);
   return (
     <Container>
       <PostInfo

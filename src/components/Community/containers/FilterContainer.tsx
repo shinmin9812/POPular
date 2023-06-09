@@ -2,7 +2,6 @@ import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks'
 import { communityActions } from '../CommunitySlice';
 import Filter from '../../common/Filter/Filter';
 import FilterDuration from '../../common/Filter/FilterDuration';
-import WriteButton from '../components/WriteButton';
 import FilterBox from '../../common/Filter/FilterBox';
 import { useState } from 'react';
 
@@ -57,7 +56,7 @@ const FilterContainer = () => {
             setFilterCategoryUse(true);
           }}
           Options={['카테고리', '의류', '주류', '캐릭터']}
-          width={23}
+          width={33}
         />
         <Filter
           value={addressFilterValue.value}
@@ -84,7 +83,7 @@ const FilterContainer = () => {
             '경상남도',
             '제주',
           ]}
-          width={23}
+          width={33}
         />
         <FilterDuration
           show={durationFilterValue.show}
@@ -99,7 +98,6 @@ const FilterContainer = () => {
           endDateTarget={endDateTarget}
           setEndDateTarget={setEndDateTarget}
         />
-        <WriteButton />
       </FilterBox>
     );
   }
