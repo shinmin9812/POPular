@@ -5,20 +5,20 @@ import ProfileImageModify from '../components/UserUpdate/components/ProfileImage
 import { SpaceLine } from '../components/UserUpdate/components/Line';
 import ProfileUpdateForm from '../components/UserUpdate/components/ProfileUpdateForm';
 import ProfileUpdatePasswordForm from '../components/UserUpdate/components/ProfileUpdatePasswordForm';
+import { useParams } from 'react-router-dom';
 
 const UserUpdatePage = () => {
   const [user, setUser] = useState<User | null>(null);
+  const { userId } = useParams();
   useEffect(() => {
     fetchData();
   }, []);
 
   async function fetchData() {
-    const response = await fetch('http://34.22.81.36:3000/users/6479cd31b0b0d8f69ffcfc55');
+    const response = await fetch(`http://34.22.81.36:3000/users/${userId}`);
     const result: User = await response.json();
-
     setUser(result);
   }
-
   return (
     <Container>
       {user ? (
@@ -27,7 +27,7 @@ const UserUpdatePage = () => {
           <SpaceLine />
           <ProfileUpdateForm user={user} />
           <SpaceLine />
-          <ProfileUpdatePasswordForm />
+          <ProfileUpdatePasswordForm user={user} />
         </>
       ) : (
         <div>로그인</div>

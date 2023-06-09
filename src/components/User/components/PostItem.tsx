@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Post } from '../../../types/post';
+import BoardTypeTag from '../../common/Board/BoardTypeTag';
 
 interface Props {
   post: Post;
@@ -10,13 +11,11 @@ const PostItem = ({ post }: Props) => {
   const regex = /src="([^"]+)"/;
   const match = findImage.match(regex);
 
-  const boardKorea = post.board === 'free' ? '자유게시판' : post.board === 'gather' ? '모집게시판' : '후기게시판';
-
   return (
-    <Container>
+    <Container key={post._id}>
       <PostItemInfo>
         <PostItemCategory>
-          <PostItemCategoty report={boardKorea}>{boardKorea}</PostItemCategoty>
+          <BoardTypeTag boardType={post.board} />
         </PostItemCategory>
         <PostItemTitle>{post.title}</PostItemTitle>
         <PostItemBottom>
@@ -34,6 +33,10 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   height: 75px;
+
+  .link {
+    width: 100%;
+  }
 `;
 
 const PostItemImage = styled.div`
@@ -59,32 +62,9 @@ const PostItemImage = styled.div`
 
 const PostItemInfo = styled.div`
   width: 80%;
-  box-sizing: border-box;
-  padding-top: 10px;
 `;
 
-const PostItemCategoty = styled.span<{ report: string }>`
-  padding: 2px 7px;
-  border-radius: var(--border-radius-button);
-  margin-right: 5px;
-  color: #fff;
-  font-size: var(--font-micro);
-
-  background-color: ${(props) => {
-    switch (props.report) {
-      case '자유게시판':
-        return '#CD554D';
-      case '후기게시판':
-        return '#38B135';
-      case '모집게시판':
-        return '#652CC1';
-      default:
-        return 'gray';
-    }
-  }};
-`;
-
-const PostItemCategory = styled.p`
+const PostItemCategory = styled.div`
   margin-top: 5px;
   font-size: var(--font-micro);
   color: var(--color-light-black);
@@ -96,13 +76,14 @@ const PostItemBottom = styled.div`
   color: var(--color-gray);
 `;
 
-const PostItemTitle = styled.p`
+const PostItemTitle = styled.div`
   max-width: 100%;
   font-size: var(--font-small);
   font-weight: var(--weight-regular);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding: 5px;
 
   margin-top: 10px;
 

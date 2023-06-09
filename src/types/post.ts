@@ -1,7 +1,7 @@
 import { BoardTypes } from './board';
 import { Comment } from './comment';
 import { User } from './user';
-import {Store} from './store'
+import { Store } from './store';
 
 export interface Post {
   _id: string;
@@ -16,5 +16,5 @@ export interface Post {
   report: string[];
   updatedAt: string;
   comments: Comment[];
-  views: number
+  views: number;
 }

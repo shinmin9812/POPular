@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { User } from '../types/user';
-import { useEffect, useState } from 'react';
 import Profile from '../components/User/components/Profile';
 import Line from '../components/User/components/Line';
 import ProfilePostList from '../components/User/containers/ProfilePostList';
@@ -18,21 +16,9 @@ const customOptions = [
 ];
 
 const UserPage = () => {
-  const [user, setUser] = useState<User[]>([]);
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    const response = await fetch('/user/all');
-    const result: User[] = await response.json();
-
-    setUser(result);
-  }
-
   return (
     <Container>
-      <Profile user={user} />
+      <Profile />
       <Line />
       <Filter options={customOptions} />
       <ProfilePostList />

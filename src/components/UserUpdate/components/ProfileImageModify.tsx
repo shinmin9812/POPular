@@ -3,15 +3,29 @@ import styled from 'styled-components';
 import ProfileUploadButton from './ProfileUploadButton';
 import ProfileButton from './ProfileButton';
 import { User } from '../../../types/user';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   user: User;
 }
 
 const ProfileImageModify = ({ user }: Props) => {
-  const [userProfile, setUserProfile] = useState(user.profile);
-  const fileHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setUserProfile(e.target.value);
+  const { userId } = useParams();
+  const token = localStorage.getItem('token');
+  const [userProfile, setUserProfile] = useState<string | null>(null);
+
+  const fileHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setUserProfile(reader.result as string);
+      };
+      reader.onerror = () => {
+        console.log('Error');
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const fileDelete = () => {
@@ -21,44 +35,55 @@ const ProfileImageModify = ({ user }: Props) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    if (userProfile) {
-      formData.append('introduce', user.introduce);
-      formData.append('nickname', user.nickname);
-      formData.append('pw', user.pw);
-      formData.append('phone_number', user.phone_number);
-      formData.append('profile', userProfile);
-    }
-    fetch('API_PATH.USER', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'multipart/form-data' },
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        alert('프로필 업로드가 완료되었습니다.');
-      })
-      .catch((error) => {
-        console.log(error.message);
+    try {
+      const response = await fetch(`http://34.22.81.36:3000/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          pw: user.pw,
+          profile: userProfile,
+          introduce: user.introduce,
+          nickname: user.nickname,
+          phone_number: user.phone_number,
+          interested_category: user.interested_category,
+          allow_notification: user.allow_notification,
+        }),
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        alert('회원정보 수정이 완료되었습니다.');
+      } else {
+        throw new Error('회원정보 수정에 실패했습니다.');
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
 
   return (
     <Container>
-      <FormContainer onSubmit={handleSubmit}>
+      <FormContainer onSubmit={handleSubmit} encType="multipart/form-data">
         <h2 className="update-title">프로필 이미지</h2>
         <p className="update-description">프로필 이미지를 변경할 수 있습니다.</p>
         <ProfileContents>
           <ProfilImage>
             <div className="profile-frame">
-              <img src={userProfile} alt={user.nickname} />
+              {user.profile === '' ? (
+                <img src={'/defaultProfile.svg'} />
+              ) : (
+                <img src={user.profile} alt={user.nickname} />
+              )}
             </div>
           </ProfilImage>
           <ProfileButtonList>
-            <ProfileUploadButton text={'프로필 선택'} name={'profile'} onChange={fileHandler} />
+            <ProfileUploadButton text={'프로필 선택'} name={'profile'} onChange={fileHandler} multiple={true} />
             <ProfileButton className="button-gap" text={'변경'} theme={'submit'} />
             <ProfileButton className="button-gap" text={'제거'} theme={'blank'} onClick={fileDelete} />
           </ProfileButtonList>
@@ -101,12 +126,12 @@ const ProfilImage = styled.div`
   .profile-frame {
     width: 60px;
     height: 60px;
-    background-color: #999;
+    background-color: #fff;
     border-radius: 50%;
     overflow: hidden;
 
     img {
-      width: 100%;
+      width: 100px;
       display: flex;
     }
   }

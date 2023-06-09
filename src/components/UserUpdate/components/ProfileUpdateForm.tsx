@@ -4,8 +4,9 @@ import FormInput from './FormInput';
 import ProfileButton from './ProfileButton';
 import CheckboxInput from './CheckboxInput';
 import { User } from '../../../types/user';
-import autoHyphen from '../../../utils/autoHyphen';
 import { useParams } from 'react-router-dom';
+import { isEqual } from '../../../utils/correctArrayCheck';
+import autoHyphen from '../../../utils/autoHyphen';
 
 interface Props {
   user: User;
@@ -32,18 +33,25 @@ const preferCategory: CategoryType[] = [
 ];
 
 const ProfileUpdateForm = ({ user }: Props) => {
+  const { userId } = useParams();
+  const token = localStorage.getItem('token');
   const [inputs, setInputs] = useState({
     profile: user.profile,
     pw: user.pw,
     introduce: user.introduce,
-    nickname: user.nickname,
-    phone_number: user.phone_number,
+    nickname: '',
+    phone_number: '',
     interested_category: user.interested_category,
     allow_notification: user.allow_notification,
   });
 
   const { introduce, nickname, phone_number, interested_category, allow_notification } = inputs;
-  const [checkNickname, setCheckNickname] = useState(false);
+  const [checkNickname, setCheckNickname] = useState(true);
+
+  // 닉네임, 전화번호 유효성 검사
+  const [isNickname, setIsNickname] = useState<boolean>(true);
+  const [isPhoneNumber, setIsPhoneNumber] = useState<boolean>(true);
+
   const [errors, setErrors] = useState({
     nickname: '',
     phone_number: '',
@@ -60,7 +68,11 @@ const ProfileUpdateForm = ({ user }: Props) => {
         }),
       });
       const data = await response.json();
-      setCheckNickname(!data.isExists);
+      if (nickname.length >= 0) {
+        setCheckNickname(!data.isExists);
+      } else {
+        setCheckNickname(false);
+      }
     } catch (err: any) {
       const errorMessage = (err as Error).message;
       console.log(errorMessage);
@@ -115,10 +127,14 @@ const ProfileUpdateForm = ({ user }: Props) => {
   // 닉네임 유효성 검사
   const validateName = (value: string) => {
     let error = '';
-    if (value.trim().length < 2 && value.length > 0) {
+    if (value.trim().length === 1) {
       error = '2글자 이상 입력하세요.';
+      setErrors((prevState) => ({ ...prevState, nickname: error }));
+      setIsNickname(false);
+    } else {
+      setErrors((prevState) => ({ ...prevState, nickname: '' }));
+      setIsNickname(true);
     }
-    setErrors((prevState) => ({ ...prevState, nickname: error }));
   };
 
   // 전화번호 유효성 검사
@@ -127,32 +143,58 @@ const ProfileUpdateForm = ({ user }: Props) => {
     let error = '';
     if (!isPhoneValid.test(value) && value.length > 0) {
       error = '전화번호 형식이 올바르지 않습니다.';
+      setErrors((prevState) => ({ ...prevState, phone_number: error }));
+      setIsPhoneNumber(false);
+    } else {
+      setErrors((prevState) => ({ ...prevState, phone_number: '' }));
+      setIsPhoneNumber(true);
     }
-    setErrors((prevState) => ({ ...prevState, phone_number: error }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { userId } = useParams();
-    const token = localStorage.getItem('token');
+    if (!isFormValid) {
+      alert('회원정보를 변경해주세요.');
+      return;
+    }
 
-    fetch(`http://34.22.81.36:3000/users/${userId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(inputs),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    try {
+      const response = await fetch(`http://34.22.81.36:3000/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          profile: user.profile,
+          pw: user.pw,
+          introduce: introduce,
+          nickname: nickname || user.nickname,
+          phone_number: phone_number || user.phone_number,
+          interested_category: interested_category,
+          allow_notification: allow_notification,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
         console.log(data);
         alert('회원정보 수정이 완료되었습니다.');
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+      } else {
+        throw new Error('회원정보 수정에 실패했습니다.');
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
+
+  const isModify =
+    introduce !== user.introduce ||
+    nickname !== '' ||
+    phone_number !== '' ||
+    allow_notification !== user.allow_notification ||
+    !isEqual(interested_category, user.interested_category);
+  const isFormValid = isNickname && isPhoneNumber && checkNickname && isModify;
 
   return (
     <Container>
@@ -183,7 +225,7 @@ const ProfileUpdateForm = ({ user }: Props) => {
           />
         </FormInner>
         <FormButton>
-          <ProfileButton className="button" text={'수정하기'} theme={'submit'} />
+          <ProfileButton className="button" text={'수정하기'} theme={'submit'} disabled={isFormValid} />
         </FormButton>
       </FormContainer>
     </Container>
@@ -215,7 +257,7 @@ const Container = styled.div`
 
 const FormContainer = styled.form``;
 
-const FormInner = styled.form`
+const FormInner = styled.div`
   padding-top: 20px;
 `;
 

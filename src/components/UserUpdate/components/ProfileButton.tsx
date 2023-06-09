@@ -5,8 +5,9 @@ interface Props {
   theme: 'blank' | 'submit' | 'cancel';
   className?: string;
   onClick?: any;
+  disabled?: boolean;
 }
-const ProfileButton = ({ text, theme, className, onClick }: Props) => {
+const ProfileButton = ({ text, theme, className, onClick, disabled }: Props) => {
   return (
     <Button theme={theme} className={className} text={text} onClick={onClick} type="submit">
       <div>{text}</div>

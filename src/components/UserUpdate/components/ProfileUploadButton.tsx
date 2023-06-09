@@ -5,15 +5,16 @@ interface Props {
   text: string;
   name: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  multiple: boolean;
 }
 
-const ProfileUploadButton = ({ text, name, onChange }: Props) => {
+const ProfileUploadButton = ({ text, name, onChange, multiple }: Props) => {
   return (
     <Button>
       <label htmlFor="file">
         <div className="btn-upload">{text}</div>
       </label>
-      <input type="file" name={name} id="file" onChange={onChange} />
+      <input type="file" name={name} id="file" onChange={onChange} multiple={multiple} />
     </Button>
   );
 };

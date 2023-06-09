@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 interface Props {
   text: string;
   type: 'follow' | 'profileEdit';
+  disabled?: boolean;
 }
 
-const ProfileButton = ({ text, type }: Props) => {
+const ProfileButton = ({ text, type, disabled }: Props) => {
   const buttonClassName = `ButtonType_${type}`;
   return (
     <Button className={buttonClassName}>
