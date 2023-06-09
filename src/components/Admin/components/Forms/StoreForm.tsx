@@ -6,8 +6,10 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { PostedStore } from '../../../../types/store';
 import { Category } from '../../../../types/category';
 import { SNS } from '../../../../types/sns';
-import { usePostStore } from '../../../../api/storeApi';
+import { useEditStore, usePostStore } from '../../../../api/storeApi';
 import Card from '../../../common/Card/Card';
+import { useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
@@ -82,7 +84,11 @@ const defaultFormValues: PostedStore = {
   scraps: [],
 };
 
-const StoreForm = () => {
+interface Props {
+  defaultData?: PostedStore | null;
+}
+
+const StoreForm = ({ defaultData }: Props) => {
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
   const locationRef = useRef<HTMLInputElement | null>(null);
   const snsUrlRef = useRef<HTMLInputElement | null>(null);
@@ -92,9 +98,18 @@ const StoreForm = () => {
   const targettedStartDate = useRef<HTMLInputElement | null>(null);
   const targettedEndDate = useRef<HTMLInputElement | null>(null);
 
+  const defaultFormData = defaultData ? defaultData : defaultFormValues;
+
+  if (defaultData) {
+    defaultData.end_date = dayjs(defaultData.end_date).format('YYYY-MM-DD');
+    defaultData.start_date = dayjs(defaultData.start_date).format('YYYY-MM-DD');
+  }
+
   const methods = useForm<PostedStore>({
-    defaultValues: defaultFormValues as PostedStore,
+    defaultValues: defaultFormData,
   });
+
+  const { storeId } = useParams();
 
   const {
     register,
@@ -141,10 +156,16 @@ const StoreForm = () => {
     setValue('coord.coordinates.1', +documents[0].y);
   }
 
-  const { mutate, isSuccess } = usePostStore();
+  const { mutate: postMutate, isLoading: postLoading, isSuccess: postIsSuccess } = usePostStore();
+  const { mutate: editMutate, isLoading: editLoading, isSuccess: editIsSuccess } = useEditStore();
 
-  if (isSuccess) {
-    alert('스토어가 등록되었습니다.');
+  if (defaultData && editIsSuccess) {
+    alert('스토어가 변경되었습니다.');
+    location.reload();
+  }
+
+  if (!defaultData && postIsSuccess) {
+    alert('스토어가 추가되었습니다.');
     location.reload();
   }
 
@@ -158,7 +179,7 @@ const StoreForm = () => {
               message: '종료일은 시작일 이후여야합니다!',
             });
           }
-          mutate(data);
+          defaultData ? editMutate({ storeData: data, storeId: storeId as string }) : postMutate(data);
         })}
       >
         <label>
@@ -243,9 +264,10 @@ const StoreForm = () => {
               일괄 적용
             </Button>
           </label>
-          <label className="closed">
+          <label className={watch().hours.mon ? '' : 'closed'}>
             <input
               type="checkbox"
+              defaultChecked={watch().hours.mon ? true : false}
               onChange={(e) => {
                 closedDayHandler(setValue, e, 'mon');
               }}
@@ -254,9 +276,10 @@ const StoreForm = () => {
             <input className="start-time" type="time" {...register('hours.mon.start')} />
             <input className="end-time" type="time" {...register('hours.mon.end')} />
           </label>
-          <label className="closed">
+          <label className={watch().hours.mon ? '' : 'closed'}>
             <input
               type="checkbox"
+              defaultChecked={watch().hours.mon ? true : false}
               onChange={(e) => {
                 closedDayHandler(setValue, e, 'tue');
               }}
@@ -265,9 +288,10 @@ const StoreForm = () => {
             <input className="start-time" type="time" {...register('hours.tue.start')} />
             <input className="end-time" type="time" {...register('hours.tue.end')} />
           </label>
-          <label className="closed">
+          <label className={watch().hours.mon ? '' : 'closed'}>
             <input
               type="checkbox"
+              defaultChecked={watch().hours.mon ? true : false}
               onChange={(e) => {
                 closedDayHandler(setValue, e, 'wed');
               }}
@@ -276,9 +300,10 @@ const StoreForm = () => {
             <input className="start-time" type="time" {...register('hours.wed.start')} />
             <input className="end-time" type="time" {...register('hours.wed.end')} />
           </label>
-          <label className="closed">
+          <label className={watch().hours.mon ? '' : 'closed'}>
             <input
               type="checkbox"
+              defaultChecked={watch().hours.mon ? true : false}
               onChange={(e) => {
                 closedDayHandler(setValue, e, 'thu');
               }}
@@ -287,9 +312,10 @@ const StoreForm = () => {
             <input className="start-time" type="time" {...register('hours.thu.start')} />
             <input className="end-time" type="time" {...register('hours.thu.end')} />
           </label>
-          <label className="closed">
+          <label className={watch().hours.mon ? '' : 'closed'}>
             <input
               type="checkbox"
+              defaultChecked={watch().hours.mon ? true : false}
               onChange={(e) => {
                 closedDayHandler(setValue, e, 'fri');
               }}
@@ -298,9 +324,10 @@ const StoreForm = () => {
             <input className="start-time" type="time" {...register('hours.fri.start')} />
             <input className="end-time" type="time" {...register('hours.fri.end')} />
           </label>
-          <label className="closed">
+          <label className={watch().hours.mon ? '' : 'closed'}>
             <input
               type="checkbox"
+              defaultChecked={watch().hours.mon ? true : false}
               onChange={(e) => {
                 closedDayHandler(setValue, e, 'sat');
               }}
@@ -309,9 +336,10 @@ const StoreForm = () => {
             <input className="start-time" type="time" {...register('hours.sat.start')} />
             <input className="end-time" type="time" {...register('hours.sat.end')} />
           </label>
-          <label className="closed">
+          <label className={watch().hours.mon ? '' : 'closed'}>
             <input
               type="checkbox"
+              defaultChecked={watch().hours.mon ? true : false}
               onChange={(e) => {
                 closedDayHandler(setValue, e, 'sun');
               }}
@@ -446,8 +474,8 @@ const StoreForm = () => {
           예약 필수
           <input type="checkbox" {...register('reservation_required')} />
         </label>
-        <button className="submit" type="submit">
-          추가하기
+        <button disabled={postLoading || editLoading} className="submit" type="submit">
+          {defaultData ? '수정하기' : '추가하기'}
         </button>
       </Container>
     </Card>
@@ -457,6 +485,8 @@ const StoreForm = () => {
 const Container = styled.form`
   display: flex;
   flex-direction: column;
+
+  width: 600px;
 
   gap: 20px;
 

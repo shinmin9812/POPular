@@ -42,8 +42,6 @@ const Container = styled.div`
 const AdminStoreEditPage = () => {
   const { data: allStores } = useGetAllStores();
 
-  const [openForm, setOpenForm] = useState<boolean>(false);
-
   return (
     <Container>
       <Card className="edit-store">

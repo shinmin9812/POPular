@@ -11,7 +11,7 @@ interface Props {
 const AdminStoreItem = ({ store }: Props) => {
   const startDate = dayjs(store.start_date).format('YY-MM-DD');
   const endDate = dayjs(store.end_date).format('YY-MM-DD');
-  console.log(store);
+  // console.log(store);
   return (
     <Link to={`./${store._id}`}>
       <Container>
