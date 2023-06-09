@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import { Store } from '../../types/store';
-
-type Props = {
-  store?: Store;
-};
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import Slider from 'react-slick';
 
 const Container = styled.div`
   display: flex;
@@ -40,17 +38,40 @@ const Container = styled.div`
   .title-img {
     align-self: center;
     width: 100%;
-    max-width: 500px;
+    height: 400px;
     aspect-ratio: 1/1;
     object-fit: cover;
   }
+
+  .slick-slider {
+    width: 100%;
+    position: relative;
+  }
+
+  .slick-dots {
+    position: absolute;
+    bottom: 20px;
+  }
 `;
 
-const Title = ({ store }: Props) => {
+const StoreTitle = () => {
+  const { storeId } = useParams();
+  async function fetchStore() {
+    const response = await fetch(`http://34.22.81.36:3000/stores/store/${storeId}`);
+    return response.json();
+  }
+  const { data: store, isLoading, isError } = useQuery(['store'], fetchStore);
+
+  const settings = {
+    dots: true,
+  };
+
+  if (isError) return <h3>error</h3>;
+  if (isLoading) return <h3>Loading...</h3>;
   return (
     <Container>
       <div className="title-head">
-        <p className="title">{store?.title}</p>
+        <p className="title">{store.title}</p>
         <div className="title-btns">
           <button className="scrap-btn">
             <img src="/images/scrap.svg" alt="" />
@@ -60,11 +81,13 @@ const Title = ({ store }: Props) => {
           </button>
         </div>
       </div>
-      {store?.images.map((image) => (
-        <img className="title-img" src={image} alt="브랜드이미지" />
-      ))}
+      <Slider {...settings}>
+        {store.images.map((image: string, i: number) => (
+          <img className="title-img" key={i} src={image} alt="브랜드이미지" />
+        ))}
+      </Slider>
     </Container>
   );
 };
 
-export default Title;
+export default StoreTitle;

@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { Store } from '../types/store';
-import Title from '../components/StoreDetail/Title';
-import DetailInfo from '../components/StoreDetail/DetailInfo';
+import StoreTitle from '../components/StoreDetail/container/StoreTitle';
+import StoreInfo from '../components/StoreDetail/container/StoreInfo';
 import StoreReview from '../components/StoreDetail/container/StoreReview';
 
 const Container = styled.div<{ isDetail: boolean }>`
@@ -43,28 +42,11 @@ const Container = styled.div<{ isDetail: boolean }>`
 `;
 
 const StoreDetailPage = () => {
-  const [store, setStore] = useState<Store | undefined>(undefined);
-
   const [isDetail, setIsDetail] = useState<boolean>(true);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    const response = await fetch('/store/id/1234');
-    const result: Store = await response.json();
-
-    if (!result) {
-      throw new Error('no result');
-    }
-
-    setStore(result);
-  }
 
   return (
     <Container isDetail={isDetail}>
-      <Title store={store}></Title>
+      <StoreTitle />
       <div className="detail-top-btn">
         <button className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'} onClick={() => setIsDetail(true)}>
           상세 정보
@@ -76,7 +58,7 @@ const StoreDetailPage = () => {
           후기
         </button>
       </div>
-      {isDetail ? <DetailInfo store={store} /> : <StoreReview />}
+      {isDetail ? <StoreInfo /> : <StoreReview />}
     </Container>
   );
 };

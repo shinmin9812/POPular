@@ -1,11 +1,8 @@
 import styled from 'styled-components';
-import { Store } from '../../types/store';
-import StorePlace from './StorePlace';
-import StoreInfo from './StoreInfo';
-
-type Props = {
-  store?: Store;
-};
+import InfoPlace from '../components/InfoPlace';
+import InfoDetail from '../components/InfoDetail';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 const Container = styled.div`
   display: flex;
@@ -89,7 +86,7 @@ const Container = styled.div`
 
   .reservation-btn,
   .recruiment-btn {
-    width: 180px;
+    width: 50%;
     height: 50px;
     border-radius: 5px;
     background-color: #878787;
@@ -105,23 +102,34 @@ const Container = styled.div`
   }
 `;
 
-const DetailInfo = ({ store }: Props) => {
+const StoreInfo = () => {
+  const { storeId } = useParams();
+  async function fetchStore() {
+    const response = await fetch(`http://34.22.81.36:3000/stores/store/${storeId}`);
+    return response.json();
+  }
+  const { data: store, isLoading, isError } = useQuery(['store'], fetchStore);
+
+  console.log(store);
+
+  if (isError) return <h3>error</h3>;
+  if (isLoading) return <h3>Loading...</h3>;
   return (
     <Container>
-      <StoreInfo store={store} />
+      <InfoDetail store={store} />
       <div className="store-sns-title">SNS</div>
       <ul className="store-sns-list">
         <li className="store-sns-item">
           <div className="sns-info">
             <img className="sns-ico" src="/images/instagram.svg" alt="" />
-            <p className="sns-title">{store?.sns[0].link_title}</p>
+            <p className="sns-title">{store.sns[0].link_title}</p>
           </div>
-          <a className="sns-link" href={store?.sns[0].link_url}>
-            {store?.sns[0].link_type}
+          <a className="sns-link" href={store.sns[0].link_url}>
+            {store.sns[0].link_type}
           </a>
         </li>
       </ul>
-      <StorePlace location={store?.location} coord={store?.coord} />
+      <InfoPlace location={store.location} coordinates={store.coord.coordinates} />
       <div className="line"></div>
       <div className="detail-bottom-btns">
         <button className="reservation-btn">예약하기</button>
@@ -131,4 +139,4 @@ const DetailInfo = ({ store }: Props) => {
   );
 };
 
-export default DetailInfo;
+export default StoreInfo;
