@@ -4,13 +4,10 @@ import ProfileFollow from './ProfileFollow';
 import ProfileButton from './ProfileButton';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
   const [userInfo, setUserInfo] = useState('');
-
-  // [path] User Profile :: 현재 페이지 유저의 Id 값
   const { userId } = useParams();
 
   useEffect(() => {
@@ -43,59 +40,38 @@ const Profile = () => {
     setUser(result);
   }
 
-  const mutation = useMutation(() => {
-    return fetch(`http://34.22.81.36:3000/users/${userInfo}/follow/${userId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-  });
-
-  const followHandler = () => {
-    alert('a');
-    mutation.mutate();
-  };
-
   if (!user || !user._id) {
     return null;
   }
   return (
     <Container>
-      {mutation.isLoading ? (
-        'loaging...'
-      ) : (
-        <>
-          <ProfileInfo>
-            <UserProfile>
-              <div className="profile-frame">
-                {user.profile === '' ? (
-                  <img src={'/defaultProfile.svg'} className="default-style" />
-                ) : (
-                  <img src={user.profile} alt={user.nickname} className="profile-style" />
-                )}
-              </div>
-            </UserProfile>
-            <ProfileList>
-              <ProfileFollow title={'게시물'} number={33} />
-              <ProfileFollow title={'팔로워'} number={user.follower.length} />
-              <ProfileFollow title={'팔로잉'} number={user.following.length} />
-            </ProfileList>
-          </ProfileInfo>
-          <ProfileDescript>
-            <p className="user-nickname">{user.nickname}</p>
-            <p className="user-introduce">{user.introduce}</p>
-            <div className="button-position">
-              {userInfo === userId ? (
-                <ProfileButton text={'프로필수정'} type={'profileEdit'} link={'update'} />
-              ) : (
-                <ProfileButton text={'팔로우'} type={'follow'} onClick={followHandler} />
-              )}
-            </div>
-          </ProfileDescript>
-        </>
-      )}
+      <ProfileInfo>
+        <UserProfile>
+          <div className="profile-frame">
+            {user.profile === '' ? (
+              <img src={'/defaultProfile.svg'} className="default-style" />
+            ) : (
+              <img src={user.profile} alt={user.nickname} className="profile-style" />
+            )}
+          </div>
+        </UserProfile>
+        <ProfileList>
+          <ProfileFollow title={'게시물'} number={33} />
+          <ProfileFollow title={'팔로워'} number={user.follower.length} />
+          <ProfileFollow title={'팔로잉'} number={user.following.length} />
+        </ProfileList>
+      </ProfileInfo>
+      <ProfileDescript>
+        <p className="user-nickname">{user.nickname}</p>
+        <p className="user-introduce">{user.introduce}</p>
+        <div className="button-position">
+          {userInfo === userId ? (
+            <ProfileButton text={'프로필수정'} type={'profileEdit'} />
+          ) : (
+            <ProfileButton text={'팔로우'} type={'follow'} />
+          )}
+        </div>
+      </ProfileDescript>
     </Container>
   );
 };
