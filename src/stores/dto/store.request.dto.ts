@@ -241,7 +241,7 @@ export class StoreRequestDto {
 
 	@IsArray()
 	@ApiProperty({
-		example: '[{1.png, 2.png}]',
+		example: '[1.png, 2.png]',
 		description: '팝업 스토어 이미지',
 	})
 	images: string[];

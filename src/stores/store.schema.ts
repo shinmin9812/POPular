@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaOptions, Types } from 'mongoose';
+import * as mongoosePaginate from 'mongoose-paginate-v2';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -83,5 +84,7 @@ export class Store extends Document {
 	scraps: Types.ObjectId[];
 }
 
-export const StoreSchema = SchemaFactory.createForClass(Store);
+const schema = SchemaFactory.createForClass(Store);
+schema.plugin(mongoosePaginate);
+export const StoreSchema = schema;
 StoreSchema.index({ coord: '2dsphere' });

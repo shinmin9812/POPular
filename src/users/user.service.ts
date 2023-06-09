@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User } from './user.schema';
@@ -48,14 +48,20 @@ export class UserService {
 		return await this.userModel.create(newUser);
 	}
 
-	async updateUser(_id: string, body: UserUpdateDto): Promise<User> {
+	async updateUser(
+		_id: string,
+		body: UserUpdateDto,
+		pathName: string,
+	): Promise<User> {
 		const pw = body.pw;
 		const hashedPassword = await hashPassword(pw);
 
 		const updateUser = {
 			...body,
+			profile: pathName,
 			pw: hashedPassword,
 		};
+
 		return await this.userModel.findByIdAndUpdate({ _id }, updateUser, {
 			new: true,
 		});
@@ -68,6 +74,8 @@ export class UserService {
 		const storeObjId = new Types.ObjectId(storeId);
 		const userObjId = new Types.ObjectId(userId);
 
+		console.log(store.scraps);
+
 		if (user && store) {
 			if (!user.scraps.includes(storeObjId)) {
 				user.scraps.push(storeObjId);
@@ -78,6 +86,8 @@ export class UserService {
 
 			user.save();
 			store.save();
+		} else {
+			throw new BadRequestException({ message: '제대로 값을 못 받아옴' });
 		}
 
 		return user;

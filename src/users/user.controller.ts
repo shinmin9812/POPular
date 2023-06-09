@@ -7,6 +7,8 @@ import {
 	Body,
 	Patch,
 	UseGuards,
+	UseInterceptors,
+	UploadedFile,
 } from '@nestjs/common';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
@@ -19,6 +21,8 @@ import {
 	ApiProperty,
 } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerOptions } from 'src/utils/multer.util';
 
 class checknickname {
 	@ApiProperty({
@@ -77,11 +81,15 @@ export class UserController {
 	@ApiBearerAuth('Authorization')
 	@Patch(':id')
 	@UseGuards(AuthGuard)
+	@UseInterceptors(FileInterceptor('image', multerOptions('profile')))
 	async updateUser(
 		@Param('id') _id: string,
 		@Body() body: UserUpdateDto,
+		@UploadedFile() file: Express.Multer.File,
 	): Promise<User> {
-		return await this.userService.updateUser(_id, body);
+		const pathName = file.path;
+		console.log(pathName);
+		return await this.userService.updateUser(_id, body, pathName);
 	}
 
 	@ApiOperation({ summary: '유저 스크랩 & 스토어 스크랩 등록하기' })
@@ -91,7 +99,7 @@ export class UserController {
 	async updateScrap(
 		@Param('userId') userId: string,
 		@Param('storeId') storeId: string,
-	): Promise<any> {
+	): Promise<User> {
 		return await this.userService.updateScrap(userId, storeId);
 	}
 
@@ -102,7 +110,7 @@ export class UserController {
 	async updateUnScrap(
 		@Param('userId') userId: string,
 		@Param('storeId') storeId: string,
-	): Promise<any> {
+	): Promise<User> {
 		return await this.userService.updateUnscrap(userId, storeId);
 	}
 
