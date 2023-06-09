@@ -13,6 +13,11 @@ export const getAllStores = async () => {
   return response;
 };
 
+export const getStoreById = async (storeId: string) => {
+  const response = await (await fetch(`${API_PATH.STORE.GET.BY_ID}/${storeId}`)).json();
+  return response;
+};
+
 export const getStoreByCoord = async ({ x, y, distance }: CoordProps) => {
   const response = await (await fetch(`${API_PATH.STORE.GET.BY_COORD}x=${x}&y=${y}&distance=${distance}`)).json();
   return response;
@@ -34,6 +39,10 @@ export const postStore = async (storeData: PostedStore): Promise<Store> => {
 
 export const useGetAllStores = () => {
   return useQuery<Store[]>(['allStores'], getAllStores);
+};
+
+export const useGetStoreById = (storeId: string) => {
+  return useQuery<Store[]>(['store', storeId], () => getStoreById(storeId));
 };
 
 export const usePostStore = () => {

@@ -5,6 +5,7 @@ import { useGetAllStores } from '../../api/storeApi';
 import AdminStoreList from '../../components/Admin/components/Stores/AdminStoreList';
 import StoreList from '../../components/common/Store/StoreList';
 import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -20,11 +21,16 @@ const Container = styled.div`
   .edit-store {
     width: 500px;
     position: fixed;
+    top: 30px;
     left: 360px;
 
     height: calc(100vh - 60px);
 
     overflow-y: scroll;
+
+    ::-webkit-scrollbar {
+      padding: 10px 0;
+    }
   }
 
   .edit-store-form {
@@ -38,18 +44,15 @@ const AdminStoreEditPage = () => {
 
   const [openForm, setOpenForm] = useState<boolean>(false);
 
-  console.log(allStores);
-
   return (
     <Container>
       <Card className="edit-store">
         <p className="title">스토어 수정</p>
-        {allStores && <StoreList stores={allStores} />}
+        {allStores && <AdminStoreList stores={allStores} />}
       </Card>
-      <Card className="edit-store-form">
-        <p className="title">스토어 수정</p>
-        <StoreForm />
-      </Card>
+      <div className="edit-store-form">
+        <Outlet />
+      </div>
     </Container>
   );
 };

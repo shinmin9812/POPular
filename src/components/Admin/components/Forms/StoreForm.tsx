@@ -7,6 +7,7 @@ import { PostedStore } from '../../../../types/store';
 import { Category } from '../../../../types/category';
 import { SNS } from '../../../../types/sns';
 import { usePostStore } from '../../../../api/storeApi';
+import Card from '../../../common/Card/Card';
 
 const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
@@ -29,6 +30,58 @@ function closedDayHandler(setValue: any, e: any, day: string) {
   }
 }
 
+const defaultFormValues: PostedStore = {
+  title: '',
+  description: '',
+  category: Category.art,
+  start_date: '',
+  end_date: '',
+  hours: {
+    mon: {
+      start: null,
+      end: null,
+    },
+    tue: {
+      start: null,
+      end: null,
+    },
+    wed: {
+      start: null,
+      end: null,
+    },
+    thu: {
+      start: null,
+      end: null,
+    },
+    fri: {
+      start: null,
+      end: null,
+    },
+    sat: {
+      start: null,
+      end: null,
+    },
+    sun: {
+      start: null,
+      end: null,
+    },
+  },
+  location: '',
+  postcode: {
+    sido: '',
+    sigungu: '',
+  },
+  coord: {
+    coordinates: [0, 0],
+    type: 'Point',
+  },
+  price: 0,
+  sns: [],
+  reservation_required: false,
+  images: [],
+  scraps: [],
+};
+
 const StoreForm = () => {
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
   const locationRef = useRef<HTMLInputElement | null>(null);
@@ -40,57 +93,7 @@ const StoreForm = () => {
   const targettedEndDate = useRef<HTMLInputElement | null>(null);
 
   const methods = useForm<PostedStore>({
-    defaultValues: {
-      title: '',
-      description: '',
-      category: Category.art,
-      start_date: '',
-      end_date: '',
-      hours: {
-        mon: {
-          start: null,
-          end: null,
-        },
-        tue: {
-          start: null,
-          end: null,
-        },
-        wed: {
-          start: null,
-          end: null,
-        },
-        thu: {
-          start: null,
-          end: null,
-        },
-        fri: {
-          start: null,
-          end: null,
-        },
-        sat: {
-          start: null,
-          end: null,
-        },
-        sun: {
-          start: null,
-          end: null,
-        },
-      },
-      location: '',
-      postcode: {
-        sido: '',
-        sigungu: '',
-      },
-      coord: {
-        coordinates: [0, 0],
-        type: 'Point',
-      },
-      price: 0,
-      sns: [],
-      reservation_required: false,
-      images: [],
-      scraps: [],
-    },
+    defaultValues: defaultFormValues as PostedStore,
   });
 
   const {
@@ -106,20 +109,12 @@ const StoreForm = () => {
 
   const { ref } = register('location');
 
-  const {
-    fields: imageFeilds,
-    append: appendImages,
-    remove: removeImage,
-  } = useFieldArray({
+  const { append: appendImages, remove: removeImage } = useFieldArray({
     control,
     name: 'images',
   });
 
-  const {
-    fields: snsFields,
-    append: appendSns,
-    remove: removeSns,
-  } = useFieldArray({
+  const { append: appendSns, remove: removeSns } = useFieldArray({
     control,
     name: 'sns',
   });
@@ -146,310 +141,316 @@ const StoreForm = () => {
     setValue('coord.coordinates.1', +documents[0].y);
   }
 
-  const { mutate, isLoading, isError, error, isSuccess } = usePostStore();
+  const { mutate, isSuccess } = usePostStore();
 
-  // console.log(watch());
+  if (isSuccess) {
+    alert('스토어가 등록되었습니다.');
+    location.reload();
+  }
 
   return (
-    <Container
-      onSubmit={handleSubmit((data) => {
-        if (data.end_date < data.start_date) {
-          return setError('end_date', {
-            message: '종료일은 시작일 이후여야합니다!',
-          });
-        }
-        mutate(data);
-      })}
-    >
-      <label>
-        스토어 이름
-        <input
-          id="title"
-          type="text"
-          maxLength={30}
-          {...register('title', {
-            required: '스토어 이름을 입력해주세요.',
-          })}
-        />
-      </label>
-      <strong>{errors?.title?.message}</strong>
-      <label className="textarea-input">
-        스토어 설명
-        <textarea
-          maxLength={400}
-          {...register('description', {
-            required: '스토어 설명을 입력해주세요!',
-          })}
-        />
-      </label>
-      <strong>{errors?.description?.message}</strong>
-      <label>
-        카테고리
-        <select {...register('category')}>
-          <option value={Category.art}>{Category.art}</option>
-          <option value={Category.character}>{Category.character}</option>
-          <option value={Category.clothes}>{Category.clothes}</option>
-          <option value={Category.design}>{Category.design}</option>
-          <option value={Category.drink}>{Category.drink}</option>
-          <option value={Category.entertainment}>{Category.entertainment}</option>
-          <option value={Category.finance}>{Category.finance}</option>
-          <option value={Category.food}>{Category.food}</option>
-          <option value={Category.sport}>{Category.sport}</option>
-          <option value={Category.tech}>{Category.tech}</option>
-          <option value={Category.other}>{Category.other}</option>
-        </select>
-      </label>
-      <label>
-        시작일
-        <input
-          type="date"
-          {...register('start_date', {
-            required: '시작일을 입력해주세요!',
-          })}
-        />
-      </label>
-      <strong>{errors?.start_date?.message}</strong>
-      <label>
-        종료일
-        <input
-          type="date"
-          {...register('end_date', {
-            required: '종료일을 입력해주세요!',
-          })}
-        />
-      </label>
-      <strong>{errors?.end_date?.message}</strong>
-      <div className="hours">
-        <p>운영시간</p>
+    <Card className="add-store">
+      <p className="title">스토어 추가</p>
+      <Container
+        onSubmit={handleSubmit((data) => {
+          if (data.end_date < data.start_date) {
+            return setError('end_date', {
+              message: '종료일은 시작일 이후여야합니다!',
+            });
+          }
+          mutate(data);
+        })}
+      >
         <label>
-          <input type="time" defaultValue="00:00" ref={targettedStartDate} />
-          <input type="time" defaultValue="12:00" ref={targettedEndDate} />
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelectorAll<HTMLInputElement>('label.closed').forEach((el) => {
-                el.classList.remove('closed');
-                const checkbox = el.querySelector<HTMLInputElement>('input[type="checkbox"]');
-                checkbox!.checked = true;
-              });
-
-              const startDate = targettedStartDate.current?.value as string;
-              const endDate = targettedEndDate.current?.value as string;
-
-              changeAllStartTime(setValue, startDate);
-              changeAllEndTime(setValue, endDate);
-            }}
-          >
-            일괄 적용
-          </Button>
-        </label>
-        <label className="closed">
+          스토어 이름
           <input
-            type="checkbox"
-            onChange={(e) => {
-              closedDayHandler(setValue, e, 'mon');
-            }}
+            id="title"
+            type="text"
+            maxLength={30}
+            {...register('title', {
+              required: '스토어 이름을 입력해주세요.',
+            })}
           />
-          월요일
-          <input className="start-time" type="time" {...register('hours.mon.start')} />
-          <input className="end-time" type="time" {...register('hours.mon.end')} />
         </label>
-        <label className="closed">
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              closedDayHandler(setValue, e, 'tue');
-            }}
+        <strong>{errors?.title?.message}</strong>
+        <label className="textarea-input">
+          스토어 설명
+          <textarea
+            maxLength={400}
+            {...register('description', {
+              required: '스토어 설명을 입력해주세요!',
+            })}
           />
-          화요일
-          <input className="start-time" type="time" {...register('hours.tue.start')} />
-          <input className="end-time" type="time" {...register('hours.tue.end')} />
         </label>
-        <label className="closed">
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              closedDayHandler(setValue, e, 'wed');
-            }}
-          />
-          수요일
-          <input className="start-time" type="time" {...register('hours.wed.start')} />
-          <input className="end-time" type="time" {...register('hours.wed.end')} />
-        </label>
-        <label className="closed">
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              closedDayHandler(setValue, e, 'thu');
-            }}
-          />
-          목요일
-          <input className="start-time" type="time" {...register('hours.thu.start')} />
-          <input className="end-time" type="time" {...register('hours.thu.end')} />
-        </label>
-        <label className="closed">
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              closedDayHandler(setValue, e, 'fri');
-            }}
-          />
-          금요일
-          <input className="start-time" type="time" {...register('hours.fri.start')} />
-          <input className="end-time" type="time" {...register('hours.fri.end')} />
-        </label>
-        <label className="closed">
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              closedDayHandler(setValue, e, 'sat');
-            }}
-          />
-          토요일
-          <input className="start-time" type="time" {...register('hours.sat.start')} />
-          <input className="end-time" type="time" {...register('hours.sat.end')} />
-        </label>
-        <label className="closed">
-          <input
-            type="checkbox"
-            onChange={(e) => {
-              closedDayHandler(setValue, e, 'sun');
-            }}
-          />
-          일요일
-          <input className="start-time" type="time" {...register('hours.sun.start')} />
-          <input className="end-time" type="time" {...register('hours.sun.end')} />
-        </label>
-      </div>
-      <label>
-        입장료
-        <input
-          type="number"
-          {...register('price', {
-            valueAsNumber: true,
-          })}
-        />
-      </label>
-      <label>
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            open({ onComplete: postcodeHandler });
-          }}
-        >
-          주소 찾기
-        </Button>
-        <input
-          type="text"
-          disabled
-          {...register('location', {
-            required: '주소를 입력해주세요.',
-          })}
-          ref={(e) => {
-            ref(e);
-            locationRef.current = e;
-          }}
-        />
-      </label>
-      <strong>{errors?.location?.message}</strong>
-
-      <label>
-        SNS
-        <div className="sns">
-          <select ref={snsSelectRef}>
-            <option value={SNS.insta}>{SNS.insta}</option>
-            <option value={SNS.website}>{SNS.website}</option>
-            <option value={SNS.kakao}>{SNS.kakao}</option>
+        <strong>{errors?.description?.message}</strong>
+        <label>
+          카테고리
+          <select {...register('category')}>
+            <option value={Category.art}>{Category.art}</option>
+            <option value={Category.character}>{Category.character}</option>
+            <option value={Category.clothes}>{Category.clothes}</option>
+            <option value={Category.design}>{Category.design}</option>
+            <option value={Category.drink}>{Category.drink}</option>
+            <option value={Category.entertainment}>{Category.entertainment}</option>
+            <option value={Category.finance}>{Category.finance}</option>
+            <option value={Category.food}>{Category.food}</option>
+            <option value={Category.sport}>{Category.sport}</option>
+            <option value={Category.tech}>{Category.tech}</option>
+            <option value={Category.other}>{Category.other}</option>
           </select>
-          <input type="text" ref={snsUrlRef} placeholder="url" />
-          <input type="text" ref={snsNameRef} placeholder="홈페이지명" />
+        </label>
+        <label>
+          시작일
+          <input
+            type="date"
+            {...register('start_date', {
+              required: '시작일을 입력해주세요!',
+            })}
+          />
+        </label>
+        <strong>{errors?.start_date?.message}</strong>
+        <label>
+          종료일
+          <input
+            type="date"
+            {...register('end_date', {
+              required: '종료일을 입력해주세요!',
+            })}
+          />
+        </label>
+        <strong>{errors?.end_date?.message}</strong>
+        <div className="hours">
+          <p>운영시간</p>
+          <label>
+            <input type="time" defaultValue="00:00" ref={targettedStartDate} />
+            <input type="time" defaultValue="12:00" ref={targettedEndDate} />
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelectorAll<HTMLInputElement>('label.closed').forEach((el) => {
+                  el.classList.remove('closed');
+                  const checkbox = el.querySelector<HTMLInputElement>('input[type="checkbox"]');
+                  checkbox!.checked = true;
+                });
+
+                const startDate = targettedStartDate.current?.value as string;
+                const endDate = targettedEndDate.current?.value as string;
+
+                changeAllStartTime(setValue, startDate);
+                changeAllEndTime(setValue, endDate);
+              }}
+            >
+              일괄 적용
+            </Button>
+          </label>
+          <label className="closed">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                closedDayHandler(setValue, e, 'mon');
+              }}
+            />
+            월요일
+            <input className="start-time" type="time" {...register('hours.mon.start')} />
+            <input className="end-time" type="time" {...register('hours.mon.end')} />
+          </label>
+          <label className="closed">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                closedDayHandler(setValue, e, 'tue');
+              }}
+            />
+            화요일
+            <input className="start-time" type="time" {...register('hours.tue.start')} />
+            <input className="end-time" type="time" {...register('hours.tue.end')} />
+          </label>
+          <label className="closed">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                closedDayHandler(setValue, e, 'wed');
+              }}
+            />
+            수요일
+            <input className="start-time" type="time" {...register('hours.wed.start')} />
+            <input className="end-time" type="time" {...register('hours.wed.end')} />
+          </label>
+          <label className="closed">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                closedDayHandler(setValue, e, 'thu');
+              }}
+            />
+            목요일
+            <input className="start-time" type="time" {...register('hours.thu.start')} />
+            <input className="end-time" type="time" {...register('hours.thu.end')} />
+          </label>
+          <label className="closed">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                closedDayHandler(setValue, e, 'fri');
+              }}
+            />
+            금요일
+            <input className="start-time" type="time" {...register('hours.fri.start')} />
+            <input className="end-time" type="time" {...register('hours.fri.end')} />
+          </label>
+          <label className="closed">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                closedDayHandler(setValue, e, 'sat');
+              }}
+            />
+            토요일
+            <input className="start-time" type="time" {...register('hours.sat.start')} />
+            <input className="end-time" type="time" {...register('hours.sat.end')} />
+          </label>
+          <label className="closed">
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                closedDayHandler(setValue, e, 'sun');
+              }}
+            />
+            일요일
+            <input className="start-time" type="time" {...register('hours.sun.start')} />
+            <input className="end-time" type="time" {...register('hours.sun.end')} />
+          </label>
+        </div>
+        <label>
+          입장료
+          <input
+            type="number"
+            {...register('price', {
+              valueAsNumber: true,
+            })}
+          />
+        </label>
+        <label>
           <Button
             onClick={(e) => {
               e.preventDefault();
-              if (!snsUrlRef.current?.value) {
-                return setError('sns', {
-                  message: 'url을 입력해주세요!',
-                });
-              }
-              if (!snsNameRef.current?.value) {
-                return setError('sns', {
-                  message: 'sns명을 입력해주세요!',
-                });
-              }
-              appendSns({
-                link_title: snsNameRef.current.value,
-                link_type: snsSelectRef.current!.value,
-                link_url: snsUrlRef.current.value,
-              });
-              clearErrors('sns');
+              open({ onComplete: postcodeHandler });
             }}
           >
-            추가
+            주소 찾기
           </Button>
+          <input
+            type="text"
+            disabled
+            {...register('location', {
+              required: '주소를 입력해주세요.',
+            })}
+            ref={(e) => {
+              ref(e);
+              locationRef.current = e;
+            }}
+          />
+        </label>
+        <strong>{errors?.location?.message}</strong>
+
+        <label>
+          SNS
+          <div className="sns">
+            <select ref={snsSelectRef}>
+              <option value={SNS.insta}>{SNS.insta}</option>
+              <option value={SNS.website}>{SNS.website}</option>
+              <option value={SNS.kakao}>{SNS.kakao}</option>
+            </select>
+            <input type="text" ref={snsUrlRef} placeholder="url" />
+            <input type="text" ref={snsNameRef} placeholder="홈페이지명" />
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                if (!snsUrlRef.current?.value) {
+                  return setError('sns', {
+                    message: 'url을 입력해주세요!',
+                  });
+                }
+                if (!snsNameRef.current?.value) {
+                  return setError('sns', {
+                    message: 'sns명을 입력해주세요!',
+                  });
+                }
+                appendSns({
+                  link_title: snsNameRef.current.value,
+                  link_type: snsSelectRef.current!.value,
+                  link_url: snsUrlRef.current.value,
+                });
+                clearErrors('sns');
+              }}
+            >
+              추가
+            </Button>
+          </div>
+        </label>
+        <div className="sns-list">
+          {watch().sns &&
+            watch().sns.map((item, idx) => {
+              return (
+                <div className="sns-item" key={idx}>
+                  <p>{item.link_type}</p>
+                  <p>{item.link_title}</p>
+                  <p>{item.link_url}</p>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      removeSns(idx);
+                    }}
+                  >
+                    삭제
+                  </Button>
+                </div>
+              );
+            })}
         </div>
-      </label>
-      <div className="sns-list">
-        {watch().sns &&
-          watch().sns.map((item, idx) => {
-            return (
-              <div className="sns-item">
-                <p>{item.link_type}</p>
-                <p>{item.link_title}</p>
-                <p>{item.link_url}</p>
-                <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    removeSns(idx);
-                  }}
-                >
-                  삭제
-                </Button>
-              </div>
-            );
-          })}
-      </div>
-      <strong>{errors?.sns?.message}</strong>
-      <label className="imgs">
-        이미지 추가하기
-        <input
-          type="file"
-          accept="image/*"
-          ref={imageRef}
-          onChange={(e) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(e.target.files![0]);
-            reader.onload = (e) => {
-              appendImages(e.target!.result);
-            };
-          }}
-        />
-      </label>
-      <div className="preview">
-        {watch().images &&
-          watch().images.map((image, idx) => {
-            return (
-              <figure>
-                <img src={image}></img>
-                <span
-                  className="delete"
-                  onClick={() => {
-                    removeImage(idx);
-                  }}
-                >
-                  x
-                </span>
-              </figure>
-            );
-          })}
-      </div>
-      <label>
-        예약 필수
-        <input type="checkbox" {...register('reservation_required')} />
-      </label>
-      <button className="submit" type="submit">
-        추가하기
-      </button>
-    </Container>
+        <strong>{errors?.sns?.message}</strong>
+        <label className="imgs">
+          이미지 추가하기
+          <input
+            type="file"
+            accept="image/*"
+            ref={imageRef}
+            onChange={(e) => {
+              const reader = new FileReader();
+              reader.readAsDataURL(e.target.files![0]);
+              reader.onload = (e) => {
+                appendImages(e.target!.result);
+              };
+            }}
+          />
+        </label>
+        <div className="preview">
+          {watch().images &&
+            watch().images.map((image, idx) => {
+              return (
+                <figure key={idx}>
+                  <img src={image}></img>
+                  <span
+                    className="delete"
+                    onClick={() => {
+                      removeImage(idx);
+                    }}
+                  >
+                    x
+                  </span>
+                </figure>
+              );
+            })}
+        </div>
+        <label>
+          예약 필수
+          <input type="checkbox" {...register('reservation_required')} />
+        </label>
+        <button className="submit" type="submit">
+          추가하기
+        </button>
+      </Container>
+    </Card>
   );
 };
 

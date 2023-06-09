@@ -12,6 +12,13 @@ const Container = styled.div`
   box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.2);
   animation: appear-card 0.8s forwards;
 
+  .title {
+    margin-bottom: 20px;
+
+    font-size: 24px;
+    font-weight: 700;
+  }
+
   @keyframes appear-card {
     0% {
       bottom: -10px;
