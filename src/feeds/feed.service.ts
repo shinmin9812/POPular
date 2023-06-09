@@ -16,7 +16,7 @@ import { handleImages } from 'src/utils/handle.images.util';
 export class FeedsService {
 	constructor(
 		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
-	) { }
+	) {}
 
 	async getAllFeeds(): Promise<Feed[]> {
 		try {
@@ -42,7 +42,11 @@ export class FeedsService {
 				query = query.where('board', board);
 			}
 
-			const feeds = await query.populate('author').populate('store_id').populate('comments').exec();
+			const feeds = await query
+				.populate('author')
+				.populate('store_id')
+				.populate('comments')
+				.exec();
 
 			return feeds;
 		} catch (err) {
@@ -68,10 +72,7 @@ export class FeedsService {
 		const limit = 7;
 		const offset = (page - 1) * limit;
 
-		const feeds = await this.feedModel
-			.find()
-			.limit(limit)
-			.skip(offset);
+		const feeds = await this.feedModel.find().limit(limit).skip(offset);
 
 		return feeds;
 	}
