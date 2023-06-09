@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.button`
-  position: fixed;
+  position: absolute;
   top: 160px;
   left: 50%;
 
@@ -19,7 +19,7 @@ const Container = styled.button`
   font-size: 14px;
   font-weight: 600;
 
-  transform: translateX(-50%);
+  transform: translateX(-100%);
 
   transition: all 0.5s;
 
@@ -27,6 +27,12 @@ const Container = styled.button`
     cursor: pointer;
 
     transform: translateX(-50%) scale(1.2);
+  }
+
+  @media all and (max-width: 767px) {
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 `;
 

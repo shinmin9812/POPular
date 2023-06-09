@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { Store } from '../../../types/store';
 import CarouselItem from './CarouselItem';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
 import { Coord, Map } from '../containers/Map';
 
 const Container = styled.div<{ currentIdx: number }>`
@@ -12,7 +10,7 @@ const Container = styled.div<{ currentIdx: number }>`
   display: flex;
   align-items: center;
 
-  width: 100vw;
+  width: calc(100vw - 500px);
   height: 200px;
 
   z-index: 200;
@@ -20,7 +18,7 @@ const Container = styled.div<{ currentIdx: number }>`
   transform: ${(props) => `translateX(-${props.currentIdx > 0 && 320 * props.currentIdx}px)`};
   transition: all 1s;
 
-  margin-left: calc((100vw - 300px) / 2);
+  margin-left: 20vw;
 
   animation: appear 1s forwards;
 
@@ -31,6 +29,10 @@ const Container = styled.div<{ currentIdx: number }>`
     100% {
       bottom: 150px;
     }
+  }
+
+  @media all and (max-width: 767px) {
+    margin-left: calc((100vw - 300px) / 2);
   }
 `;
 
