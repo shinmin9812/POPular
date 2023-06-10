@@ -181,7 +181,7 @@ const StoreForm = ({ defaultData, setPreviewData }: Props) => {
     <>
       <Container>
         <Card className="add-store">
-          <p className="title">스토어 추가</p>
+          {!defaultData && <p className="title">스토어 추가</p>}
           <form
             onSubmit={handleSubmit((data) => {
               if (data.end_date < data.start_date) {
