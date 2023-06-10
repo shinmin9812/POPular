@@ -8,7 +8,6 @@ type Place = {
 
 const Container = styled.div`
   width: 100%;
-  margin-top: 40px;
 
   .store-location-title {
     font-size: 18px;
@@ -17,13 +16,16 @@ const Container = styled.div`
 
   .store-location-img {
     width: 100%;
-    height: 175px;
-    margin-top: 10px;
+    aspect-ratio: 1/1;
+    margin-top: 20px;
   }
 
-  .store-location {
-    font-size: 14px;
-    margin-top: 10px;
+  .store-location-content {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 20px 0 4px 0;
+
+    word-break: keep-all;
   }
 `;
 
@@ -50,7 +52,7 @@ const InfoPlace = ({ location, coordinates }: Place) => {
     <Container>
       <p className="store-location-title">오시는 길</p>
       <div id="store-detail-map" className="store-location-img"></div>
-      <p className="store-location">{location}</p>
+      <p className="store-location-content">{location}</p>
     </Container>
   );
 };

@@ -1,6 +1,7 @@
 import { API_PATH } from '../constants/path';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Store, PostedStore } from '../types/store';
+import { Post } from '../types/post';
 
 interface CoordProps {
   x: number;
@@ -20,6 +21,11 @@ export const getStoreById = async (storeId: string) => {
 
 export const getStoreByCoord = async ({ x, y, distance }: CoordProps) => {
   const response = await (await fetch(`${API_PATH.STORE.GET.BY_COORD}x=${x}&y=${y}&distance=${distance}`)).json();
+  return response;
+};
+
+export const getAllReviewFeeds = async () => {
+  const response = await (await fetch(API_PATH.POST.GET.ALL_REVIEW_FEEDS)).json();
   return response;
 };
 
@@ -57,6 +63,10 @@ export const useGetAllStores = () => {
 
 export const useGetStoreById = (storeId: string, option?: object) => {
   return useQuery<Store>(['store', storeId], () => getStoreById(storeId), option);
+};
+
+export const useGetAllReviewFeeds = (option?: object) => {
+  return useQuery<Post[]>(['reviewFeeds'], () => getAllReviewFeeds(), option);
 };
 
 export const usePostStore = () => {

@@ -68,7 +68,7 @@ const StoreDetailPage = () => {
               후기
             </button>
           </div>
-          {isDetail ? <StoreInfo store={data} /> : <StoreReview />}
+          {isDetail ? <StoreInfo store={data} /> : <StoreReview storeId={storeId!} />}
         </>
       )}
     </Container>
