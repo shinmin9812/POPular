@@ -28,10 +28,14 @@ export class FeedsController {
 		return await this.feedsService.getAllFeeds();
 	}
 
-	@ApiOperation({ summary: '게시글 페이지네이션' })
-	@Get('pages')
-	async getPaginate(@Query('page') page: number = 1) {
-		return await this.feedsService.getPaginate(page);
+	@ApiOperation({ summary: '유저가 작성한 게시글 페이지네이션 조회' })
+	@Get('user/:userId')
+	async getPaginate(
+		@Param('userId') id: string,
+		@Query('pageIndex') pageIndex: number,
+		@Query('order') order?: string,
+	) {
+		return await this.feedsService.getPaginateByUserId(id, pageIndex, order);
 	}
 
 	@ApiOperation({ summary: '모든 모집게시판 조회' })
@@ -83,7 +87,6 @@ export class FeedsController {
 		return this.feedsService.addLike(feedId, like);
 	}
 
-
 	@ApiOperation({ summary: '게시글 신고 추가 및 삭제' })
 	@Patch(':id/report')
 	async addReport(
@@ -93,7 +96,6 @@ export class FeedsController {
 		const { report } = updateFeedDto;
 		return this.feedsService.addReport(feedId, report);
 	}
-
 
 	@ApiOperation({ summary: '게시글 댓글 추가' })
 	@Patch(':id/comment')
