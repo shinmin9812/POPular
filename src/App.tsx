@@ -4,7 +4,7 @@ import GlobalStyle from './styles/GlobalStyle';
 function App() {
   return (
     <>
-      <MetaTag title="POPular" url="www.popular.com" />;
+      <MetaTag title="POPular" url="www.popular.com" />
       <GlobalStyle />
       <Router />
     </>
