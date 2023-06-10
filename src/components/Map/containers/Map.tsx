@@ -78,7 +78,6 @@ const Map = () => {
       level: zoom,
       maxLevel: 8,
     };
-    console.log('render');
 
     const createdMap = new window.kakao.maps.Map(container, options);
     createdMap.relayout();
