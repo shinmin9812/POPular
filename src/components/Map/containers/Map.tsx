@@ -208,7 +208,7 @@ const Container = styled.div`
   right: 0;
 
   height: calc(100vh - var(--header-height));
-  width: calc(100vw - 500px);
+  width: calc(100vw - 400px);
   overflow: hidden;
 
   .custom-overlay {
@@ -255,7 +255,7 @@ const Container = styled.div`
     }
   }
 
-  @media all and (max-width: 767px) {
+  @media all and (max-width: 1200px) {
     height: calc(100vh - var(--header-height) - var(--GNA-height));
     width: 100vw;
   }

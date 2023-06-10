@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Container = styled.button`
   position: absolute;
-  top: 160px;
+  top: 80px;
   left: 50%;
 
   width: 130px;
@@ -19,7 +19,7 @@ const Container = styled.button`
   font-size: 14px;
   font-weight: 600;
 
-  transform: translateX(-100%);
+  transform: translateX(-50%);
 
   transition: all 0.5s;
 
