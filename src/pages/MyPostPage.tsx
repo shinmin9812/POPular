@@ -10,7 +10,7 @@ const MyPostPage = () => {
   }, []);
 
   async function fetchData() {
-    const response = await fetch('/post/all');
+    const response = await fetch('http://34.22.81.36:3000/feeds');
     const result: Post[] = await response.json();
 
     setPost(result);
