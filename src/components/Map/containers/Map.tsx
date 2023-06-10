@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { API_PATH } from '../../../constants/path';
 import { Store } from '../../../types/store';
 import StoreSheet from '../components/StoreSheet';
+import KakaoMap from '../components/KakaoMap';
 
 declare global {
   interface Window {
@@ -77,6 +78,7 @@ const Map = () => {
       level: zoom,
       maxLevel: 8,
     };
+    console.log('render');
 
     const createdMap = new window.kakao.maps.Map(container, options);
     createdMap.relayout();
@@ -181,7 +183,7 @@ const Map = () => {
 
   return (
     <Container>
-      <div id="map" style={{ width: '100%', height: '100%' }} />
+      <KakaoMap />
       {isFetched && stores && stores.length > 0 && (
         <SlideCarousel
           setSlectedId={setSlectedId}
