@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
-import StoreForm from '../../components/Admin/components/Forms/StoreForm';
 import { useGetAllStores } from '../../api/storeApi';
 import AdminStoreList from '../../components/Admin/components/Stores/AdminStoreList';
-import StoreList from '../../components/common/Store/StoreList';
-import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 const Container = styled.div`

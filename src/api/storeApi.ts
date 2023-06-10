@@ -55,8 +55,8 @@ export const useGetAllStores = () => {
   return useQuery<Store[]>(['allStores'], getAllStores);
 };
 
-export const useGetStoreById = (storeId: string) => {
-  return useQuery<Store>(['store', storeId], () => getStoreById(storeId));
+export const useGetStoreById = (storeId: string, option?: object) => {
+  return useQuery<Store>(['store', storeId], () => getStoreById(storeId), option);
 };
 
 export const usePostStore = () => {

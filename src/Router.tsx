@@ -21,10 +21,9 @@ import UserUpdatePage from './pages/UserUpdatePage';
 import AdminLayout from './components/Admin/components/AdminLayout';
 import AdminPage from './pages/Admin/AdminPage';
 import AdminStoreAddPage from './pages/Admin/AdminStoreAddPage';
-import AdminStoreStatisticsPage from './pages/Admin/AdminStoreEditPage';
 import AdminStoreEditPage from './pages/Admin/AdminStoreEditPage';
-import StoreForm from './components/Admin/components/Forms/StoreForm';
 import AdminStoreEditPageDetail from './pages/Admin/AdminStoreEditPageDetail';
+import AdminStoreStatisticsPage from './pages/Admin/AdminStoreStatisticsPage';
 
 const Router = () => {
   return (

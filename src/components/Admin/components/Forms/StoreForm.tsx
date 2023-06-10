@@ -8,8 +8,8 @@ import { Category } from '../../../../types/category';
 import { SNS } from '../../../../types/sns';
 import { useEditStore, usePostStore } from '../../../../api/storeApi';
 import Card from '../../../common/Card/Card';
-import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { useParams } from 'react-router-dom';
 
 const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
@@ -100,6 +100,8 @@ const StoreForm = ({ defaultData }: Props) => {
 
   const defaultFormData = defaultData ? defaultData : defaultFormValues;
 
+  const { storeId } = useParams();
+
   if (defaultData) {
     defaultData.end_date = dayjs(defaultData.end_date).format('YYYY-MM-DD');
     defaultData.start_date = dayjs(defaultData.start_date).format('YYYY-MM-DD');
@@ -108,8 +110,6 @@ const StoreForm = ({ defaultData }: Props) => {
   const methods = useForm<PostedStore>({
     defaultValues: defaultFormData,
   });
-
-  const { storeId } = useParams();
 
   const {
     register,
