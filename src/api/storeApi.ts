@@ -14,7 +14,7 @@ export const getAllStores = async () => {
 };
 
 export const getStoreById = async (storeId: string) => {
-  const response = await (await fetch(`${API_PATH.STORE.GET.BY_ID}/${storeId}`)).json();
+  const response = await (await fetch(`${API_PATH.STORE.GET.BY_ID.replace(':storeId', storeId)}`)).json();
   return response;
 };
 
@@ -37,14 +37,32 @@ export const postStore = async (storeData: PostedStore): Promise<Store> => {
   }
 };
 
+export const editPost = async ({ storeData, storeId }: { storeData: PostedStore; storeId: string }): Promise<Store> => {
+  try {
+    const request = await fetch(API_PATH.STORE.PUT.replace(':storeId', storeId), {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'PUT',
+      body: JSON.stringify(storeData),
+    });
+    const result = await request.json();
+    return result;
+  } catch (err) {
+    throw new Error('포스트 전송에 실패하였습니다!');
+  }
+};
+
 export const useGetAllStores = () => {
   return useQuery<Store[]>(['allStores'], getAllStores);
 };
 
-export const useGetStoreById = (storeId: string) => {
-  return useQuery<Store[]>(['store', storeId], () => getStoreById(storeId));
+export const useGetStoreById = (storeId: string, option?: object) => {
+  return useQuery<Store>(['store', storeId], () => getStoreById(storeId), option);
 };
 
 export const usePostStore = () => {
   return useMutation(postStore);
+};
+
+export const useEditStore = () => {
+  return useMutation(editPost);
 };

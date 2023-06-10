@@ -37,7 +37,7 @@ interface Props {
 }
 
 const Card = ({ children, className }: Props) => {
-  return <Container className={className}>{children}</Container>;
+  return <Container className={`card ${className}`}>{children}</Container>;
 };
 
 export default Card;

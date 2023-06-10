@@ -21,9 +21,10 @@ import UserUpdatePage from './pages/UserUpdatePage';
 import AdminLayout from './components/Admin/components/AdminLayout';
 import AdminPage from './pages/Admin/AdminPage';
 import AdminStoreAddPage from './pages/Admin/AdminStoreAddPage';
-import AdminStoreStatisticsPage from './pages/Admin/AdminStoreEditPage';
 import AdminStoreEditPage from './pages/Admin/AdminStoreEditPage';
-import StoreForm from './components/Admin/components/Forms/StoreForm';
+import AdminStoreEditPageDetail from './pages/Admin/AdminStoreEditPageDetail';
+import AdminStoreStatisticsPage from './pages/Admin/AdminStoreStatisticsPage';
+import AdminStoreDeletePage from './pages/Admin/AdminStoreDeletePage';
 
 const Router = () => {
   return (
@@ -55,9 +56,9 @@ const Router = () => {
           <Route path={CLIENT_PATH.ADMIN_STORE.STATISTICS} element={<AdminStoreStatisticsPage />} />
           <Route path={CLIENT_PATH.ADMIN_STORE.ADD} element={<AdminStoreAddPage />} />
           <Route path={CLIENT_PATH.ADMIN_STORE.EDIT} element={<AdminStoreEditPage />}>
-            <Route path={`${CLIENT_PATH.ADMIN_STORE.EDIT}/:storeId`} element={<StoreForm />} />
+            <Route path={`${CLIENT_PATH.ADMIN_STORE.EDIT}/:storeId`} element={<AdminStoreEditPageDetail />} />
           </Route>
-          <Route path={CLIENT_PATH.ADMIN_STORE.DELETE} element={<AdminPage />} />
+          <Route path={CLIENT_PATH.ADMIN_STORE.DELETE} element={<AdminStoreDeletePage />} />
 
           <Route path={CLIENT_PATH.ADMIN_USER.STATISTICS} element={<AdminPage />} />
           <Route path={CLIENT_PATH.ADMIN_USER.ADD} element={<AdminPage />} />
