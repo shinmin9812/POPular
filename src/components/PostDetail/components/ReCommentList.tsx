@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import ReCommentArrowIcon from '../../common/Icons/ReCommentArrowIcon';
-import { CommentAuthorName, CommentContent, CommentUpdateAt } from './CommentItem';
+import XmarkIcon from '../../common/Icons/XmarkIcon';
+import { CommentAuthorName, CommentContent, CommentUpdateAt, CommentDeleteButton } from './CommentItem';
+import { Comment } from '../../../types/comment';
 
 const ReCommentWrap = styled.ul`
   background-color: #fafafa;
   border: 1px solid #dddddd;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 const ReCommentItem = styled.li`
@@ -17,21 +19,20 @@ const ReCommentItem = styled.li`
   }
 `;
 
-const ReComment = () => {
+const ReComment = ({ reComments }: { reComments: Comment[] | undefined }) => {
   return (
     <ReCommentWrap>
-      <ReCommentItem>
-        <ReCommentArrowIcon />
-        <CommentAuthorName>이준석</CommentAuthorName>
-        <CommentContent>5월 15일에 XXX 팝업 스토어 갈 사람 구해요요 dfdfdf dfdfdfdfdfdfdfsdfkjsdlfjk</CommentContent>
-        <CommentUpdateAt>06.05 11:48:51</CommentUpdateAt>
-      </ReCommentItem>
-      <ReCommentItem>
-        <ReCommentArrowIcon />
-        <CommentAuthorName>이준석</CommentAuthorName>
-        <CommentContent>5월 15일에 XXX 팝업 스토어 갈 사람 구해요요 dfdfdf dfdfdfdfdfdfdfsdfkjsdlfjk</CommentContent>
-        <CommentUpdateAt>06.05 11:48:51</CommentUpdateAt>
-      </ReCommentItem>
+      {reComments?.map((reComment, index) => (
+        <ReCommentItem key={reComment._id + index}>
+          <ReCommentArrowIcon />
+          <CommentAuthorName>{reComment.author.nickname}</CommentAuthorName>
+          <CommentContent>{reComment.content}</CommentContent>
+          <CommentUpdateAt>{reComment.updatedAt.slice(0, 10)}</CommentUpdateAt>
+          <CommentDeleteButton>
+            <XmarkIcon />
+          </CommentDeleteButton>{' '}
+        </ReCommentItem>
+      ))}
     </ReCommentWrap>
   );
 };

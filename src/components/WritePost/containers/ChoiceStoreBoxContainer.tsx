@@ -28,6 +28,7 @@ const ChoiceStoreBoxContainer = () => {
     const response = await fetch('http://34.22.81.36:3000/stores');
     const result = await response.json();
     setStores(result);
+    console.log(result);
   }
   useEffect(() => {
     fetchData();

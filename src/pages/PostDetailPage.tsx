@@ -5,11 +5,15 @@ import PostInfo from '../components/PostDetail/components/PostInfo';
 import StoreWrap from '../components/PostDetail/components/StoreWrap';
 import StoreItem from '../components/common/Store/StoreItem';
 import PostContent from '../components/PostDetail/components/PostContent';
-import CommentsList from '../components/PostDetail/components/CommentsList';
+import CommentListContainer from '../components/PostDetail/containers/CommentListContainer';
 import UpdateAndDeleteContainer from '../components/PostDetail/containers/UpdateAndDeleteButtonContainer';
 import LikesAndReportsContainer from '../components/PostDetail/containers/LikeAndReportButtonContainer';
 import { useParams } from 'react-router-dom';
 import CommentInputContainer from '../components/PostDetail/containers/CommentInputContainer';
+import { useAppDispatch } from '../Hooks/useSelectorHooks';
+import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
+import { Comment } from '../types/comment';
+
 const Container = styled.div`
   width: 100%;
 `;
@@ -17,7 +21,10 @@ const Container = styled.div`
 const PostDetailPage = () => {
   const postId = useParams().postId;
   const [post, setPost] = useState<Post | null>(null);
-
+  const dispatch = useAppDispatch();
+  const setComments = (comments: Comment[]) => {
+    return dispatch(PostDetailActions.setComment(comments));
+  };
   useEffect(() => {
     fetchData();
   }, []);
@@ -26,6 +33,7 @@ const PostDetailPage = () => {
     const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}`);
     const result: Post = await response.json();
     setPost(result);
+    setComments(result.comments);
   }
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {
@@ -49,8 +57,8 @@ const PostDetailPage = () => {
       )}
       <PostContent content={post ? post.content : ''} rating={post ? post.ratings : 0}></PostContent>
       <UpdateAndDeleteContainer />
-      <LikesAndReportsContainer />
-      <CommentsList comments={post ? post.comments : undefined} />
+      <LikesAndReportsContainer likes={post.likes.length} reports={post.reports.length} />
+      <CommentListContainer />
       <CommentInputContainer />
     </Container>
   );

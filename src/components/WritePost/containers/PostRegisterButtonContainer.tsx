@@ -62,6 +62,7 @@ const PostRegisterButtonContainer = () => {
           body: JSON.stringify(data),
         });
       }
+      console.log(data);
       if (response.ok) {
         setPostTitle('');
         setPostContent('');

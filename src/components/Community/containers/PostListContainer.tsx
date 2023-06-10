@@ -60,7 +60,7 @@ const PostListItemContainer = () => {
 
   useEffect(() => {
     fetchData(tab, setPosts, navigate);
-  }, [tab, navigate]);
+  }, [tab]);
 
   // 필터 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDateUse;

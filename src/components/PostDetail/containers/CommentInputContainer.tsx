@@ -1,6 +1,9 @@
 import CommentInput from '../components/CommentInput';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
+import { PostDetailActions } from '../PostDetailSlice';
+import { Comment } from '../../../types/comment';
 
 type aa = {
   author: string;
@@ -12,9 +15,13 @@ type aa = {
   recomments: aa[];
 };
 
-const feedCommentApi = async (url = '', method = '', postId = '', data: aa, commentId?: string) => {
-  const response = await fetch(url, {
-    method: method,
+const feedCommentApi = async (
+  data: aa,
+  addComment: (comment: Comment) => void,
+  setInput: Dispatch<SetStateAction<string>>,
+) => {
+  const response = await fetch(`http://34.22.81.36:3000/comments`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -22,17 +29,9 @@ const feedCommentApi = async (url = '', method = '', postId = '', data: aa, comm
     body: JSON.stringify(data),
   });
   const result = await response.json();
-  const response2 = await fetch(`http://34.22.81.36:3000/feeds/${postId}/comment`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-    body: JSON.stringify({
-      comment: result._id,
-    }),
-  });
-  const result2 = await response2.json();
+  addComment(result);
+  console.log(result);
+  setInput('');
 };
 
 const getUserInfo = async (setIsMember: React.Dispatch<React.SetStateAction<string | undefined>>) => {
@@ -56,6 +55,10 @@ const getUserInfo = async (setIsMember: React.Dispatch<React.SetStateAction<stri
 const CommentInputContainer = ({ commentId }: { commentId?: string }) => {
   const [input, setInput] = useState('');
   const [isMember, setIsMember] = useState<string>();
+  const dispatch = useAppDispatch();
+  const addComment = (comment: Comment) => {
+    return dispatch(PostDetailActions.addComment(comment));
+  };
   const postId = useParams().postId;
   useEffect(() => {
     getUserInfo(setIsMember);
@@ -73,9 +76,7 @@ const CommentInputContainer = ({ commentId }: { commentId?: string }) => {
       },
       recomments: [],
     };
-    commentId
-      ? feedCommentApi(`http://34.22.81.36:3000/comments/${commentId}/recomment`, 'PATCH', postId, data, commentId)
-      : feedCommentApi(`http://34.22.81.36:3000/comments`, 'POST', postId, data);
+    feedCommentApi(data, addComment, setInput);
   };
   return <CommentInput onChange={onChange} value={input} onClick={onClick} />;
 };

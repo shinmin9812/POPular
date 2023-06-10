@@ -20,16 +20,34 @@ const ButtonWrap = styled.div`
   margin-top: 20px;
 `;
 
-const LikesAndReports = () => {
+const LikesAndReports = ({
+  likes,
+  reports,
+  onClick,
+}: {
+  likes: number | undefined;
+  reports: number | undefined;
+  onClick: (isLike: string) => Promise<void>;
+}) => {
   return (
     <ButtonWrap>
-      <Button>
+      <Button
+        onClick={() => {
+          onClick('like');
+        }}
+      >
         <LikeIcon />
         좋아요
+        <span>{likes}</span>
       </Button>
-      <Button>
+      <Button
+        onClick={() => {
+          onClick('report');
+        }}
+      >
         <ReportIcon />
         <ReportNameWrap>신고하기</ReportNameWrap>
+        <span>{reports}</span>
       </Button>
     </ButtonWrap>
   );

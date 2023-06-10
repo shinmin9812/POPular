@@ -13,5 +13,6 @@ export interface Comment {
     type: CommentParentType;
     id: string;
   };
+  updatedAt: string
   recomments?: Comment[];
 }
