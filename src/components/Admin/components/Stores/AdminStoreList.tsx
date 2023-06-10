@@ -1,4 +1,3 @@
-import React from 'react';
 import { Store } from '../../../../types/store';
 import styled from 'styled-components';
 import AdminStoreItem from './AdminStoreItem';

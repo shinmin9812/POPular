@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 type Place = {
   location: string | undefined;
-  coordinates: [string, string];
+  coordinates: [number, number];
 };
 
 const Container = styled.div`
@@ -44,7 +44,7 @@ const InfoPlace = ({ location, coordinates }: Place) => {
     });
 
     marker.setMap(map);
-  }, [coordinates]);
+  }, [coordinates, location]);
 
   return (
     <Container>
