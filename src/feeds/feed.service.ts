@@ -5,7 +5,7 @@ import {
 	InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model, Types, PaginateModel, PaginateResult } from 'mongoose';
 import { Feed } from './feed.schema';
 import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
@@ -15,7 +15,7 @@ import { handleImages } from 'src/utils/handle.images.util';
 @Injectable()
 export class FeedsService {
 	constructor(
-		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
+		@InjectModel(Feed.name) private readonly feedModel: PaginateModel<Feed>,
 	) {}
 
 	async getAllFeeds(): Promise<Feed[]> {
@@ -68,13 +68,27 @@ export class FeedsService {
 		return await this.getFeedsByBoard('free');
 	}
 
-	async getPaginate(page: number): Promise<Feed[]> {
-		const limit = 7;
-		const offset = (page - 1) * limit;
+	async getPaginateById(
+		id: string,
+		pageIndex: number,
+		order?: string,
+	): Promise<PaginateResult<Feed>> {
+		let sort: { [key: string]: number } = { createdAt: -1 };
 
-		const feeds = await this.feedModel.find().limit(limit).skip(offset);
+		if (order === 'desc') {
+			sort = { createdAt: -1 };
+		} else if (order === 'asc') {
+			sort = { createdAt: 1 };
+		}
 
-		return feeds;
+		return this.feedModel.paginate(
+			{ author: id },
+			{
+				sort,
+				page: pageIndex,
+				limit: 5,
+			},
+		);
 	}
 
 	async getFeedById(id: string): Promise<Feed> {

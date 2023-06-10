@@ -54,8 +54,17 @@ export class UserService {
 		const base64Image = body.profile;
 		const imageUrl = await handleImage(base64Image, './uploads', '');
 
+		const {
+			profile,
+			introduce,
+			nickname,
+			phone_number,
+			pw,
+			interested_category,
+			allow_notification,
+		} = body;
+
 		//변경 비밀번호 해싱
-		const pw = body.pw;
 		const hashedPassword = await hashPassword(pw);
 
 		const updateUser = {

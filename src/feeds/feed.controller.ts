@@ -28,11 +28,15 @@ export class FeedsController {
 		return await this.feedsService.getAllFeeds();
 	}
 
-	// @ApiOperation({ summary: '유저가 작성한 게시글 무한 스크롤 조회' })
-	// @Get('user/:userId/:pageIndex')
-	// async getPaginate(@Param('userId') id: string, @Param('pageIndex') pageIndex: number) {
-	// 	return await this.feedsService.get(id, pageIndex);
-	// }
+	@ApiOperation({ summary: '유저가 작성한 게시글 페이지네이션 조회' })
+	@Get('user/:userId')
+	async getPaginate(
+		@Param('userId') id: string,
+		@Query('pageIndex') pageIndex: number,
+		@Query('order') order?: string,
+	) {
+		return await this.feedsService.getPaginateById(id, pageIndex, order);
+	}
 
 	@ApiOperation({ summary: '모든 모집게시판 조회' })
 	@Get('gather')
