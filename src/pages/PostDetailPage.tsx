@@ -13,6 +13,7 @@ import CommentInputContainer from '../components/PostDetail/containers/CommentIn
 import { useAppDispatch } from '../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
 import { Comment } from '../types/comment';
+import MetaTag from '../components/SEO/MetaTag';
 
 const Container = styled.div`
   width: 100%;
@@ -41,6 +42,7 @@ const PostDetailPage = () => {
   }
   return (
     <Container>
+      <MetaTag title={`POPular | ${post.title}`} />
       <PostInfo
         boardType={post.board}
         title={post.title}

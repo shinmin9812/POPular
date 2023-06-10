@@ -5,6 +5,7 @@ import PostContentContainer from '../components/WritePost/containers/PostContent
 import RatingContainer from '../components/WritePost/containers/RatingContainer';
 import ChoiceStoreBoxContainer from '../components/WritePost/containers/ChoiceStoreBoxContainer';
 import PostRegisterButtonContainer from '../components/WritePost/containers/PostRegisterButtonContainer';
+import MetaTag from '../components/SEO/MetaTag';
 const Container = styled.div`
   width: 100%;
   position: relative;
@@ -13,6 +14,7 @@ const Container = styled.div`
 const WritePostPage = () => {
   return (
     <Container>
+      <MetaTag title="POPular | 글쓰기" />
       <TabsContainer />
       <PostTitleContainer />
       <PostContentContainer />

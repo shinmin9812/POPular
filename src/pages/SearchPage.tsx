@@ -4,6 +4,7 @@ import { Store } from '../types/store';
 import SearchInput from '../components/common/SearchInput/SearchInput';
 import StoreList from '../components/common/Store/StoreList';
 import FilterContainer from '../components/Community/containers/FilterContainer';
+import MetaTag from '../components/SEO/MetaTag';
 
 const Container = styled.div`
   width: 100%;
@@ -25,6 +26,7 @@ const SearchPage = () => {
 
   return (
     <Container>
+      <MetaTag title={`POPular | 검색`} />
       <SearchInput placeholder="제목을 입력하세요." />
       <FilterContainer />
       <StoreList stores={stores} />

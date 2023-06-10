@@ -3,6 +3,7 @@ import Profile from '../components/User/components/Profile';
 import Line from '../components/User/components/Line';
 import ProfilePostList from '../components/User/containers/ProfilePostList';
 import Filter from '../components/User/containers/Filter';
+import MetaTag from '../components/SEO/MetaTag';
 
 const Container = styled.div`
   width: 100%;

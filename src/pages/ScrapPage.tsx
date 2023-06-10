@@ -2,10 +2,12 @@
 import { storeData } from '../mocks/data/stores';
 import StoreList from '../components/common/Store/StoreList';
 import styled from 'styled-components';
+import MetaTag from '../components/SEO/MetaTag';
 
 const ScrapPage = () => {
   return (
     <div>
+      <MetaTag title={`POPular | 위시리스트`} />
       <Title>위시리스트</Title>
       <StoreList stores={storeData} />
     </div>

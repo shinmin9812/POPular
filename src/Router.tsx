@@ -31,9 +31,9 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
+          <Route path={CLIENT_PATH.HOME} element={<HomePage />}></Route>
           <Route path={CLIENT_PATH.WRITE} element={<WritePostPage />}></Route>
           <Route path={CLIENT_PATH.POST} element={<PostDetailPage />}></Route>
-          <Route path={CLIENT_PATH.HOME} element={<HomePage />}></Route>
           <Route path={CLIENT_PATH.MAP} element={<MapPage />}></Route>
           <Route path={CLIENT_PATH.SEARCH} element={<SearchPage />}></Route>
           <Route path={CLIENT_PATH.BOARD} element={<CommunityPage />}></Route>

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import StoreList from '../components/common/Store/StoreList';
 import { storeData } from '../mocks/data/stores';
+import MetaTag from '../components/SEO/MetaTag';
 
 // dummydata로 임시 세팅
 
@@ -14,6 +15,7 @@ const RecentListPage = () => {
 
   return (
     <>
+      <MetaTag title={`POPular | 최근 본 스토어`} />
       <Title>최근 본 스토어</Title>
       <StoreList stores={stores} />
     </>

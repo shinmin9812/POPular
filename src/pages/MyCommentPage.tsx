@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Comment } from '../types/comment';
 import CommentList from '../components/UserMenu/components/CommentList';
+import MetaTag from '../components/SEO/MetaTag';
 
 const MyCommentPage = () => {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -17,6 +18,7 @@ const MyCommentPage = () => {
 
   return (
     <>
+      <MetaTag title={`POPular | 내가 쓴 댓글`} />
       <Title>내가 쓴 댓글</Title>
       <CommentList comments={comments} />
     </>

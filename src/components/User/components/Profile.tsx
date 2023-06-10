@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import MetaTag from '../../SEO/MetaTag';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -61,6 +62,7 @@ const Profile = () => {
   }
   return (
     <Container>
+      <MetaTag title={`POPular | ${user.nickname}님의 프로필`} />
       {mutation.isLoading ? (
         'loaging...'
       ) : (

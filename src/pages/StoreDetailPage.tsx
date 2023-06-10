@@ -5,6 +5,7 @@ import StoreInfo from '../components/StoreDetail/container/StoreInfo';
 import StoreReview from '../components/StoreDetail/container/StoreReview';
 import { useParams } from 'react-router-dom';
 import { useGetStoreById } from '../api/storeApi';
+import MetaTag from '../components/SEO/MetaTag';
 
 const Container = styled.div<{ isDetail: boolean }>`
   .detail-top-btn {
@@ -50,28 +51,31 @@ const StoreDetailPage = () => {
   const { data } = useGetStoreById(storeId!);
 
   return (
-    <Container isDetail={isDetail}>
-      {data && (
-        <>
-          <StoreTitle store={data} />
-          <div className="detail-top-btn">
-            <button
-              className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'}
-              onClick={() => setIsDetail(true)}
-            >
-              상세 정보
-            </button>
-            <button
-              className={isDetail ? 'store-comment-btn active' : 'store-comment-btn'}
-              onClick={() => setIsDetail(false)}
-            >
-              후기
-            </button>
-          </div>
-          {isDetail ? <StoreInfo store={data} /> : <StoreReview storeId={storeId!} />}
-        </>
-      )}
-    </Container>
+    <>
+      {data && <MetaTag title={`POPular | ${data.title}`} url="www.popular.com" />}
+      <Container isDetail={isDetail}>
+        {data && (
+          <>
+            <StoreTitle store={data} />
+            <div className="detail-top-btn">
+              <button
+                className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'}
+                onClick={() => setIsDetail(true)}
+              >
+                상세 정보
+              </button>
+              <button
+                className={isDetail ? 'store-comment-btn active' : 'store-comment-btn'}
+                onClick={() => setIsDetail(false)}
+              >
+                후기
+              </button>
+            </div>
+            {isDetail ? <StoreInfo store={data} /> : <StoreReview storeId={storeId!} />}
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 

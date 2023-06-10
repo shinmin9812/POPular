@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import MemberMenu from '../components/UserMenu/components/MemberMenu';
 import NonMemberMenu from '../components/UserMenu/components/NonMemberMenu';
+import MetaTag from '../components/SEO/MetaTag';
 
 const UserMenuPage = () => {
   const [isMember, setIsMember] = useState(false);
@@ -33,7 +34,12 @@ const UserMenuPage = () => {
     getUserInfo();
   }, []);
 
-  return <Container>{isMember ? <MemberMenu /> : <NonMemberMenu />}</Container>;
+  return (
+    <Container>
+      <MetaTag title={`POPular | 마이페이지`} />
+      {isMember ? <MemberMenu /> : <NonMemberMenu />}
+    </Container>
+  );
 };
 
 export default UserMenuPage;

@@ -3,6 +3,7 @@ import NotificationItem from '../components/Notifications/components/Notificatio
 import { Notification } from '../types/notification';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import MetaTag from '../components/SEO/MetaTag';
 
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -17,6 +18,7 @@ const NotificationsPage = () => {
 
   return (
     <>
+      <MetaTag title={`POPular | 알림 목록`} />
       <Title>알림 목록</Title>
       {notifications.map((data: Notification) => (
         <NotificationItem type={data.type} checked={data.checked} content={data.content} />

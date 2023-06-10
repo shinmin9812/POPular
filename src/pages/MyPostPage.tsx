@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Post } from '../types/post';
 import PostList from '../components/UserMenu/components/PostList';
+import MetaTag from '../components/SEO/MetaTag';
 
 const MyPostPage = () => {
   const [posts, setPost] = useState<Post[]>([]);
@@ -18,6 +19,7 @@ const MyPostPage = () => {
 
   return (
     <div>
+      <MetaTag title={`POPular | 내가 쓴 글`} />
       <Title>내가 쓴 글</Title>
       <PostList posts={posts} />
     </div>
