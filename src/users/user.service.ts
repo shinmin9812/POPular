@@ -137,16 +137,18 @@ export class UserService {
 			profile: target.profile,
 		};
 
-		if (!user.following.includes(followerInfo)) {
-			user.following.push(followerInfo);
-		}
+		if (user && target) {
+			if (!user.following.includes(followerInfo)) {
+				user.following.push(followerInfo);
+			}
 
-		if (!target.follower.includes(followingInfo)) {
-			target.follower.push(followingInfo);
-		}
+			if (!target.follower.includes(followingInfo)) {
+				target.follower.push(followingInfo);
+			}
 
-		user.save();
-		target.save();
+			user.save();
+			target.save();
+		}
 
 		return user;
 	}
@@ -155,30 +157,22 @@ export class UserService {
 		const user = await this.userModel.findById(user_id);
 		const target = await this.userModel.findById(target_id);
 
-		const followingInfo = {
-			_id: user._id.toString(),
-			nickname: user.nickname,
-			profile: user.profile,
-		};
+		if (user && target) {
+			for (const item of user.following) {
+				if (item._id === target_id) {
+					user.following.splice(user.following.indexOf(item), 1);
+				}
+			}
 
-		const followerInfo = {
-			_id: target._id.toString(),
-			nickname: target.nickname,
-			profile: target.profile,
-		};
+			for (const item of target.follower) {
+				if (item._id === user_id) {
+					target.follower.splice(target.follower.indexOf(item), 1);
+				}
+			}
 
-		const userIndex = user.following.indexOf(followerInfo);
-		const targetIndex = target.follower.indexOf(followingInfo);
-
-		if (userIndex !== -1) {
-			target.follower.splice(userIndex, 1);
+			user.save();
+			target.save();
 		}
-		if (targetIndex !== -1) {
-			user.following.splice(targetIndex, 1);
-		}
-
-		user.save();
-		target.save();
 
 		return user;
 	}
