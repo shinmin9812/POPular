@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaOptions } from 'mongoose';
+import { Document, SchemaOptions, Types } from 'mongoose';
+import * as mongoosePaginate from 'mongoose-paginate-v2';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -21,15 +22,21 @@ class day {
 	sun: time;
 }
 
+class postinfo {
+	sido: string;
+	sigungu: string;
+}
+
 class coordinfo {
-	lat: string;
-	lng: string;
+	@Prop({ default: 'Point' })
+	type: string;
+	coordinates: number[];
 }
 
 class snsinfo {
-	linkType: string;
-	linkTitle: string;
-	link: string;
+	link_type: string;
+	link_title: string;
+	link_url: string;
 }
 
 @Schema(options)
@@ -41,7 +48,7 @@ export class Store extends Document {
 	description: string;
 
 	@Prop({ required: true })
-	brand: string;
+	category: string;
 
 	@Prop({ required: true })
 	start_date: Date;
@@ -55,6 +62,9 @@ export class Store extends Document {
 	@Prop({ required: true })
 	location: string;
 
+	@Prop({ type: postinfo, required: true })
+	postcode: postinfo;
+
 	@Prop({ type: coordinfo, required: true })
 	coord: coordinfo;
 
@@ -62,16 +72,19 @@ export class Store extends Document {
 	price: number;
 
 	@Prop({ type: Array })
-	sns: [snsinfo];
+	sns: snsinfo[];
 
 	@Prop({ default: false })
 	reservation_required: boolean;
 
 	@Prop()
-	images: Array<string>;
+	images: string[];
 
-	@Prop({ default: 0 })
-	scrap: number;
+	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
+	scraps?: Types.ObjectId[];
 }
 
-export const StoreSchema = SchemaFactory.createForClass(Store);
+const schema = SchemaFactory.createForClass(Store);
+schema.plugin(mongoosePaginate);
+export const StoreSchema = schema;
+StoreSchema.index({ coord: '2dsphere' });

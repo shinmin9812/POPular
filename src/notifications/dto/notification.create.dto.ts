@@ -1,25 +1,74 @@
-import { IsBoolean, IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString, ValidateIf } from "class-validator";
-import { ContentModel, NotificationType } from "../notification.schema";
-import { BoardType } from "src/posts/post.schema";
+import {
+	IsEnum,
+	IsMongoId,
+	IsNotEmpty,
+	IsOptional,
+	ValidateIf,
+} from 'class-validator';
+import { NotificationType } from '../notification.schema';
+import { BoardType } from 'src/feeds/feed.schema';
+import { Types } from 'mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class NotificationCreateDto {
-  @IsEnum(NotificationType)
-  @IsNotEmpty()
-  readonly type: NotificationType;
+	@IsEnum(NotificationType)
+	@IsNotEmpty()
+	@ApiProperty({
+		example: 'follow',
+		description: '알림 종류',
+		required: true,
+	})
+	readonly type: NotificationType;
 
-  @IsEnum(BoardType)
-  @ValidateIf(obj => obj.type === NotificationType.Comment)
-  readonly board: BoardType;
+	@IsEnum(BoardType)
+	@ValidateIf(
+		obj =>
+			obj.type === NotificationType.COMMENT ||
+			obj.type === NotificationType.RECOMMENT,
+	)
+	@ApiProperty({
+		example: 'gather',
+		description: '알림이 온 게시판 종류',
+	})
+	readonly board: BoardType;
 
-  @IsNotEmpty()
-  @IsString()
-  readonly userId: string;
+	@IsNotEmpty()
+	@IsMongoId()
+	@ApiProperty({
+		example: 'qwer2134',
+		description: '알림 대상 ID',
+		required: true,
+	})
+	readonly user_id: Types.ObjectId;
 
-  @IsNotEmpty()
-  @IsMongoId()
-  readonly content: string;
+	@IsMongoId()
+	@ApiProperty({
+		example: 'qwer2134',
+		description: '알림에서 참조할 데이터 ID(AD 타입 - store)',
+		required: true,
+	})
+	@ValidateIf(obj => obj.type === NotificationType.AD)
+	content_store: Types.ObjectId;
 
-  @IsNotEmpty()
-  @IsEnum(ContentModel)
-  readonly contentModel: ContentModel;
+	@IsMongoId()
+	@ApiProperty({
+		example: 'qwer2134',
+		description: '알림에서 참조할 데이터 ID(Follow 타입 - user)',
+		required: true,
+	})
+	@ValidateIf(obj => obj.type === NotificationType.FOLLOW)
+	content_user: Types.ObjectId;
+
+	@IsMongoId()
+	@ApiProperty({
+		example: 'qwer2134',
+		description: '알림에서 참조할 데이터 ID(Comment, Recomment 타입 - comment)',
+		required: true,
+	})
+	@ValidateIf(
+		obj =>
+			obj.type === NotificationType.COMMENT ||
+			obj.type === NotificationType.RECOMMENT,
+	)
+	content_comment: Types.ObjectId;
 }

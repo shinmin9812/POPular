@@ -6,18 +6,26 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { StoreModule } from './stores/store.module';
 import { UserModule } from './users/user.module';
-import { PostsModule } from './posts/post.module';
+import { FeedsModule } from './feeds/feed.module';
 import { NotificationsModule } from './notifications/notification.module';
+import { CommentsModule } from './comments/comment.module';
+import { AuthModule } from './auth/auth.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 //{useNewUrlParser: true, userUnifiedTopology: true} 해당 부분에 대해 deprecatedError가 발생
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
 		MongooseModule.forRoot(process.env.MONGO_URI),
+		MulterModule.register({
+			dest: './uploads',
+		}),
 		StoreModule,
 		UserModule,
-		PostsModule,
-		NotificationsModule
+		FeedsModule,
+		NotificationsModule,
+		CommentsModule,
+		AuthModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

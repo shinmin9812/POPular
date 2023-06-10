@@ -3,6 +3,7 @@ import { Document, SchemaOptions, Types } from 'mongoose';
 import { Comment } from 'src/comments/comment.schema';
 import { Store } from 'src/stores/store.schema';
 import { User } from 'src/users/user.schema';
+import * as mongoosePaginate from 'mongoose-paginate-v2';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -10,13 +11,13 @@ const options: SchemaOptions = {
 };
 
 export enum BoardType {
-	Gather = 'gather',
-	Review = 'review',
-	Free = 'free',
+	GATHER = 'gather',
+	REVIEW = 'review',
+	FREE = 'free',
 }
 
 @Schema(options)
-export class Post extends Document {
+export class Feed extends Document {
 	@Prop({ required: true })
 	title: string;
 
@@ -33,19 +34,24 @@ export class Post extends Document {
 	images: Array<string>;
 
 	@Prop({ type: Types.ObjectId, ref: 'Store' })
-	storeId?: Types.ObjectId | Store;
+	store_id?: Types.ObjectId | Store;
 
 	@Prop({ min: 1, max: 5 })
 	ratings?: number;
 
 	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
 	likes: Types.ObjectId[];
-	
+
 	@Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
 	reports: Types.ObjectId[];
 
 	@Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }], default: [] })
 	comments: Types.ObjectId[] | Comment[];
+
+	@Prop({ default: 0 })
+	views: number;
 }
 
-export const PostSchema = SchemaFactory.createForClass(Post);
+const schema = SchemaFactory.createForClass(Feed);
+schema.plugin(mongoosePaginate);
+export const FeedSchema = schema;
