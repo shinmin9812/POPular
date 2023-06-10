@@ -71,7 +71,7 @@ const ReviewList = ({ posts, isFetching }: Props) => {
       {posts ? (
         posts.map((post) => {
           return (
-            <li key={post.id}>
+            <li key={post._id}>
               <ReviewPost post={post} />
             </li>
           );

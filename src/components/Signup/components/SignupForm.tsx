@@ -74,8 +74,7 @@ const SignupForm = () => {
         setErrors((prevState) => ({ ...prevState, nickname: '다른 유저가 사용중인 닉네임입니다.' }));
       }
     } catch (err: any) {
-      const errorMessage = (err as Error).message;
-      console.log(errorMessage);
+      throw new Error(err);
     }
   };
 
@@ -94,8 +93,7 @@ const SignupForm = () => {
         setErrors((prevState) => ({ ...prevState, email: '이미 가입된 이메일입니다.' }));
       }
     } catch (err: any) {
-      const errorMessage = (err as Error).message;
-      console.log(errorMessage);
+      throw new Error(err);
     }
   };
 
@@ -202,8 +200,7 @@ const SignupForm = () => {
         navigate('/login');
       }
     } catch (err: any) {
-      const errorMessage = (err as Error).message;
-      console.log(errorMessage, '회원가입 실패');
+      throw new Error(err);
     }
   };
 

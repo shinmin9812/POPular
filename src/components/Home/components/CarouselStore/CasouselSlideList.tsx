@@ -14,7 +14,6 @@ const CasouselSlideList = () => {
 
   const { data: storeData, isLoading, isError, error } = useQuery(['stores'], fetchStoreData);
 
-  console.log(storeData);
   if (isLoading) {
     return <div>Loading...</div>;
   }

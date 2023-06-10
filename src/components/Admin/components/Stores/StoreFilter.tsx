@@ -1,23 +1,22 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Category } from '../../../../types/category';
 
-interface FilterSettingValues {
-  searchType: string;
-  searchValue: string;
-  categories: Category[];
-  locations: string[];
-  isEnded: boolean;
-}
+// interface FilterSettingValues {
+//   searchType: string;
+//   searchValue: string;
+//   categories: Category[];
+//   locations: string[];
+//   isEnded: boolean;
+// }
 
 const StoreFilter = () => {
-  const filterSetting: FilterSettingValues = {
-    searchType: '',
-    searchValue: '',
-    categories: [],
-    locations: [],
-    isEnded: false,
-  };
+  // const filterSetting: FilterSettingValues = {
+  //   searchType: '',
+  //   searchValue: '',
+  //   categories: [],
+  //   locations: [],
+  //   isEnded: false,
+  // };
 
   return (
     <Container>

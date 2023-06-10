@@ -125,11 +125,6 @@ const StoreForm = ({ defaultData, setPreviewData }: Props) => {
     formState: { errors },
   } = methods;
 
-  if (setPreviewData) {
-    console.log('a');
-    // setPreviewData(watch());
-  }
-
   const { ref } = register('location');
 
   const { append: appendImages, remove: removeImage } = useFieldArray({

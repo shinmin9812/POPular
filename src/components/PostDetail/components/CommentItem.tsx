@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import CommentInputContainer from '../containers/CommentInputContainer';
-import UpdateAndDelete from './UpdateAndDeleteButtons';
 import ReComment from './ReCommentList';
 import XmarkIcon from '../../common/Icons/XmarkIcon';
 const CommentWrap = styled.div`

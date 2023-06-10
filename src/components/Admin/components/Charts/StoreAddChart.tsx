@@ -20,7 +20,6 @@ const StoreAddChart = ({ stores }: Props) => {
   let data = [];
 
   for (const key of daymap.keys()) {
-    console.log(key);
     data.push({
       name: key,
       '추가된 점포': daymap.get(key).length,
@@ -40,7 +39,7 @@ const StoreAddChart = ({ stores }: Props) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="추가된 점포" stackId="a" fill="#891baa" barSize={40} onClick={(e) => console.log(e)} />
+          <Bar dataKey="추가된 점포" stackId="a" fill="#891baa" barSize={40} />
         </BarChart>
       </ResponsiveContainer>
     </Container>

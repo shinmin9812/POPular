@@ -31,9 +31,7 @@ const Profile = () => {
       setUserInfo(data._id);
       return data;
     } catch (err: any) {
-      const errorMessage = err as Error;
-      console.log(errorMessage);
-      return null;
+      throw new Error(err);
     }
   };
 

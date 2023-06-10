@@ -1,7 +1,6 @@
 import { Store } from '../../../../types/store';
 import styled from 'styled-components';
 import Tag from '../../../common/Tag/Tag';
-import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { NavLink } from 'react-router-dom';
 
@@ -12,7 +11,7 @@ interface Props {
 const AdminStoreItem = ({ store }: Props) => {
   const startDate = dayjs(store.start_date).format('YY-MM-DD');
   const endDate = dayjs(store.end_date).format('YY-MM-DD');
-  // console.log(store);
+
   return (
     <Container>
       <NavLink to={`./${store._id}`} className={({ isActive }) => (isActive ? 'active' : '')}>

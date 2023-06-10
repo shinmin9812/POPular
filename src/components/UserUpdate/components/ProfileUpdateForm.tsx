@@ -74,13 +74,13 @@ const ProfileUpdateForm = ({ user }: Props) => {
         setCheckNickname(false);
       }
     } catch (err: any) {
-      const errorMessage = (err as Error).message;
-      console.log(errorMessage);
+      throw new Error(err);
     }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = e.target;
+    let newCategory: any;
     switch (name) {
       case 'allow_notification':
         setInputs({
@@ -89,7 +89,6 @@ const ProfileUpdateForm = ({ user }: Props) => {
         });
         break;
       case 'interested_category':
-        let newCategory: any;
         if ((e.target as HTMLInputElement).checked) {
           newCategory = [...inputs.interested_category, value];
         } else {
@@ -177,14 +176,13 @@ const ProfileUpdateForm = ({ user }: Props) => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+        // const data = await response.json();
         alert('회원정보 수정이 완료되었습니다.');
       } else {
         throw new Error('회원정보 수정에 실패했습니다.');
       }
     } catch (error: any) {
-      console.log(error.message);
+      throw new Error(error);
     }
   };
 

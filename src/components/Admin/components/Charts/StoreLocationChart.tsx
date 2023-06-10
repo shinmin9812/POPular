@@ -20,7 +20,6 @@ const StoreLocationChart = ({ stores }: Props) => {
   const COLORS = ['#234589', '#00C49F', '#FFBB28', '#FF8042'];
 
   for (const key of locationMap.keys()) {
-    console.log(key);
     data.push({
       name: key,
       지역: locationMap.get(key).length,

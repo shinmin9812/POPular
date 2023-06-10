@@ -62,7 +62,6 @@ const PostRegisterButtonContainer = () => {
           body: JSON.stringify(data),
         });
       }
-      console.log(data);
       if (response.ok) {
         setPostTitle('');
         setPostContent('');
@@ -70,8 +69,8 @@ const PostRegisterButtonContainer = () => {
         setIsUpdate({ use: false, id: '' });
         navigate('/community/board/all');
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      throw new Error(err);
     }
   };
 
@@ -92,9 +91,7 @@ const PostRegisterButtonContainer = () => {
         return null;
       }
     } catch (err: any) {
-      const errorMessage = err as Error;
-      console.log(errorMessage);
-      return null;
+      throw new Error(err);
     }
   };
 

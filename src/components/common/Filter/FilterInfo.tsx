@@ -50,7 +50,7 @@ const FilterInfo = ({
 }) => {
   const start = `${startDate.year}-${startDate.month}-${startDate.day}`;
   const end = `${endDate.year}-${endDate.month}-${endDate.day}`;
-  const today = new Date().toLocaleDateString();
+  // const today = new Date().toLocaleDateString();
 
   return (
     <FilterInfoItemWrap>

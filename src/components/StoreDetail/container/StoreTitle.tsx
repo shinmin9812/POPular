@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import Slider from 'react-slick';
 import { Store } from '../../../types/store';
 

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import InfoPlace from '../components/InfoPlace';
 import InfoDetail from '../components/InfoDetail';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { Store } from '../../../types/store';
 
 const Container = styled.div`

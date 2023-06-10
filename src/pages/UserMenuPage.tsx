@@ -25,9 +25,7 @@ const UserMenuPage = () => {
         return null;
       }
     } catch (err: any) {
-      const errorMessage = err as Error;
-      console.log(errorMessage);
-      return null;
+      throw new Error(err);
     }
   };
 

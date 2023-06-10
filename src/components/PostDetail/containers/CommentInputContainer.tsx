@@ -30,7 +30,6 @@ const feedCommentApi = async (
   });
   const result = await response.json();
   addComment(result);
-  console.log(result);
   setInput('');
 };
 
@@ -46,9 +45,7 @@ const getUserInfo = async (setIsMember: React.Dispatch<React.SetStateAction<stri
     const data = await response.json();
     setIsMember(data._id);
   } catch (err: any) {
-    const errorMessage = err as Error;
-    console.log(errorMessage);
-    return null;
+    throw new Error(err);
   }
 };
 

@@ -22,7 +22,6 @@ const Container = styled.div`
 
 const AdminStoreStatisticsPage = () => {
   const { data: allStores } = useGetAllStores();
-  console.log(allStores);
 
   return (
     <Container>
