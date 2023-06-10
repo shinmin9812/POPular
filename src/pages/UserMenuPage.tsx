@@ -41,6 +41,9 @@ const UserMenuPage = () => {
 export default UserMenuPage;
 
 const Container = styled.div`
-  width: 350px;
-  margin: 0 auto;
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
