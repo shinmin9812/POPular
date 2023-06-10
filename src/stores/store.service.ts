@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, PaginateModel, PaginateResult } from 'mongoose';
 import { Store } from './store.schema';
 import { StoreRequestDto } from './dto/store.request.dto';
 import { handleImages } from 'src/utils/handle.images.util';
@@ -8,18 +8,22 @@ import { handleImages } from 'src/utils/handle.images.util';
 @Injectable()
 export class StoreService {
 	constructor(
-		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
+		@InjectModel(Store.name) private readonly storeModel: PaginateModel<Store>,
 	) {}
 
 	async getAllStores(): Promise<Store[]> {
 		return await this.storeModel.find();
 	}
 
-	async getPaginate(page: number): Promise<Store[]> {
-		const limit = 20;
-		const offset = (page - 1) * limit;
-
-		return await this.storeModel.find().limit(limit).skip(offset);
+	async getPaginate(page: number): Promise<PaginateResult<Store>> {
+		return await this.storeModel.paginate(
+			{},
+			{
+				sort: { createdAt: -1 },
+				page: page,
+				limit: 20,
+			},
+		);
 	}
 
 	async getStoreById(_id: string): Promise<Store> {
