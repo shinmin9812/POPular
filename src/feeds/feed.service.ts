@@ -68,7 +68,7 @@ export class FeedsService {
 		return await this.getFeedsByBoard('free');
 	}
 
-	async getPaginateById(
+	async getPaginateByUserId(
 		id: string,
 		pageIndex: number,
 		order?: string,

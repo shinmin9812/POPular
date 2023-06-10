@@ -7,6 +7,7 @@ import {
 } from 'mongoose';
 import { Feed } from 'src/feeds/feed.schema';
 import { User } from 'src/users/user.schema';
+import * as mongoosePaginate from 'mongoose-paginate-v2';
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -44,4 +45,6 @@ export class Comment extends Document {
 	recomments: Types.ObjectId[];
 }
 
-export const CommentSchema = SchemaFactory.createForClass(Comment);
+const schema = SchemaFactory.createForClass(Comment);
+schema.plugin(mongoosePaginate);
+export const CommentSchema = schema;

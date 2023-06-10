@@ -35,7 +35,7 @@ export class FeedsController {
 		@Query('pageIndex') pageIndex: number,
 		@Query('order') order?: string,
 	) {
-		return await this.feedsService.getPaginateById(id, pageIndex, order);
+		return await this.feedsService.getPaginateByUserId(id, pageIndex, order);
 	}
 
 	@ApiOperation({ summary: '모든 모집게시판 조회' })

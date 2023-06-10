@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment } from './comment.schema';
-import { Model, Types } from 'mongoose';
+import { Model, PaginateResult, Types, PaginateModel } from 'mongoose';
 import { CommentCreateDto } from './dto/comment.create.dto';
 import { CommentUpdateDto } from './dto/comment.update.dto';
 import { FeedsService } from 'src/feeds/feed.service';
@@ -18,7 +18,8 @@ import path from 'path';
 @Injectable()
 export class CommentsService {
 	constructor(
-		@InjectModel(Comment.name) private readonly commentModel: Model<Comment>,
+		@InjectModel(Comment.name)
+		private readonly commentModel: PaginateModel<Comment>,
 		@Inject(forwardRef(() => FeedsService)) private feedsService: FeedsService,
 	) {}
 
@@ -59,6 +60,29 @@ export class CommentsService {
 				`'${id}' 아이디를 가진 댓글을 불러오지 못했습니다.`,
 			);
 		}
+	}
+
+	async getPaginationByUserId(
+		id: string,
+		pageIndex: number,
+		order: string,
+	): Promise<PaginateResult<Comment>> {
+		let sort: { [key: string]: number } = { createdAt: -1 };
+
+		if (order === 'desc') {
+			sort = { createdAt: -1 };
+		} else if (order === 'asc') {
+			sort = { createdAt: 1 };
+		}
+
+		return this.commentModel.paginate(
+			{ author: id },
+			{
+				sort,
+				page: pageIndex,
+				limit: 5,
+			},
+		);
 	}
 
 	async createComment(commentCreateDto: CommentCreateDto): Promise<Comment> {
