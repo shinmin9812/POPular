@@ -41,7 +41,7 @@ const Container = styled.div`
 
 const OutletWrapper = styled.div`
   min-height: 100vh;
-  width: 100vw;
+  width: 140vw;
   padding: 30px 30px 30px 360px;
   background-color: #fcf6ff;
   font-family: 'Noto Sans KR', sans-serif;
