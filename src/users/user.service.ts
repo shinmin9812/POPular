@@ -1,19 +1,20 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { User, user_profile } from './user.schema';
+import { User } from './user.schema';
 import { Store } from 'src/stores/store.schema';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
-import { hashPassword } from '../utils/hassing.util';
+import { hashPassword, comparePasswords } from '../utils/hassing.util';
 import { handleImage } from 'src/utils/handle.image.util';
+
 
 @Injectable()
 export class UserService {
 	constructor(
 		@InjectModel(User.name) private readonly userModel: Model<User>,
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
-	) {}
+	) { }
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -50,32 +51,44 @@ export class UserService {
 	}
 
 	async updateUser(_id: string, body: UserUpdateDto): Promise<User> {
-		//유저 프로필
-		const base64Image = body.profile;
-		const imageUrl = await handleImage(base64Image, './uploads', '');
+		const user = await this.userModel.findById(_id);
 
-		const {
-			profile,
-			introduce,
-			nickname,
-			phone_number,
-			pw,
-			interested_category,
-			allow_notification,
-		} = body;
+		if (!user) {
+			throw new NotFoundException('사용자를 찾을 수 없습니다!');
+		}
 
-		//변경 비밀번호 해싱
-		const hashedPassword = await hashPassword(pw);
+		if (body.profile) {
+			const base64Image = body.profile;
+			const imageUrl = await handleImage(base64Image, './uploads', '');
+			user.profile = imageUrl;
+		}
 
-		const updateUser = {
-			...body,
-			pw: hashedPassword,
-			profile: imageUrl,
-		};
+		if (body.pw) {
+			const newPw = await hashPassword(body.pw);
+			user.pw = newPw;
+		}
 
-		return await this.userModel.findByIdAndUpdate({ _id }, updateUser, {
-			new: true,
-		});
+		if (body.introduce) {
+			user.introduce = body.introduce;
+		}
+
+		if (body.nickname) {
+			user.nickname = body.nickname;
+		}
+
+		if (body.phone_number) {
+			user.phone_number = body.phone_number;
+		}
+
+		if (body.interested_category) {
+			user.interested_category = body.interested_category;
+		}
+
+		if (body.allow_notification !== undefined) {
+			user.allow_notification = body.allow_notification;
+		}
+
+		return user.save();
 	}
 
 	async updateScrap(userId: string, storeId: string): Promise<User> {
