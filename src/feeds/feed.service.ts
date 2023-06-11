@@ -134,7 +134,6 @@ export class FeedsService {
 		try {
 			const base64Images = extractImages(feedCreateDto.content);
 			const imageMapping = await handleImages(base64Images);
-
 			let updatedContent = feedCreateDto.content;
 			for (const [imgData, imageUrl] of Object.entries(imageMapping)) {
 				updatedContent = updatedContent.replace(imgData, imageUrl);
@@ -185,7 +184,7 @@ export class FeedsService {
 				const imageMapping = await handleImages(base64Images);
 				let updatedContent = feedUpdateDto.content;
 				for (const [imgData, imageUrl] of Object.entries(imageMapping)) {
-					updatedContent = updatedContent.replace(imgData, `https://${imageUrl}`);
+					updatedContent = updatedContent.replace(imgData, imageUrl);
 				}
 				feedUpdateDto.content = updatedContent;
 				feedUpdateDto.images = Object.values(imageMapping);
