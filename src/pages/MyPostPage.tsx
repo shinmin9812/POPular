@@ -1,25 +1,11 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import { Post } from '../types/post';
 import PostList from '../components/UserMenu/components/PostList';
 
 const MyPostPage = () => {
-  const [posts, setPost] = useState<Post[]>([]);
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    const response = await fetch('http://34.22.81.36:3000/feeds');
-    const result: Post[] = await response.json();
-
-    setPost(result);
-  }
-
   return (
     <div>
       <Title>내가 쓴 글</Title>
-      <PostList posts={posts} />
+      <PostList />
     </div>
   );
 };
