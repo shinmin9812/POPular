@@ -185,7 +185,7 @@ export class FeedsService {
 				const imageMapping = await handleImages(base64Images);
 				let updatedContent = feedUpdateDto.content;
 				for (const [imgData, imageUrl] of Object.entries(imageMapping)) {
-					updatedContent = updatedContent.replace(imgData, imageUrl);
+					updatedContent = updatedContent.replace(imgData, `https://${imageUrl}`);
 				}
 				feedUpdateDto.content = updatedContent;
 				feedUpdateDto.images = Object.values(imageMapping);
@@ -203,39 +203,34 @@ export class FeedsService {
 	}
 
 	async addLike(feedId: Types.ObjectId, like: Types.ObjectId): Promise<Feed> {
-		const liked = (await this.feedModel.findById(feedId)).likes.find(
-			e => e === like,
-		);
-		if (liked) {
-			return this.feedModel
-				.findByIdAndUpdate(feedId, { $pull: { likes: like } }, { new: true })
-				.exec();
-		}
-		return this.feedModel
-			.findByIdAndUpdate(feedId, { $push: { likes: like } }, { new: true })
-			.exec();
-	}
+    const likeObjectId = new Types.ObjectId(like);
+    const likeFeed = await this.feedModel.findById(feedId);
+    console.log('피드:' + likeFeed);
+    const liked = likeFeed.likes.find(e => e.equals(likeObjectId));
+    console.log('좋아요:' + liked);
+    if (liked) {
+        return this.feedModel
+            .findByIdAndUpdate(feedId, { $pull: { likes: likeObjectId } }, { new: true })
+            .exec();
+    }
+    return this.feedModel
+        .findByIdAndUpdate(feedId, { $addToSet: { likes: likeObjectId } }, { new: true })
+        .exec();
+}
 
-	async addReport(
-		feedId: Types.ObjectId,
-		report: Types.ObjectId,
-	): Promise<Feed> {
-		const reported = (await this.feedModel.findById(feedId)).reports.find(
-			e => e === report,
-		);
-		if (reported) {
+async addReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
+	const reportObjectId = new Types.ObjectId(report);
+	const reportFeed = await this.feedModel.findById(feedId);
+	const reported = reportFeed.likes.find(e => e.equals(reportObjectId));
+	if (reported) {
 			return this.feedModel
-				.findByIdAndUpdate(
-					feedId,
-					{ $pull: { reports: report } },
-					{ new: true },
-				)
-				.exec();
-		}
-		return this.feedModel
-			.findByIdAndUpdate(feedId, { $push: { reports: report } }, { new: true })
-			.exec();
+					.findByIdAndUpdate(feedId, { $pull: { reports: reportObjectId } }, { new: true })
+					.exec();
 	}
+	return this.feedModel
+			.findByIdAndUpdate(feedId, { $addToSet: { reports: reportObjectId } }, { new: true })
+			.exec();
+}
 
 	async addComment(
 		feedId: Types.ObjectId,
