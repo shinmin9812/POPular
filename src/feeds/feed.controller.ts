@@ -46,8 +46,8 @@ export class FeedsController {
 
 	@ApiOperation({ summary: '모든 후기게시판 조회' })
 	@Get('review')
-	async getAllReviewFeeds() {
-		return await this.feedsService.getAllReviewFeeds();
+	async getAllReviewFeeds(@Query('storeId') store_id?: string) {
+		return await this.feedsService.getAllReviewFeeds(store_id);
 	}
 
 	@ApiOperation({ summary: '모든 자유게시판 조회' })

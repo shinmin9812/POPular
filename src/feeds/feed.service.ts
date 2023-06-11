@@ -41,9 +41,14 @@ export class FeedsService {
 		}
 	}
 
-	async getFeedsByBoard(board?: string): Promise<Feed[]> {
+	async getFeedsByBoard(board?: string, store_id?: string): Promise<Feed[]> {
 		try {
-			let query = this.feedModel.find();
+			let query: any;
+			if (store_id) {
+				query = this.feedModel.find({ store_id: store_id });
+			} else {
+				query = this.feedModel.find();
+			}
 
 			if (board) {
 				query = query.where('board', board);
@@ -67,8 +72,8 @@ export class FeedsService {
 		return await this.getFeedsByBoard('gather');
 	}
 
-	async getAllReviewFeeds(): Promise<Feed[]> {
-		return await this.getFeedsByBoard('review');
+	async getAllReviewFeeds(store_id?: string): Promise<Feed[]> {
+		return await this.getFeedsByBoard('review', store_id);
 	}
 
 	async getAllFreeFeeds(): Promise<Feed[]> {
@@ -97,7 +102,7 @@ export class FeedsService {
 		const options = {
 			sort,
 			page: pageIndex,
-			limit: 5,
+			limit: 3,
 		};
 		return this.feedModel.aggregatePaginate<Feed>(aggregateQuery, options);
 	}
