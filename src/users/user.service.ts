@@ -53,7 +53,7 @@ export class UserService {
 		return await this.userModel.create(newUser);
 	}
 
-	async updateUser(_id: string, body: UserUpdateDto): Promise<any> {
+	async updateUser(_id: string, body: UserUpdateDto): Promise<User> {
 		const user = await this.userModel.findById(_id);
 
 		if (!user) {
@@ -62,7 +62,7 @@ export class UserService {
 
 		if (body.profile) {
 			const base64Image = body.profile;
-			const imageUrl = await handleImage(base64Image, './uploads', '');
+			const imageUrl = await handleImage(base64Image, '/uploads', 'http://34.22.81.36:3000');
 			user.profile = imageUrl;
 		}
 
