@@ -5,11 +5,12 @@ import SignupLink from '../components/Login/components/SignupLink';
 const LoginPage = () => {
   return (
     <Container>
-      <PageTitle>로그인</PageTitle>
-      <div>
+      <Intro>모든 트렌드가 모이는 곳 팝업스토어!</Intro>
+      <LoginContainer>
+        <PageTitle>로그인</PageTitle>
         <LoginForm />
         <SignupLink />
-      </div>
+      </LoginContainer>
     </Container>
   );
 };
@@ -17,10 +18,32 @@ const LoginPage = () => {
 export default LoginPage;
 
 const Container = styled.div`
-  height: calc(100vh - 200px);
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+`;
+
+const Intro = styled.section`
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+    background: linear-gradient(to bottom right, var(--color-main), var(--color-white));
+    color: var(--color-white);
+    flex-grow: 1.5;
+    height: 800px;
+    border-radius: 10px;
+    padding: 20px;
+  }
+`;
+
+const LoginContainer = styled.div`
+  height: 700px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  margin-top: 170px;
+  @media (min-width: 768px) {
+    flex-grow: 1;
+  }
 `;
 
 const PageTitle = styled.h1`

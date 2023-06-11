@@ -20,13 +20,13 @@ const Container = styled.div`
 
 const SignupMessage = styled.p`
   color: var(--color-black);
-  font-size: var(--font-small);
+  font-size: var(--font-regular);
 `;
 
 const SignupButton = styled(Link)`
   color: var(--color-main);
-  background-color: var(--color-white);
-  font-size: var(--font-small);
+  background-color: none;
+  font-size: var(--font-regular);
   padding: 0 10px;
   text-decoration: underline;
 `;
