@@ -11,6 +11,7 @@ import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
 import { extractImages } from 'src/utils/extract.images.util';
 import { handleImages } from 'src/utils/handle.images.util';
+import { Comment } from 'src/comments/comment.schema';
 
 @Injectable()
 export class FeedsService {
@@ -123,6 +124,43 @@ export class FeedsService {
 			}
 
 			return feed;
+		} catch (err) {
+			throw new BadRequestException(
+				`'${id}' 아이디를 가진 글을 불러오지 못했습니다.`,
+			);
+		}
+	}
+
+	async getCommentsByFeedId(id: string): Promise<Object[]> {
+		try {
+			const feed = await this.feedModel
+				.findById(id)
+				.populate({
+					path: 'comments',
+					populate: [
+						{
+							path: 'recomments',
+							model: 'Comment',
+							populate: {
+								path: 'author',
+								model: 'User',
+							},
+						},
+						{
+							path: 'author',
+							model: 'User',
+						},
+					],
+				})
+				.exec();
+
+			if (!feed) {
+				throw new NotFoundException(
+					`'${id}' 아이디를 가진 글을 찾지 못했습니다.`,
+				);
+			}
+
+			return feed.comments;
 		} catch (err) {
 			throw new BadRequestException(
 				`'${id}' 아이디를 가진 글을 불러오지 못했습니다.`,

@@ -62,6 +62,12 @@ export class FeedsController {
 		return await this.feedsService.getFeedById(id);
 	}
 
+	@ApiOperation({ summary: 'ID로 게시글 댓글 조회' })
+	@Get(':id/comments')
+	async getCommentsByFeedId(@Param('id') id: string) {
+		return await this.feedsService.getCommentsByFeedId(id);
+	}
+
 	@ApiOperation({ summary: '게시글 등록하기' })
 	@Post()
 	async createFeed(@Body() createDto: FeedCreateDto): Promise<Feed> {
