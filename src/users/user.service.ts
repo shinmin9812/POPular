@@ -62,7 +62,11 @@ export class UserService {
 
 		if (body.profile) {
 			const base64Image = body.profile;
-			const imageUrl = await handleImage(base64Image, '/uploads', 'http://34.22.81.36:3000');
+			const imageUrl = await handleImage(
+				base64Image,
+				'/uploads',
+				'http://34.22.81.36:3000',
+			);
 			user.profile = imageUrl;
 		}
 

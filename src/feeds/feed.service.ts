@@ -5,7 +5,12 @@ import {
 	InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types, PaginateModel, PaginateResult } from 'mongoose';
+import {
+	Model,
+	Types,
+	AggregatePaginateModel,
+	AggregatePaginateResult,
+} from 'mongoose';
 import { Feed } from './feed.schema';
 import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
@@ -16,7 +21,8 @@ import { Comment } from 'src/comments/comment.schema';
 @Injectable()
 export class FeedsService {
 	constructor(
-		@InjectModel(Feed.name) private readonly feedModel: PaginateModel<Feed>,
+		@InjectModel(Feed.name)
+		private readonly feedModel: AggregatePaginateModel<Feed>,
 	) {}
 
 	async getAllFeeds(): Promise<Feed[]> {
@@ -35,9 +41,14 @@ export class FeedsService {
 		}
 	}
 
-	async getFeedsByBoard(board?: string): Promise<Feed[]> {
+	async getFeedsByBoard(board?: string, store_id?: string): Promise<Feed[]> {
 		try {
-			let query = this.feedModel.find();
+			let query: any;
+			if (store_id) {
+				query = this.feedModel.find({ store_id: store_id });
+			} else {
+				query = this.feedModel.find();
+			}
 
 			if (board) {
 				query = query.where('board', board);
@@ -61,8 +72,8 @@ export class FeedsService {
 		return await this.getFeedsByBoard('gather');
 	}
 
-	async getAllReviewFeeds(): Promise<Feed[]> {
-		return await this.getFeedsByBoard('review');
+	async getAllReviewFeeds(store_id?: string): Promise<Feed[]> {
+		return await this.getFeedsByBoard('review', store_id);
 	}
 
 	async getAllFreeFeeds(): Promise<Feed[]> {
@@ -73,7 +84,7 @@ export class FeedsService {
 		id: string,
 		pageIndex: number,
 		order?: string,
-	): Promise<PaginateResult<Feed>> {
+	): Promise<AggregatePaginateResult<Feed>> {
 		let sort: { [key: string]: number } = { createdAt: -1 };
 
 		if (order === 'desc') {
@@ -82,14 +93,18 @@ export class FeedsService {
 			sort = { createdAt: 1 };
 		}
 
-		return this.feedModel.paginate(
-			{ author: id },
+		const aggregateQuery = this.feedModel.aggregate([
 			{
-				sort,
-				page: pageIndex,
-				limit: 5,
+				$match: { author: id },
 			},
-		);
+		]);
+
+		const options = {
+			sort,
+			page: pageIndex,
+			limit: 3,
+		};
+		return this.feedModel.aggregatePaginate<Feed>(aggregateQuery, options);
 	}
 
 	async getFeedById(id: string): Promise<Feed> {
