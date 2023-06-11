@@ -8,47 +8,47 @@ export class UserUpdateDto {
 		format: 'binary',
 		description: '이미지 파일',
 	})
-	profile: string;
+	profile?: string;
 
 	@IsString()
 	@ApiProperty({
 		example: '스포츠와 커피를 좋아하는 엘리스입니다.',
 		description: '유저 한 줄 소개',
 	})
-	introduce: string;
+	introduce?: string;
 
 	@IsString()
 	@ApiProperty({
 		example: '귀여운 토끼',
 		description: '유저 닉네임',
 	})
-	nickname: string;
+	nickname?: string;
 
 	@IsString()
 	@ApiProperty({
 		example: 'qwer1234',
 		description: '유저 비밀번호',
 	})
-	pw: string;
+	pw?: string;
 
 	@IsString()
 	@ApiProperty({
 		example: '010-1234-4321',
 		description: '유저 전화번호',
 	})
-	phone_number: string;
+	phone_number?: string;
 
 	@IsArray()
 	@ApiProperty({
 		example: '[의류, 식품]',
 		description: '유저 선호 카테고리 목록',
 	})
-	interested_category: string[];
+	interested_category?: string[];
 
 	@IsBoolean()
 	@ApiProperty({
 		example: 'true',
 		description: '유저 알림 허용 여부',
 	})
-	allow_notification: boolean;
+	allow_notification?: boolean;
 }
