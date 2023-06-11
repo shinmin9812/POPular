@@ -12,6 +12,7 @@ const Button = styled.button`
   background: none;
   align-items: center;
   font-size: var(--font-small);
+  cursor: pointer;
 `;
 
 const ButtonWrap = styled.div`

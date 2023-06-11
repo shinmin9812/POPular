@@ -11,6 +11,7 @@ const Button = styled.button`
   height: fit-content;
   border-radius: 8px;
   padding: 15px;
+  cursor: pointer;
 `;
 
 const PostRegisterButton = ({ children, onClick }: { children: string; onClick: () => void }) => {

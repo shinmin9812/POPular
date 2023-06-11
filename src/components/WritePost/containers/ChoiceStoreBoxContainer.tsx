@@ -12,7 +12,6 @@ import ChoiceStoreList from '../components/ChoiceStoreList';
 import ChoiceStoreBox from '../components/ChoiceStoreBox';
 
 const ChoiceStoreBoxContainer = () => {
-  const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const choiceStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
   const dispatch = useAppDispatch();
   const setChoiceStoreId = (id: string) => {
@@ -31,26 +30,24 @@ const ChoiceStoreBoxContainer = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  if (tab !== '자유게시판') {
-    return (
-      <ChoiceStoreBox>
-        <SearchContainerWrap placeholder={'스토어를 검색해주세요.'} />
-        <FilterContainer />
-        <FilterInfoContainer />
-        <ChoiceStoreList choice={choiceStoreId.length > 0}>
-          {stores ? (
-            filterFunc(stores, filterAddress, filterCategory, filterDate, choiceStoreId).map((store: Store) => (
-              <ChoiceStoreItemContainer key={store._id} setChoiceStoreId={setChoiceStoreId} storeId={store._id}>
-                <StoreItem store={store} />
-              </ChoiceStoreItemContainer>
-            ))
-          ) : (
-            <li></li>
-          )}
-        </ChoiceStoreList>
-      </ChoiceStoreBox>
-    );
-  } else return <div></div>;
+  return (
+    <ChoiceStoreBox>
+      <SearchContainerWrap placeholder={'스토어를 검색해주세요.'} />
+      <FilterContainer />
+      <FilterInfoContainer />
+      <ChoiceStoreList choice={choiceStoreId.length > 0}>
+        {stores ? (
+          filterFunc(stores, filterAddress, filterCategory, filterDate, choiceStoreId).map((store: Store) => (
+            <ChoiceStoreItemContainer key={store._id} setChoiceStoreId={setChoiceStoreId} storeId={store._id}>
+              <StoreItem store={store} />
+            </ChoiceStoreItemContainer>
+          ))
+        ) : (
+          <li></li>
+        )}
+      </ChoiceStoreList>
+    </ChoiceStoreBox>
+  );
 };
 
 export default ChoiceStoreBoxContainer;

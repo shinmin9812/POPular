@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { Post } from '../types/post';
+import { Comment } from '../types/comment';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../Hooks/useSelectorHooks';
+import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
 import PostInfo from '../components/PostDetail/components/PostInfo';
 import StoreWrap from '../components/PostDetail/components/StoreWrap';
 import StoreItem from '../components/common/Store/StoreItem';
@@ -8,12 +12,10 @@ import PostContent from '../components/PostDetail/components/PostContent';
 import CommentListContainer from '../components/PostDetail/containers/CommentListContainer';
 import UpdateAndDeleteContainer from '../components/PostDetail/containers/UpdateAndDeleteButtonContainer';
 import LikesAndReportsContainer from '../components/PostDetail/containers/LikeAndReportButtonContainer';
-import { useParams } from 'react-router-dom';
 import CommentInputContainer from '../components/PostDetail/containers/CommentInputContainer';
-import { useAppDispatch } from '../Hooks/useSelectorHooks';
-import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
-import { Comment } from '../types/comment';
+import StarIcon from '../components/common/Icons/StarIcon';
 import getComments from '../api/CommentApi';
+
 const Container = styled.div`
   width: 100%;
 `;
@@ -21,11 +23,23 @@ const Container = styled.div`
 const FlexDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  margin: auto;
+`;
+
+const RatingsWrap = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 0 15px 20px;
+  span {
+    margin-right: 5px;
+  }
 `;
 
 const PostDetailPage = () => {
   const postId = useParams().postId;
   const [post, setPost] = useState<Post | null>(null);
+  const comments = useAppSelector((state) => state.PostDetailSlice.comment);
   const dispatch = useAppDispatch();
   const setComments = (comments: Comment[]) => {
     return dispatch(PostDetailActions.setComment(comments));
@@ -63,14 +77,24 @@ const PostDetailPage = () => {
         updatedAt={post.updatedAt}
         likes={post.likes.length}
         views={post.views}
-        comments={post.comments.length}
+        comments={comments.length}
       />
       {post.store_id && (
         <StoreWrap>
           <StoreItem store={post.store_id} />
+          {post.ratings && (
+            <RatingsWrap>
+              <span>평점:</span>
+              {Array(post.ratings)
+                .fill(0)
+                .map((i, index) => (
+                  <StarIcon key={index} fill="var(--color-sub)" width={20} />
+                ))}
+            </RatingsWrap>
+          )}
         </StoreWrap>
       )}
-      <PostContent content={post ? post.content : ''} rating={post ? post.ratings : 0}></PostContent>
+      <PostContent content={post ? post.content : ''}></PostContent>
       <FlexDiv>
         <LikesAndReportsContainer />
         <UpdateAndDeleteContainer />

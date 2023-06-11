@@ -23,6 +23,7 @@ const FilterInfoItemWrap = styled.div`
 const CancelFilter = styled.button`
   background: none;
   color: var(--color-red);
+  cursor: pointer;
 `;
 
 const FilterInfo = ({
@@ -48,13 +49,6 @@ const FilterInfo = ({
   setFilterAddressValue: (address: string) => void;
   setFilterCategoryValue: (category: string) => void;
 }) => {
-<<<<<<< HEAD
-=======
-  const start = `${startDate.year}-${startDate.month}-${startDate.day}`;
-  const end = `${endDate.year}-${endDate.month}-${endDate.day}`;
-  // const today = new Date().toLocaleDateString();
-
->>>>>>> a852527a352eedc36ae464911c6c1416b1d41653
   return (
     <FilterInfoItemWrap>
       {(category.use || address.use || durationFilterUse) && <FilterIconWrap />}

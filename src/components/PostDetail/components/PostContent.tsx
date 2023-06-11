@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import StarIcon from '../../common/Icons/StarIcon';
 const PostContentWrap = styled.div`
-  padding: 20px;
+  width: 100%;
+  padding: 30px 20px;
+  margin: 40px auto;
+
   h1 {
     display: block;
     font-size: 2em;
@@ -98,23 +100,8 @@ const PostContentWrap = styled.div`
   }
 `;
 
-const PostContent = ({ content, rating }: { content: string; rating: number | undefined }) => {
-  return (
-    <PostContentWrap>
-      {rating && (
-        <div>
-          평점:
-          {Array(rating)
-            .fill(0)
-            .map((i, index) => (
-              <StarIcon key={index} fill="var(--color-sub)" />
-            ))}
-        </div>
-      )}
-
-      <div dangerouslySetInnerHTML={{ __html: content }} />
-    </PostContentWrap>
-  );
+const PostContent = ({ content }: { content: string }) => {
+  return <PostContentWrap dangerouslySetInnerHTML={{ __html: content }} />;
 };
 
 export default PostContent;

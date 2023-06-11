@@ -16,6 +16,8 @@ const PageItem = styled.li<{ active: boolean }>`
   line-height: 15px;
   text-align: center;
   margin: 0 3px;
+  cursor: pointer;
+
   ${(props) =>
     props.active &&
     css`
@@ -29,6 +31,7 @@ const MovementButton = styled.button`
   color: var(--color-gray);
   background: none;
   margin: 0 10px;
+  cursor: pointer;
 `;
 
 const Pagination = ({

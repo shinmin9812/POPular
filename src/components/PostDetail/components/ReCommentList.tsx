@@ -3,7 +3,7 @@ import ReCommentArrowIcon from '../../common/Icons/ReCommentArrowIcon';
 import XmarkIcon from '../../common/Icons/XmarkIcon';
 import { CommentAuthorName, CommentContent, CommentUpdateAt, CommentDeleteButton } from './CommentItem';
 import { Comment } from '../../../types/comment';
-
+import getDateFunc from '../../../Hooks/GetDateFunc';
 const ReCommentWrap = styled.ul`
   background-color: #fafafa;
   border: 1px solid #dddddd;
@@ -34,7 +34,7 @@ const ReComment = ({
           <ReCommentArrowIcon />
           <CommentAuthorName>{reComment.author.nickname}</CommentAuthorName>
           <CommentContent>{reComment.content}</CommentContent>
-          <CommentUpdateAt>{reComment.updatedAt.slice(0, 10)}</CommentUpdateAt>
+          <CommentUpdateAt>{getDateFunc(reComment.updatedAt)}</CommentUpdateAt>
           <CommentDeleteButton
             onClick={() => {
               commentDelete(reComment._id, reComment.author._id);

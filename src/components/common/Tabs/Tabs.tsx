@@ -2,16 +2,10 @@ import styled, { css } from 'styled-components';
 
 const Tab = styled.p<{ active: boolean }>`
   text-align: center;
-<<<<<<< HEAD
   font-size: var(--font-regular);
   padding-bottom: 10px;
-=======
-  font-size: 18px;
-  padding-bottom: 5px;
-  margin-bottom: 20px;
-  border-bottom: 3px solid rgba(101, 44, 193, 0.2);
->>>>>>> a852527a352eedc36ae464911c6c1416b1d41653
   width: 100%;
+  cursor: pointer;
 
   + p {
     margin-left: 4px;

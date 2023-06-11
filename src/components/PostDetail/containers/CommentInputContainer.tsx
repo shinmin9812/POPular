@@ -51,7 +51,13 @@ const getUserInfo = async (setIsMember: React.Dispatch<React.SetStateAction<stri
   }
 };
 
-const CommentInputContainer = ({ commentId }: { commentId?: string }) => {
+const CommentInputContainer = ({
+  commentId,
+  setReCommentInput,
+}: {
+  commentId?: string;
+  setReCommentInput?: () => void;
+}) => {
   const [input, setInput] = useState('');
   const [isMember, setIsMember] = useState<string>();
   const dispatch = useAppDispatch();
@@ -77,6 +83,7 @@ const CommentInputContainer = ({ commentId }: { commentId?: string }) => {
       recomments: [],
     };
     feedCommentApi(data, setInput, postId, setComments);
+    setReCommentInput && setReCommentInput();
   };
   return <CommentInput onChange={onChange} value={input} onClick={onClick} />;
 };

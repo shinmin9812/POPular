@@ -1,14 +1,8 @@
 import TabsWrap from '../../common/Tabs/Tabs';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
-import React, { Dispatch } from 'react';
-import { BoardTypes } from '../../../types/board';
 
-interface Props {
-  setPostedBoard: Dispatch<React.SetStateAction<Omit<BoardTypes, 'all'>>>;
-}
-
-const TabsContainer = ({ setPostedBoard }: Props) => {
+const TabsContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const dispatch = useAppDispatch();
   const setTab = (tab: string) => dispatch(WritePostSliceActions.setTab(tab));

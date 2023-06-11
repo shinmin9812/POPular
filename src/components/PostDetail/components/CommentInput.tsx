@@ -21,6 +21,7 @@ const RegisterButton = styled.button`
   border-radius: 8px;
   width: 30%;
   height: 40px;
+  cursor: pointer;
 `;
 
 const CommentInput = ({

@@ -16,6 +16,7 @@ const Duration = styled.button`
   border-radius: 8px;
   font-size: 14px;
   padding: 10px;
+  cursor: pointer;
   @media (max-width: 520px) {
     font-size: var(--font-micro);
   }

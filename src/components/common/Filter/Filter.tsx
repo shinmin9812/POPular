@@ -14,6 +14,8 @@ const Select = styled.select<{ width: number }>`
   font-size: var(--font-small);
   margin-top: 10px;
   text-align: center;
+  cursor: pointer;
+
   + select {
     margin-left: 9px;
   }

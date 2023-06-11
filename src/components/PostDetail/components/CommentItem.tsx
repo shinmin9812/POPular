@@ -3,8 +3,10 @@ import { Comment } from '../../../types/comment';
 import CommentInputContainer from '../containers/CommentInputContainer';
 import ReComment from './ReCommentList';
 import XmarkIcon from '../../common/Icons/XmarkIcon';
+import getDateFunc from '../../../Hooks/GetDateFunc';
 const CommentWrap = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 export const Li = styled.li`
@@ -68,7 +70,7 @@ const CommentItem = ({
       <CommentWrap onClick={setReCommentInput}>
         <CommentAuthorName>{comment.author.nickname}</CommentAuthorName>
         <CommentContent>{comment.content}</CommentContent>
-        <CommentUpdateAt>{comment.updatedAt.slice(0, 10)}</CommentUpdateAt>
+        <CommentUpdateAt>{getDateFunc(comment.updatedAt)}</CommentUpdateAt>
         <CommentDeleteButton
           onClick={(e) => {
             e.stopPropagation(); // 상단에 있는 setReCommentInput 방지
@@ -83,7 +85,7 @@ const CommentItem = ({
       )}
       {reCommentInput && (
         <ReCommentInputWrap>
-          <CommentInputContainer commentId={comment._id} />
+          <CommentInputContainer commentId={comment._id} setReCommentInput={setReCommentInput} />
         </ReCommentInputWrap>
       )}
     </Li>

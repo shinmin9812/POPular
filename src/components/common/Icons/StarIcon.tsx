@@ -1,9 +1,9 @@
-const StarIcon = ({ fill }: { fill: string }) => {
+const StarIcon = ({ fill, width }: { fill: string; width: number }) => {
   return (
     <svg
       version="1.0"
       xmlns="http://www.w3.org/2000/svg"
-      width="20px"
+      width={width + 'px'}
       height="20px"
       viewBox="0 0 1280.000000 1181.000000"
       preserveAspectRatio="xMidYMid meet"

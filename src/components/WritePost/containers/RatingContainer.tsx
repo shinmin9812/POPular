@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
 import Rating from '../components/Rating';
@@ -8,7 +7,6 @@ const RatingContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const dispatch = useAppDispatch();
   const setRating = (rating: number) => dispatch(WritePostSliceActions.setRating(rating));
-  const RATINGS = [1, 2, 3, 4, 5];
 
   const array = [0, 1, 2, 3, 4];
   const [clicked, setClicked] = useState([true, false, false, false, false]);
@@ -24,7 +22,7 @@ const RatingContainer = () => {
   if (tab === '후기게시판')
     return (
       <Rating>
-        <div>
+        <>
           {array.map((item) => (
             <span
               key={item}
@@ -33,10 +31,10 @@ const RatingContainer = () => {
                 setRating(item + 1);
               }}
             >
-              <StarIcon fill={clicked[item] ? 'var(--color-sub)' : 'var(--color-gray)'} />
+              <StarIcon fill={clicked[item] ? 'var(--color-sub)' : 'var(--color-gray)'} width={25} />
             </span>
           ))}
-        </div>
+        </>
       </Rating>
     );
   else return <div></div>;

@@ -57,7 +57,6 @@ const LikesAndReportsContainer = () => {
     });
     const result = await response.json();
     isLike === 'like' ? setLikes(result.likes) : setReports(result.reports);
-    console.log(result);
   }
 
   return (
