@@ -7,12 +7,18 @@ interface Props {
 }
 
 const StoreLocationChart = ({ stores }: Props) => {
+  const PIE_KEY = '지역';
+
   const locationMap = new Map();
 
   stores.forEach((store) => {
-    if (locationMap.has(store.postcode.sido))
-      locationMap.set(store.postcode.sido, [...locationMap.get(store.postcode.sido), store]);
-    else locationMap.set(store.postcode.sido, [store]);
+    const SIDO = store.postcode.sido;
+    const isExistedLocation = locationMap.has(SIDO);
+    if (isExistedLocation) {
+      locationMap.set(SIDO, [...locationMap.get(SIDO), store]);
+    } else {
+      locationMap.set(SIDO, [store]);
+    }
   });
 
   let data = [];
@@ -22,7 +28,7 @@ const StoreLocationChart = ({ stores }: Props) => {
   for (const key of locationMap.keys()) {
     data.push({
       name: key,
-      지역: locationMap.get(key).length,
+      [PIE_KEY]: locationMap.get(key).length,
     });
   }
 
@@ -33,8 +39,8 @@ const StoreLocationChart = ({ stores }: Props) => {
   return (
     <Container>
       <PieChart width={400} height={300}>
-        <Pie data={data} cx={200} cy={150} innerRadius={50} outerRadius={100} fill="#8884d8" dataKey="지역">
-          {data.map((entry, index) => (
+        <Pie data={data} cx={200} cy={150} innerRadius={50} outerRadius={100} fill="#8884d8" dataKey={PIE_KEY}>
+          {data.map((_, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
