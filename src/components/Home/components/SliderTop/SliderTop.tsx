@@ -8,6 +8,7 @@ const SliderTop = () => {
     dots: true,
     infinite: true,
     speed: 500,
+    //autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     centerMode: true,
@@ -25,8 +26,8 @@ const SliderTop = () => {
                 <p className="innertext-2">'무직타이거' 팝업스토어</p>
                 <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
               </TextBox>
-              <InnerImage></InnerImage>
-              <Object></Object>
+              <InnerImage className="image-1"></InnerImage>
+              <Object className="object-animation"></Object>
             </SlideContent>
           </SlideItem>
           <SlideItem>
@@ -36,8 +37,8 @@ const SliderTop = () => {
                 <p className="innertext-2">'무직타이거' 팝업스토어</p>
                 <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
               </TextBox>
-              <InnerImage></InnerImage>
-              <Object></Object>
+              <InnerImage className="image-2"></InnerImage>
+              <Object className="object-animation"></Object>
             </SlideContent>
           </SlideItem>
           <SlideItem>
@@ -47,8 +48,8 @@ const SliderTop = () => {
                 <p className="innertext-2">'무직타이거' 팝업스토어</p>
                 <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
               </TextBox>
-              <InnerImage></InnerImage>
-              <Object></Object>
+              <InnerImage className="image-3"></InnerImage>
+              <Object className="object-animation"></Object>
             </SlideContent>
           </SlideItem>
         </CustomSlider>
@@ -58,7 +59,7 @@ const SliderTop = () => {
 };
 
 const SlideFrame = styled.div`
-  height: 200px;
+  height: 250px;
 `;
 const SlideBox = styled.div`
   width: 100%;
@@ -95,45 +96,85 @@ const TextBox = styled.div`
   z-index: 5;
 
   .innertext-1 {
-    font-size: var(--font-small);
+    font-size: var(--font-regular);
   }
 
   .innertext-2 {
-    margin-top: 5px;
+    margin-top: 7px;
     font-size: var(--font-medium);
     font-weight: var(--weight-semi-bold);
   }
 
   .innertext-3 {
     margin-top: 20px;
-    font-size: var(--font-micro);
+    font-size: var(--font-regular);
+
+    @media all and (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  @media all and (max-width: 767px) {
+    left: 6%;
   }
 `;
 
 const InnerImage = styled.div`
   position: absolute;
   right: 0px;
-  background: linear-gradient(to right, lemonchiffon, lemonchiffon 10%, transparent),
-    url('/images/main-back.jpeg') no-repeat;
   opacity: 0.4;
   z-index: 3;
-  background-size: contain;
-  background-position: center top;
   width: 340px;
   height: 500px;
+
+  &.image-1 {
+    background: linear-gradient(to right, lemonchiffon, lemonchiffon 10%, transparent),
+      url('/images/main-back.jpeg') no-repeat;
+    background-size: contain;
+    background-position: center top;
+  }
+
+  &.image-2 {
+    background: linear-gradient(to right, lightblue, lightblue 10%, transparent),
+      url('/images/main-back.jpeg') no-repeat;
+    background-size: contain;
+    background-position: center top;
+  }
+
+  &.image-3 {
+    background: linear-gradient(to right, #d4c2dc, #d4c2dc 10%, transparent), url('/images/main-back.jpeg') no-repeat;
+    background-size: contain;
+    background-position: center top;
+  }
 `;
 
 const Object = styled.div`
   background: url('/images/tiger.png') no-repeat;
   z-index: 20;
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   background-size: contain;
   z-index: 4;
 
   position: absolute;
   bottom: 0;
   right: 20%;
+  animation: identifier 0.9s;
+
+  @keyframes identifier {
+    0% {
+      transform: translateY(80px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  @media all and (max-width: 767px) {
+    right: 5%;
+    width: 120px;
+    height: 120px;
+  }
 `;
 
 const CustomSlider = styled(Slider)`
@@ -151,7 +192,7 @@ const CustomSlider = styled(Slider)`
     margin: 0px;
   }
   .slick-dots li button:before {
-    font-size: 40px;
+    font-size: 50px;
     line-height: 0px;
     content: '.';
   }
@@ -159,9 +200,16 @@ const CustomSlider = styled(Slider)`
     color: var(--color-sub);
   }
 
-  /* .slick-active .object-item {
+  .slick-slide .object-animation {
+    opacity: 0;
+    transition: all 0.9s;
+    transform: translateY(80px);
+  }
 
-  } */
+  .slick-slide.slick-active .object-animation {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 `;
 
 export default SliderTop;

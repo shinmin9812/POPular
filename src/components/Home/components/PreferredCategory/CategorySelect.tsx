@@ -24,7 +24,7 @@ const Container = styled.div`
   box-shadow: #d7cdd726 0px 0px 3px 3px;
 
   .text-notice {
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
 
     .title-point {
       font-weight: var(--weight-semi-bold);
@@ -35,6 +35,7 @@ const Container = styled.div`
 
   .text-setting {
     margin-top: 20px;
+    font-size: var(--font-medium);
     font-weight: var(--weight-semi-bold);
   }
 

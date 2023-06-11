@@ -33,25 +33,27 @@ const InnerContent = styled.div`
   .text-section {
     .item-title {
       font-weight: var(--weight-semi-bold);
-      font-size: var(--font-small);
+      font-size: var(--font-regular);
     }
 
     .item-period {
       margin-top: 5px;
       font-weight: var(--weight-regular);
-      font-size: var(--font-micro);
+      font-size: var(--font-small);
       color: var(--color-gray);
     }
   }
 
   .image-section {
-    width: 110px;
-    height: 70px;
+    width: 140px;
+    height: 90px;
     overflow: hidden;
     border-radius: 5px;
 
     img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 `;

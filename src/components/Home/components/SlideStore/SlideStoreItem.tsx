@@ -43,13 +43,13 @@ const Container = styled.div`
 
   .item-title {
     font-weight: var(--weight-semi-bold);
-    font-size: var(--font-small);
+    font-size: var(--font-regular);
   }
 
   .item-period {
     margin-top: 5px;
     font-weight: var(--weight-regular);
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
     color: var(--color-gray);
   }
 `;
