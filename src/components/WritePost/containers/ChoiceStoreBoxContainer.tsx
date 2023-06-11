@@ -9,6 +9,8 @@ import StoreItem from '../../common/Store/StoreItem';
 import { Store } from '../../../types/store';
 import filterFunc from '../../../Hooks/filterFunc';
 import ChoiceStoreList from '../components/ChoiceStoreList';
+import ChoiceStoreBox from '../components/ChoiceStoreBox';
+
 const ChoiceStoreBoxContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const choiceStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
@@ -25,18 +27,17 @@ const ChoiceStoreBoxContainer = () => {
     const response = await fetch('http://34.22.81.36:3000/stores');
     const result = await response.json();
     setStores(result);
-    console.log(result);
   }
   useEffect(() => {
     fetchData();
   }, []);
   if (tab !== '자유게시판') {
     return (
-      <div>
+      <ChoiceStoreBox>
         <SearchContainerWrap placeholder={'스토어를 검색해주세요.'} />
         <FilterContainer />
         <FilterInfoContainer />
-        <ChoiceStoreList>
+        <ChoiceStoreList choice={choiceStoreId.length > 0}>
           {stores ? (
             filterFunc(stores, filterAddress, filterCategory, filterDate, choiceStoreId).map((store: Store) => (
               <ChoiceStoreItemContainer key={store._id} setChoiceStoreId={setChoiceStoreId} storeId={store._id}>
@@ -47,7 +48,7 @@ const ChoiceStoreBoxContainer = () => {
             <li></li>
           )}
         </ChoiceStoreList>
-      </div>
+      </ChoiceStoreBox>
     );
   } else return <div></div>;
 };

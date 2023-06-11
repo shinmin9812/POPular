@@ -13,7 +13,7 @@ import CommentInputContainer from '../components/PostDetail/containers/CommentIn
 import { useAppDispatch } from '../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
 import { Comment } from '../types/comment';
-
+import getComments from '../api/CommentApi';
 const Container = styled.div`
   width: 100%;
 `;
@@ -39,16 +39,17 @@ const PostDetailPage = () => {
 
   useEffect(() => {
     fetchData();
+    getComments(postId, setComments);
   }, []);
 
   async function fetchData() {
     const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}`);
     const result: Post = await response.json();
     setPost(result);
-    setComments(result.comments);
     setLikes(result.likes);
     setReports(result.reports);
   }
+
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {
     return <div>Loading...</div>;

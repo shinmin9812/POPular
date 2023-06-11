@@ -3,7 +3,7 @@ import FilterDateBox from './FilterDateBox';
 interface durationFilterValue {
   show: boolean;
   use: boolean;
-  StartDate: string;
+  startDate: string;
   endDate: string;
 }
 

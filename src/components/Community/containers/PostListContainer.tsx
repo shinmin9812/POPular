@@ -1,11 +1,14 @@
-import PostListItem from '../components/PostList';
 import { Post } from '../../../types/post';
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo, Suspense } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
-import { useNavigate, NavigateFunction } from 'react-router-dom';
+import { useNavigate, NavigateFunction, Link } from 'react-router-dom';
 import filterFunc from '../../../Hooks/filterFunc';
 import { Store } from '../../../types/store';
 import { communityActions } from '../CommunitySlice';
+import { useQuery } from '@tanstack/react-query';
+
+import PostItem from '../../User/components/PostItem';
+
 async function fetchData(
   tab: string,
   setPosts: React.Dispatch<React.SetStateAction<Post[] | undefined>>,
@@ -37,6 +40,7 @@ async function fetchData(
       break;
   }
   setPosts(result);
+  return result;
 }
 
 const PostListItemContainer = () => {
@@ -51,7 +55,6 @@ const PostListItemContainer = () => {
   const setPage = useCallback((page: number) => dispatch(communityActions.setPage(page)), [dispatch]);
 
   const [posts, setPosts] = useState<Post[]>();
-
   const stores: Store[] | undefined =
     posts && posts.map((post: Post) => post.store_id).filter((value): value is Store => Boolean(value));
 
@@ -59,10 +62,14 @@ const PostListItemContainer = () => {
     fetchData(tab, setPosts, navigate);
   }, [tab]);
 
+  // useQuery 사용 확인 필요
+  // const useGetPosts = useQuery<Post[]>(['getPosts', tab], () => {
+  //   return fetchData(tab, setPosts, navigate);
+  // });
+  // console.log(useGetPosts.data);
+
   // 필터 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDate.use;
-
-  //에러 발생 fix 예정
   const originalPost: Post[] | undefined = useMemo(() => {
     if (useFilter) {
       // 필터링된 스토어리스트
@@ -96,17 +103,26 @@ const PostListItemContainer = () => {
     setTotalPage(Array.from({ length: dividedPost.length }, (_, index) => index + 1));
   }, [setTotalPage, dividedPost, originalPost]);
 
+  if (posts === undefined) {
+    return <div>loading...</div>;
+  }
+
   return (
     <ul>
       {dividedPost[page - 1]?.map((post) => (
-        <PostListItem
-          key={post._id}
-          postTitle={post.title}
-          postInfo={`${new Date(post.updatedAt).toISOString().slice(0, 10)} | By ${post.author} | Likes ${
-            post.likes.length
-          }`}
-          postId={post._id}
-        />
+        // <PostListItem
+        //   key={post._id}
+        //   postTitle={post.title}
+        //   postInfo={`${new Date(post.updatedAt).toISOString().slice(0, 10)} | By ${post.author} | Likes ${
+        //     post.likes.length
+        //   }`}
+        //   postId={post._id}
+        // />
+        <li key={post._id}>
+          <Link to={`/community/post/${post._id}`}>
+            <PostItem post={post} />
+          </Link>
+        </li>
       ))}
     </ul>
   );

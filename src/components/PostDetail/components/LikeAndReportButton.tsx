@@ -18,7 +18,6 @@ const ButtonWrap = styled.div`
   display: flex;
   width: 120px;
   justify-content: space-around;
-  margin-top: 10px;
 `;
 
 const LikesAndReports = ({
@@ -43,7 +42,7 @@ const LikesAndReports = ({
       >
         <LikeIcon fill={checkLike ? 'var(--color-main)' : 'var(--color-gray)'} />
         <NameWrap>좋아요</NameWrap>
-        {/* <span>{likes}</span> */}
+        <span>{likes}</span>
       </Button>
       <Button
         onClick={() => {
@@ -52,7 +51,7 @@ const LikesAndReports = ({
       >
         <ReportIcon fill={checkReport ? 'var(--color-main)' : 'var(--color-gray)'} />
         <NameWrap>싫어요</NameWrap>
-        {/* <span>{reports}</span> */}
+        <span>{reports}</span>
       </Button>
     </ButtonWrap>
   );

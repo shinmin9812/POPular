@@ -18,7 +18,7 @@ export interface WritePostInitialState {
   durationFilter: {
     show: boolean;
     use: boolean;
-    StartDate: string;
+    startDate: string;
     endDate: string;
   };
   isUpdate: {
@@ -55,7 +55,7 @@ const initialState: WritePostInitialState = {
   durationFilter: {
     show: false,
     use: false,
-    StartDate: today,
+    startDate: today,
     endDate: today,
   },
   isUpdate: {
@@ -84,7 +84,7 @@ const WritePostSlice = createSlice({
       state.categoryFilter.use = action.payload;
     },
     setFilterStartDate(state, action: PayloadAction<string>) {
-      state.durationFilter.StartDate = action.payload;
+      state.durationFilter.startDate = action.payload;
     },
     setFilterEndDate(state, action: PayloadAction<string>) {
       state.durationFilter.endDate = action.payload;

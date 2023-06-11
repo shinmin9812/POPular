@@ -1,8 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Comment } from '../../../types/comment';
 import CommentItem from '../components/CommentItem';
+import getComments from '../../../api/CommentApi';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
+import { PostDetailActions } from '../PostDetailSlice';
 
 const CommentItemContainer = ({ comment }: { comment: Comment }) => {
+  const postId = useParams().postId;
+  const dispatch = useAppDispatch();
+  const setComments = (comments: Comment[]) => {
+    return dispatch(PostDetailActions.setComment(comments));
+  };
+
   const [reCommentInput, setReCommentInput] = useState(false);
   const [isMember, setIsMember] = useState();
   useEffect(() => {
@@ -40,7 +50,7 @@ const CommentItemContainer = ({ comment }: { comment: Comment }) => {
     });
     const result = await response.json();
     alert(result.message);
-    location.reload();
+    getComments(postId, setComments);
   };
 
   return (

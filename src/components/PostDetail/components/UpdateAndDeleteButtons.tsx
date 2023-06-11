@@ -13,7 +13,6 @@ const Button = styled.button<{ update: boolean }>`
 const ButtonWrap = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 5px;
 `;
 
 const UpdateAndDelete = ({ deletePost, updatePost }: { deletePost: () => void; updatePost: () => void }) => {
