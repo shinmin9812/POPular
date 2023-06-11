@@ -57,36 +57,8 @@ export class UserService {
 			throw new NotFoundException('사용자를 찾을 수 없습니다!');
 		}
 
-		if (body.profile) {
-			const base64Image = body.profile;
-			const imageUrl = await handleImage(base64Image, './uploads', '');
-			user.profile = imageUrl;
-		}
+		
 
-		if (body.pw) {
-			const newPw = await hashPassword(body.pw);
-			user.pw = newPw;
-		}
-
-		if (body.introduce) {
-			user.introduce = body.introduce;
-		}
-
-		if (body.nickname) {
-			user.nickname = body.nickname;
-		}
-
-		if (body.phone_number) {
-			user.phone_number = body.phone_number;
-		}
-
-		if (body.interested_category) {
-			user.interested_category = body.interested_category;
-		}
-
-		if (body.allow_notification !== undefined) {
-			user.allow_notification = body.allow_notification;
-		}
 
 		return user.save();
 	}
