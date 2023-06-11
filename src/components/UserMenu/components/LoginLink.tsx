@@ -31,6 +31,7 @@ const LinkContainer = styled.div`
   }
 
   & p {
+    font-weight: var(--weight-light);
     font-size: var(--font-medium);
     display: flex;
     align-items: center;

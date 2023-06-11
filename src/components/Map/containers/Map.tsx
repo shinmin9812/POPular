@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { API_PATH } from '../../../constants/path';
 import { Store } from '../../../types/store';
 import StoreSheet from '../components/StoreSheet';
+import KakaoMap from '../components/KakaoMap';
 
 declare global {
   interface Window {
@@ -181,7 +182,7 @@ const Map = () => {
 
   return (
     <Container>
-      <div id="map" style={{ width: '100%', height: '100%' }} />
+      <KakaoMap />
       {isFetched && stores && stores.length > 0 && (
         <SlideCarousel
           setSlectedId={setSlectedId}
@@ -208,7 +209,7 @@ const Container = styled.div`
   right: 0;
 
   height: calc(100vh - var(--header-height));
-  width: calc(100vw - 500px);
+  width: calc(100vw - 400px);
   overflow: hidden;
 
   .custom-overlay {
@@ -255,7 +256,7 @@ const Container = styled.div`
     }
   }
 
-  @media all and (max-width: 767px) {
+  @media all and (max-width: 1200px) {
     height: calc(100vh - var(--header-height) - var(--GNA-height));
     width: 100vw;
   }

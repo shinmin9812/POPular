@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import Slider from 'react-slick';
+import { Store } from '../../../types/store';
 
 const Container = styled.div`
   display: flex;
@@ -54,20 +53,15 @@ const Container = styled.div`
   }
 `;
 
-const StoreTitle = () => {
-  const { storeId } = useParams();
-  async function fetchStore() {
-    const response = await fetch(`http://34.22.81.36:3000/stores/store/${storeId}`);
-    return response.json();
-  }
-  const { data: store, isLoading, isError } = useQuery(['store'], fetchStore);
+interface Props {
+  store: Store;
+}
 
+const StoreTitle = ({ store }: Props) => {
   const settings = {
     dots: true,
   };
 
-  if (isError) return <h3>error</h3>;
-  if (isLoading) return <h3>Loading...</h3>;
   return (
     <Container>
       <div className="title-head">

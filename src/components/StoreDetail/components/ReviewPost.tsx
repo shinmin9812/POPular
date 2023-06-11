@@ -4,16 +4,21 @@ import { Post } from '../../../types/post';
 const Container = styled.article`
   margin-bottom: 20px;
 
-  .thumbnail {
+  .thumbnail-box {
     width: 100%;
     aspect-ratio: 1/1;
     border-radius: 14px;
 
-    object-fit: cover;
+    background-color: #eeeeee;
+
+    img {
+      object-fit: cover;
+    }
   }
 
   .post-info {
     padding: 14px 10px;
+
     .user-info {
       display: flex;
       align-items: center;
@@ -54,14 +59,16 @@ interface Props {
 const ReviewPost = ({ post }: Props) => {
   return (
     <Container>
-      <img className="thumbnail" src={post.images ? post.images[0] : ''} alt={post.title} />
+      <figure className="thumbnail-box">
+        <img className="thumbnail" src={post.images ? post.images[0] : ''} alt={post.title} />
+      </figure>
       <div className="post-info">
         <div className="user-info">
-          <img src={post.author.profile} />
+          {!post.author.profile ? <img src="/defaultProfile.svg" /> : <img src={post.author.profile} />}
           <p className="user-name">{post.author.nickname}</p>
           <span className="user-followers"> · {post.author.follower.length} followers</span>
         </div>
-        <p className="content">{post.content}</p>
+        <p className="content">{post.content.replace(/<[^>]*>?/g, '')}</p>
       </div>
     </Container>
   );

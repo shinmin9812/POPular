@@ -12,8 +12,8 @@ const CommentList = ({ comments }: Props) => {
       {comments.map((comment) => {
         return (
           <li key={comment._id}>
-            <Link to={`/posts/${comment.parent.id}`}>
-              <CommentItem comment={comment} parentType={comment.parent.type} parentId={comment.parent.id} />
+            <Link to={`/posts/${comment.parent._id}`}>
+              <CommentItem comment={comment} parentType={comment.parent.type} parentId={comment.parent._id} />
             </Link>
           </li>
         );

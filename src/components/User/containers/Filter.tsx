@@ -11,7 +11,6 @@ interface Option {
 const Filter = ({ options }: { options: Option[] }) => {
   const filter = useSelector((state: RootState) => state.UserSlice.filter);
   const dispatch = useDispatch();
-  console.log(filter);
 
   return (
     <Container>

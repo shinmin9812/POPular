@@ -1,7 +1,7 @@
 import { Category } from './category';
 import { Notification } from './notification';
 
-const enum RoleTypes {
+export const enum RoleTypes {
   USER = 'user',
   ADMIN = 'admin',
   ENTERPRISER = 'enterpriser',

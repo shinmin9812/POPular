@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.label`
@@ -38,13 +37,10 @@ interface Props {
 }
 
 const BasicTextarea = ({ label, className }: Props) => {
-  const changeHandler = () => {
-    console.log('change');
-  };
   return (
     <Container>
       {label}
-      <textarea className={className} onChange={changeHandler} />
+      <textarea className={className} />
     </Container>
   );
 };

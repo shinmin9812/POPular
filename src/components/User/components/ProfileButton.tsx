@@ -5,27 +5,36 @@ interface Props {
   text: string;
   type: 'follow' | 'profileEdit';
   disabled?: boolean;
+  link?: string | undefined;
+  onClick?: () => void;
 }
 
-const ProfileButton = ({ text, type, disabled }: Props) => {
+const ProfileButton = ({ text, type, disabled, link, onClick }: Props) => {
   const buttonClassName = `ButtonType_${type}`;
   return (
-    <Button className={buttonClassName}>
-      <Link className="button-link" to={'update'}>
-        {text}
-      </Link>
-    </Button>
+    <>
+      {link ? (
+        <Button className={buttonClassName}>
+          <Link className="button-link" to={link}>
+            {text}
+          </Link>
+        </Button>
+      ) : (
+        <Button className={buttonClassName} onClick={onClick}>
+          {text}
+        </Button>
+      )}
+    </>
   );
 };
 
 const Button = styled.button`
   border-radius: 4px;
-
-  .button-link {
-    font-size: var(--font-micro);
-    padding: 8px 18px;
-    display: block;
-  }
+  font-size: var(--font-micro);
+  padding: 8px 18px;
+  display: block;
+  color: #fff;
+  cursor: pointer;
 
   &.ButtonType_follow {
     background-color: var(--color-main);

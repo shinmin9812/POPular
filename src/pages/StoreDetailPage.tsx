@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import StoreTitle from '../components/StoreDetail/container/StoreTitle';
 import StoreInfo from '../components/StoreDetail/container/StoreInfo';
 import StoreReview from '../components/StoreDetail/container/StoreReview';
+import { useParams } from 'react-router-dom';
+import { useGetStoreById } from '../api/storeApi';
 
 const Container = styled.div<{ isDetail: boolean }>`
   .detail-top-btn {
@@ -43,22 +45,32 @@ const Container = styled.div<{ isDetail: boolean }>`
 
 const StoreDetailPage = () => {
   const [isDetail, setIsDetail] = useState<boolean>(true);
+  const { storeId } = useParams();
+
+  const { data } = useGetStoreById(storeId!);
 
   return (
     <Container isDetail={isDetail}>
-      <StoreTitle />
-      <div className="detail-top-btn">
-        <button className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'} onClick={() => setIsDetail(true)}>
-          상세 정보
-        </button>
-        <button
-          className={isDetail ? 'store-comment-btn active' : 'store-comment-btn'}
-          onClick={() => setIsDetail(false)}
-        >
-          후기
-        </button>
-      </div>
-      {isDetail ? <StoreInfo /> : <StoreReview />}
+      {data && (
+        <>
+          <StoreTitle store={data} />
+          <div className="detail-top-btn">
+            <button
+              className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'}
+              onClick={() => setIsDetail(true)}
+            >
+              상세 정보
+            </button>
+            <button
+              className={isDetail ? 'store-comment-btn active' : 'store-comment-btn'}
+              onClick={() => setIsDetail(false)}
+            >
+              후기
+            </button>
+          </div>
+          {isDetail ? <StoreInfo store={data} /> : <StoreReview storeId={storeId!} />}
+        </>
+      )}
     </Container>
   );
 };

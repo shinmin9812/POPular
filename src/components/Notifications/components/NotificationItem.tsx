@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import UserIconMini from '../../common/Icons/UserIconMini';
 import CommentIconMini from '../../common/Icons/CommentIconMini';
 import StoreIconMini from '../../common/Icons/StoreIconMini';
-import { Content, NotificationTypes } from '../../../types/notification';
+import { NotificationType } from '../../../types/notification';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 
-const NotificationItem = ({ type, content }: { type: NotificationTypes; content: Content; checked: boolean }) => {
+const NotificationItem = ({ type, content }: { type: NotificationType; content: any; checked: boolean }) => {
   return (
     <ItemContainer>
-      {type === 'follow' && 'nickname' in content && (
+      {type === 'Follow' && 'nickname' in content && (
         <>
           <UserIconMini />
           <Notification>
@@ -16,7 +16,7 @@ const NotificationItem = ({ type, content }: { type: NotificationTypes; content:
           </Notification>
         </>
       )}
-      {type === 'comment' && 'author' in content && (
+      {type === 'Comment' && 'author' in content && (
         <>
           <CommentIconMini />
           <Notification>
@@ -28,7 +28,7 @@ const NotificationItem = ({ type, content }: { type: NotificationTypes; content:
           </Notification>
         </>
       )}
-      {type === 'ad' && 'title' in content && (
+      {type === 'Store' && 'title' in content && (
         <>
           <StoreIconMini />
           <Notification>

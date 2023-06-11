@@ -8,17 +8,19 @@ interface Props {
 
 const PostList = ({ posts }: Props) => {
   return (
-    <ul>
-      {posts.map((post) => {
-        return (
-          <li key={post._id}>
-            <Link to={`/community/post/${post._id}`}>
-              <PostItem post={post} />
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
+    <Container>
+      <ul>
+        {posts.map((post) => {
+          return (
+            <li key={post._id}>
+              <Link to={`/posts/${post._id}`}>
+                <PostItem post={post} />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </Container>
   );
 };
 

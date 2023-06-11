@@ -81,7 +81,7 @@ const ProfileUpdatePasswordForm = ({ user }: Props) => {
         throw new Error('회원정보 수정에 실패했습니다.');
       }
     } catch (error: any) {
-      console.log(error.message);
+      throw new Error(error);
     }
   };
 

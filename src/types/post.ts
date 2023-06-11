@@ -13,7 +13,7 @@ export interface Post {
   store_id?: Store;
   ratings?: number;
   likes: string[];
-  report: string[];
+  reports: string[];
   updatedAt: string;
   comments: Comment[];
   views: number;

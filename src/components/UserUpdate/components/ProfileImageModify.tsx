@@ -22,7 +22,7 @@ const ProfileImageModify = ({ user }: Props) => {
         setUserProfile(reader.result as string);
       };
       reader.onerror = () => {
-        console.log('Error');
+        throw new Error('file reading error');
       };
       reader.readAsDataURL(file);
     }
@@ -56,14 +56,13 @@ const ProfileImageModify = ({ user }: Props) => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+        // const data = await response.json();
         alert('회원정보 수정이 완료되었습니다.');
       } else {
         throw new Error('회원정보 수정에 실패했습니다.');
       }
     } catch (error: any) {
-      console.log(error.message);
+      throw new Error(error);
     }
   };
 

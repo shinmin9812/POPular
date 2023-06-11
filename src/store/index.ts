@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import CommunitySlice from '../components/Community/CommunitySlice';
 import WritePostSlice from '../components/WritePost/WritePostSlice';
 import UserSlice from '../components/User/UserSlice';
+import PostDetailSlice from '../components/PostDetail/PostDetailSlice';
 import { api } from '../api/useQueries';
 
 const store = configureStore({
   reducer: {
     CommunitySlice,
     WritePostSlice,
+    PostDetailSlice,
     UserSlice,
     [api.reducerPath]: api.reducer,
   },

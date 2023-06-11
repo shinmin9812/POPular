@@ -74,8 +74,7 @@ const SignupForm = () => {
         setErrors((prevState) => ({ ...prevState, nickname: '다른 유저가 사용중인 닉네임입니다.' }));
       }
     } catch (err: any) {
-      const errorMessage = (err as Error).message;
-      console.log(errorMessage);
+      throw new Error(err);
     }
   };
 
@@ -94,8 +93,7 @@ const SignupForm = () => {
         setErrors((prevState) => ({ ...prevState, email: '이미 가입된 이메일입니다.' }));
       }
     } catch (err: any) {
-      const errorMessage = (err as Error).message;
-      console.log(errorMessage);
+      throw new Error(err);
     }
   };
 
@@ -202,8 +200,7 @@ const SignupForm = () => {
         navigate('/login');
       }
     } catch (err: any) {
-      const errorMessage = (err as Error).message;
-      console.log(errorMessage, '회원가입 실패');
+      throw new Error(err);
     }
   };
 
@@ -218,42 +215,54 @@ const SignupForm = () => {
           이름
           {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
         </Label>
-        <Input type="text" name="name" value={name} onChange={onChange} />
+        <Input placeholder="2글자 이상" type="text" name="name" value={name} onChange={onChange} />
       </FieldContainer>
       <FieldContainer>
         <Label>
           이메일
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
         </Label>
-        <Input type="email" name="email" value={email} onChange={onChange} />
+        <Input placeholder="email@email.com" type="email" name="email" value={email} onChange={onChange} />
       </FieldContainer>
       <FieldContainer>
         <Label>
           닉네임
           {errors.nickname && <ErrorMessage>{errors.nickname}</ErrorMessage>}
         </Label>
-        <Input type="text" name="nickname" value={nickname} onChange={onChange} />
+        <Input placeholder="2글자 이상" type="text" name="nickname" value={nickname} onChange={onChange} />
       </FieldContainer>
       <FieldContainer>
         <Label>
           비밀번호
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </Label>
-        <Input type="password" name="password" value={password} onChange={onChange} />
+        <Input
+          placeholder="특수문자, 문자, 숫자 포함 8~15자"
+          type="password"
+          name="password"
+          value={password}
+          onChange={onChange}
+        />
       </FieldContainer>
       <FieldContainer>
         <Label>
           비밀번호 확인
           {errors.confirmPassword && <ErrorMessage>{errors.confirmPassword}</ErrorMessage>}
         </Label>
-        <Input type="password" name="confirmPassword" value={confirmPassword} onChange={onChange} />
+        <Input
+          placeholder="특수문자, 문자, 숫자 포함 8~15자"
+          type="password"
+          name="confirmPassword"
+          value={confirmPassword}
+          onChange={onChange}
+        />
       </FieldContainer>
       <FieldContainer>
         <Label>
           전화번호
           {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
         </Label>
-        <Input type="text" name="phone" value={autoHyphen(phone)} onChange={onChange} />
+        <Input placeholder="01011112222" type="text" name="phone" value={autoHyphen(phone)} onChange={onChange} />
       </FieldContainer>
       <CheckboxContainer>
         <Checkbox type="checkbox" checked={allowNotifications} onChange={handleAllowNotificationsChange} />
@@ -298,11 +307,22 @@ const Input = styled.input`
   border-radius: var(--border-radius-input);
   font-size: var(--font-small);
   color: var(--color-black);
+  :focus {
+    border: 2px solid var(--color-main);
+    outline: none;
+  }
+
+  ::placeholder {
+    color: var(--color-gray);
+    font-size: var(--font-small);
+  }
 `;
 
 const ErrorMessage = styled.span`
   font-size: var(--font-micro);
   color: var(--color-red);
+  display: flex;
+  align-items: center;
 `;
 
 const CheckboxContainer = styled.div`

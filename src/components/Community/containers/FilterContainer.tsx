@@ -35,7 +35,7 @@ const FilterContainer = () => {
     durationFilterValue.endDate,
   );
 
-  const Today: Date = new Date();
+  // const Today: Date = new Date();
   // 자유게시판으로 이동 시 필터 초기화
   if (Tab === '자유게시판') {
     // setFilterAddressValue('지역');

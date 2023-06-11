@@ -1,27 +1,9 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CategorySelect from './CategorySelect';
 
-interface ContainerProps {
-  windowWidth: number;
-}
-
 const CategoryBox = () => {
-  // 백그라운드 영역 사이즈 동적으로 조정하기
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleWindowResize);
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
-
   return (
-    <Container windowWidth={windowWidth}>
+    <Container>
       <CategoryInner>
         <h2>엘리스님에게 추천하는 팝업스토어🐰</h2>
         <CategoryItems>
@@ -32,11 +14,10 @@ const CategoryBox = () => {
   );
 };
 
-const Container = styled.div<ContainerProps>`
+const Container = styled.div`
   width: 100%;
 
-  position: relative;
-
+  position: static;
   margin-top: 40px;
 
   h2 {
@@ -49,15 +30,16 @@ const Container = styled.div<ContainerProps>`
   &::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 50.5%;
     left: 50%;
-    width: ${(props) => props.windowWidth - 13}px;
-    height: 100%;
+    width: 100%;
+    height: 230px;
     background-color: #fbf3ff;
     transform: translateX(-50%);
     z-index: 0;
   }
 `;
+
 const CategoryInner = styled.div`
   position: relative;
   z-index: 2;

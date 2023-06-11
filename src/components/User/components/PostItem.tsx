@@ -83,9 +83,8 @@ const PostItemTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 5px;
-
-  margin-top: 10px;
+  padding: 2px;
+  margin-top: 5px;
 
   @media all and (max-width: 767px) {
     font-size: var(--font-small);

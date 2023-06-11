@@ -21,8 +21,8 @@ const CommentsList = ({ comments }: { comments: Comment[] | undefined }) => {
         Comment <span>{comments?.length}</span>
       </Title>
       <ul>
-        {comments?.map((comment) => (
-          <CommentItemContainer key={comment.id} comment={comment} />
+        {comments?.map((comment, index) => (
+          <CommentItemContainer key={comment._id + index} comment={comment} />
         ))}
       </ul>
     </CommentBox>
