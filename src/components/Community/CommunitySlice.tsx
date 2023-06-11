@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+const today = new Date().toISOString().slice(0, 10);
+
 export interface CommunityInitialState {
   tab: string;
   addressFilter: {
@@ -13,16 +15,8 @@ export interface CommunityInitialState {
   durationFilter: {
     show: boolean;
     use: boolean;
-    StartDate: {
-      year: number;
-      month: number;
-      day: number;
-    };
-    endDate: {
-      year: number;
-      month: number;
-      day: number;
-    };
+    StartDate: string;
+    endDate: string;
   };
   page: {
     currPage: number;
@@ -30,21 +24,13 @@ export interface CommunityInitialState {
   };
 }
 
-export interface SetDate {
-  year: number;
-  month: number;
-  day: number;
-}
-
 export interface SetFilter {
   filter: string;
   use: boolean;
 }
 
-const Today: Date = new Date();
-
 const initialState: CommunityInitialState = {
-  tab: '전체',
+  tab: '전체게시판',
   addressFilter: {
     value: '지역',
     use: false,
@@ -56,8 +42,8 @@ const initialState: CommunityInitialState = {
   durationFilter: {
     show: false,
     use: false,
-    StartDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
-    endDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
+    StartDate: today,
+    endDate: today,
   },
   page: {
     currPage: 1,
@@ -90,10 +76,10 @@ const CommunitySlice = createSlice({
     setFilterCategoryUse(state, action: PayloadAction<boolean>) {
       state.categoryFilter.use = action.payload;
     },
-    setFilterStartDate(state, action: PayloadAction<SetDate>) {
+    setFilterStartDate(state, action: PayloadAction<string>) {
       state.durationFilter.StartDate = action.payload;
     },
-    setFilterEndDate(state, action: PayloadAction<SetDate>) {
+    setFilterEndDate(state, action: PayloadAction<string>) {
       state.durationFilter.endDate = action.payload;
     },
     setFilterDurationUse(state, action: PayloadAction<boolean>) {

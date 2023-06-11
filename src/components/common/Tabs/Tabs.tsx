@@ -2,9 +2,8 @@ import styled, { css } from 'styled-components';
 
 const Tab = styled.p<{ active: boolean }>`
   text-align: center;
-  font-size: 18px;
-  padding-bottom: 5px;
-  border-bottom: 3px solid rgba(101, 44, 193, 0.2);
+  font-size: var(--font-regular);
+  padding-bottom: 10px;
   width: 100%;
   + p {
     margin-left: 4px;
@@ -13,8 +12,9 @@ const Tab = styled.p<{ active: boolean }>`
   ${(props) =>
     props.active &&
     css`
-      font-weight: var(--weight-bold);
-      border-bottom: 3px solid rgba(101, 44, 193, 1);
+      color: var(--color-main);
+      border-bottom: 3px solid var(--color-main);
+      font-size: var(--font-medium);
     `}
 `;
 

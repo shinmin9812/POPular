@@ -10,9 +10,12 @@ const filterFunc = (
     value: string;
     use: boolean;
   },
-  targetStartDate: string,
-  targetEndDate: string,
-  DateFilterUse: boolean,
+  duration: {
+    show: boolean;
+    use: boolean;
+    StartDate: string;
+    endDate: string;
+  },
   choiceStoreId?: string,
 ) => {
   if (choiceStoreId && choiceStoreId.length > 0) {
@@ -22,8 +25,9 @@ const filterFunc = (
     (store) =>
       (address.use ? store.postcode.sido === address.value : store) &&
       (category.use ? store.category === category.value : store) &&
-      (DateFilterUse
-        ? new Date(store.start_date) <= new Date(targetEndDate) && new Date(targetStartDate) <= new Date(store.end_date)
+      (duration.use
+        ? new Date(store.start_date) <= new Date(duration.endDate) &&
+          new Date(duration.StartDate) <= new Date(store.end_date)
         : store),
   );
 };

@@ -8,6 +8,8 @@ const ReCommentWrap = styled.ul`
   background-color: #fafafa;
   border: 1px solid #dddddd;
   margin-top: 10px;
+  width: 86%;
+  margin-left: 14%;
 `;
 
 const ReCommentItem = styled.li`
@@ -15,11 +17,16 @@ const ReCommentItem = styled.li`
   padding: 15px 0 15px 15px;
   + li {
     border-top: 1px var(--color-light-gray) solid;
-    margin-bottom: 10px;
   }
 `;
 
-const ReComment = ({ reComments }: { reComments: Comment[] | undefined }) => {
+const ReComment = ({
+  reComments,
+  commentDelete,
+}: {
+  reComments: Comment[] | undefined;
+  commentDelete: (commentId: string, authorId: string) => Promise<void>;
+}) => {
   return (
     <ReCommentWrap>
       {reComments?.map((reComment, index) => (
@@ -28,9 +35,13 @@ const ReComment = ({ reComments }: { reComments: Comment[] | undefined }) => {
           <CommentAuthorName>{reComment.author.nickname}</CommentAuthorName>
           <CommentContent>{reComment.content}</CommentContent>
           <CommentUpdateAt>{reComment.updatedAt.slice(0, 10)}</CommentUpdateAt>
-          <CommentDeleteButton>
+          <CommentDeleteButton
+            onClick={() => {
+              commentDelete(reComment._id, reComment.author._id);
+            }}
+          >
             <XmarkIcon />
-          </CommentDeleteButton>{' '}
+          </CommentDeleteButton>
         </ReCommentItem>
       ))}
     </ReCommentWrap>

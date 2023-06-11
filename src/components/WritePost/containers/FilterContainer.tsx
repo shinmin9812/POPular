@@ -19,21 +19,15 @@ const FilterContainer = () => {
   const setFilterCategoryValue = (category: string) => dispatch(WritePostSliceActions.setFilterCategoryValue(category));
   const setFilterCategoryUse = (use: boolean) => dispatch(WritePostSliceActions.setFilterCategoryUse(use));
   //기간 필터
-  const setStartDate = (date: { year: number; month: number; day: number }) =>
-    dispatch(WritePostSliceActions.setFilterStartDate(date));
-  const setEndDate = (date: { year: number; month: number; day: number }) =>
-    dispatch(WritePostSliceActions.setFilterEndDate(date));
+  const setStartDate = (date: string) => dispatch(WritePostSliceActions.setFilterStartDate(date));
+  const setEndDate = (date: string) => dispatch(WritePostSliceActions.setFilterEndDate(date));
   const setFilterDurationUse = (use: boolean) => dispatch(WritePostSliceActions.setFilterDurationUse(use));
   const setDurationShow = (show: boolean) => dispatch(WritePostSliceActions.setFilterDurationShow(show));
 
   // redux 기간 설정 전 validation을 위한 상태
-  const [startDateTarget, setStartDateTarget] = useState<{ year: number; month: number; day: number }>(
-    durationFilterValue.StartDate,
-  );
+  const [startDateTarget, setStartDateTarget] = useState(durationFilterValue.StartDate);
   // redux 기간 설정 전 validation을 위한 상태
-  const [endDateTarget, setEndDateTarget] = useState<{ year: number; month: number; day: number }>(
-    durationFilterValue.endDate,
-  );
+  const [endDateTarget, setEndDateTarget] = useState(durationFilterValue.endDate);
 
   const Today: Date = new Date();
   // 자유게시판으로 이동 시 필터 초기화
@@ -49,7 +43,7 @@ const FilterContainer = () => {
     return <div></div>;
   } else {
     return (
-      <FilterBox>
+      <FilterBox width={100}>
         <Filter
           value={categoryFilterValue.value}
           onChange={(e) => {
@@ -69,10 +63,10 @@ const FilterContainer = () => {
           width={33}
         />
         <FilterDuration
-          show={durationFilterValue.show}
           setShow={() => {
             setDurationShow(!durationFilterValue.show);
           }}
+          durationFilterValue={durationFilterValue}
           setStartDate={setStartDate}
           setEndDate={setEndDate}
           setFilterDurationUse={setFilterDurationUse}

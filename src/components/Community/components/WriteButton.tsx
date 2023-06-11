@@ -11,7 +11,7 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 22%;
+  width: 25%;
   height: 39px;
   margin-left: 10px;
   background-color: var(--color-sub);
@@ -19,7 +19,6 @@ const Button = styled.button`
   border-radius: 8px;
   padding: 10px;
   margin-top: 10px;
-
   a {
     font-size: 14px;
     color: var(--color-white);

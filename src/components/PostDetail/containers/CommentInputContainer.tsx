@@ -30,6 +30,7 @@ const feedCommentApi = async (
   });
   const result = await response.json();
   addComment(result);
+  console.log(data);
   console.log(result);
   setInput('');
 };

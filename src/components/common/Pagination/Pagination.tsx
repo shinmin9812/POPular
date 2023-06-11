@@ -13,13 +13,15 @@ const PageList = styled.ul`
 const PageItem = styled.li<{ active: boolean }>`
   padding: 5px;
   width: 25px;
+  line-height: 15px;
   text-align: center;
+  margin: 0 3px;
   ${(props) =>
     props.active &&
     css`
       color: var(--color-white);
       background-color: var(--color-main);
-      border-radius: 60px;
+      border-radius: 100%;
     `};
 `;
 

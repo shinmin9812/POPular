@@ -18,6 +18,11 @@ const Container = styled.div`
   width: 100%;
 `;
 
+const FlexDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const PostDetailPage = () => {
   const postId = useParams().postId;
   const [post, setPost] = useState<Post | null>(null);
@@ -25,6 +30,13 @@ const PostDetailPage = () => {
   const setComments = (comments: Comment[]) => {
     return dispatch(PostDetailActions.setComment(comments));
   };
+  const setLikes = (likes: string[]) => {
+    return dispatch(PostDetailActions.setLikes(likes));
+  };
+  const setReports = (reports: string[]) => {
+    return dispatch(PostDetailActions.setReports(reports));
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -34,6 +46,8 @@ const PostDetailPage = () => {
     const result: Post = await response.json();
     setPost(result);
     setComments(result.comments);
+    setLikes(result.likes);
+    setReports(result.reports);
   }
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {
@@ -56,8 +70,10 @@ const PostDetailPage = () => {
         </StoreWrap>
       )}
       <PostContent content={post ? post.content : ''} rating={post ? post.ratings : 0}></PostContent>
-      <UpdateAndDeleteContainer />
-      <LikesAndReportsContainer likes={post.likes.length} reports={post.reports.length} />
+      <FlexDiv>
+        <LikesAndReportsContainer />
+        <UpdateAndDeleteContainer />
+      </FlexDiv>
       <CommentListContainer />
       <CommentInputContainer />
     </Container>

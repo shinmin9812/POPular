@@ -14,7 +14,7 @@ async function fetchData(
   let response;
   let result;
   switch (tab) {
-    case '전체':
+    case '전체게시판':
       response = await fetch(`http://34.22.81.36:3000/feeds/`);
       result = await response.json();
       navigate('/community/board/all');
@@ -46,9 +46,6 @@ const PostListItemContainer = () => {
   const filterCategory = useAppSelector((state) => state.CommunitySlice.categoryFilter);
   const filterAddress = useAppSelector((state) => state.CommunitySlice.addressFilter);
   const filterDate = useAppSelector((state) => state.CommunitySlice.durationFilter);
-  const filterDateUse = useAppSelector((state) => state.CommunitySlice.durationFilter.use);
-  const filterStartDate = `${filterDate.StartDate.year}-${filterDate.StartDate.month}-${filterDate.StartDate.day}`;
-  const filterEndDate = `${filterDate.endDate.year}-${filterDate.endDate.month}-${filterDate.endDate.day}`;
   const dispatch = useAppDispatch();
   const setTotalPage = useCallback((page: number[]) => dispatch(communityActions.setTotalPage(page)), [dispatch]);
   const setPage = useCallback((page: number) => dispatch(communityActions.setPage(page)), [dispatch]);
@@ -63,14 +60,13 @@ const PostListItemContainer = () => {
   }, [tab]);
 
   // 필터 사용 유무
-  const useFilter = filterCategory.use || filterAddress.use || filterDateUse;
+  const useFilter = filterCategory.use || filterAddress.use || filterDate.use;
 
   //에러 발생 fix 예정
   const originalPost: Post[] | undefined = useMemo(() => {
     if (useFilter) {
       // 필터링된 스토어리스트
-      const useFilterStoreList =
-        stores && filterFunc(stores, filterAddress, filterCategory, filterStartDate, filterEndDate, filterDateUse);
+      const useFilterStoreList = stores && filterFunc(stores, filterAddress, filterCategory, filterDate);
       // 필터링된 게시글들
       const useFilterPosts = posts?.filter((post) =>
         useFilterStoreList?.some((store) => store._id === post.store_id?._id),
@@ -79,7 +75,7 @@ const PostListItemContainer = () => {
     } else {
       return posts;
     }
-  }, [useFilter, posts, stores, filterAddress, filterCategory, filterStartDate, filterEndDate, filterDateUse]);
+  }, [useFilter, posts, stores, filterAddress, filterCategory, filterDate]);
 
   useEffect(() => {
     // 탭 이동 시 페이지 초기화

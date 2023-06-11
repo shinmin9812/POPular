@@ -19,9 +19,6 @@ const ChoiceStoreBoxContainer = () => {
   const filterCategory = useAppSelector((state) => state.WritePostSlice.categoryFilter);
   const filterAddress = useAppSelector((state) => state.WritePostSlice.addressFilter);
   const filterDate = useAppSelector((state) => state.WritePostSlice.durationFilter);
-  const filterDateUse = useAppSelector((state) => state.WritePostSlice.durationFilter.use);
-  const filterStartDate = `${filterDate.StartDate.year}-${filterDate.StartDate.month}-${filterDate.StartDate.day}`;
-  const filterEndDate = `${filterDate.endDate.year}-${filterDate.endDate.month}-${filterDate.endDate.day}`;
 
   const [stores, setStores] = useState<Store[]>();
   async function fetchData() {
@@ -41,15 +38,7 @@ const ChoiceStoreBoxContainer = () => {
         <FilterInfoContainer />
         <ChoiceStoreList>
           {stores ? (
-            filterFunc(
-              stores,
-              filterAddress,
-              filterCategory,
-              filterStartDate,
-              filterEndDate,
-              filterDateUse,
-              choiceStoreId,
-            ).map((store: Store) => (
+            filterFunc(stores, filterAddress, filterCategory, filterDate, choiceStoreId).map((store: Store) => (
               <ChoiceStoreItemContainer key={store._id} setChoiceStoreId={setChoiceStoreId} storeId={store._id}>
                 <StoreItem store={store} />
               </ChoiceStoreItemContainer>

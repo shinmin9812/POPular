@@ -40,24 +40,20 @@ const FilterInfo = ({
   category: { value: string; use: boolean };
   address: { value: string; use: boolean };
   durationFilterUse: boolean;
-  startDate: { year: number; month: number; day: number };
-  endDate: { year: number; month: number; day: number };
+  startDate: string;
+  endDate: string;
   setFilterAddressUse: (use: boolean) => void;
   setFilterCategoryUse: (use: boolean) => void;
   setFilterDurationUse: (category: boolean) => void;
   setFilterAddressValue: (address: string) => void;
   setFilterCategoryValue: (category: string) => void;
 }) => {
-  const start = `${startDate.year}-${startDate.month}-${startDate.day}`;
-  const end = `${endDate.year}-${endDate.month}-${endDate.day}`;
-  const today = new Date().toLocaleDateString();
-
   return (
     <FilterInfoItemWrap>
-      <FilterIconWrap />
+      {(category.use || address.use || durationFilterUse) && <FilterIconWrap />}
       {category.use && (
         <FilterInfoItem>
-          {category.value}{' '}
+          {category.value}
           <CancelFilter
             onClick={() => {
               setFilterCategoryValue('카테고리');
@@ -70,7 +66,7 @@ const FilterInfo = ({
       )}
       {address.use && (
         <FilterInfoItem>
-          {address.value}{' '}
+          {address.value}
           <CancelFilter
             onClick={() => {
               setFilterAddressValue('지역');
@@ -83,7 +79,7 @@ const FilterInfo = ({
       )}
       {durationFilterUse && (
         <FilterInfoItem>
-          {`${start}~${end}`}{' '}
+          {`${startDate}~${endDate}`}
           <CancelFilter
             onClick={() => {
               setFilterDurationUse(false);

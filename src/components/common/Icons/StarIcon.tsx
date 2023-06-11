@@ -1,4 +1,4 @@
-const StarIcon = () => {
+const StarIcon = ({ fill }: { fill: string }) => {
   return (
     <svg
       version="1.0"
@@ -9,7 +9,7 @@ const StarIcon = () => {
       preserveAspectRatio="xMidYMid meet"
     >
       <metadata>Created by potrace 1.15, written by Peter Selinger 2001-2017</metadata>
-      <g transform="translate(0.000000,1181.000000) scale(0.100000,-0.100000)" fill="var(--color-sub)" stroke="000000">
+      <g transform="translate(0.000000,1181.000000) scale(0.100000,-0.100000)" fill={fill} stroke="000000">
         <path
           d="M6327 11292 c-60 -180 -161 -489 -227 -687 -65 -198 -233 -709 -373
     -1135 -141 -426 -367 -1114 -503 -1527 l-248 -753 -2358 0 c-1297 0 -2358 -3
