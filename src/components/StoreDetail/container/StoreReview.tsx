@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import { useGetReviewPostByStoreQuery } from '../../../api/useQueries';
-import { useParams } from 'react-router-dom';
 import ReviewList from '../components/ReviewList';
-import { useGetAllReviewFeeds } from '../../../api/storeApi';
+import { useGetAllReviewFeeds } from '../../../api/feedApi';
 
 const Container = styled.section`
   width: 100%;

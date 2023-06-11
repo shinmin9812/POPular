@@ -24,11 +24,6 @@ export const getStoreByCoord = async ({ x, y, distance }: CoordProps) => {
   return response;
 };
 
-export const getAllReviewFeeds = async () => {
-  const response = await (await fetch(API_PATH.POST.GET.ALL_REVIEW_FEEDS)).json();
-  return response;
-};
-
 export const postStore = async (storeData: PostedStore): Promise<Store> => {
   try {
     const request = await fetch(API_PATH.STORE.POST, {
@@ -39,7 +34,19 @@ export const postStore = async (storeData: PostedStore): Promise<Store> => {
     const result = await request.json();
     return result;
   } catch (err) {
-    throw new Error('포스트 전송에 실패하였습니다!');
+    throw new Error('스토어 등록에 실패하였습니다!');
+  }
+};
+
+export const deleteStore = async (storeId: string): Promise<Store> => {
+  try {
+    const request = await fetch(API_PATH.STORE.DELETE.replace(':storeId', storeId), {
+      method: 'DELETE',
+    });
+    const result = await request.json();
+    return result;
+  } catch (err) {
+    throw new Error('스토어 삭제를 실패하였습니다!');
   }
 };
 
@@ -53,7 +60,7 @@ export const editPost = async ({ storeData, storeId }: { storeData: PostedStore;
     const result = await request.json();
     return result;
   } catch (err) {
-    throw new Error('포스트 전송에 실패하였습니다!');
+    throw new Error('스토어 수정에 실패하였습니다!');
   }
 };
 
@@ -65,14 +72,14 @@ export const useGetStoreById = (storeId: string, option?: object) => {
   return useQuery<Store>(['store', storeId], () => getStoreById(storeId), option);
 };
 
-export const useGetAllReviewFeeds = (option?: object) => {
-  return useQuery<Post[]>(['reviewFeeds'], () => getAllReviewFeeds(), option);
-};
-
 export const usePostStore = () => {
   return useMutation(postStore);
 };
 
 export const useEditStore = () => {
   return useMutation(editPost);
+};
+
+export const useDeleteStore = (storeId: string, option?: object) => {
+  return useMutation(() => deleteStore(storeId), option);
 };
