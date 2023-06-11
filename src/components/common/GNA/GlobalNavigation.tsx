@@ -17,7 +17,13 @@ const Container = styled.footer`
 
   padding: 0 30px;
 
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+
+  z-index: 999;
+  box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.4);
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
 
   border-top: 1px var(--color-light-gray) solid;
 
