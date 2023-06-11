@@ -8,7 +8,7 @@ export async function handleImage(
 ): Promise<string> {
 	const filename = `${uuid.v4()}.png`;
 	const filePath = `${imageFolderPath}/${filename}`;
-	await saveImage(base64String, filePath);
+	await saveImage(base64String, `.${filePath}`);
 
 	const imageUrl = `${imagePublicUrlBase}${filePath}`;
 
