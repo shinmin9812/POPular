@@ -30,7 +30,7 @@ const ProfileButton = ({ text, type, disabled, link, onClick }: Props) => {
 
 const Button = styled.button`
   border-radius: 4px;
-  font-size: var(--font-micro);
+  font-size: 12px;
   padding: 8px 18px;
   display: block;
   color: #fff;

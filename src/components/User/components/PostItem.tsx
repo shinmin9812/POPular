@@ -19,7 +19,7 @@ const PostItem = ({ post }: Props) => {
         </PostItemCategory>
         <PostItemTitle>{post.title}</PostItemTitle>
         <PostItemBottom>
-          {post.updatedAt} | {post.author.nickname} | 💜 {post.likes.length}
+          {new Date(post.updatedAt).toISOString().slice(0, 10)} | {post.author.nickname} | 💜 {post.likes.length}
         </PostItemBottom>
       </PostItemInfo>
       <PostItemImage>
@@ -32,7 +32,7 @@ const PostItem = ({ post }: Props) => {
 const Container = styled.div`
   width: 100%;
   display: flex;
-  height: 75px;
+  height: 80px;
 
   .link {
     width: 100%;
@@ -45,16 +45,16 @@ const PostItemImage = styled.div`
 
   .temporary-image {
     position: absolute;
-    width: 75px;
-    height: 75px;
+    width: 120px;
+    height: 80px;
     border-radius: 8px;
     overflow: hidden;
     top: 0;
     right: 0;
 
     img {
-      width: 75px;
-      height: 75px;
+      width: 120px;
+      height: 80px;
       object-fit: cover;
     }
   }
@@ -66,28 +66,28 @@ const PostItemInfo = styled.div`
 
 const PostItemCategory = styled.div`
   margin-top: 5px;
-  font-size: var(--font-micro);
+  font-size: var(--font-small);
   color: var(--color-light-black);
 `;
 
 const PostItemBottom = styled.div`
   margin-top: 10px;
-  font-size: var(--font-micro);
+  font-size: 12px;
   color: var(--color-gray);
 `;
 
 const PostItemTitle = styled.div`
   max-width: 100%;
-  font-size: var(--font-small);
+  font-size: var(--font-regular);
   font-weight: var(--weight-regular);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 2px;
+  padding: 5px 0px;
   margin-top: 5px;
 
   @media all and (max-width: 767px) {
-    font-size: var(--font-small);
+    font-size: var(--font-regular);
   }
 `;
 

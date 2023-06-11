@@ -98,7 +98,7 @@ const Input = styled.input`
   border-radius: var(--border-radius-input);
   border: 1px solid var(--color-sub);
   background-color: #f3f3f3;
-  font-size: var(--font-micro);
+  font-size: 12px;
   display: none;
 
   & ~ label {
@@ -107,7 +107,7 @@ const Input = styled.input`
     width: 100%;
     padding: 7px 20px;
     text-align: center;
-    font-size: var(--font-micro);
+    font-size: 12px;
     box-sizing: border-box;
   }
 
