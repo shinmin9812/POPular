@@ -9,6 +9,12 @@ import StoreItem from '../../common/Store/StoreItem';
 import { Store } from '../../../types/store';
 import filterFunc from '../../../Hooks/filterFunc';
 import ChoiceStoreList from '../components/ChoiceStoreList';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  width: 100%;
+`;
+
 const ChoiceStoreBoxContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const choiceStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
@@ -34,7 +40,7 @@ const ChoiceStoreBoxContainer = () => {
   }, []);
   if (tab !== '자유게시판') {
     return (
-      <div>
+      <Container>
         <SearchContainerWrap placeholder={'스토어를 검색해주세요.'} />
         <FilterContainer />
         <FilterInfoContainer />
@@ -57,7 +63,7 @@ const ChoiceStoreBoxContainer = () => {
             <li></li>
           )}
         </ChoiceStoreList>
-      </div>
+      </Container>
     );
   } else return <div></div>;
 };

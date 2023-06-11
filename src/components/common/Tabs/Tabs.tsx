@@ -4,8 +4,10 @@ const Tab = styled.p<{ active: boolean }>`
   text-align: center;
   font-size: 18px;
   padding-bottom: 5px;
+  margin-bottom: 20px;
   border-bottom: 3px solid rgba(101, 44, 193, 0.2);
   width: 100%;
+
   + p {
     margin-left: 4px;
   }

@@ -7,7 +7,7 @@ type Props = {
 };
 
 const Container = styled.div`
-  width: 50%;
+  width: 100%;
 
   .store-detail-info-list {
     display: flex;

@@ -5,20 +5,34 @@ import PostContentContainer from '../components/WritePost/containers/PostContent
 import RatingContainer from '../components/WritePost/containers/RatingContainer';
 import ChoiceStoreBoxContainer from '../components/WritePost/containers/ChoiceStoreBoxContainer';
 import PostRegisterButtonContainer from '../components/WritePost/containers/PostRegisterButtonContainer';
+import { useState } from 'react';
+import { BoardTypes } from '../types/board';
+import SelectedStoreItem from '../components/WritePost/components/SelectedStoreItem';
+import { useAppSelector } from '../Hooks/useSelectorHooks';
 const Container = styled.div`
   width: 100%;
   position: relative;
+
+  .store-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
 `;
 
 const WritePostPage = () => {
+  const [postedBoard, setPostedBoard] = useState<Omit<BoardTypes, 'all'>>(BoardTypes.free);
+  const selectedStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
+
   return (
     <Container>
-      <TabsContainer />
+      <TabsContainer setPostedBoard={setPostedBoard} />
       <PostTitleContainer />
       <PostContentContainer />
-      <ChoiceStoreBoxContainer />
-      <RatingContainer />
-      <PostRegisterButtonContainer />
+      <div className="store-box">
+        <ChoiceStoreBoxContainer />
+        {selectedStoreId && <SelectedStoreItem storeId={selectedStoreId} />}
+      </div>
     </Container>
   );
 };
