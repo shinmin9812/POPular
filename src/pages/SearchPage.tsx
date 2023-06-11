@@ -23,8 +23,6 @@ const SearchPage = () => {
     setStores(result);
   }
 
-  console.log(stores);
-
   return (
     <Container>
       <SearchInput placeholder="제목을 입력하세요." />

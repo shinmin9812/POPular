@@ -8,7 +8,7 @@ export const API_PATH = {
       // 특정 옵션 스토어 조회 (쿼리스트링 사용)
       WITH_OPTIONS: `${API_BASE_URL}/stores`,
       // ID 조회
-      BY_ID: `${API_BASE_URL}/stores/id/:storeId`,
+      BY_ID: `${API_BASE_URL}/stores/store/:storeId`,
       // 추천 스토어 조회
       RECOMMENDED: `${API_BASE_URL}/stores/recommended`,
       // 주간 스토어 조회
@@ -23,7 +23,7 @@ export const API_PATH = {
       BY_COORD: `${API_BASE_URL}/stores/coord`,
     },
     POST: `${API_BASE_URL}/stores`,
-    PUT: {},
+    PUT: `${API_BASE_URL}/stores/:storeId`,
     DELETE: {},
   },
 
@@ -50,7 +50,9 @@ export const API_PATH = {
       // 포스트 게시판 조회
       BY_BOARD: '/post/board/:boardId',
       // 특정 스토어의 후기 조회
-      REVIEW_BY_STORE: '/post/store/:storeId',
+      REVIEW_BY_STORE: '/post/review/:storeId',
+      // 후기 게시판 스토 조회
+      ALL_REVIEW_FEEDS: `${API_BASE_URL}/feeds/review`,
     },
     POST: {},
     PUT: {},

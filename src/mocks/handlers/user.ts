@@ -22,7 +22,6 @@ export const user = [
   }),
 
   rest.post(API_PATH.USER.POST.LOGIN, (req, res, ctx) => {
-    console.log(req.json());
     return res(
       ctx.status(200),
       ctx.json({
@@ -38,7 +37,7 @@ export const user = [
   // 특정 ID 유저 조회
   rest.get(API_PATH.USER.GET.BY_ID, (req, res, ctx) => {
     const { userId } = req.params;
-    const result = userData.find(({ id }) => id === userId);
+    const result = userData.find(({ _id }) => _id === userId);
 
     if (Number.isNaN(userId) || !result) {
       return res(

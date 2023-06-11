@@ -71,7 +71,7 @@ const ReviewList = ({ posts, isFetching }: Props) => {
       {posts ? (
         posts.map((post) => {
           return (
-            <li key={post.id}>
+            <li key={post._id}>
               <ReviewPost post={post} />
             </li>
           );
@@ -85,7 +85,7 @@ const ReviewList = ({ posts, isFetching }: Props) => {
         </>
       )}
       <div className="more-view">
-        <Button onClick={() => navigate('/')}>후기 더 보기</Button>
+        <Button onClick={() => navigate('/community/board/review')}>후기 더 보기</Button>
       </div>
     </Container>
   );

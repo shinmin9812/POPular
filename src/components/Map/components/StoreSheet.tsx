@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Conatainer = styled.div`
   position: fixed;
 
-  width: 500px;
+  width: 400px;
   height: calc(100vh - var(--header-height));
 
   left: 0;
@@ -61,7 +61,7 @@ const Conatainer = styled.div`
     bottom: calc(var(--GNA-height) * 2);
   }
 
-  @media all and (max-width: 767px) {
+  @media all and (max-width: 1200px) {
     height: calc(100vh - (var(--header-height) * 3));
     width: 100vw;
     bottom: calc(-100% + (var(--GNA-height) * 4) + 50px);

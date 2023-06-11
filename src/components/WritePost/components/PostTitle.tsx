@@ -9,9 +9,18 @@ const TitleNameWrap = styled.span`
 
 const Input = styled.input`
   width: 80%;
-  border: 1px solid #987fc0;
   border-radius: 8px;
   padding: 10px;
+  flex-grow: 1;
+  border: none;
+  border-bottom: 1px solid #987fc0;
+
+  font-size: 20px;
+
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid #987fc0;
+  }
 `;
 
 const TitleInputWrap = styled.div`
@@ -20,6 +29,15 @@ const TitleInputWrap = styled.div`
   margin-top: 20px;
   font-size: var(--font-medium);
   font-weight: var(--weight-semi-bold);
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 20px;
+
+  p {
+    width: fit-content;
+    font-size: 20px;
+  }
 `;
 
 const PostTitle = ({ value, onChange }: { value: string; onChange: (title: string) => void }) => {

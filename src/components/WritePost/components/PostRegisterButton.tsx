@@ -8,8 +8,7 @@ const PostRegisterButtonWrap = styled.div`
 const Button = styled.button`
   background-color: var(--color-main);
   color: var(--color-white);
-  font-size: var(--font-medium);
-  font-weight: var(--weight-regular);
+  height: fit-content;
   border-radius: 8px;
   padding: 15px;
 `;

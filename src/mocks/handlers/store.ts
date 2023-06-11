@@ -16,7 +16,7 @@ export const store = [
   // ID 조회
   rest.get(API_PATH.STORE.GET.BY_ID, (req, res, ctx) => {
     const { storeId } = req.params;
-    const result = storeData.find(({ id }) => id === storeId);
+    const result = storeData.find(({ _id }) => _id === storeId);
 
     if (Number.isNaN(storeId) || !result) {
       return res(

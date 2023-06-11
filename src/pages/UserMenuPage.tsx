@@ -25,9 +25,7 @@ const UserMenuPage = () => {
         return null;
       }
     } catch (err: any) {
-      const errorMessage = err as Error;
-      console.log(errorMessage);
-      return null;
+      throw new Error(err);
     }
   };
 
@@ -41,6 +39,9 @@ const UserMenuPage = () => {
 export default UserMenuPage;
 
 const Container = styled.div`
-  width: 350px;
-  margin: 0 auto;
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

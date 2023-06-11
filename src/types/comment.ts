@@ -11,8 +11,8 @@ export interface Comment {
   content: string;
   parent: {
     type: CommentParentType;
-    id: string;
+    _id: string;
   };
-  updatedAt: string
+  updatedAt: string;
   recomments?: Comment[];
 }

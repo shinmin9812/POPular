@@ -26,7 +26,7 @@ const FilterContainer = () => {
   const setDurationShow = (show: boolean) => dispatch(communityActions.setFilterDurationShow(show));
 
   // redux 기간 설정 전 validation을 위한 상태
-  const [startDateTarget, setStartDateTarget] = useState(durationFilterValue.StartDate);
+  const [startDateTarget, setStartDateTarget] = useState(durationFilterValue.startDate);
   // redux 기간 설정 전 validation을 위한 상태
   const [endDateTarget, setEndDateTarget] = useState(durationFilterValue.endDate);
   // 자유게시판으로 이동 시 필터 초기화

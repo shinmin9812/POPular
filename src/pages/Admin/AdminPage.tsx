@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
-import { getAllStores } from '../../api/storeApi';
-import { useQueries } from '@tanstack/react-query';
-import { Store } from '../../types/store';
-import dayjs from 'dayjs';
 
 const Container = styled.div`
   display: grid;

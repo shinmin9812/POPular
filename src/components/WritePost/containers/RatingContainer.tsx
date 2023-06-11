@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
 import Rating from '../components/Rating';
@@ -7,6 +8,7 @@ const RatingContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const dispatch = useAppDispatch();
   const setRating = (rating: number) => dispatch(WritePostSliceActions.setRating(rating));
+  const RATINGS = [1, 2, 3, 4, 5];
 
   const array = [0, 1, 2, 3, 4];
   const [clicked, setClicked] = useState([true, false, false, false, false]);

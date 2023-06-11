@@ -23,7 +23,7 @@ export const post = [
   // 특정 스토어의 후기 포스트 조회
   rest.get(API_PATH.POST.GET.REVIEW_BY_STORE, (req, res, ctx) => {
     const { storeId } = req.params;
-    const reviewPosts = postData.filter((item) => item.storeId === storeId && item.board === BoardTypes.review);
+    const reviewPosts = postData.filter((item) => item._id === storeId && item.board === BoardTypes.review);
     return res(ctx.status(200), ctx.delay(1000), ctx.json(reviewPosts));
   }),
 ];
