@@ -5,7 +5,7 @@ import {
 	InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model, Types, PaginateModel, PaginateResult } from 'mongoose';
 import { Feed } from './feed.schema';
 import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
@@ -15,8 +15,8 @@ import { handleImages } from 'src/utils/handle.images.util';
 @Injectable()
 export class FeedsService {
 	constructor(
-		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
-	) { }
+		@InjectModel(Feed.name) private readonly feedModel: PaginateModel<Feed>,
+	) {}
 
 	async getAllFeeds(): Promise<Feed[]> {
 		try {
@@ -42,7 +42,11 @@ export class FeedsService {
 				query = query.where('board', board);
 			}
 
-			const feeds = await query.populate('author').populate('store_id').populate('comments').exec();
+			const feeds = await query
+				.populate('author')
+				.populate('store_id')
+				.populate('comments')
+				.exec();
 
 			return feeds;
 		} catch (err) {
@@ -64,16 +68,27 @@ export class FeedsService {
 		return await this.getFeedsByBoard('free');
 	}
 
-	async getPaginate(page: number): Promise<Feed[]> {
-		const limit = 7;
-		const offset = (page - 1) * limit;
+	async getPaginateByUserId(
+		id: string,
+		pageIndex: number,
+		order?: string,
+	): Promise<PaginateResult<Feed>> {
+		let sort: { [key: string]: number } = { createdAt: -1 };
 
-		const feeds = await this.feedModel
-			.find()
-			.limit(limit)
-			.skip(offset);
+		if (order === 'desc') {
+			sort = { createdAt: -1 };
+		} else if (order === 'asc') {
+			sort = { createdAt: 1 };
+		}
 
-		return feeds;
+		return this.feedModel.paginate(
+			{ author: id },
+			{
+				sort,
+				page: pageIndex,
+				limit: 5,
+			},
+		);
 	}
 
 	async getFeedById(id: string): Promise<Feed> {
@@ -82,20 +97,23 @@ export class FeedsService {
 				.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true })
 				.populate('author')
 				.populate('store_id')
-				.populate({path: 'comments',
-										populate: [{
-											path: 'recomments',
-											model: 'Comment',
-											populate: {
-												path: 'author',
-												model: 'User'
-											}
-										},
-										{
-											path: 'author',
-											model: 'User'
-										}]
-									})
+				.populate({
+					path: 'comments',
+					populate: [
+						{
+							path: 'recomments',
+							model: 'Comment',
+							populate: {
+								path: 'author',
+								model: 'User',
+							},
+						},
+						{
+							path: 'author',
+							model: 'User',
+						},
+					],
+				})
 				.exec();
 
 			if (!feed) {
@@ -185,23 +203,34 @@ export class FeedsService {
 	}
 
 	async addLike(feedId: Types.ObjectId, like: Types.ObjectId): Promise<Feed> {
-		const liked = (await this.feedModel.findById(feedId)).likes.find((e)=> e === like)
-		if(liked){
+		const liked = (await this.feedModel.findById(feedId)).likes.find(
+			e => e === like,
+		);
+		if (liked) {
 			return this.feedModel
-			.findByIdAndUpdate(feedId, { $pull: { likes: like } }, { new: true })
-			.exec();
+				.findByIdAndUpdate(feedId, { $pull: { likes: like } }, { new: true })
+				.exec();
 		}
 		return this.feedModel
 			.findByIdAndUpdate(feedId, { $push: { likes: like } }, { new: true })
 			.exec();
 	}
 
-	async addReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
-		const reported = (await this.feedModel.findById(feedId)).reports.find((e)=> e === report)
-		if(reported){
+	async addReport(
+		feedId: Types.ObjectId,
+		report: Types.ObjectId,
+	): Promise<Feed> {
+		const reported = (await this.feedModel.findById(feedId)).reports.find(
+			e => e === report,
+		);
+		if (reported) {
 			return this.feedModel
-			.findByIdAndUpdate(feedId, { $pull: { reports: report } }, { new: true })
-			.exec();
+				.findByIdAndUpdate(
+					feedId,
+					{ $pull: { reports: report } },
+					{ new: true },
+				)
+				.exec();
 		}
 		return this.feedModel
 			.findByIdAndUpdate(feedId, { $push: { reports: report } }, { new: true })

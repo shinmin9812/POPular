@@ -6,6 +6,7 @@ import {
 	Param,
 	Patch,
 	Post,
+	Query,
 	UseGuards,
 } from '@nestjs/common';
 import { CommentsService } from './comment.service';
@@ -31,6 +32,20 @@ export class CommentsController {
 	@Get(':id')
 	async getCommentById(@Param('id') id: string) {
 		return await this.commentsService.getCommentById(id);
+	}
+
+	@ApiOperation({ summary: '유저가 작성한 댓글 페이지네이션 조회' })
+	@Get('user/:userId')
+	async getPagination(
+		@Param('userId') id: string,
+		@Query('pageIndex') pageIndex: number,
+		@Query('order') order?: string,
+	) {
+		return await this.commentsService.getPaginationByUserId(
+			id,
+			pageIndex,
+			order,
+		);
 	}
 
 	@ApiOperation({ summary: '댓글 추가하기' })

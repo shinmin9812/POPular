@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment } from './comment.schema';
-import { Model, Types } from 'mongoose';
+import { Model, PaginateResult, Types, PaginateModel } from 'mongoose';
 import { CommentCreateDto } from './dto/comment.create.dto';
 import { CommentUpdateDto } from './dto/comment.update.dto';
 import { FeedsService } from 'src/feeds/feed.service';
@@ -18,7 +18,8 @@ import path from 'path';
 @Injectable()
 export class CommentsService {
 	constructor(
-		@InjectModel(Comment.name) private readonly commentModel: Model<Comment>,
+		@InjectModel(Comment.name)
+		private readonly commentModel: PaginateModel<Comment>,
 		@Inject(forwardRef(() => FeedsService)) private feedsService: FeedsService,
 	) {}
 
@@ -61,6 +62,29 @@ export class CommentsService {
 		}
 	}
 
+	async getPaginationByUserId(
+		id: string,
+		pageIndex: number,
+		order: string,
+	): Promise<PaginateResult<Comment>> {
+		let sort: { [key: string]: number } = { createdAt: -1 };
+
+		if (order === 'desc') {
+			sort = { createdAt: -1 };
+		} else if (order === 'asc') {
+			sort = { createdAt: 1 };
+		}
+
+		return this.commentModel.paginate(
+			{ author: id },
+			{
+				sort,
+				page: pageIndex,
+				limit: 5,
+			},
+		);
+	}
+
 	async createComment(commentCreateDto: CommentCreateDto): Promise<Comment> {
 		try {
 			const createdComment = new this.commentModel();
@@ -84,7 +108,7 @@ export class CommentsService {
 				console.log(err);
 				throw new BadRequestException('잘못된 데이터를 입력하셨습니다.');
 			}
-			console.log(err)
+			console.log(err);
 			throw new InternalServerErrorException('댓글 생성에 실패하였습니다.');
 		}
 	}
