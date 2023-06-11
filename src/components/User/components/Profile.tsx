@@ -98,18 +98,24 @@ const Profile = () => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding: 20px 0px;
+`;
 
 const ProfileInfo = styled.div`
   display: flex;
   justify-content: center;
   gap: 3%;
+
+  @media all and (max-width: 767px) {
+    justify-content: space-around;
+  }
 `;
 
 const UserProfile = styled.div`
   .profile-frame {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background-color: #fff;
     border-radius: 50%;
     overflow: hidden;
@@ -120,7 +126,7 @@ const UserProfile = styled.div`
     }
 
     .profile-style {
-      width: 100px;
+      width: 110px;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -135,20 +141,21 @@ const ProfileList = styled.div`
 `;
 
 const ProfileDescript = styled.div`
-  width: 400px;
-  padding: 20px 0px;
+  width: 450px;
+  padding: 30px 0px 10px;
   margin: 0 auto;
   position: relative;
 
   .user-nickname {
-    font-weight: var(--weight-regular);
+    font-weight: var(--weight-semi-bold);
   }
 
   .user-introduce {
     margin-top: 6px;
     font-weight: var(--weight-light);
-    font-size: var(--font-micro);
+    font-size: 13px;
     width: 70%;
+    line-height: 18px;
   }
 
   .button-position {
@@ -157,9 +164,10 @@ const ProfileDescript = styled.div`
     right: 0px;
   }
 
-  @media all and (max-width: 500px) {
+  @media all and (max-width: 767px) {
     width: 100%;
-    padding: 10px 0px 20px;
+    box-sizing: border-box;
+    padding: 10px 10px 20px;
     margin: 10px 0px 0px;
 
     .user-nickname {

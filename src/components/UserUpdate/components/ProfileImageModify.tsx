@@ -45,13 +45,13 @@ const ProfileImageModify = ({ user }: Props) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          pw: user.pw,
+          //pw: user.pw,
           profile: userProfile,
-          introduce: user.introduce,
-          nickname: user.nickname,
-          phone_number: user.phone_number,
-          interested_category: user.interested_category,
-          allow_notification: user.allow_notification,
+          // introduce: user.introduce,
+          // nickname: user.nickname,
+          // phone_number: user.phone_number,
+          // interested_category: user.interested_category,
+          // allow_notification: user.allow_notification,
         }),
       });
 
@@ -84,7 +84,7 @@ const ProfileImageModify = ({ user }: Props) => {
           <ProfileButtonList>
             <ProfileUploadButton text={'프로필 선택'} name={'profile'} onChange={fileHandler} multiple={true} />
             <ProfileButton className="button-gap" text={'변경'} theme={'submit'} />
-            <ProfileButton className="button-gap" text={'제거'} theme={'blank'} onClick={fileDelete} />
+            <ProfileButton className="button-gap" text={'기본 이미지'} theme={'blank'} onClick={fileDelete} />
           </ProfileButtonList>
         </ProfileContents>
       </FormContainer>
@@ -103,11 +103,11 @@ const Container = styled.div`
   }
 
   .update-title {
-    font-size: var(--font-small);
+    font-size: var(--font-reguler);
     font-weight: var(--weight-semi-bold);
   }
   .update-description {
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
     color: var(--color-light-black);
     margin-top: 7px;
   }
@@ -123,8 +123,8 @@ const ProfileContents = styled.div`
 `;
 const ProfilImage = styled.div`
   .profile-frame {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background-color: #fff;
     border-radius: 50%;
     overflow: hidden;
@@ -135,7 +135,7 @@ const ProfilImage = styled.div`
     }
 
     .profile-style {
-      width: 100px;
+      width: 110px;
       position: absolute;
       top: 50%;
       left: 50%;

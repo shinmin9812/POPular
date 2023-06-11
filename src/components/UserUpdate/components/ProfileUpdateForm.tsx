@@ -36,8 +36,8 @@ const ProfileUpdateForm = ({ user }: Props) => {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
   const [inputs, setInputs] = useState({
-    profile: user.profile,
-    pw: user.pw,
+    // profile: user.profile,
+    // pw: user.pw,
     introduce: user.introduce,
     nickname: '',
     phone_number: '',
@@ -165,8 +165,8 @@ const ProfileUpdateForm = ({ user }: Props) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          profile: user.profile,
-          pw: user.pw,
+          // profile: user.profile,
+          // pw: user.pw,
           introduce: introduce,
           nickname: nickname || user.nickname,
           phone_number: phone_number || user.phone_number,
@@ -234,15 +234,15 @@ const Container = styled.div`
   width: 70%;
   margin: 0 auto;
   transition: all 0.3s;
-  margin-top: 30px;
+  margin-top: 40px;
 
   .update-title {
-    font-size: var(--font-small);
+    font-size: var(--font-reguler);
     font-weight: var(--weight-semi-bold);
   }
 
   .update-description {
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
     color: var(--color-light-black);
     margin-top: 7px;
   }
@@ -256,12 +256,12 @@ const Container = styled.div`
 const FormContainer = styled.form``;
 
 const FormInner = styled.div`
-  padding-top: 20px;
+  padding-top: 30px;
 `;
 
 const NicknameMessage = styled.div`
   text-align: right;
-  font-size: var(--font-micro);
+  font-size: var(--font-small);
   color: ${(props) =>
     props.color === 'red' &&
     css`
@@ -271,7 +271,7 @@ const NicknameMessage = styled.div`
 
 const ErrorNotice = styled.div`
   text-align: right;
-  font-size: var(--font-micro);
+  font-size: var(--font-small);
 `;
 const FormButton = styled.div`
   margin-top: 30px;

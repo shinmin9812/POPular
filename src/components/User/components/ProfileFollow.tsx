@@ -15,11 +15,11 @@ const ProfileFollow = ({ title, number }: Props) => {
 };
 
 const Container = styled.div`
-  width: 100px;
+  width: 115px;
   text-align: center;
 
   .userinfo-title {
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
     font-weight: var(--weight-regular);
   }
 
