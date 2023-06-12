@@ -75,9 +75,7 @@ export class CommentsService {
 
 	async getCommentInfoById(id: string): Promise<Comment> {
 		try {
-			const comment = await this.commentModel
-				.findById(id)
-				.exec();
+			const comment = await this.commentModel.findById(id).exec();
 
 			if (!comment) {
 				throw new NotFoundException(
@@ -133,16 +131,18 @@ export class CommentsService {
 
 			const savedComment = await createdComment.save();
 
-			async function generateAncestor( 
-				savedComment: Comment, 
-				feedsService: FeedsService, 
-				commentsService: CommentsService 
+			async function generateAncestor(
+				savedComment: Comment,
+				feedsService: FeedsService,
+				commentsService: CommentsService,
 			): Promise<{
-				type: BoardType,
-				author: Types.ObjectId | User
+				type: BoardType;
+				author: Types.ObjectId | User;
 			}> {
-				if(savedComment.parent.type === 'Feed'){
-					const thisParent = feedsService.getFeedInfoById(savedComment.parent.id.toString());
+				if (savedComment.parent.type === 'Feed') {
+					const thisParent = feedsService.getFeedInfoById(
+						savedComment.parent.id.toString(),
+					);
 					const thisBoardType = (await thisParent).board;
 					const thisAuthor = (await thisParent).author;
 					return {
@@ -150,8 +150,12 @@ export class CommentsService {
 						author: thisAuthor,
 					};
 				}
-				const thisParent = commentsService.getCommentInfoById(savedComment.parent.id.toString());
-				const thisGrandparent = feedsService.getFeedInfoById((await thisParent).parent.id.toString())
+				const thisParent = commentsService.getCommentInfoById(
+					savedComment.parent.id.toString(),
+				);
+				const thisGrandparent = feedsService.getFeedInfoById(
+					(await thisParent).parent.id.toString(),
+				);
 				const thisBoardType = (await thisGrandparent).board;
 				const thisAuthor = (await thisGrandparent).author;
 				return {
@@ -161,9 +165,14 @@ export class CommentsService {
 			}
 
 			const notificationCreateDto = {
-				type: savedComment.parent.type === 'Comment' ? NotificationType.RECOMMENT : NotificationType.COMMENT,
-				board: (await generateAncestor( savedComment, this.feedsService, this )).type,
-				user_id: (await generateAncestor( savedComment, this.feedsService, this)).author,
+				type:
+					savedComment.parent.type === 'Comment'
+						? NotificationType.RECOMMENT
+						: NotificationType.COMMENT,
+				board: (await generateAncestor(savedComment, this.feedsService, this))
+					.type,
+				user_id: (await generateAncestor(savedComment, this.feedsService, this))
+					.author,
 				content_comment: savedComment._id,
 				content_store: null,
 				content_user: null,

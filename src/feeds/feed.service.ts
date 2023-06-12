@@ -147,9 +147,7 @@ export class FeedsService {
 
 	async getFeedInfoById(id: string): Promise<Feed> {
 		try {
-			const feed = await this.feedModel
-				.findById(id)
-				.exec();
+			const feed = await this.feedModel.findById(id).exec();
 
 			if (!feed) {
 				throw new NotFoundException(
