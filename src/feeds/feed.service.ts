@@ -240,33 +240,52 @@ export class FeedsService {
 	}
 
 	async addLike(feedId: Types.ObjectId, like: Types.ObjectId): Promise<Feed> {
-    const likeObjectId = new Types.ObjectId(like);
-    const likeFeed = await this.feedModel.findById(feedId);
-    console.log('피드:' + likeFeed);
-    const liked = likeFeed.likes.find(e => e.equals(likeObjectId));
-    console.log('좋아요:' + liked);
-    if (liked) {
-        return this.feedModel
-            .findByIdAndUpdate(feedId, { $pull: { likes: likeObjectId } }, { new: true })
-            .exec();
-    }
-    return this.feedModel
-        .findByIdAndUpdate(feedId, { $addToSet: { likes: likeObjectId } }, { new: true })
-        .exec();
+		const likeObjectId = new Types.ObjectId(like);
+		const likeFeed = await this.feedModel.findById(feedId);
+		console.log('피드:' + likeFeed);
+		const liked = likeFeed.likes.find(e => e.equals(likeObjectId));
+		console.log('좋아요:' + liked);
+		if (liked) {
+			return this.feedModel
+				.findByIdAndUpdate(
+					feedId,
+					{ $pull: { likes: likeObjectId } },
+					{ new: true },
+				)
+				.exec();
+		}
+		return this.feedModel
+			.findByIdAndUpdate(
+				feedId,
+				{ $addToSet: { likes: likeObjectId } },
+				{ new: true },
+			)
+			.exec();
 	}
 
-	async addReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
+	async addReport(
+		feedId: Types.ObjectId,
+		report: Types.ObjectId,
+	): Promise<Feed> {
 		const reportObjectId = new Types.ObjectId(report);
 		const reportFeed = await this.feedModel.findById(feedId);
 		const reported = reportFeed.reports.find(e => e.equals(reportObjectId));
 		if (reported) {
-				return this.feedModel
-						.findByIdAndUpdate(feedId, { $pull: { reports: reportObjectId } }, { new: true })
-						.exec();
+			return this.feedModel
+				.findByIdAndUpdate(
+					feedId,
+					{ $pull: { reports: reportObjectId } },
+					{ new: true },
+				)
+				.exec();
 		}
 		return this.feedModel
-				.findByIdAndUpdate(feedId, { $addToSet: { reports: reportObjectId } }, { new: true })
-				.exec();
+			.findByIdAndUpdate(
+				feedId,
+				{ $addToSet: { reports: reportObjectId } },
+				{ new: true },
+			)
+			.exec();
 	}
 
 	async addComment(

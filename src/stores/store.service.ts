@@ -55,6 +55,12 @@ export class StoreService {
 		});
 	}
 
+	async getStoresByCategory(category: string): Promise<Store[]> {
+		return await this.storeModel.find({
+			category: category,
+		});
+	}
+
 	async createStore(body: StoreRequestDto): Promise<Store> {
 		const base64Images = body.images;
 		const imageMapping = await handleImages(base64Images);
@@ -80,7 +86,7 @@ export class StoreService {
 		});
 	}
 
-	async deleteStore(_id: string): Promise<Store> {
-		return await this.storeModel.findByIdAndDelete(_id);
+	async deleteStores(ids: string[]): Promise<void> {
+		await this.storeModel.deleteMany({ _id: { $in: ids } });
 	}
 }

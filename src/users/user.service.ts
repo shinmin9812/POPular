@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User } from './user.schema';
@@ -8,13 +12,12 @@ import { UserUpdateDto } from './dto/user.update.dto';
 import { hashPassword, comparePasswords } from '../utils/hassing.util';
 import { handleImage } from 'src/utils/handle.image.util';
 
-
 @Injectable()
 export class UserService {
 	constructor(
 		@InjectModel(User.name) private readonly userModel: Model<User>,
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
-	) { }
+	) {}
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -111,7 +114,9 @@ export class UserService {
 			user.save();
 			store.save();
 		} else {
-			throw new BadRequestException({ message: '제대로 값을 못 받아옴' });
+			throw new BadRequestException({
+				message: 'user ID, store ID가 올바르지 않습니다.',
+			});
 		}
 
 		return user;
