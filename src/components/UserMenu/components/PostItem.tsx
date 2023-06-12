@@ -2,6 +2,26 @@ import styled from 'styled-components';
 import { Post } from '../../../types/post';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 
+interface Props {
+  post: Post;
+}
+
+const PostItem = ({ post }: Props) => {
+  return (
+    <Container>
+      <div className="post-header">
+        <BoardTypeTag boardType={post.board} />
+        <p className="post-date">{post.updatedAt.slice(0, 10)}</p>
+      </div>
+      <div className="post-title">
+        <h2>{post.title}</h2>
+      </div>
+    </Container>
+  );
+};
+
+export default PostItem;
+
 const Container = styled.article`
   display: flex;
   flex-direction: column;
@@ -30,32 +50,7 @@ const Container = styled.article`
 
     h2 {
       white-space: nowrap;
-      overflow: hidden;
       text-overflow: ellipsis;
     }
   }
 `;
-
-interface Props {
-  post: Post;
-}
-
-const PostItem = ({ post }: Props) => {
-  return (
-    <Container>
-      {
-        <>
-          <div className="post-header">
-            <BoardTypeTag boardType={post.board} />
-            <p className="post-date">{post.updatedAt}</p>
-          </div>
-          <div className="post-title">
-            <h2>{post.title}</h2>
-          </div>
-        </>
-      }
-    </Container>
-  );
-};
-
-export default PostItem;
