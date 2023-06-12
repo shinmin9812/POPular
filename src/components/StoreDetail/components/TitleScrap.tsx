@@ -12,7 +12,7 @@ const Container = styled.button`
 `;
 
 const TitleScrap = ({ store }: Props) => {
-  const [checkScrap, setCheckScrap] = useState(false);
+  // const [checkScrap, setCheckScrap] = useState(false);
 
   async function fetchData() {
     const response = await fetch('http://34.22.81.36:3000/auth/profile', {
@@ -27,27 +27,23 @@ const TitleScrap = ({ store }: Props) => {
 
   const { data: user } = useQuery(['user'], fetchData);
 
-  async function PostData() {
-    const response = await fetch(`http://34.22.81.36:3000/users/${user._id}/scrapStore/${store._id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        scraps: [...user.scraps, store._id],
-      }),
-    });
-    return response.json();
-  }
+  // async function PostData() {
+  //   const response = await fetch(`http://34.22.81.36:3000/users/${user._id}/scrapStore/${store._id}`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       scraps: [...user.scraps, store._id],
+  //     }),
+  //   });
+  //   return response.json();
+  // }
 
-  const { data } = useMutation(PostData);
-  console.log(data);
+  // useEffect(() => {
+  //   setCheckScrap(user.scraps.includes(store._id));
+  // }, [user, store]);
 
-  useEffect(() => {
-    setCheckScrap(user.scraps.includes(store._id));
-  }, [user, store]);
-
-  console.log(checkScrap);
   return (
     <Container>
       <img src="/images/scrap.svg" alt="" />
