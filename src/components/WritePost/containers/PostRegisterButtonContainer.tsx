@@ -1,8 +1,10 @@
 import PostRegisterButton from '../components/PostRegisterButton';
+import PostRegisterButtonWrap from '../components/PostRegisterButtonWrap';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
 import { useState, useEffect } from 'react';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
+import { API_PATH, CLIENT_PATH } from '../../../constants/path';
 
 // 게시글 생성 스키마 확인
 const PostRegisterButtonContainer = () => {
@@ -44,7 +46,7 @@ const PostRegisterButtonContainer = () => {
     try {
       let response: Response;
       if (isUpdate.use) {
-        response = await fetch(`http://34.22.81.36:3000/feeds/${isUpdate.id}`, {
+        response = await fetch(API_PATH.POST.PUT.replace(':postId', isUpdate.id), {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ const PostRegisterButtonContainer = () => {
           body: JSON.stringify(data),
         });
       } else {
-        response = await fetch('http://34.22.81.36:3000/feeds', {
+        response = await fetch(API_PATH.POST.POST, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +69,7 @@ const PostRegisterButtonContainer = () => {
         setPostContent('');
         setChoiceStoreId('');
         setIsUpdate({ use: false, id: '' });
-        navigate('/community/board/all');
+        navigate(CLIENT_PATH.BOARD.replace(':category', currTab));
       }
     } catch (err: any) {
       throw new Error(err);
@@ -99,13 +101,29 @@ const PostRegisterButtonContainer = () => {
     getUserInfo();
   }, []);
   return (
-    <PostRegisterButton
-      onClick={() => {
-        register();
-      }}
-    >
-      {isUpdate.use ? '수정하기' : '작성하기'}
-    </PostRegisterButton>
+    <PostRegisterButtonWrap>
+      <PostRegisterButton
+        isUpdate={true}
+        onClick={() => {
+          setPostTitle('');
+          setPostContent('');
+          setChoiceStoreId('');
+          setIsUpdate({ use: false, id: '' });
+          alert('이전 페이지로 돌아갑니다.');
+          navigate(CLIENT_PATH.BOARD.replace(':category', currTab));
+        }}
+      >
+        취소
+      </PostRegisterButton>
+      <PostRegisterButton
+        isUpdate={false}
+        onClick={() => {
+          register();
+        }}
+      >
+        {isUpdate.use ? '수정하기' : '작성하기'}
+      </PostRegisterButton>
+    </PostRegisterButtonWrap>
   );
 };
 

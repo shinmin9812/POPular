@@ -7,9 +7,8 @@ const Select = styled.select<{ width: number }>`
   background: url('../../../../public/chevronDownIcon.png') no-repeat 95% 50%/13px auto;
   ${(props) => `width: ${props.width}%;`}
   height: 39px;
-  background-color: var(--color-gray);
-  color: var(--color-white);
-  border: none;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-sub);
   border-radius: 8px;
   font-size: var(--font-small);
   margin-top: 10px;

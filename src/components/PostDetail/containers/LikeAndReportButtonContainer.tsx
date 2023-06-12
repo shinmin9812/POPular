@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../PostDetailSlice';
+import { API_PATH } from '../../../constants/path';
+
 const getUserInfo = async (setIsMember: React.Dispatch<React.SetStateAction<string | undefined>>) => {
   try {
     const response = await fetch('http://34.22.81.36:3000/auth/profile', {
@@ -47,7 +49,7 @@ const LikesAndReportsContainer = () => {
 
   async function FetchData(isLike: string) {
     const data = { [isLike]: isMember };
-    const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}/${isLike}`, {
+    const response = await fetch(`${API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : '')}/${isLike}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

@@ -4,6 +4,8 @@ import CommentInputContainer from '../containers/CommentInputContainer';
 import ReComment from './ReCommentList';
 import XmarkIcon from '../../common/Icons/XmarkIcon';
 import getDateFunc from '../../../utils/getDateFunc';
+import { Link } from 'react-router-dom';
+import { CLIENT_PATH } from '../../../constants/path';
 const CommentWrap = styled.div`
   display: flex;
   cursor: pointer;
@@ -38,6 +40,7 @@ export const CommentUpdateAt = styled.span`
   width: 30%;
   font-size: var(--font-small);
   text-align: right;
+  cursor: pointer;
 `;
 
 export const CommentDeleteButton = styled.button`
@@ -68,7 +71,9 @@ const CommentItem = ({
   return (
     <Li>
       <CommentWrap onClick={setReCommentInput}>
-        <CommentAuthorName>{comment.author.nickname}</CommentAuthorName>
+        <Link to={CLIENT_PATH.PROFILE.replace(':userId', comment.author._id)}>
+          <CommentAuthorName>{comment.author.nickname}</CommentAuthorName>
+        </Link>
         <CommentContent>{comment.content}</CommentContent>
         <CommentUpdateAt>{getDateFunc(comment.updatedAt)}</CommentUpdateAt>
         <CommentDeleteButton

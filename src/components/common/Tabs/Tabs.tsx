@@ -11,6 +11,10 @@ const Tab = styled.p<{ active: boolean }>`
     margin-left: 4px;
   }
 
+  &:hover {
+    color: var(--color-main);
+  }
+
   ${(props) =>
     props.active &&
     css`

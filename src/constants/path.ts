@@ -42,27 +42,31 @@ export const API_PATH = {
 
   POST: {
     GET: {
-      ALL: '/post/all',
+      ALL: `${API_BASE_URL}/feeds/`,
       // 포스트 ID 조회
-      BY_ID: '/post/id/:postId',
+      BY_ID: `${API_BASE_URL}/feeds/:postId`,
       // 특정 유저의 전체 포스트 조회
       BY_USER: '/post/user/:userId',
       // 포스트 게시판 조회
       BY_BOARD: '/post/board/:boardId',
       // 특정 스토어의 후기 조회
       REVIEW_BY_STORE: '/post/review/:storeId',
+      // 자유 게시판 스토 조회
+      ALL_FREE_FEEDS: `${API_BASE_URL}/feeds/free`,
       // 후기 게시판 스토 조회
       ALL_REVIEW_FEEDS: `${API_BASE_URL}/feeds/review`,
+      // 모집 게시판 스토 조회
+      ALL_GATHER_FEEDS: `${API_BASE_URL}/feeds/gather`,
     },
-    POST: {},
-    PUT: {},
+    POST: `${API_BASE_URL}/feeds/:postId`,
+    PUT:  `${API_BASE_URL}/feeds/:postId`,
     DELETE: {},
   },
 
   COMMENT: {
     GET: {
       // 검색 옵션은 쿼리스트링으로 판별 ex) /comment?author=elice
-      ALL: '/comment/all',
+      ALL: `${API_BASE_URL}/comments`,
       // 코멘트 ID 조회
       BY_ID: '/comment/id/:comentId',
       // 특정 유저의 전체 코멘트
@@ -70,9 +74,9 @@ export const API_PATH = {
       // 특정 포스트의 전체 코멘트
       BY_POST: '/comment/post/:postId',
     },
-    POST: {},
+    POST:`${API_BASE_URL}/comments`,
     PUT: {},
-    DELETE: {},
+    DELETE: `${API_BASE_URL}/comments/:commentId`,
   },
 
   NOTIFICATION: {

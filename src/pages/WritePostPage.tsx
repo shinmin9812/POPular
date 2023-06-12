@@ -9,13 +9,6 @@ import SelectedStoreItem from '../components/WritePost/components/SelectedStoreI
 import { useAppSelector } from '../Hooks/useSelectorHooks';
 const Container = styled.div`
   width: 100%;
-  position: relative;
-
-  .store-box {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-  }
 `;
 
 const FlexDiv = styled.div`
@@ -23,7 +16,7 @@ const FlexDiv = styled.div`
 `;
 const RatingAndRegisterWrap = styled.div`
   display: flex;
-  width: 46%;
+  width: 50%;
   margin-top: 10px;
   margin-left: auto;
   justify-content: space-between;
@@ -40,16 +33,16 @@ const WritePostPage = () => {
       <TabsContainer />
       <PostTitleContainer />
       <PostContentContainer />
+      <RatingAndRegisterWrap>
+        <RatingContainer />
+        <PostRegisterButtonContainer />
+      </RatingAndRegisterWrap>
       {tab !== '자유게시판' && (
         <FlexDiv>
           <ChoiceStoreBoxContainer />
           {selectedStoreId && <SelectedStoreItem storeId={selectedStoreId} />}
         </FlexDiv>
       )}
-      <RatingAndRegisterWrap>
-        <RatingContainer />
-        <PostRegisterButtonContainer />
-      </RatingAndRegisterWrap>
     </Container>
   );
 };

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 const Button = styled.button<{ update: boolean }>`
   color: var(--color-white);
   border-radius: 8px;
-  width: 50px;
-  height: 30px;
-  font-size: var(--font-small);
+  width: 55px;
+  height: 35px;
+  font-size: var(--font-regular);
   background-color: ${(props) => (props.update ? 'var(--color-main)' : 'var(--color-gray)')};
   margin: 5px;
   cursor: pointer;
@@ -20,10 +20,10 @@ const UpdateAndDelete = ({ deletePost, updatePost }: { deletePost: () => void; u
   return (
     <ButtonWrap>
       <Button update={true} onClick={updatePost}>
-        글 수정
+        수정
       </Button>
       <Button update={false} onClick={deletePost}>
-        글 삭제
+        삭제
       </Button>
     </ButtonWrap>
   );

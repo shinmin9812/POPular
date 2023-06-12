@@ -7,10 +7,10 @@ import { WritePostSliceActions } from '../WritePostSlice';
 import { useState, useEffect } from 'react';
 import StoreItem from '../../common/Store/StoreItem';
 import { Store } from '../../../types/store';
-import filterFunc from '../../../Hooks/filterFunc';
+import filterFunc from '../../../utils/filterFunc';
 import ChoiceStoreList from '../components/ChoiceStoreList';
 import ChoiceStoreBox from '../components/ChoiceStoreBox';
-
+import { API_PATH } from '../../../constants/path';
 const ChoiceStoreBoxContainer = () => {
   const choiceStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
   const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ const ChoiceStoreBoxContainer = () => {
 
   const [stores, setStores] = useState<Store[]>();
   async function fetchData() {
-    const response = await fetch('http://34.22.81.36:3000/stores');
+    const response = await fetch(API_PATH.STORE.GET.ALL);
     const result = await response.json();
     setStores(result);
   }

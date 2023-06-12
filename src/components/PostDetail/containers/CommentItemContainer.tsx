@@ -5,6 +5,7 @@ import getComments from '../../../api/CommentApi';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../PostDetailSlice';
+import { API_PATH } from '../../../constants/path';
 
 const CommentItemContainer = ({ comment }: { comment: Comment }) => {
   const postId = useParams().postId;
@@ -41,7 +42,7 @@ const CommentItemContainer = ({ comment }: { comment: Comment }) => {
       alert('작성자가 아닙니다');
       return;
     }
-    const response = await fetch(`http://34.22.81.36:3000/comments/${commentId}`, {
+    const response = await fetch(API_PATH.COMMENT.DELETE.replace(':commentId', commentId), {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

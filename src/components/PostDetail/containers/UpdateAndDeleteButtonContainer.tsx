@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions, isUpdate } from '../../WritePost/WritePostSlice';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { Post } from '../../../types/post';
+import { API_PATH } from '../../../constants/path';
 
 const UpdateAndDeleteContainer = () => {
   const navigate: NavigateFunction = useNavigate();
@@ -51,13 +52,13 @@ const UpdateAndDeleteContainer = () => {
   };
 
   const getPostInfo = async () => {
-    const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}`);
+    const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : ''));
     const result = await response.json();
     setPostInfo(result);
   };
 
   async function DeleteFetchData() {
-    const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}`, {
+    const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : ''), {
       method: 'DELETE',
     });
     const result = await response.json();

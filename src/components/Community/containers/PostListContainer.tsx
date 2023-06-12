@@ -1,39 +1,35 @@
 import { Post } from '../../../types/post';
 import { useEffect, useCallback, useMemo } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
-import { useNavigate, NavigateFunction, Link } from 'react-router-dom';
-import filterFunc from '../../../Hooks/filterFunc';
+import { Link } from 'react-router-dom';
+import filterFunc from '../../../utils/filterFunc';
 import { Store } from '../../../types/store';
 import { communityActions } from '../CommunitySlice';
 import { useQuery } from '@tanstack/react-query';
-
+import { useParams } from 'react-router-dom';
+import { API_PATH, CLIENT_PATH } from '../../../constants/path';
 import PostItem from '../../common/Post/PostItem';
 
-async function fetchData(tab: string, navigate: NavigateFunction) {
+async function fetchData(postCategory = 'all') {
   try {
     let response;
     let result;
-    switch (tab) {
-      case '전체게시판':
-        response = await fetch(`http://34.22.81.36:3000/feeds/`);
+    switch (postCategory) {
+      case 'all':
+        response = await fetch(API_PATH.POST.GET.ALL);
         result = await response.json();
-        navigate('/community/board/all');
         break;
-      case '자유게시판':
-        response = await fetch(`http://34.22.81.36:3000/feeds/free`);
+      case 'free':
+        response = await fetch(API_PATH.POST.GET.ALL_FREE_FEEDS);
         result = await response.json();
-        navigate('/community/board/free');
-
         break;
-      case '모집게시판':
-        response = await fetch(`http://34.22.81.36:3000/feeds/gather`);
+      case 'gather':
+        response = await fetch(API_PATH.POST.GET.ALL_GATHER_FEEDS);
         result = await response.json();
-        navigate('/community/board/gather');
         break;
-      case '후기게시판':
-        response = await fetch(`http://34.22.81.36:3000/feeds/review`);
+      case 'review':
+        response = await fetch(API_PATH.POST.GET.ALL_REVIEW_FEEDS);
         result = await response.json();
-        navigate('/community/board/review');
         break;
     }
     return result;
@@ -44,8 +40,6 @@ async function fetchData(tab: string, navigate: NavigateFunction) {
 }
 
 const PostListItemContainer = () => {
-  const navigate = useNavigate();
-  const tab = useAppSelector((state) => state.CommunitySlice.tab);
   const page = useAppSelector((state) => state.CommunitySlice.page.currPage);
   const filterCategory = useAppSelector((state) => state.CommunitySlice.categoryFilter);
   const filterAddress = useAppSelector((state) => state.CommunitySlice.addressFilter);
@@ -53,9 +47,10 @@ const PostListItemContainer = () => {
   const dispatch = useAppDispatch();
   const setTotalPage = useCallback((page: number[]) => dispatch(communityActions.setTotalPage(page)), [dispatch]);
   const setPage = useCallback((page: number) => dispatch(communityActions.setPage(page)), [dispatch]);
+  const postCategory = useParams().category;
 
-  const { data, isFetching } = useQuery<Post[]>(['getPosts', tab], () => {
-    return fetchData(tab, navigate);
+  const { data, isFetching } = useQuery<Post[]>(['getPosts', postCategory], () => {
+    return fetchData(postCategory);
   });
 
   // 필터 하나라도 사용 유무
@@ -94,7 +89,7 @@ const PostListItemContainer = () => {
   useEffect(() => {
     // 탭 이동 시 페이지 초기화
     setPage(1);
-  }, [tab, setPage, originalPost]);
+  }, [postCategory, setPage, originalPost]);
 
   if (isFetching) {
     return <div>loading...</div>;
@@ -103,7 +98,7 @@ const PostListItemContainer = () => {
     <ul>
       {dividedPost[page - 1]?.map((post) => (
         <li key={post._id}>
-          <Link to={`/community/post/${post._id}`}>
+          <Link to={CLIENT_PATH.POST.replace(':postId', post._id)}>
             <PostItem post={post} />
           </Link>
         </li>

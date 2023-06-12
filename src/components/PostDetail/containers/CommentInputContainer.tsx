@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../PostDetailSlice';
 import { Comment } from '../../../types/comment';
 import getComments from '../../../api/CommentApi';
+import { API_PATH } from '../../../constants/path';
 
 type aa = {
   author: string;
@@ -22,7 +23,7 @@ const feedCommentApi = async (
   postId = '',
   setComments: (comments: Comment[]) => void,
 ) => {
-  const response = await fetch(`http://34.22.81.36:3000/comments`, {
+  const response = await fetch(API_PATH.COMMENT.POST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -31,6 +32,7 @@ const feedCommentApi = async (
     body: JSON.stringify(data),
   });
   const result = await response.json();
+  console.log(data);
   setInput('');
   getComments(postId, setComments);
 };
