@@ -10,12 +10,16 @@ import { FeedsModule } from './feeds/feed.module';
 import { NotificationsModule } from './notifications/notification.module';
 import { CommentsModule } from './comments/comment.module';
 import { AuthModule } from './auth/auth.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 //{useNewUrlParser: true, userUnifiedTopology: true} 해당 부분에 대해 deprecatedError가 발생
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
 		MongooseModule.forRoot(process.env.MONGO_URI),
+		MulterModule.register({
+			dest: './uploads',
+		}),
 		StoreModule,
 		UserModule,
 		FeedsModule,

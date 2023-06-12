@@ -38,7 +38,10 @@ export class NotificationsService {
 		try {
 			const notification = await this.notificationModel
 				.findById(id)
-				.populate('content')
+				.populate('user_id')
+				.populate('content_store')
+				.populate('content_comment')
+				.populate('content_user')
 				.exec();
 
 			if (!notification) {

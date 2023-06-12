@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, PaginateModel, PaginateResult } from 'mongoose';
 import { Store } from './store.schema';
@@ -75,21 +75,7 @@ export class StoreService {
 	}
 
 	async updateStore(_id: string, body: StoreRequestDto): Promise<Store> {
-		const store = await this.storeModel.findById(_id);
-
-		if (!store) {
-			throw new NotFoundException('스토어를 찾을 수 없습니다!');
-		}
-
-		const base64Images = body.images;
-		const imageMapping = await handleImages(base64Images);
-
-		const updateStore = {
-			...body,
-			images: Object.values(imageMapping),
-		};
-
-		return await this.storeModel.findByIdAndUpdate({ _id }, updateStore, {
+		return await this.storeModel.findByIdAndUpdate({ _id }, body, {
 			new: true,
 		});
 	}

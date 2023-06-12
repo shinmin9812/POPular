@@ -16,6 +16,7 @@ import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
 import { Feed } from './feed.schema';
 import { Types } from 'mongoose';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('/feeds')
 @ApiTags('Feed')
@@ -46,8 +47,8 @@ export class FeedsController {
 
 	@ApiOperation({ summary: '모든 후기게시판 조회' })
 	@Get('review')
-	async getAllReviewFeeds(@Query('storeId') store_id?: string) {
-		return await this.feedsService.getAllReviewFeeds(store_id);
+	async getAllReviewFeeds() {
+		return await this.feedsService.getAllReviewFeeds();
 	}
 
 	@ApiOperation({ summary: '모든 자유게시판 조회' })
@@ -69,13 +70,17 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 등록하기' })
+	@ApiBearerAuth('Authorization')
 	@Post()
+	@UseGuards(AuthGuard)
 	async createFeed(@Body() createDto: FeedCreateDto): Promise<Feed> {
 		return await this.feedsService.createFeed(createDto);
 	}
 
 	@ApiOperation({ summary: '게시글 수정하기' })
+	@ApiBearerAuth('Authorization')
 	@Patch(':id')
+	@UseGuards(AuthGuard)
 	async updateFeed(
 		@Param('id') id: string,
 		@Body() updateDto: FeedUpdateDto,
@@ -84,7 +89,9 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 좋아요 추가 및 삭제' })
+	@ApiBearerAuth('Authorization')
 	@Patch(':id/like')
+	@UseGuards(AuthGuard)
 	async addLike(
 		@Param('id') feedId: Types.ObjectId,
 		@Body() updateFeedDto: FeedUpdateDto,
@@ -94,7 +101,9 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 신고 추가 및 삭제' })
+	@ApiBearerAuth('Authorization')
 	@Patch(':id/report')
+	@UseGuards(AuthGuard)
 	async addReport(
 		@Param('id') feedId: Types.ObjectId,
 		@Body() updateFeedDto: FeedUpdateDto,
@@ -104,7 +113,9 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 댓글 추가' })
+	@ApiBearerAuth('Authorization')
 	@Patch(':id/comment')
+	@UseGuards(AuthGuard)
 	async addComment(
 		@Param('id') feedId: Types.ObjectId,
 		@Body() updateFeedDto: FeedUpdateDto,
@@ -114,7 +125,9 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 댓글 삭제' })
+	@ApiBearerAuth('Authorization')
 	@Delete(':id/comment')
+	@UseGuards(AuthGuard)
 	async removeComment(
 		@Param('id') feedId: Types.ObjectId,
 		@Body() updateFeedDto: FeedUpdateDto,
@@ -124,7 +137,9 @@ export class FeedsController {
 	}
 
 	@ApiOperation({ summary: '게시글 삭제하기' })
+	@ApiBearerAuth('Authorization')
 	@Delete(':id')
+	@UseGuards(AuthGuard)
 	async deleteFeed(@Param('id') id: string) {
 		await this.feedsService.deleteFeed(id);
 		return { message: '글이 삭제되었습니다.' };
