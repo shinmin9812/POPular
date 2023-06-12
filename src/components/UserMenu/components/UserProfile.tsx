@@ -14,7 +14,7 @@ const UserProfile = ({
 }) => {
   return (
     <ProfileContainer>
-      <Link to={`/user/${userId}`}>
+      <Link to={`/community/user/${userId}`}>
         <ImageContainer>
           <img src={profileImage} alt="profileImage" width={40} />
         </ImageContainer>

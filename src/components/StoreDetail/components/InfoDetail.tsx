@@ -1,9 +1,40 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { Store } from '../../../types/store';
-import { useNavigate } from 'react-router-dom';
 
 type Props = {
   store: Store;
+};
+
+type hours = {
+  mon: {
+    start: string | null;
+    end: string | null;
+  };
+  tue: {
+    start: string | null;
+    end: string | null;
+  };
+  wed: {
+    start: string | null;
+    end: string | null;
+  };
+  thu: {
+    start: string | null;
+    end: string | null;
+  };
+  fri: {
+    start: string | null;
+    end: string | null;
+  };
+  sat: {
+    start: string | null;
+    end: string | null;
+  };
+  sun: {
+    start: string | null;
+    end: string | null;
+  };
 };
 
 const Container = styled.div`
@@ -34,6 +65,30 @@ const Container = styled.div`
     font-size: 16px;
     font-weight: 500;
     margin-left: 20px;
+    margin-right: 10px;
+  }
+
+  .week-btn {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: #ffffff;
+  }
+
+  .hours-list {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0 20px 45px;
+
+    li + li {
+      margin-top: 8px;
+    }
+  }
+
+  .hours-item {
+    letter-spacing: 1px;
   }
 
   .store-sns-title {
@@ -100,7 +155,38 @@ function getPeriod(period: string) {
   return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
 }
 
+function businessHours(hours: hours) {
+  const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+  const koreanDays = ['월', '화', '수', '목', '금', '토', '일'];
+  const openHours: string[] = [];
+
+  Object.entries(hours).forEach(([day, time]) => {
+    const start = time.start;
+    const end = time.end;
+    const dayIndex = days.indexOf(day);
+    const koreanDay = koreanDays[dayIndex];
+
+    if (!start || !end) {
+      return openHours.push(`${koreanDay} 휴무일`);
+    }
+
+    openHours.push(`${koreanDay} ${start} ~ ${end}`);
+  });
+
+  return (
+    <ul className="hours-list">
+      {openHours.map((hour: string, i: number) => (
+        <li className="hours-item" key={i}>
+          {hour}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 const InfoDetail = ({ store }: Props) => {
+  const [week, setWeek] = useState<boolean>(false);
+
   return (
     <Container>
       <ul className="store-detail-info-list">
@@ -114,16 +200,24 @@ const InfoDetail = ({ store }: Props) => {
         <li className="store-detail-info-item">
           <img className="item-ico" src="/images/clock.svg" alt="" />
           <p className="item-info">
-            영업중 {store.hours.mon.start} - {store.hours.mon.end}
+            영업 중 {store.hours.fri.start} ~ {store.hours.fri.end}
           </p>
+          <button className="week-btn" onClick={() => setWeek(!week)}>
+            <img
+              src="/images/angle-down.svg"
+              alt=""
+              style={week ? { transform: 'rotate(180deg)' } : { transform: 'rotate(0)' }}
+            />
+          </button>
         </li>
+        {week && businessHours(store.hours)}
         <li className="store-detail-info-item">
           <img className="item-ico" src="/images/place.svg" alt="" />
           <p className="item-info">{store.location}</p>
         </li>
         <li className="store-detail-info-item">
           <img className="item-ico" src="/images/won.svg" alt="" />
-          <p className="item-info">입장료 {store.price.toLocaleString()}원</p>
+          <p className="item-info">입장료 {!store.price ? '무료' : `${store.price.toLocaleString()}원`}</p>
         </li>
         <div className="store-sns-title">SNS</div>
         {store.sns.length > 0 && (
