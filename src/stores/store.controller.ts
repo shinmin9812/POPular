@@ -4,11 +4,9 @@ import {
 	Delete,
 	Get,
 	Param,
-	Patch,
 	Post,
 	Put,
 	Query,
-	Req,
 } from '@nestjs/common';
 import { StoreRequestDto } from './dto/store.request.dto';
 import { StoreService } from './store.service';
@@ -74,8 +72,8 @@ export class StoreController {
 	}
 
 	@ApiOperation({ summary: '스토어 정보 삭제하기' })
-	@Delete(':id')
-	async delete(@Param('id') _id: string) {
-		return await this.storeServcie.deleteStore(_id);
+	@Delete('')
+	async delete(@Body() ids: string[]) {
+		return await this.storeServcie.deleteStores(ids);
 	}
 }

@@ -9,7 +9,7 @@ import { User } from './user.schema';
 import { Store } from 'src/stores/store.schema';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
-import { hashPassword, comparePasswords } from '../utils/hassing.util';
+import { hashPassword } from '../utils/hassing.util';
 import { handleImage } from 'src/utils/handle.image.util';
 
 @Injectable()
@@ -29,6 +29,11 @@ export class UserService {
 
 	async getUserById(_id: string): Promise<User> {
 		return await this.userModel.findById({ _id });
+	}
+
+	async getScrapsById(_id: string): Promise<Types.ObjectId[]> {
+		const user = await this.userModel.findById(_id).select('scraps');
+		return user?.scraps;
 	}
 
 	async checkDuplicateNickname(nickname: string): Promise<string> {
@@ -62,7 +67,12 @@ export class UserService {
 
 		if (body.profile) {
 			const base64Image = body.profile;
-			const imageUrl = await handleImage(base64Image, './uploads', '');
+			const imageUrl = await handleImage(
+				base64Image,
+				'/uploads',
+				'http://34.22.81.36:3000',
+			);
+
 			user.profile = imageUrl;
 		}
 
@@ -101,7 +111,13 @@ export class UserService {
 		const storeObjId = new Types.ObjectId(storeId);
 		const userObjId = new Types.ObjectId(userId);
 
-		console.log(store.scraps);
+		if (!user) {
+			throw new NotFoundException('해당 유저가 없습니다.');
+		}
+
+		if (!store) {
+			throw new NotFoundException('해당 스토어가 없습니다');
+		}
 
 		if (user && store) {
 			if (!user.scraps.includes(storeObjId)) {

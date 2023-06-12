@@ -7,7 +7,7 @@ import {
 } from 'mongoose';
 import { Feed } from 'src/feeds/feed.schema';
 import { User } from 'src/users/user.schema';
-import * as mongoosePaginate from 'mongoose-paginate-v2';
+import mongooseAggregatePaginate = require('mongoose-aggregate-paginate-v2');
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -46,5 +46,5 @@ export class Comment extends Document {
 }
 
 const schema = SchemaFactory.createForClass(Comment);
-schema.plugin(mongoosePaginate);
+schema.plugin(mongooseAggregatePaginate);
 export const CommentSchema = schema;
