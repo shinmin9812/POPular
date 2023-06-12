@@ -36,8 +36,6 @@ const ProfileUpdateForm = ({ user }: Props) => {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
   const [inputs, setInputs] = useState({
-    // profile: user.profile,
-    // pw: user.pw,
     introduce: user.introduce,
     nickname: '',
     phone_number: '',
@@ -165,8 +163,6 @@ const ProfileUpdateForm = ({ user }: Props) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          // profile: user.profile,
-          // pw: user.pw,
           introduce: introduce,
           nickname: nickname || user.nickname,
           phone_number: phone_number || user.phone_number,
@@ -176,8 +172,15 @@ const ProfileUpdateForm = ({ user }: Props) => {
       });
 
       if (response.ok) {
-        // const data = await response.json();
+        const data = await response.json();
         alert('회원정보 수정이 완료되었습니다.');
+        setInputs({
+          introduce: data.introduce,
+          nickname: '',
+          phone_number: '',
+          interested_category: data.interested_category,
+          allow_notification: data.allow_notification,
+        });
       } else {
         throw new Error('회원정보 수정에 실패했습니다.');
       }
@@ -215,6 +218,7 @@ const ProfileUpdateForm = ({ user }: Props) => {
             defaultData={preferCategory}
             onChange={handleChange}
           />
+          {/* <input type="checkbox" onChange={handleChange}/> */}
           <CheckboxInput
             type={'allow_notification'}
             value={allow_notification}

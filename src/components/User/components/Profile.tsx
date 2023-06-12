@@ -3,18 +3,21 @@ import { User } from '../../../types/user';
 import ProfileFollow from './ProfileFollow';
 import ProfileButton from './ProfileButton';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
   const [userInfo, setUserInfo] = useState('');
   const { userId } = useParams();
+  const [checkFollower, setCheckFollower] = useState(false);
+  const [followerCount, setFollowerCount] = useState(0);
+  const [isFollowLoading, setIsFollowLoading] = useState(false);
 
   useEffect(() => {
     getUserInfo();
     fetchData();
-  }, []);
+  }, [userId, userInfo]);
 
   const getUserInfo = async () => {
     try {
@@ -33,13 +36,17 @@ const Profile = () => {
     }
   };
 
-  async function fetchData() {
+  const fetchData = useCallback(async () => {
     const response = await fetch(`http://34.22.81.36:3000/users/${userId}`);
     const result: User = await response.json();
     setUser(result);
-  }
 
-  const mutation = useMutation(() => {
+    const isFollower = result.follower.some((follower: any) => follower._id === userInfo);
+    setCheckFollower(isFollower);
+    setFollowerCount(result.follower.length);
+  }, [userId, userInfo]);
+
+  const followMutation = useMutation(() => {
     return fetch(`http://34.22.81.36:3000/users/${userInfo}/follow/${userId}`, {
       method: 'PATCH',
       headers: {
@@ -49,9 +56,54 @@ const Profile = () => {
     });
   });
 
-  const followHandler = () => {
-    alert('a');
-    mutation.mutate();
+  const unfollowMutation = useMutation(() => {
+    return fetch(`http://34.22.81.36:3000/users/${userInfo}/unfollow/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+  });
+
+  const followHandler = async () => {
+    if (isFollowLoading) return;
+    setIsFollowLoading(true);
+
+    if (checkFollower) {
+      setCheckFollower(false);
+      return;
+    }
+
+    try {
+      await followMutation.mutateAsync();
+      setCheckFollower(true);
+      setFollowerCount((prevCount) => prevCount + 1);
+    } catch (error) {
+      console.log('팔로우 요청 에러:', error);
+    } finally {
+      setIsFollowLoading(false);
+    }
+  };
+
+  const unfollowHandler = async () => {
+    if (isFollowLoading) return;
+    setIsFollowLoading(true);
+
+    if (!checkFollower) {
+      setCheckFollower(true);
+      return;
+    }
+
+    try {
+      await unfollowMutation.mutateAsync();
+      setCheckFollower(false);
+      setFollowerCount((prevCount) => prevCount - 1);
+    } catch (error) {
+      console.log('언팔로우 요청 에러:', error);
+    } finally {
+      setIsFollowLoading(false);
+    }
   };
 
   if (!user || !user._id) {
@@ -59,7 +111,7 @@ const Profile = () => {
   }
   return (
     <Container>
-      {mutation.isLoading ? (
+      {followMutation.isLoading ? (
         'loaging...'
       ) : (
         <>
@@ -75,7 +127,7 @@ const Profile = () => {
             </UserProfile>
             <ProfileList>
               <ProfileFollow title={'게시물'} number={33} />
-              <ProfileFollow title={'팔로워'} number={user.follower.length} />
+              <ProfileFollow title={'팔로워'} number={followerCount} />
               <ProfileFollow title={'팔로잉'} number={user.following.length} />
             </ProfileList>
           </ProfileInfo>
@@ -86,7 +138,13 @@ const Profile = () => {
               {userInfo === userId ? (
                 <ProfileButton text={'프로필수정'} type={'profileEdit'} link={`/user/${userId}/update`} />
               ) : (
-                <ProfileButton text={'팔로우'} type={'follow'} onClick={followHandler} />
+                <div>
+                  {checkFollower ? (
+                    <ProfileButton text={'언팔로우'} type={'unfollow'} onClick={unfollowHandler} />
+                  ) : (
+                    <ProfileButton text={'팔로우'} type={'follow'} onClick={followHandler} />
+                  )}
+                </div>
               )}
             </div>
           </ProfileDescript>
