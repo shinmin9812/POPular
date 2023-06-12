@@ -66,15 +66,12 @@ const ContentContainer = styled.div`
   & li {
     margin: 10px 20px;
     border-radius: 8px;
-
-    article {
-      // padding: 10px 20px;
-    }
   }
 `;
 
 const Title = styled.h1`
   font-size: 25px;
   color: var(--color-main);
-  margin: 0 20px 0 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
 `;
