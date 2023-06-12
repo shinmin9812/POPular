@@ -48,20 +48,16 @@ const CommentItem = ({ comment, parentType, parentId }: Props) => {
 export default CommentItem;
 
 const Container = styled.article`
+  width: 100%;
+  padding: 20px 10px;
+  gap: 5px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  width: 100%;
-
-  padding: 20px 0;
-
   border-bottom: 2px solid var(--color-light-gray);
 
   .comment-header {
     display: flex;
-    gap: 10px;
     width: 100%;
-
     margin-bottom: 6px;
 
     .comment-post-title {
@@ -77,7 +73,6 @@ const Container = styled.article`
 
     h2 {
       white-space: nowrap;
-      overflow: hidden;
       text-overflow: ellipsis;
     }
   }
