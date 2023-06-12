@@ -1,7 +1,15 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
+const activeStyle = {
+  color: 'var(--color-main)',
+  fontSize: 'calc(var(--font-regular) + 2px)',
+};
 const MenuItem = ({ link, title }: { link: string; title: string }) => {
-  return <Link to={link}>{title}</Link>;
+  return (
+    <NavLink to={link} style={({ isActive }) => (isActive ? activeStyle : {})}>
+      {title}
+    </NavLink>
+  );
 };
 
 export default MenuItem;
