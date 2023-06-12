@@ -245,12 +245,6 @@ export class FeedsService {
 				);
 			}
 
-			if (feedUpdateDto.like || feedUpdateDto.report || feedUpdateDto.comment) {
-				throw new BadRequestException(
-					'좋아요, 신고, 댓글 관련 Patch는 해당 API를 이용해주세요.',
-				);
-			}
-
 			if (feedUpdateDto.content) {
 				const base64Images = extractImages(feedUpdateDto.content);
 				const imageMapping = await handleImages(base64Images);
