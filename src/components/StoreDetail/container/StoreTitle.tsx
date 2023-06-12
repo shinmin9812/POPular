@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import { Store } from '../../../types/store';
+import TitleScrap from '../components/TitleScrap';
 
 const Container = styled.div`
   display: flex;
@@ -28,7 +29,6 @@ const Container = styled.div`
     }
   }
 
-  .scrap-btn,
   .share-btn {
     background-color: #ffffff;
     pointer: cursor;
@@ -67,9 +67,7 @@ const StoreTitle = ({ store }: Props) => {
       <div className="title-head">
         <p className="title">{store.title}</p>
         <div className="title-btns">
-          <button className="scrap-btn">
-            <img src="/images/scrap.svg" alt="" />
-          </button>
+          <TitleScrap store={store} />
           <button className="share-btn">
             <img src="/images/share.svg" alt="" />
           </button>
