@@ -16,7 +16,7 @@ export const store = [
   // ID 조회
   rest.get(API_PATH.STORE.GET.BY_ID, (req, res, ctx) => {
     const { storeId } = req.params;
-    const result = storeData.find(({ id }) => id === storeId);
+    const result = storeData.find(({ _id }) => _id === storeId);
 
     if (Number.isNaN(storeId) || !result) {
       return res(
@@ -41,8 +41,9 @@ export const store = [
   }),
 
   // 추천 스토어 조회
-  rest.get(API_PATH.STORE.GET.RECOMENDED, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(storeData));
+  rest.get(API_PATH.STORE.GET.RECOMMENDED, (req, res, ctx) => {
+    const result = storeData.slice(0, 3);
+    return res(ctx.status(200), ctx.json(result));
   }),
 
   // 예약 필수 스토어 조회

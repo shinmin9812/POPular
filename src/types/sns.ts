@@ -3,3 +3,9 @@ export const enum SNS {
   kakao = 'kakao',
   website = 'website',
 }
+
+export interface SNSType {
+  link_type: string;
+  link_title: string;
+  link_url: string;
+}
