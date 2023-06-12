@@ -4,6 +4,7 @@ import CommentItemContainer from '../containers/CommentItemContainer';
 
 const CommentBox = styled.div`
   margin-top: 30px;
+  padding-top: 20px;
 `;
 
 const Title = styled.h4`

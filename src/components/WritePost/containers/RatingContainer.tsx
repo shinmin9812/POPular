@@ -1,57 +1,41 @@
-import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-  font-size: 24px;
-
-  .ratings {
-    display: flex;
-    gap: 6px;
-    font-size: 30px;
-    cursor: pointer;
-
-    .star {
-      color: #a9a9a9;
-      transition: all 0.4s;
-
-      &:hover {
-        transform: scale(1.2);
-      }
-      &.selected {
-        color: var(--color-main);
-      }
-    }
-  }
-`;
-
+import Rating from '../components/Rating';
+import { useState } from 'react';
+import StarIcon from '../../common/Icons/StarIcon';
 const RatingContainer = () => {
-  const rating = useAppSelector((state) => state.WritePostSlice.ratings);
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const dispatch = useAppDispatch();
   const setRating = (rating: number) => dispatch(WritePostSliceActions.setRating(rating));
-  const RATINGS = [1, 2, 3, 4, 5];
+
+  const array = [0, 1, 2, 3, 4];
+  const [clicked, setClicked] = useState([true, false, false, false, false]);
+
+  const handleStarClick = (index: number) => {
+    const clickStates = [...clicked];
+    for (let i = 0; i < 5; i++) {
+      clickStates[i] = i <= index ? true : false;
+    }
+    setClicked(clickStates);
+  };
 
   if (tab === '후기게시판')
     return (
-      <Container>
-        평점
-        <div className="ratings">
-          {RATINGS.map((rate) => (
-            <div
-              onClick={() => setRating(rate)}
-              className={`star ${rating >= rate ? 'selected' : ''}`}
-              data-rate={rate}
+      <Rating>
+        <>
+          {array.map((item) => (
+            <span
+              key={item}
+              onClick={() => {
+                handleStarClick(item);
+                setRating(item + 1);
+              }}
             >
-              ★
-            </div>
+              <StarIcon fill={clicked[item] ? 'var(--color-sub)' : 'var(--color-gray)'} width={25} />
+            </span>
           ))}
-        </div>
-      </Container>
+        </>
+      </Rating>
     );
   else return <div></div>;
 };

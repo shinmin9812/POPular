@@ -2,24 +2,26 @@ import styled from 'styled-components';
 import { useGetStoreById } from '../../../api/storeApi';
 import Tag from '../../common/Tag/Tag';
 import dayjs from 'dayjs';
-import InfoDetail from '../../StoreDetail/components/InfoDetail';
-import RatingContainer from '../containers/RatingContainer';
-import PostRegisterButtonContainer from '../containers/PostRegisterButtonContainer';
 
 interface Props {
   storeId: string;
 }
 
 const Container = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+  width: 50%;
+
   .store-card {
     display: grid;
     gap: 30px;
     grid-template-columns: 1fr 1fr;
-    width: 100%;
+    width: 90%;
     height: 250px;
     padding: 20px;
-    margin-top: 142px;
-
+    margin-top: 130px;
+    margin-left: auto;
     border-radius: 10px;
     box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.3);
     animation: appear-store 0.5s forwards;
@@ -141,10 +143,7 @@ const SelectedStoreItem = ({ storeId }: Props) => {
             </div>
           </div>
         </div>
-        <div className="posting-btn">
-          <RatingContainer />
-          <PostRegisterButtonContainer />
-        </div>
+        <div className="posting-btn"></div>
       </Container>
     );
   }

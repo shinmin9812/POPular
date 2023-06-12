@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../PostDetailSlice';
 import { Comment } from '../../../types/comment';
+import getComments from '../../../api/CommentApi';
 
 type aa = {
   author: string;
@@ -17,8 +18,9 @@ type aa = {
 
 const feedCommentApi = async (
   data: aa,
-  addComment: (comment: Comment) => void,
   setInput: Dispatch<SetStateAction<string>>,
+  postId = '',
+  setComments: (comments: Comment[]) => void,
 ) => {
   const response = await fetch(`http://34.22.81.36:3000/comments`, {
     method: 'POST',
@@ -29,8 +31,8 @@ const feedCommentApi = async (
     body: JSON.stringify(data),
   });
   const result = await response.json();
-  addComment(result);
   setInput('');
+  getComments(postId, setComments);
 };
 
 const getUserInfo = async (setIsMember: React.Dispatch<React.SetStateAction<string | undefined>>) => {
@@ -49,13 +51,20 @@ const getUserInfo = async (setIsMember: React.Dispatch<React.SetStateAction<stri
   }
 };
 
-const CommentInputContainer = ({ commentId }: { commentId?: string }) => {
+const CommentInputContainer = ({
+  commentId,
+  setReCommentInput,
+}: {
+  commentId?: string;
+  setReCommentInput?: () => void;
+}) => {
   const [input, setInput] = useState('');
   const [isMember, setIsMember] = useState<string>();
   const dispatch = useAppDispatch();
-  const addComment = (comment: Comment) => {
-    return dispatch(PostDetailActions.addComment(comment));
+  const setComments = (comments: Comment[]) => {
+    return dispatch(PostDetailActions.setComment(comments));
   };
+
   const postId = useParams().postId;
   useEffect(() => {
     getUserInfo(setIsMember);
@@ -73,7 +82,8 @@ const CommentInputContainer = ({ commentId }: { commentId?: string }) => {
       },
       recomments: [],
     };
-    feedCommentApi(data, addComment, setInput);
+    feedCommentApi(data, setInput, postId, setComments);
+    setReCommentInput && setReCommentInput();
   };
   return <CommentInput onChange={onChange} value={input} onClick={onClick} />;
 };

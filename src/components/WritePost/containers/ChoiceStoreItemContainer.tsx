@@ -14,6 +14,7 @@ const ChoiceStoreItemContainer = ({
 
   return (
     <ChoiceStoreItem
+      storeId={storeId}
       choice={choice}
       onClick={() => {
         setChoice((prev) => !prev);

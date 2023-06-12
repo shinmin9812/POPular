@@ -9,10 +9,11 @@ const CommentInputWrap = styled.div`
 
 const Input = styled.input`
   border: 1px solid #987fc0;
-  width: 100%;
+  width: 98%;
   height: 50px;
   border-radius: 8px;
   margin-bottom: 5px;
+  padding-left: 15px;
 `;
 const RegisterButton = styled.button`
   background-color: var(--color-main);
@@ -20,6 +21,7 @@ const RegisterButton = styled.button`
   border-radius: 8px;
   width: 30%;
   height: 40px;
+  cursor: pointer;
 `;
 
 const CommentInput = ({

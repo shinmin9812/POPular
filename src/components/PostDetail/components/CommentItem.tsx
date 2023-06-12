@@ -3,8 +3,10 @@ import { Comment } from '../../../types/comment';
 import CommentInputContainer from '../containers/CommentInputContainer';
 import ReComment from './ReCommentList';
 import XmarkIcon from '../../common/Icons/XmarkIcon';
+import getDateFunc from '../../../Hooks/GetDateFunc';
 const CommentWrap = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 export const Li = styled.li`
@@ -17,7 +19,7 @@ export const Li = styled.li`
 `;
 
 export const CommentAuthorName = styled.span`
-  color: var(--color-gray);
+  color: var(--color-light-black);
   font-weight: var(--weight-light);
   width: 15%;
   font-size: var(--font-small);
@@ -39,33 +41,53 @@ export const CommentUpdateAt = styled.span`
 `;
 
 export const CommentDeleteButton = styled.button`
+  display: flex;
   background: none;
-  width: 10%;
+  width: 78px;
   padding-top: 2px;
+  justify-content: center;
+`;
+
+const ReCommentInputWrap = styled.div`
+  width: 86%;
+  margin-left: 14%;
 `;
 
 const CommentItem = ({
   comment,
   reCommentInput,
   setReCommentInput,
+  commentDelete,
 }: //  ReComment
 {
   comment: Comment;
   reCommentInput: boolean;
   setReCommentInput: () => void;
+  commentDelete: (commentId: string, authorId: string) => Promise<void>;
 }) => {
   return (
     <Li>
       <CommentWrap onClick={setReCommentInput}>
         <CommentAuthorName>{comment.author.nickname}</CommentAuthorName>
         <CommentContent>{comment.content}</CommentContent>
-        <CommentUpdateAt>{comment.updatedAt.slice(0, 10)}</CommentUpdateAt>
-        <CommentDeleteButton>
+        <CommentUpdateAt>{getDateFunc(comment.updatedAt)}</CommentUpdateAt>
+        <CommentDeleteButton
+          onClick={(e) => {
+            e.stopPropagation(); // 상단에 있는 setReCommentInput 방지
+            commentDelete(comment._id, comment.author._id);
+          }}
+        >
           <XmarkIcon />
         </CommentDeleteButton>
       </CommentWrap>
-      {comment.recomments && comment.recomments.length > 0 && <ReComment reComments={comment.recomments} />}
-      {reCommentInput && <CommentInputContainer commentId={comment._id} />}
+      {comment.recomments && comment.recomments.length > 0 && (
+        <ReComment reComments={comment.recomments} commentDelete={commentDelete} />
+      )}
+      {reCommentInput && (
+        <ReCommentInputWrap>
+          <CommentInputContainer commentId={comment._id} setReCommentInput={setReCommentInput} />
+        </ReCommentInputWrap>
+      )}
     </Li>
   );
 };

@@ -8,6 +8,7 @@ const Button = styled.button<{ update: boolean }>`
   font-size: var(--font-small);
   background-color: ${(props) => (props.update ? 'var(--color-main)' : 'var(--color-gray)')};
   margin: 5px;
+  cursor: pointer;
 `;
 
 const ButtonWrap = styled.div`

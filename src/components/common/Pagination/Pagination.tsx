@@ -13,13 +13,17 @@ const PageList = styled.ul`
 const PageItem = styled.li<{ active: boolean }>`
   padding: 5px;
   width: 25px;
+  line-height: 15px;
   text-align: center;
+  margin: 0 3px;
+  cursor: pointer;
+
   ${(props) =>
     props.active &&
     css`
       color: var(--color-white);
       background-color: var(--color-main);
-      border-radius: 60px;
+      border-radius: 100%;
     `};
 `;
 
@@ -27,6 +31,7 @@ const MovementButton = styled.button`
   color: var(--color-gray);
   background: none;
   margin: 0 10px;
+  cursor: pointer;
 `;
 
 const Pagination = ({

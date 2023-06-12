@@ -8,7 +8,7 @@ const SearchContainer = styled.div`
     width: 25px;
     fill: var(--color-gray);
     position: absolute;
-    top: 16px;
+    top: 21px;
     left: 10px;
   }
 `;
@@ -16,7 +16,7 @@ const SearchContainer = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   font-size: 16px;
-  margin-top: 10px;
+  margin-top: 15px;
   padding: 11px 11px 11px 39px;
   border: 3px solid #987fc0;
   border-radius: 30px;
