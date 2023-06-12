@@ -4,8 +4,8 @@ import { useDeleteStore, useGetAllStores } from '../../api/storeApi';
 import AdminStoreList from '../../components/Admin/components/Stores/AdminStoreList';
 import { useState } from 'react';
 import AdminStoreItem from '../../components/Admin/components/Stores/AdminStoreItem';
-import { Store } from '../../types/store';
 import Button from '../../components/common/Button/Button';
+import { Category } from '../../types/category';
 
 const Container = styled.div`
   display: flex;
@@ -50,42 +50,47 @@ const Container = styled.div`
   }
 `;
 
+export interface FilterSettingValues {
+  searchType: string;
+  searchValue: string;
+  categories: Category[];
+  location: string;
+  isEnded: boolean;
+}
+
 const AdminStoreDeletePage = () => {
-  const { data: allStores } = useGetAllStores();
+  const { data: allStores, isFetched } = useGetAllStores();
   const [selectedId, setSelectedId] = useState<string[]>([]);
 
-  const { mutate, isLoading, isSuccess } = useDeleteStore(selectedId[0], {
+  console.log(selectedId);
+
+  const { mutate, isSuccess } = useDeleteStore(selectedId, {
     onSuccess: () => {
       setSelectedId([]);
-      console.log();
     },
   });
 
-  let filteredStores: Store[] = [];
-
-  if (allStores) {
-    filteredStores = allStores!.filter((store) => selectedId.includes(store._id));
-  }
-
-  const deleteHandler = () => {
+  function deleteHandler() {
     mutate();
-  };
+  }
 
   return (
     <Container>
       <Card className="delete-store">
         <p className="title">스토어 삭제</p>
-        {allStores && (
-          <AdminStoreList selectMode={true} setSelectedId={setSelectedId} selectedId={selectedId} stores={allStores} />
+        {allStores && allStores.length > 0 && (
+          <AdminStoreList setSelectedId={setSelectedId} selectedId={selectedId} stores={allStores} selectMode={true} />
         )}
       </Card>
       {isSuccess && <Card className="selected-store">스토어 삭제에 성공하였습니다!</Card>}
       {selectedId.length > 0 && !isSuccess && (
         <Card className="selected-store">
           <p className="title">선택된 목록</p>
-          {filteredStores!.map((store) => (
-            <AdminStoreItem store={store} />
-          ))}
+          {allStores!.map((store) => {
+            if (selectedId.includes(store._id)) {
+              return <AdminStoreItem key={store._id} store={store} />;
+            }
+          })}
           <Button onClick={deleteHandler}>스토어 삭제하기</Button>
         </Card>
       )}

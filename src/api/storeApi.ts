@@ -38,9 +38,10 @@ export const postStore = async (storeData: PostedStore): Promise<Store> => {
   }
 };
 
-export const deleteStore = async (storeId: string): Promise<Store> => {
+export const deleteStore = async (storeId: string[]): Promise<Store> => {
+  console.log(API_PATH.STORE.DELETE.replace(':storeId', JSON.stringify(storeId)));
   try {
-    const request = await fetch(API_PATH.STORE.DELETE.replace(':storeId', storeId), {
+    const request = await fetch(API_PATH.STORE.DELETE.replace(':storeId', JSON.stringify(storeId)), {
       method: 'DELETE',
     });
     const result = await request.json();
@@ -80,6 +81,6 @@ export const useEditStore = () => {
   return useMutation(editPost);
 };
 
-export const useDeleteStore = (storeId: string, option?: object) => {
+export const useDeleteStore = (storeId: string[], option?: object) => {
   return useMutation(() => deleteStore(storeId), option);
 };

@@ -35,7 +35,7 @@ const Container = styled.div`
   }
 
   .edit-store-form {
-    width: 600px;
+    display: flex;
     margin-left: 530px;
   }
 `;
