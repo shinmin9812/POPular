@@ -8,6 +8,7 @@ import {
 	Patch,
 	UseGuards,
 } from '@nestjs/common';
+import { Types } from 'mongoose';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
 import { UserService } from './user.service';
@@ -53,6 +54,12 @@ export class UserController {
 	@Get(':id')
 	async getUserById(@Param('id') _id: string): Promise<User> {
 		return await this.userService.getUserById(_id);
+	}
+
+	@ApiOperation({ summary: 'ID로 유저 스크랩 정보 찾기' })
+	@Get(':id/scraps')
+	async getScrapsById(@Param('id') _id: string): Promise<Types.ObjectId[]> {
+		return await this.userService.getScrapsById(_id);
 	}
 
 	@ApiOperation({ summary: '유저 닉네임 중복 여부 확인하기' })
