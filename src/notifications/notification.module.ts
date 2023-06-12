@@ -4,6 +4,7 @@ import { Notification, NotificationSchema } from './notification.schema';
 import { NotificationsController } from './notification.controller';
 import { NotificationsService } from './notification.service';
 import { CommentsModule } from 'src/comments/comment.module';
+import { UserModule } from 'src/users/user.module';
 
 @Module({
 	imports: [
@@ -11,6 +12,7 @@ import { CommentsModule } from 'src/comments/comment.module';
 			{ name: Notification.name, schema: NotificationSchema },
 		]),
 		forwardRef(() => CommentsModule),
+		forwardRef(() => UserModule),
 	],
 	controllers: [NotificationsController],
 	providers: [NotificationsService],

@@ -145,6 +145,26 @@ export class FeedsService {
 		}
 	}
 
+	async getFeedInfoById(id: string): Promise<Feed> {
+		try {
+			const feed = await this.feedModel
+				.findById(id)
+				.exec();
+
+			if (!feed) {
+				throw new NotFoundException(
+					`'${id}' 아이디를 가진 글을 찾지 못했습니다.`,
+				);
+			}
+
+			return feed;
+		} catch (err) {
+			throw new BadRequestException(
+				`'${id}' 아이디를 가진 글을 불러오지 못했습니다.`,
+			);
+		}
+	}
+
 	async getCommentsByFeedId(id: string): Promise<Object[]> {
 		try {
 			const feed = await this.feedModel

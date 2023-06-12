@@ -1,8 +1,4 @@
-import {
-	BadRequestException,
-	Injectable,
-	NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, Inject, forwardRef, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User } from './user.schema';
@@ -11,13 +7,16 @@ import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
 import { hashPassword } from '../utils/hassing.util';
 import { handleImage } from 'src/utils/handle.image.util';
+import { NotificationsService } from 'src/notifications/notification.service';
+import { NotificationType } from 'src/notifications/notification.schema';
 
 @Injectable()
 export class UserService {
 	constructor(
 		@InjectModel(User.name) private readonly userModel: Model<User>,
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
-	) {}
+		@Inject(forwardRef(() => NotificationsService)) private NotificationsService: NotificationsService
+	) { }
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -203,6 +202,18 @@ export class UserService {
 			user.save();
 			target.save();
 		}
+
+		const notificationCreatDto = {
+			type: NotificationType.FOLLOW,
+			board: null,
+			user_id: new Types.ObjectId(user._id),
+			content_comment: null,
+			content_store: null,
+			content_user: new Types.ObjectId(target._id),
+		}
+
+		const createdNotification = await this.NotificationsService.createNotification(notificationCreatDto)
+		await this.updateNotification(target._id, createdNotification._id);
 
 		return user;
 	}
