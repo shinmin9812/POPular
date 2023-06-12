@@ -15,6 +15,7 @@ import LikesAndReportsContainer from '../components/PostDetail/containers/LikeAn
 import CommentInputContainer from '../components/PostDetail/containers/CommentInputContainer';
 import StarIcon from '../components/common/Icons/StarIcon';
 import getComments from '../api/CommentApi';
+import { useQuery } from '@tanstack/react-query';
 
 const Container = styled.div`
   width: 100%;
@@ -36,6 +37,11 @@ const RatingsWrap = styled.div`
   }
 `;
 
+async function fetchData(postId = '') {
+  const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}`);
+  const result: Post = await response.json();
+  return result;
+}
 const PostDetailPage = () => {
   const postId = useParams().postId;
   const [post, setPost] = useState<Post | null>(null);
@@ -52,17 +58,19 @@ const PostDetailPage = () => {
   };
 
   useEffect(() => {
-    fetchData();
     getComments(postId, setComments);
   }, []);
 
-  async function fetchData() {
-    const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}`);
-    const result: Post = await response.json();
-    setPost(result);
-    setLikes(result.likes);
-    setReports(result.reports);
-  }
+  const { data, isFetching } = useQuery<Post>(['getPost'], () => {
+    return fetchData(postId);
+  });
+  useEffect(() => {
+    if (data) {
+      setPost(data);
+      setLikes(data.likes);
+      setReports(data.reports);
+    }
+  }, [data]);
 
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {
