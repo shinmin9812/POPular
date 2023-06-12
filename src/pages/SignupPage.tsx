@@ -4,8 +4,11 @@ import SignupForm from '../components/Signup/components/SignupForm';
 const SignupPage = () => {
   return (
     <Container>
-      <PageTitle>회원가입</PageTitle>
-      <SignupForm></SignupForm>
+      <Intro></Intro>
+      <SignupContainer>
+        <PageTitle>회원가입</PageTitle>
+        <SignupForm></SignupForm>
+      </SignupContainer>
     </Container>
   );
 };
@@ -15,8 +18,32 @@ export default SignupPage;
 const Container = styled.div`
   height: calc(100vh - 200px);
   display: flex;
+  justify-content: space-around;
+  height: 100%;
+`;
+
+const Intro = styled.section`
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+    background: linear-gradient(to bottom right, var(--color-main), var(--color-white));
+    color: var(--color-white);
+    height: 800px;
+    border-radius: 10px;
+    padding: 20px;
+    width: 60%;
+  }
+`;
+
+const SignupContainer = styled.div`
+  height: 700px;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
+  margin-top: 80px;
+  @media (min-width: 768px) {
+    flex: 1;
+    padding: 0 20px;
+  }
 `;
 
 const PageTitle = styled.h1`
