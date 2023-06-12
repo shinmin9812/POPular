@@ -8,7 +8,12 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment } from './comment.schema';
-import { Model, PaginateResult, Types, PaginateModel } from 'mongoose';
+import {
+	Model,
+	Types,
+	AggregatePaginateModel,
+	AggregatePaginateResult,
+} from 'mongoose';
 import { CommentCreateDto } from './dto/comment.create.dto';
 import { CommentUpdateDto } from './dto/comment.update.dto';
 import { FeedsService } from 'src/feeds/feed.service';
@@ -22,7 +27,7 @@ import { NotificationType } from 'src/notifications/notification.schema';
 export class CommentsService {
 	constructor(
 		@InjectModel(Comment.name)
-		private readonly commentModel: PaginateModel<Comment>,
+		private readonly commentModel: AggregatePaginateModel<Comment>,
 		@Inject(forwardRef(() => FeedsService)) private feedsService: FeedsService,
 		@Inject(forwardRef(() => UserService)) private UserService: UserService,
 		@Inject(forwardRef(() => NotificationsService))
@@ -72,7 +77,7 @@ export class CommentsService {
 		id: string,
 		pageIndex: number,
 		order: string,
-	): Promise<PaginateResult<Comment>> {
+	): Promise<AggregatePaginateResult<Comment>> {
 		let sort: { [key: string]: number } = { createdAt: -1 };
 
 		if (order === 'desc') {
@@ -81,13 +86,21 @@ export class CommentsService {
 			sort = { createdAt: 1 };
 		}
 
-		return this.commentModel.paginate(
-			{ author: id },
+		const aggregateQuery = this.commentModel.aggregate([
 			{
-				sort,
-				page: pageIndex,
-				limit: 5,
+				$match: { author: id },
 			},
+		]);
+
+		const options = {
+			sort,
+			page: pageIndex,
+			limit: 5,
+		};
+
+		return this.commentModel.aggregatePaginate<Comment>(
+			aggregateQuery,
+			options,
 		);
 	}
 

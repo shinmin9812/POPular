@@ -4,7 +4,6 @@ import {
 	Delete,
 	Get,
 	Param,
-	Patch,
 	Post,
 	Put,
 	Query,
@@ -12,12 +11,6 @@ import {
 import { StoreRequestDto } from './dto/store.request.dto';
 import { StoreService } from './store.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-
-class CoordQuery {
-	x: string;
-	y: string;
-	distance: string;
-}
 
 @Controller('/stores')
 @ApiTags('Store')
@@ -52,8 +45,8 @@ export class StoreController {
 	}
 
 	@ApiOperation({ summary: '좌표 위치 주변 스토어 정보 찾기' })
-	@Get('coord')
-	async getStoresByCoord(@Query() query: CoordQuery) {
+	@Get('/coord')
+	async getStoresByCoord(@Query() query) {
 		const { x, y, distance } = query;
 		const longtitude = Number(y);
 		const latitude = Number(x);
@@ -64,12 +57,6 @@ export class StoreController {
 			latitude,
 			searchDistance,
 		);
-	}
-
-	@ApiOperation({ summary: '카테고리별 스토어 정보 찾기' })
-	@Get('category')
-	async getStoresByCategory(@Query('category') query: string) {
-		return await this.storeServcie.getStoresByCategory(query);
 	}
 
 	@ApiOperation({ summary: '스토어 정보 등록하기' })
@@ -85,8 +72,8 @@ export class StoreController {
 	}
 
 	@ApiOperation({ summary: '스토어 정보 삭제하기' })
-	@Delete(':ids')
-	async delete(@Param('ids') ids: string[]) {
+	@Delete('')
+	async delete(@Body() ids: string[]) {
 		return await this.storeServcie.deleteStores(ids);
 	}
 }
