@@ -15,6 +15,6 @@ export async function saveImage(
 
 	const directoryPath = join(targetPath, '..');
 
-	await fsPromises.mkdir(directoryPath, {recursive: true});
+	await fsPromises.mkdir(directoryPath, { recursive: true });
 	await fsPromises.writeFile(targetPath, buffer);
 }

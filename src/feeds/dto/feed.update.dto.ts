@@ -53,4 +53,38 @@ export class FeedUpdateDto {
 		description: '게시글 평점',
 	})
 	ratings?: number;
+
+	@IsOptional()
+	@IsMongoId()
+	@ApiProperty({
+		example: '6479cd31b0b0d8f69ffcfc55',
+		description: '게시글 좋아요 누른 유저 ID',
+	})
+	like: Types.ObjectId;
+
+	@IsOptional()
+	@IsMongoId()
+	@ApiProperty({
+		example: '6479cd31b0b0d8f69ffcfc55',
+		description: '게시글 신고 누른 유저 ID',
+	})
+	report: Types.ObjectId;
+
+	@IsOptional()
+	@IsMongoId()
+	@ApiProperty({
+		example: '647d4230f130cbfd139325a1',
+		description: '댓글 ID',
+	})
+	comment: Types.ObjectId;
+
+	@IsOptional()
+	@IsNumber()
+	@Min(0)
+	@ApiProperty({
+		example: '0',
+		description: '게시글 조회수',
+		default: 0,
+	})
+	views: number;
 }
