@@ -7,7 +7,7 @@ import { Store } from '../../../types/store';
 import { communityActions } from '../CommunitySlice';
 import { useQuery } from '@tanstack/react-query';
 
-import PostItem from '../../User/components/PostItem';
+import PostItem from '../../common/Post/PostItem';
 
 async function fetchData(tab: string, navigate: NavigateFunction) {
   try {

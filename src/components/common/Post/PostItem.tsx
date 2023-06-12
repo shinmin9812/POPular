@@ -10,7 +10,6 @@ const PostItem = ({ post }: Props) => {
   const findImage = post.content;
   const regex = /src="([^"]+)"/;
   const match = findImage.match(regex);
-
   return (
     <Container key={post._id}>
       <ContainerInner>
@@ -24,7 +23,7 @@ const PostItem = ({ post }: Props) => {
           </PostItemBottom>
         </PostItemInfo>
         <PostItemImage>
-          <div className="temporary-image">{match ? <img src={match[1]} alt={''} /> : null}</div>
+          <div className="temporary-image">{match ? <img src={post.images && post.images[0]} /> : null}</div>
         </PostItemImage>
       </ContainerInner>
     </Container>

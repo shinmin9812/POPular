@@ -1,7 +1,7 @@
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import { BoardTypes } from '../../../types/board';
 import styled from 'styled-components';
-import getDateFunc from '../../../Hooks/GetDateFunc';
+import getDateFunc from '../../../utils/getDateFunc';
 
 interface PostInfoType {
   boardType: BoardTypes;

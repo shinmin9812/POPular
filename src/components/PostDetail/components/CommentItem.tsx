@@ -3,7 +3,7 @@ import { Comment } from '../../../types/comment';
 import CommentInputContainer from '../containers/CommentInputContainer';
 import ReComment from './ReCommentList';
 import XmarkIcon from '../../common/Icons/XmarkIcon';
-import getDateFunc from '../../../Hooks/GetDateFunc';
+import getDateFunc from '../../../utils/getDateFunc';
 const CommentWrap = styled.div`
   display: flex;
   cursor: pointer;

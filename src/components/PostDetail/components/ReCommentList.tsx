@@ -3,7 +3,7 @@ import ReCommentArrowIcon from '../../common/Icons/ReCommentArrowIcon';
 import XmarkIcon from '../../common/Icons/XmarkIcon';
 import { CommentAuthorName, CommentContent, CommentUpdateAt, CommentDeleteButton } from './CommentItem';
 import { Comment } from '../../../types/comment';
-import getDateFunc from '../../../Hooks/GetDateFunc';
+import getDateFunc from '../../../utils/getDateFunc';
 const ReCommentWrap = styled.ul`
   background-color: #fafafa;
   border: 1px solid #dddddd;

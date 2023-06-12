@@ -20,7 +20,7 @@ const Container = styled.div`
     width: 90%;
     height: 250px;
     padding: 20px;
-    margin-top: 130px;
+    margin-top: 35px;
     margin-left: auto;
     border-radius: 10px;
     box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.3);
