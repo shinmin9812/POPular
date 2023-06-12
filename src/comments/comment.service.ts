@@ -157,7 +157,7 @@ export class CommentsService {
 					(await thisParent).parent.id.toString(),
 				);
 				const thisBoardType = (await thisGrandparent).board;
-				const thisAuthor = (await thisGrandparent).author;
+				const thisAuthor = (await thisParent).author;
 				return {
 					type: thisBoardType,
 					author: thisAuthor,
