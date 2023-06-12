@@ -5,10 +5,9 @@ interface Props {
 }
 
 const initialState: Props = {
-  filter: 'newest',
+  filter: 'desc',
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 const UserSlice = createSlice({
   name: 'user',
   initialState,

@@ -40,7 +40,7 @@ const Router = () => {
           <Route path={CLIENT_PATH.USER_MENU} element={<UserMenuPage />}></Route>
           <Route path={CLIENT_PATH.USER_SCRAP} element={<ScrapPage />}></Route>
           <Route path={CLIENT_PATH.USER_NOTIFICATIONS} element={<NotificationsPage />}></Route>
-          <Route path={CLIENT_PATH.USER_DETAIL} element={<UserPage />}></Route>
+          <Route path={CLIENT_PATH.PROFILE} element={<UserPage />}></Route>
           <Route path={CLIENT_PATH.LOGIN} element={<LoginPage />}></Route>
           <Route path={CLIENT_PATH.STORE_DETAIL} element={<StoreDetailPage />}></Route>
           <Route path={CLIENT_PATH.SIGNUP} element={<SignupPage />}></Route>

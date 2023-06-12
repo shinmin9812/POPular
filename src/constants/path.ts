@@ -100,6 +100,7 @@ export const CLIENT_PATH = {
   BOARD: '/community/board/:category',
   POST: '/community/post/:postId',
   WRITE: '/community/write',
+  PROFILE: '/community/user/:userId',
 
   STORE_DETAIL: '/store/:storeId',
 
@@ -112,8 +113,6 @@ export const CLIENT_PATH = {
   USER_POSTS: '/usermenu/posts',
   USER_COMMENTS: '/usermenu/comments',
   USER_NOTIFICATIONS: '/usermenu/notifications',
-
-  USER_DETAIL: '/user/:userId',
   USER_UPDATE: '/user/:userId/update',
 
   ADMIN: '/admin',

@@ -13,30 +13,47 @@ const PostItem = ({ post }: Props) => {
 
   return (
     <Container key={post._id}>
-      <PostItemInfo>
-        <PostItemCategory>
-          <BoardTypeTag boardType={post.board} />
-        </PostItemCategory>
-        <PostItemTitle>{post.title}</PostItemTitle>
-        <PostItemBottom>
-          {new Date(post.updatedAt).toISOString().slice(0, 10)} | {post.author.nickname} | 💜 {post.likes.length}
-        </PostItemBottom>
-      </PostItemInfo>
-      <PostItemImage>
-        <div className="temporary-image">{match ? <img src={match[1]} alt={''} /> : null}</div>
-      </PostItemImage>
+      <ContainerInner>
+        <PostItemInfo>
+          <PostItemCategory>
+            <BoardTypeTag boardType={post.board} />
+          </PostItemCategory>
+          <PostItemTitle>{post.title}</PostItemTitle>
+          <PostItemBottom>
+            {new Date(post.updatedAt).toISOString().slice(0, 10)} | {post.author.nickname} | 💜 {post.likes.length}
+          </PostItemBottom>
+        </PostItemInfo>
+        <PostItemImage>
+          <div className="temporary-image">{match ? <img src={match[1]} alt={''} /> : null}</div>
+        </PostItemImage>
+      </ContainerInner>
     </Container>
   );
 };
 
 const Container = styled.div`
+  box-sizing: border-box;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--color-light-gray);
+  transition: all 0.3s;
+  box-shadow: 1px 1px 10px #eee;
+  margin-bottom: 10px;
+  border-radius: 8px;
+
+  &:hover {
+    cursor: pointer;
+    transform: translateY(-4px);
+    background-color: #fff;
+    filter: brightness(0.97);
+  }
+`;
+
+const ContainerInner = styled.div`
   width: 100%;
   display: flex;
   height: 80px;
-
-  .link {
-    width: 100%;
-  }
 `;
 
 const PostItemImage = styled.div`
