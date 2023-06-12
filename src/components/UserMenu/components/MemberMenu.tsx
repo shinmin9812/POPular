@@ -80,6 +80,22 @@ const MemberMenu = () => {
 export default MemberMenu;
 
 const Container = styled.div`
+  & > a {
+    display: block;
+    width: 350px;
+    height: 65px;
+    font-size: var(--font-medium);
+    border-bottom: 0.5px solid var(--color-gray);
+    padding: 20px;
+    margin: 0;
+    cursor: pointer;
+
+    :hover {
+      transition: all 0.1s ease;
+      color: var(--color-main);
+      font-size: calc(var(--font-medium) + 2px);
+    }
+  }
   margin: 20px 0;
   .deleteUser {
     display: block;
