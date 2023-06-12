@@ -9,8 +9,6 @@ import { useMutation } from '@tanstack/react-query';
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
   const [userInfo, setUserInfo] = useState('');
-
-  // [path] User Profile :: 현재 페이지 유저의 Id 값
   const { userId } = useParams();
 
   useEffect(() => {
@@ -86,7 +84,7 @@ const Profile = () => {
             <p className="user-introduce">{user.introduce}</p>
             <div className="button-position">
               {userInfo === userId ? (
-                <ProfileButton text={'프로필수정'} type={'profileEdit'} link={'update'} />
+                <ProfileButton text={'프로필수정'} type={'profileEdit'} link={`/user/${userId}/update`} />
               ) : (
                 <ProfileButton text={'팔로우'} type={'follow'} onClick={followHandler} />
               )}

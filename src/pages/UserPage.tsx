@@ -10,8 +10,8 @@ const Container = styled.div`
 `;
 
 const customOptions = [
-  { value: 'newest', name: '최신순' },
-  { value: 'oldest', name: '오래된 순' },
+  { value: 'desc', name: '최신순' },
+  { value: 'asc', name: '오래된 순' },
 ];
 
 const UserPage = () => {

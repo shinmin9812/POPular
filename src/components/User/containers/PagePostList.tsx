@@ -4,14 +4,17 @@ import { useEffect, useRef, CSSProperties } from 'react';
 import { Post } from '../../../types/post';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import PostItem from '../components/PostItem';
+import PostItem from '../../common/Post/PostItem';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 async function getFeeds(
   _limit: number,
   offset: number = 1,
+  filter?: string | number | readonly string[],
 ): Promise<{ rows: Post[]; nextOffset: number; hasNextPage: boolean }> {
   const res = await fetch(
-    `http://34.22.81.36:3000/feeds/user/648490f8dde175dd0d146256?pageIndex=${offset}&order=desc`,
+    `http://34.22.81.36:3000/feeds/user/648490f8dde175dd0d146256?pageIndex=${offset}&order=${filter}`,
     {
       method: 'GET',
     },
@@ -22,7 +25,6 @@ async function getFeeds(
   return { rows, nextOffset: offset + 1, hasNextPage: data.hasNextPage };
 }
 
-// 스타일 컴포넌트 type
 type PostgetTotalSizeProps = {
   height: number;
   style?: CSSProperties;
@@ -34,9 +36,10 @@ type PostItemContainerProps = {
 };
 
 const PagePostList = () => {
-  const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const filter = useSelector((state: RootState) => state.UserSlice.filter);
+  const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage, refetch } = useInfiniteQuery(
     ['feeds'],
-    (ctx) => getFeeds(0, ctx.pageParam),
+    (ctx) => getFeeds(0, ctx.pageParam, filter),
     {
       getNextPageParam: (lastGroup, groups) => {
         const hasNextPage = lastGroup.hasNextPage;
@@ -64,6 +67,10 @@ const PagePostList = () => {
     }
   }, [hasNextPage, fetchNextPage, allRows.length, isFetchingNextPage, rowVirtualizer.getVirtualItems()]);
 
+  useEffect(() => {
+    refetch(); // 필터링이 변경될 때 데이터를 다시 불러오기
+  }, [filter, refetch]);
+
   return (
     <Container>
       {status === 'loading' ? (
@@ -89,11 +96,9 @@ const PagePostList = () => {
                       'Nothing more to load'
                     )
                   ) : (
-                    <PostItemContainerBox>
-                      <Link to={`/community/post/${post._id}`}>
-                        <PostItem post={post} />
-                      </Link>
-                    </PostItemContainerBox>
+                    <Link to={`/community/post/${post._id}`}>
+                      <PostItem post={post} />
+                    </Link>
                   )}
                 </PostItemContainer>
               );
@@ -169,25 +174,6 @@ const PostItemContainer = styled.div<PostItemContainerProps>`
   width: 100%;
   height: ${(props) => props.size}px;
   transform: translateY(${(props) => props.start}px);
-`;
-
-const PostItemContainerBox = styled.div`
-  box-sizing: border-box;
-  padding: 20px 20px;
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid var(--color-light-gray);
-  transition: all 0.3s;
-  box-shadow: 1px 1px 10px #eee;
-  margin-bottom: 10px;
-  border-radius: 8px;
-
-  &:hover {
-    cursor: pointer;
-    transform: translateY(-4px);
-    background-color: #fff;
-    filter: brightness(0.97);
-  }
 `;
 
 export default PagePostList;

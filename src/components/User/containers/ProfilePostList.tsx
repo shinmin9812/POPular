@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import PostItem from '../components/PostItem';
+import PostItem from '../../common/Post/PostItem';
 import { Post } from '../../../types/post';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
