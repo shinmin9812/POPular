@@ -153,7 +153,7 @@ export class CommentsService {
 				const thisParent = commentsService.getCommentInfoById(savedComment.parent.id.toString());
 				const thisGrandparent = feedsService.getFeedInfoById((await thisParent).parent.id.toString())
 				const thisBoardType = (await thisGrandparent).board;
-				const thisAuthor = (await thisGrandparent).author;
+				const thisAuthor = (await thisParent).author;
 				return {
 					type: thisBoardType,
 					author: thisAuthor,
