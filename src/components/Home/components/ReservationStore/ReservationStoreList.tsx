@@ -29,6 +29,7 @@ const Container = styled.div`
   h2 {
     font-weight: var(--weight-semi-bold);
     margin-bottom: 20px;
+    font-size: var(--font-medium);
   }
 `;
 

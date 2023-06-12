@@ -5,6 +5,7 @@ import PrevIcon from '../Icons/PrevIcon';
 import { NavLink } from 'react-router-dom';
 import HeaderSearchBox from './HeaderSearchBox';
 import HeaderProfile from './HeaderProfile';
+import { useEffect, useState } from 'react';
 
 const Container = styled.header`
   position: fixed;
@@ -18,9 +19,20 @@ const Container = styled.header`
 
   border-bottom: 1px var(--color-light-gray) solid;
 
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
 
   z-index: 999;
+  box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s;
+
+  &.hide {
+    top: -90px;
+  }
+
+  &.top {
+    box-shadow: none;
+  }
 
   .inner {
     display: flex;
@@ -60,7 +72,7 @@ const Container = styled.header`
   @media all and (min-width: 768px) {
     .inner {
       justify-content: flex-start;
-      align-items: end;
+      align-items: center;
       height: fit-content;
 
       .prev-btn {
@@ -73,6 +85,10 @@ const Container = styled.header`
         font-size: 30px;
 
         color: var(--color-main);
+
+        img {
+          width: 150px;
+        }
       }
 
       nav {
@@ -80,21 +96,27 @@ const Container = styled.header`
         justify-content: space-between;
         align-items: center;
 
-        flex-grow: 1;
-
         .links {
           display: flex;
           gap: 40px;
           font-size: 18px;
 
           a {
+            position: relative;
             transition: all 0.5s;
             color: var(--color-light-black);
+            background-color: transparent;
+            font-weight: 300;
+            transform-origin: bottom center;
+
+            &:hover {
+              transform: translateY(-3px);
+            }
 
             &.active {
               color: var(--color-main);
-
-              transform: scale(1.1);
+              font-weight: 500;
+              transform: scale(1.2);
             }
           }
         }
@@ -127,8 +149,24 @@ const Header = () => {
   const isHome = useLocation().pathname === CLIENT_PATH.HOME;
   const navigate = useNavigate();
 
+  const [position, setPosition] = useState(window.pageYOffset);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const moving = window.pageYOffset;
+      setVisible(position > moving);
+      setPosition(moving);
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [position]);
+
   return (
-    <Container>
+    <Container className={`${visible ? '' : 'hide'}${position === 0 ? 'top' : ''}`}>
       <div className="inner">
         {!isHome && (
           <button className="prev-btn" onClick={() => navigate(-1)}>
@@ -136,7 +174,7 @@ const Header = () => {
           </button>
         )}
         <Link className="logo" to={CLIENT_PATH.HOME}>
-          POPular
+          <img src="/images/logo.png" alt="임시로고" />
         </Link>
 
         <nav>
@@ -147,7 +185,9 @@ const Header = () => {
             <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
               커뮤니티
             </NavLink>
-            <NavLink to={'/admin'}>관리자</NavLink>
+            <NavLink to={'/admin'} target="_blank">
+              관리자
+            </NavLink>
           </div>
         </nav>
         <div className="sub-links">

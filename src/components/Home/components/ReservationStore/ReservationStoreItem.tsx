@@ -15,7 +15,8 @@ const ReservationStoreItem = ({ store }: Props) => {
         <div className={'item-description'}>
           <p className={'item-title'}>{store.title}</p>
           <p className={'item-period'}>
-            {store.start_date} ~ {store.end_date}
+            {new Date(store.start_date).toISOString().slice(0, 10)}~
+            {new Date(store.end_date).toISOString().slice(0, 10)}
           </p>
         </div>
       </InnerContent>
@@ -34,6 +35,7 @@ const InnerContent = styled.div`
     &:hover img {
       transform: scale(1.07);
     }
+
     img {
       transition: all 0.3s;
       width: 100%;
@@ -49,14 +51,14 @@ const InnerContent = styled.div`
 
   .item-title {
     font-weight: var(--weight-semi-bold);
-    font-size: var(--font-small);
+    font-size: var(--font-regular);
   }
 
   .item-period {
-    margin-top: 5px;
-    font-weight: var(--weight-regular);
-    font-size: var(--font-micro);
-    color: var(--color-gray);
+    margin-top: 7px;
+    font-weight: var(--weight-light);
+    font-size: var(--font-small);
+    color: var(--color-light-black);
   }
 `;
 

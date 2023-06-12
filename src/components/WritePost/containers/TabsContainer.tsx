@@ -1,6 +1,7 @@
 import TabsWrap from '../../common/Tabs/Tabs';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
+
 const TabsContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const dispatch = useAppDispatch();

@@ -3,10 +3,14 @@ import { Comment } from '../../types/comment';
 
 interface initialStateType {
   comment: Comment[];
+  likes: string[];
+  reports: string[];
 }
 
 const initialState: initialStateType = {
   comment: [],
+  likes: [],
+  reports: [],
 };
 
 const PostDetailSlice = createSlice({
@@ -18,6 +22,12 @@ const PostDetailSlice = createSlice({
     },
     addComment(state, action: PayloadAction<Comment>) {
       state.comment = [...state.comment, action.payload];
+    },
+    setLikes(state, action: PayloadAction<string[]>) {
+      state.likes = action.payload;
+    },
+    setReports(state, action: PayloadAction<string[]>) {
+      state.reports = action.payload;
     },
   },
 });

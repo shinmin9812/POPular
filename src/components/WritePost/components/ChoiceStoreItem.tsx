@@ -13,21 +13,24 @@ const ChoiceButton = styled.button<{ choice: boolean }>`
   margin-bottom: 20px;
   margin-right: 20px;
   border-radius: 8px;
+  cursor: pointer;
 `;
 
 const ChoiceStoreItem = ({
+  storeId,
   children,
   onClick,
   choice,
 }: {
+  storeId: string;
   children: JSX.Element;
   onClick: () => void;
   choice: boolean;
 }) => {
   return (
     <Li>
-      {children}
-      <ChoiceButton choice={choice} onClick={onClick}>
+      <label htmlFor={storeId}>{children}</label>
+      <ChoiceButton choice={choice} onClick={onClick} id={storeId}>
         {choice ? '취소' : '선택'}
       </ChoiceButton>
     </Li>

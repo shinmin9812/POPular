@@ -14,8 +14,10 @@ const UserProfile = ({
 }) => {
   return (
     <ProfileContainer>
-      <Link to={`/user/${userId}`}>
-        <img src={profileImage} alt="profileImage" width={40} />
+      <Link to={`/community/user/${userId}`}>
+        <ImageContainer>
+          <img src={profileImage} alt="profileImage" width={40} />
+        </ImageContainer>
         <p>{nickname}</p>
       </Link>
       <Link to={CLIENT_PATH.USER_NOTIFICATIONS} style={{ display: 'flex', alignItems: 'center' }}>
@@ -29,7 +31,7 @@ export default UserProfile;
 
 const ProfileContainer = styled.div`
   width: 350px;
-  padding: 4px 12px 16px 8px;
+  padding: 16px 12px 16px 8px;
   border-bottom: 1px solid var(--color-gray);
   display: flex;
   justify-content: space-between;
@@ -42,6 +44,19 @@ const ProfileContainer = styled.div`
     font-size: var(--font-medium);
     display: flex;
     align-items: center;
-    padding: 0 8px;
+    padding: 0 12px;
+  }
+`;
+
+const ImageContainer = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 70%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;

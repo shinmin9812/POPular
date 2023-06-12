@@ -23,6 +23,8 @@ const Container = styled.div`
   border-radius: 20px;
   box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.4);
 
+  z-index: 9999;
+
   .home {
     position: absolute;
     right: 20px;

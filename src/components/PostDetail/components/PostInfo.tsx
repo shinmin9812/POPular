@@ -1,6 +1,7 @@
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import { BoardTypes } from '../../../types/board';
 import styled from 'styled-components';
+import getDateFunc from '../../../utils/getDateFunc';
 
 interface PostInfoType {
   boardType: BoardTypes;
@@ -53,7 +54,7 @@ const PostInfo = ({ boardType, title, nickName, updatedAt, likes, comments, view
       <RowWrap>
         <ColumnWrap>
           <PostTitle>{title}</PostTitle>
-          <BottomInfo>{`${nickName} | ${updatedAt}`}</BottomInfo>
+          <BottomInfo>{`${nickName} | ${getDateFunc(updatedAt)}`}</BottomInfo>
         </ColumnWrap>
         <ColumnWrap>
           <RightInfo>

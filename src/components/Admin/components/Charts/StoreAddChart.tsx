@@ -7,14 +7,24 @@ interface Props {
   stores: Store[];
 }
 const StoreAddChart = ({ stores }: Props) => {
+  const BAR_KEY = '추가된 점포';
+
   const daymap = new Map();
-  stores.forEach((store) => {
-    store.createdAt = dayjs(store.createdAt).format('YYYY/MM/DD');
+  const convertedStores = stores.map((store) => {
+    return {
+      ...store,
+      createdAt: dayjs(store.createdAt).format('YYYY/MM/DD'),
+    };
   });
 
-  stores.forEach((store) => {
-    if (daymap.has(store.createdAt)) daymap.set(store.createdAt, [...daymap.get(store.createdAt), store]);
-    else daymap.set(store.createdAt, [store]);
+  convertedStores.forEach((store) => {
+    const { createdAt } = store;
+    const isExistedDate = daymap.has(createdAt);
+    if (isExistedDate) {
+      daymap.set(createdAt, [...daymap.get(createdAt), store]);
+    } else {
+      daymap.set(createdAt, [store]);
+    }
   });
 
   let data = [];
@@ -22,7 +32,7 @@ const StoreAddChart = ({ stores }: Props) => {
   for (const key of daymap.keys()) {
     data.push({
       name: key,
-      '추가된 점포': daymap.get(key).length,
+      [BAR_KEY]: daymap.get(key).length,
     });
   }
 
@@ -39,7 +49,7 @@ const StoreAddChart = ({ stores }: Props) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="추가된 점포" stackId="a" fill="#891baa" barSize={40} />
+          <Bar dataKey={BAR_KEY} stackId="a" fill="#891baa" barSize={40} />
         </BarChart>
       </ResponsiveContainer>
     </Container>

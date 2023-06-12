@@ -10,49 +10,25 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
 
-  .store-sns-title {
+  .store-info {
     width: 100%;
-    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+  }
+
+  .store-location {
+    width: 50%;
+  }
+
+  .store-description {
+    padding-top: 20px;
+
     font-size: 18px;
-    font-weight: 700;
-  }
+    font-weight: 300;
 
-  .store-sns-list {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 10px;
-
-    li + li {
-      margin-top: 10px;
-    }
-  }
-
-  .store-sns-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 30px;
-  }
-
-  .sns-info {
-    display: flex;
-    align-items: center;
-  }
-
-  .sns-title {
-    font-size: 16px;
-    margin-left: 10px;
-  }
-
-  .sns-link {
-    width: 130px;
-    height: 30xp;
-    border: 1px solid #652cc1;
-    border-radius: 5px;
-    line-height: 28px;
-    text-align: center;
-    color: #652cc1;
+    word-break: keep-all;
+    line-height: 1.3;
+    letter-spacing: 0.02em;
   }
 
   .store-similar {
@@ -75,11 +51,14 @@ const Container = styled.div`
 
   .detail-bottom-btns {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
     align-items: center;
     width: 100%;
+    margin-top: 20px;
 
-    button + button {
-      margin-left: 10px;
+    button {
+      width: 100%;
     }
   }
 
@@ -88,16 +67,38 @@ const Container = styled.div`
     width: 50%;
     height: 50px;
     border-radius: 5px;
-    background-color: #878787;
+    background-color: var(--color-sub);
     font-size: 16px;
     font-weight: 700;
     color: #ffffff;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:disabled {
+      background-color: #c1c1c1;
+      cursor: not-allowed;
+    }
   }
 
   .line {
     width: 100%;
     border-bottom: 1px solid #e7e7e7;
     margin: 20px 0;
+  }
+
+  // 모바일
+  @media all and (max-width: 767px) {
+    .store-info {
+      width: 100%;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .store-location {
+      width: 100%;
+    }
   }
 `;
 
@@ -107,31 +108,18 @@ interface Props {
 
 const StoreInfo = ({ store }: Props) => {
   return (
-    <Container>
-      <InfoDetail store={store} />
-      <div className="store-sns-title">SNS</div>
-      {store.sns.length > 0 && (
-        <>
-          <ul className="store-sns-list">
-            <li className="store-sns-item">
-              <div className="sns-info">
-                <img className="sns-ico" src="/images/instagram.svg" alt="" />
-                <p className="sns-title">{store.sns[0].link_title}</p>
-              </div>
-              <a className="sns-link" href={store.sns[0].link_url}>
-                {store.sns[0].link_type}
-              </a>
-            </li>
-          </ul>
-        </>
-      )}
-      <InfoPlace location={store.location} coordinates={store.coord.coordinates} />
-      <div className="line"></div>
-      <div className="detail-bottom-btns">
-        <button className="reservation-btn">예약하기</button>
-        <button className="recruiment-btn">모집하기</button>
-      </div>
-    </Container>
+    <>
+      <Container>
+        <p className="store-description">{store?.description}</p>
+        <div className="line"></div>
+        <div className="store-info">
+          <div className="store-location">
+            <InfoPlace location={store.location} coordinates={store.coord.coordinates} />
+          </div>
+          <InfoDetail store={store} />
+        </div>
+      </Container>
+    </>
   );
 };
 

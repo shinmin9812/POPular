@@ -37,11 +37,15 @@ const Container = styled.div`
   // Size
   --border-radius-button: 8px;
   --border-radius-input: 4px;
+
+  width: fit-content;
+  background-color: #fcf6ff;
 `;
 
 const OutletWrapper = styled.div`
   min-height: 100vh;
-  width: 100vw;
+  min-width: 100vw;
+  width: fit-content;
   padding: 30px 30px 30px 360px;
   background-color: #fcf6ff;
   font-family: 'Noto Sans KR', sans-serif;

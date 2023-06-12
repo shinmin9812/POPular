@@ -1,6 +1,7 @@
 import { API_PATH } from '../constants/path';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Store, PostedStore } from '../types/store';
+import { Post } from '../types/post';
 
 interface CoordProps {
   x: number;
@@ -33,7 +34,20 @@ export const postStore = async (storeData: PostedStore): Promise<Store> => {
     const result = await request.json();
     return result;
   } catch (err) {
-    throw new Error('포스트 전송에 실패하였습니다!');
+    throw new Error('스토어 등록에 실패하였습니다!');
+  }
+};
+
+export const deleteStore = async (storeId: string[]): Promise<Store> => {
+  console.log(API_PATH.STORE.DELETE.replace(':storeId', JSON.stringify(storeId)));
+  try {
+    const request = await fetch(API_PATH.STORE.DELETE.replace(':storeId', JSON.stringify(storeId)), {
+      method: 'DELETE',
+    });
+    const result = await request.json();
+    return result;
+  } catch (err) {
+    throw new Error('스토어 삭제를 실패하였습니다!');
   }
 };
 
@@ -47,7 +61,7 @@ export const editPost = async ({ storeData, storeId }: { storeData: PostedStore;
     const result = await request.json();
     return result;
   } catch (err) {
-    throw new Error('포스트 전송에 실패하였습니다!');
+    throw new Error('스토어 수정에 실패하였습니다!');
   }
 };
 
@@ -65,4 +79,8 @@ export const usePostStore = () => {
 
 export const useEditStore = () => {
   return useMutation(editPost);
+};
+
+export const useDeleteStore = (storeId: string[], option?: object) => {
+  return useMutation(() => deleteStore(storeId), option);
 };

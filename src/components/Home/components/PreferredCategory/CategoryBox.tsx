@@ -4,37 +4,41 @@ import CategorySelect from './CategorySelect';
 const CategoryBox = () => {
   return (
     <Container>
-      <CategoryInner>
-        <h2>엘리스님에게 추천하는 팝업스토어🐰</h2>
-        <CategoryItems>
-          <CategorySelect />
-        </CategoryItems>
-      </CategoryInner>
+      <ContainerBackground>
+        <CategoryInner>
+          <h2>엘리스님에게 추천하는 팝업스토어🐰</h2>
+          <CategoryItems>
+            <CategorySelect />
+          </CategoryItems>
+        </CategoryInner>
+      </ContainerBackground>
     </Container>
   );
 };
 
 const Container = styled.div`
   width: 100%;
-
-  position: static;
-  margin-top: 40px;
+  margin-top: 60px;
 
   h2 {
     font-weight: var(--weight-semi-bold);
+    font-size: var(--font-medium);
     margin-bottom: 20px;
     text-align: center;
     color: var(--color-main);
   }
+`;
+
+const ContainerBackground = styled.div`
+  position: static;
 
   &::before {
     content: '';
     position: absolute;
-    top: 50.5%;
     left: 50%;
     width: 100%;
-    height: 230px;
-    background-color: #fbf3ff;
+    height: 250px;
+    background-color: rgb(249 244 253);
     transform: translateX(-50%);
     z-index: 0;
   }

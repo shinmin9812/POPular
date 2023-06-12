@@ -88,7 +88,7 @@ const Form = styled.form`
 
 const FieldContainer = styled.div`
   display: flex;
-  width: 300px;
+  width: 350px;
   justify-content: space-between;
   padding: 10px 0;
 
@@ -96,12 +96,12 @@ const FieldContainer = styled.div`
     justify-content: center;
     display: flex;
     align-items: center;
-    width: 70px;
+    width: 65px;
   }
 
   input {
-    width: 220px;
-    height: 30px;
+    width: 270px;
+    height: 40px;
     padding: 8px;
     margin: 0;
     box-sizing: border-box;
@@ -123,14 +123,15 @@ const FieldContainer = styled.div`
 `;
 
 const WarningMessage = styled.p`
-  font-size: var(--font-small);
+  font-size: var(--font-regular);
   color: var(--color-red);
   padding-top: 10px;
 `;
 
 const LoginButton = styled.button`
-  width: 300px;
-  height: 40px;
+  width: 350px;
+  height: 50px;
+  font-size: var(--font-medium);
   color: var(--color-white);
   background-color: var(--color-main);
   border-radius: var(--border-radius-button);

@@ -2,12 +2,26 @@ import styled from 'styled-components';
 
 const RatingWrap = styled.div`
   display: flex;
-  flex-direction: column;
   margin-top: 10px;
+  line-height: 20px;
+`;
+
+const TitleNameWrap = styled.span`
+  margin: 0 10px;
+  font-size: var(--font-medium);
+`;
+
+const CursorBox = styled.div`
+  cursor: pointer;
 `;
 
 const Rating = ({ children }: { children: JSX.Element }) => {
-  return <RatingWrap>평점{children}</RatingWrap>;
+  return (
+    <RatingWrap>
+      <TitleNameWrap>평점 </TitleNameWrap>
+      <CursorBox>{children}</CursorBox>
+    </RatingWrap>
+  );
 };
 
 export default Rating;

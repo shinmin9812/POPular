@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { useGetReviewPostByStoreQuery } from '../../../api/useQueries';
-import { useParams } from 'react-router-dom';
 import ReviewList from '../components/ReviewList';
+import { useGetAllReviewFeeds } from '../../../api/feedApi';
 
 const Container = styled.section`
   width: 100%;
@@ -12,13 +11,17 @@ const Container = styled.section`
   }
 `;
 
-const StoreReview = () => {
-  const { storeId } = useParams();
-  const { currentData: posts, isFetching } = useGetReviewPostByStoreQuery({ storeId: storeId });
+interface Props {
+  storeId: string;
+}
+
+const StoreReview = ({ storeId }: Props) => {
+  const { data: posts, isFetching } = useGetAllReviewFeeds();
+
   return (
     <Container>
       <div className="review-list">
-        <ReviewList posts={posts} isFetching={isFetching} />
+        <ReviewList posts={posts!} isFetching={isFetching} />
       </div>
     </Container>
   );
