@@ -253,21 +253,21 @@ export class FeedsService {
     return this.feedModel
         .findByIdAndUpdate(feedId, { $addToSet: { likes: likeObjectId } }, { new: true })
         .exec();
-}
-
-async addReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
-	const reportObjectId = new Types.ObjectId(report);
-	const reportFeed = await this.feedModel.findById(feedId);
-	const reported = reportFeed.reports.find(e => e.equals(reportObjectId));
-	if (reported) {
-			return this.feedModel
-					.findByIdAndUpdate(feedId, { $pull: { reports: reportObjectId } }, { new: true })
-					.exec();
 	}
-	return this.feedModel
-			.findByIdAndUpdate(feedId, { $addToSet: { reports: reportObjectId } }, { new: true })
-			.exec();
-}
+
+	async addReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
+		const reportObjectId = new Types.ObjectId(report);
+		const reportFeed = await this.feedModel.findById(feedId);
+		const reported = reportFeed.reports.find(e => e.equals(reportObjectId));
+		if (reported) {
+				return this.feedModel
+						.findByIdAndUpdate(feedId, { $pull: { reports: reportObjectId } }, { new: true })
+						.exec();
+		}
+		return this.feedModel
+				.findByIdAndUpdate(feedId, { $addToSet: { reports: reportObjectId } }, { new: true })
+				.exec();
+	}
 
 	async addComment(
 		feedId: Types.ObjectId,
