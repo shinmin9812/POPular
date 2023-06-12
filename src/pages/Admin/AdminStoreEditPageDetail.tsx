@@ -4,8 +4,7 @@ import StoreForm from '../../components/Admin/components/Forms/StoreForm';
 import { useGetStoreById } from '../../api/storeApi';
 
 const Container = styled.div`
-  display: flex;
-  gap: 30px;
+  width: 100%;
 
   .title {
     margin-bottom: 20px;

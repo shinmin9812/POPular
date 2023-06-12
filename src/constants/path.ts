@@ -24,7 +24,7 @@ export const API_PATH = {
     },
     POST: `${API_BASE_URL}/stores`,
     PUT: `${API_BASE_URL}/stores/:storeId`,
-    DELETE: {},
+    DELETE: `${API_BASE_URL}/stores/:storeId`,
   },
 
   USER: {
