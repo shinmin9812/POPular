@@ -56,9 +56,9 @@ const InnerContent = styled.div`
 
   .item-period {
     margin-top: 7px;
-    font-weight: var(--weight-regular);
+    font-weight: var(--weight-light);
     font-size: var(--font-small);
-    color: var(--color-gray);
+    color: var(--color-light-black);
   }
 `;
 
