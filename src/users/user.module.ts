@@ -9,7 +9,7 @@ import { Store, StoreSchema } from 'src/stores/store.schema';
 	imports: [
 		MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
 		MongooseModule.forFeature([{ name: Store.name, schema: StoreSchema }]),
-		forwardRef(() => UserModule)
+		forwardRef(() => UserModule),
 	],
 	controllers: [UserController],
 	providers: [UserService],

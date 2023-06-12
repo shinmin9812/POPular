@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User } from './user.schema';
@@ -8,13 +12,12 @@ import { UserUpdateDto } from './dto/user.update.dto';
 import { hashPassword, comparePasswords } from '../utils/hassing.util';
 import { handleImage } from 'src/utils/handle.image.util';
 
-
 @Injectable()
 export class UserService {
 	constructor(
 		@InjectModel(User.name) private readonly userModel: Model<User>,
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
-	) { }
+	) {}
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();

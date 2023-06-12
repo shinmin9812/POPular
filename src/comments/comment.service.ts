@@ -25,7 +25,8 @@ export class CommentsService {
 		private readonly commentModel: PaginateModel<Comment>,
 		@Inject(forwardRef(() => FeedsService)) private feedsService: FeedsService,
 		@Inject(forwardRef(() => UserService)) private UserService: UserService,
-		@Inject(forwardRef(() => NotificationsService)) private NotificationsService: NotificationsService,
+		@Inject(forwardRef(() => NotificationsService))
+		private NotificationsService: NotificationsService,
 	) {}
 
 	async getAllComments(): Promise<Comment[]> {
@@ -100,33 +101,48 @@ export class CommentsService {
 
 			const savedComment = await createdComment.save();
 
-			async function generateBoardType( 
-				savedComment: Comment, 
-				feedsService: FeedsService, 
-				commentsService: CommentsService 
+			async function generateBoardType(
+				savedComment: Comment,
+				feedsService: FeedsService,
+				commentsService: CommentsService,
 			): Promise<BoardType> {
-				if(savedComment.parent.type === 'Feed'){
-					const thisParent = feedsService.getFeedById(savedComment.parent.id.toString());
+				if (savedComment.parent.type === 'Feed') {
+					const thisParent = feedsService.getFeedById(
+						savedComment.parent.id.toString(),
+					);
 					const thisBoardType = (await thisParent).board;
-					return thisBoardType
+					return thisBoardType;
 				}
-				const thisParent = commentsService.getCommentById(savedComment.parent.id.toString());
-				const thisGrandparent = feedsService.getFeedById((await thisParent).parent.id.toString())
+				const thisParent = commentsService.getCommentById(
+					savedComment.parent.id.toString(),
+				);
+				const thisGrandparent = feedsService.getFeedById(
+					(await thisParent).parent.id.toString(),
+				);
 				const thisBoardType = (await thisGrandparent).board;
 				return thisBoardType;
 			}
-			
+
 			const notificationCreateDto = {
-				type: savedComment.parent.type === 'Comment' ? NotificationType.RECOMMENT : NotificationType.COMMENT,
-				board: await generateBoardType( savedComment, this.feedsService, this ),
+				type:
+					savedComment.parent.type === 'Comment'
+						? NotificationType.RECOMMENT
+						: NotificationType.COMMENT,
+				board: await generateBoardType(savedComment, this.feedsService, this),
 				user_id: commentCreateDto.author,
 				content_comment: savedComment._id,
 				content_store: null,
-				content_user: null
+				content_user: null,
 			};
 
-			const createdNotification = await this.NotificationsService.createNotification(notificationCreateDto);
-			await this.UserService.updateNotification(savedComment.author, createdNotification._id);
+			const createdNotification =
+				await this.NotificationsService.createNotification(
+					notificationCreateDto,
+				);
+			await this.UserService.updateNotification(
+				savedComment.author,
+				createdNotification._id,
+			);
 
 			if (savedComment.parent.type === 'Comment') {
 				await this.addRecomment(savedComment.parent.id, savedComment._id);
