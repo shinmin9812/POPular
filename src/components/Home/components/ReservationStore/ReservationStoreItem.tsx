@@ -15,7 +15,8 @@ const ReservationStoreItem = ({ store }: Props) => {
         <div className={'item-description'}>
           <p className={'item-title'}>{store.title}</p>
           <p className={'item-period'}>
-            {store.start_date} ~ {store.end_date}
+            {new Date(store.start_date).toISOString().slice(0, 10)}~
+            {new Date(store.end_date).toISOString().slice(0, 10)}
           </p>
         </div>
       </InnerContent>
@@ -54,7 +55,7 @@ const InnerContent = styled.div`
   }
 
   .item-period {
-    margin-top: 5px;
+    margin-top: 7px;
     font-weight: var(--weight-regular);
     font-size: var(--font-small);
     color: var(--color-gray);

@@ -12,7 +12,8 @@ const VerticalStoreItem = ({ store }: Props) => {
         <div className={'text-section'}>
           <p className={'item-title'}>{store.title}</p>
           <p className={'item-period'}>
-            {store.start_date} ~ {store.end_date}
+            {new Date(store.start_date).toISOString().slice(0, 10)}~
+            {new Date(store.end_date).toISOString().slice(0, 10)}
           </p>
         </div>
         <div className={'image-section'}>
@@ -37,10 +38,10 @@ const InnerContent = styled.div`
     }
 
     .item-period {
-      margin-top: 5px;
-      font-weight: var(--weight-regular);
+      margin-top: 7px;
+      font-weight: var(--weight-light);
       font-size: var(--font-small);
-      color: var(--color-gray);
+      color: var(--color-light-black);
     }
   }
 
