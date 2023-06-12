@@ -143,6 +143,19 @@ export class UserService {
 		return user;
 	}
 
+	async updateNotification(
+		userId: Types.ObjectId | User,
+		notification: Types.ObjectId,
+	): Promise<User> {
+		return this.userModel
+			.findByIdAndUpdate(
+				userId,
+				{ $push: { notifications: notification } },
+				{ new: true },
+			)
+			.exec();
+	}
+
 	async updateFollow(user_id: string, target_id: string): Promise<User> {
 		const user = await this.userModel.findById(user_id);
 		const target = await this.userModel.findById(target_id);

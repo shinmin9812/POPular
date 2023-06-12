@@ -258,7 +258,7 @@ export class FeedsService {
 async addReport(feedId: Types.ObjectId, report: Types.ObjectId): Promise<Feed> {
 	const reportObjectId = new Types.ObjectId(report);
 	const reportFeed = await this.feedModel.findById(feedId);
-	const reported = reportFeed.likes.find(e => e.equals(reportObjectId));
+	const reported = reportFeed.reports.find(e => e.equals(reportObjectId));
 	if (reported) {
 			return this.feedModel
 					.findByIdAndUpdate(feedId, { $pull: { reports: reportObjectId } }, { new: true })
