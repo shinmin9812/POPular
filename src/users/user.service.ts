@@ -114,9 +114,7 @@ export class UserService {
 			user.save();
 			store.save();
 		} else {
-			throw new BadRequestException({
-				message: 'user ID, store ID가 올바르지 않습니다.',
-			});
+			throw new BadRequestException({ message: '제대로 값을 못 받아옴' });
 		}
 
 		return user;
