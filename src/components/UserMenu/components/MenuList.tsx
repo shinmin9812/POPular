@@ -12,43 +12,16 @@ const MenuList = ({ userId }: { userId: string }) => {
     navigate('/');
   };
 
-  const fetchDeleteUser = (userId: string) => {
-    try {
-      fetch(`http://34.22.81.36:3000/users/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-    } catch (err: any) {
-      throw new Error(err);
-    }
-  };
-
-  const handleDeleteUser = async (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const result = confirm('정말 탈퇴하시겠습니까?');
-    if (result) {
-      fetchDeleteUser(userId);
-      alert('탈퇴가 완료되었습니다.');
-      localStorage.removeItem('token');
-      navigate('/');
-    }
-  };
-
   return (
     <MenuListContainer>
-      <MenuItem link={`/user/${userId}`} title="내 프로필 보기" />
       <MenuItem link={CLIENT_PATH.USER_RECENT} title="최근 본 스토어" />
       <MenuItem link={CLIENT_PATH.USER_SCRAP} title="위시리스트" />
       <MenuItem link={CLIENT_PATH.USER_POSTS} title="내가 쓴 글" />
       <MenuItem link={CLIENT_PATH.USER_COMMENTS} title="내가 쓴 댓글" />
-      <MenuItem link={`/user/${userId}/update`} title="회원정보 수정" />
+
       <div className="logout" onClick={handleLogout}>
         로그아웃
       </div>
-      <div onClick={handleDeleteUser}>회원탈퇴</div>
     </MenuListContainer>
   );
 };
@@ -57,7 +30,8 @@ export default MenuList;
 
 const MenuListContainer = styled.div`
   width: 350px;
-  margin: 40px 20px;
+  margin: 0;
+  border-top: 1px solid gray;
   a,
   div {
     display: block;

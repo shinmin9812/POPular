@@ -31,7 +31,7 @@ export default UserProfile;
 
 const ProfileContainer = styled.div`
   width: 350px;
-  padding: 4px 12px 16px 8px;
+  padding: 16px 12px 16px 8px;
   border-bottom: 1px solid var(--color-gray);
   display: flex;
   justify-content: space-between;
