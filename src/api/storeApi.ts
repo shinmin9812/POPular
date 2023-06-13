@@ -38,14 +38,13 @@ export const postStore = async (storeData: PostedStore): Promise<Store> => {
   }
 };
 
-export const deleteStore = async (storeId: string[]): Promise<Store> => {
-  console.log(API_PATH.STORE.DELETE.replace(':storeId', JSON.stringify(storeId)));
+export const deleteStore = async (storeId: string[]): Promise<void> => {
   try {
-    const request = await fetch(API_PATH.STORE.DELETE.replace(':storeId', JSON.stringify(storeId)), {
+    await fetch(API_PATH.STORE.DELETE, {
+      headers: { 'Content-Type': 'application/json' },
       method: 'DELETE',
+      body: JSON.stringify(storeId),
     });
-    const result = await request.json();
-    return result;
   } catch (err) {
     throw new Error('스토어 삭제를 실패하였습니다!');
   }
@@ -73,12 +72,12 @@ export const useGetStoreById = (storeId: string, option?: object) => {
   return useQuery<Store>(['store', storeId], () => getStoreById(storeId), option);
 };
 
-export const usePostStore = () => {
-  return useMutation(postStore);
+export const usePostStore = (option?: object) => {
+  return useMutation(postStore, option);
 };
 
-export const useEditStore = () => {
-  return useMutation(editPost);
+export const useEditStore = (option?: object) => {
+  return useMutation(editPost, option);
 };
 
 export const useDeleteStore = (storeId: string[], option?: object) => {

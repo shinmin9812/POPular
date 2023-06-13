@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { Dispatch, SetStateAction, useRef } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Button from '../../../common/Button/Button';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { PostedStore } from '../../../../types/store';
@@ -12,6 +12,8 @@ import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 import StoreInfo from '../../../StoreDetail/container/StoreInfo';
 import StoreTitle from '../../../StoreDetail/container/StoreTitle';
+import Modal from '../../../common/Modal/Modal';
+import { useQueryClient } from '@tanstack/react-query';
 
 const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
@@ -88,10 +90,9 @@ const defaultFormValues: PostedStore = {
 
 interface Props {
   defaultData?: PostedStore | null;
-  setPreviewData?: Dispatch<SetStateAction<any>>;
 }
 
-const StoreForm = ({ defaultData, setPreviewData }: Props) => {
+const StoreForm = ({ defaultData }: Props) => {
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
   const locationRef = useRef<HTMLInputElement | null>(null);
   const snsUrlRef = useRef<HTMLInputElement | null>(null);
@@ -100,6 +101,10 @@ const StoreForm = ({ defaultData, setPreviewData }: Props) => {
   const imageRef = useRef<HTMLInputElement | null>(null);
   const targettedStartDate = useRef<HTMLInputElement | null>(null);
   const targettedEndDate = useRef<HTMLInputElement | null>(null);
+
+  const queryClient = useQueryClient();
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const defaultFormData = defaultData ? defaultData : defaultFormValues;
 
@@ -159,18 +164,27 @@ const StoreForm = ({ defaultData, setPreviewData }: Props) => {
     setValue('coord.coordinates.1', +documents[0].y);
   }
 
-  const { mutate: postMutate, isLoading: postLoading, isSuccess: postIsSuccess } = usePostStore();
-  const { mutate: editMutate, isLoading: editLoading, isSuccess: editIsSuccess } = useEditStore();
+  const {
+    mutate: postMutate,
+    isLoading: postLoading,
+    isSuccess: postIsSuccess,
+  } = usePostStore({
+    onSuccess: () => {
+      console.log('add');
+      setModalOpen(true);
+    },
+  });
 
-  if (defaultData && editIsSuccess) {
-    alert('스토어가 변경되었습니다.');
-    location.reload();
-  }
-
-  if (!defaultData && postIsSuccess) {
-    alert('스토어가 추가되었습니다.');
-    location.reload();
-  }
+  const {
+    mutate: editMutate,
+    isLoading: editLoading,
+    isSuccess: editIsSuccess,
+  } = useEditStore({
+    onSuccess: () => {
+      setModalOpen(true);
+      queryClient.refetchQueries(['allStores']);
+    },
+  });
 
   return (
     <Container>
@@ -487,6 +501,8 @@ const StoreForm = ({ defaultData, setPreviewData }: Props) => {
         <StoreTitle store={{ ...watch(), _id: 'fake' }} />
         <StoreInfo store={{ ...watch(), _id: 'fake' }} />
       </Card>
+      {modalOpen && postIsSuccess && <Modal onClose={() => setModalOpen(false)}>스토어가 추가되었습니다!</Modal>}
+      {modalOpen && editIsSuccess && <Modal onClose={() => setModalOpen(false)}>스토어가 수정되었습니다!</Modal>}
     </Container>
   );
 };

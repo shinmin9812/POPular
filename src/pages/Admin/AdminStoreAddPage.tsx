@@ -5,10 +5,9 @@ import { useState } from 'react';
 const Container = styled.div``;
 
 const AdminStoreAddPage = () => {
-  const [, setPreviewData] = useState();
   return (
     <Container>
-      <StoreForm setPreviewData={setPreviewData} />
+      <StoreForm />
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 import { Store } from '../../../../types/store';
 import styled from 'styled-components';
 import AdminStoreItem from './AdminStoreItem';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import StoreFilter, { SearchTypeCase, defaultFilterSetting } from './StoreFilter';
 import { FilterSettingValues } from '../../../../pages/Admin/AdminStoreDeletePage';
 
@@ -27,7 +27,6 @@ const AdminStoreList = ({ stores, selectMode, selectedId, setSelectedId }: Props
     if (filterSetting.searchValue) {
       result = stores.filter((store) => {
         if (filterSetting.searchType === SearchTypeCase.id) {
-          console.log(store._id, filterSetting.searchValue);
           return store._id === filterSetting.searchValue;
         } else if (filterSetting.searchType === SearchTypeCase.title) {
           return store.title.includes(filterSetting.searchValue);
@@ -45,6 +44,10 @@ const AdminStoreList = ({ stores, selectMode, selectedId, setSelectedId }: Props
 
     setSearchedStores(result);
   }
+
+  useEffect(() => {
+    clickFilter();
+  }, [stores]);
 
   return (
     <Container>
