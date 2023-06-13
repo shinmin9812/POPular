@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Comment } from '../../../types/comment';
 import CommentItem from '../components/CommentItem';
-import { getComments } from '../../../api/commentApi';
+import { getComments } from '../../../api/CommentApi';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../PostDetailSlice';

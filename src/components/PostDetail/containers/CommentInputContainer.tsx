@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../PostDetailSlice';
 import { Comment } from '../../../types/comment';
-import { getComments } from '../../../api/commentApi';
+import { getComments } from '../../../api/CommentApi';
 import { API_PATH } from '../../../constants/path';
 
 type postCommentBody = {
