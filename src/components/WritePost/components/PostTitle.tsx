@@ -9,12 +9,10 @@ const TitleNameWrap = styled.span`
 
 const Input = styled.input`
   width: 80%;
-  border-radius: 8px;
   padding: 10px;
   flex-grow: 1;
-  border: none;
-  border-bottom: 1px solid #987fc0;
-
+  border: 1px solid #987fc0;
+  border-radius: 8px;
   font-size: 20px;
 
   &:focus {

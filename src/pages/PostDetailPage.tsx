@@ -14,7 +14,7 @@ import UpdateAndDeleteContainer from '../components/PostDetail/containers/Update
 import LikesAndReportsContainer from '../components/PostDetail/containers/LikeAndReportButtonContainer';
 import CommentInputContainer from '../components/PostDetail/containers/CommentInputContainer';
 import StarIcon from '../components/common/Icons/StarIcon';
-import getComments from '../api/CommentApi';
+import { getComments } from '../api/commentApi';
 import { useQuery } from '@tanstack/react-query';
 
 const Container = styled.div`

@@ -6,6 +6,7 @@ import HomeIcon from '../Icons/HomeIcon';
 import CommunityIcon from '../Icons/CommunityIcon';
 import { CLIENT_PATH } from '../../../constants/path';
 import UserIcon from '../Icons/UserIcon';
+import { useAppSelector } from '../../../Hooks/useSelectorHooks';
 
 const Container = styled.footer`
   display: none;
@@ -80,6 +81,21 @@ const Container = styled.footer`
 `;
 
 const GlobalNavigation = () => {
+  const tab = useAppSelector((state) => state.CommunitySlice.tab);
+  let currTab;
+  switch (tab) {
+    case '전체게시판':
+      currTab = 'all';
+      break;
+    case '자유게시판':
+      currTab = 'free';
+      break;
+    case '후기게시판':
+      currTab = 'review';
+      break;
+    case '모집게시판':
+      currTab = 'gather';
+  }
   return (
     <Container>
       <nav>
@@ -101,7 +117,7 @@ const GlobalNavigation = () => {
             <p>홈</p>
           </div>
         </NavLink>
-        <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink to={'/community/board/' + currTab} className={({ isActive }) => (isActive ? 'active' : '')}>
           <div className="nav_link">
             <CommunityIcon />
             <p>커뮤니티</p>
