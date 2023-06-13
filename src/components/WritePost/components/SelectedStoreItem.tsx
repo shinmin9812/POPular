@@ -103,7 +103,7 @@ const Container = styled.div`
 `;
 
 const SelectedStoreItem = ({ storeId }: Props) => {
-  const { data: store, isFetched } = useGetStoreById(storeId);
+  const { data: store } = useGetStoreById(storeId);
 
   if (store) {
     return (

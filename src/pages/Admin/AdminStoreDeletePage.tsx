@@ -62,7 +62,7 @@ export interface FilterSettingValues {
 
 const AdminStoreDeletePage = () => {
   const queryClient = useQueryClient();
-  const { data: allStores, isFetched, refetch } = useGetAllStores();
+  const { data: allStores } = useGetAllStores();
   const [selectedId, setSelectedId] = useState<string[]>([]);
 
   const { mutate, isSuccess } = useDeleteStore(selectedId, {

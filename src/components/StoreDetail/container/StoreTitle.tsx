@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import TitleScrap from '../components/TitleScrap';
-import { useGetStoreById } from '../../../api/storeApi';
+import { Store } from '../../../types/store';
 
 type Props = {
-  storeId: string;
+  store: Store;
 };
 
 const Container = styled.div`
@@ -57,13 +57,7 @@ const Container = styled.div`
   }
 `;
 
-const StoreTitle = ({ storeId }: Props) => {
-  const { data: store, isLoading, isError } = useGetStoreById(storeId);
-
-  if (isLoading) return <div>Loading...</div>;
-
-  if (isError) return <div>Error</div>;
-
+const StoreTitle = ({ store }: Props) => {
   const settings = {
     dots: true,
   };
@@ -73,7 +67,7 @@ const StoreTitle = ({ storeId }: Props) => {
       <div className="title-head">
         <p className="title">{store.title}</p>
         <div className="title-btns">
-          <TitleScrap storeId={storeId!} />
+          <TitleScrap store={store} />
           <button className="share-btn">
             <img src="/images/share.svg" alt="" />
           </button>

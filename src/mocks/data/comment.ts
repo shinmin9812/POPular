@@ -9,7 +9,7 @@ export const commentData: Comment[] = [
     content: '테스트 댓글',
     parent: {
       type: CommentParentType.feed,
-      _id: postData[0]._id,
+      id: postData[0]._id,
     },
     recomments: [],
     updatedAt: '2023-06-13',

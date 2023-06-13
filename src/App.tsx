@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import Router from './Router';
 import MetaTag from './components/SEO/MetaTag';
 import GlobalStyle from './styles/GlobalStyle';
-import Modal from './components/common/Modal/Modal';
 
 function App() {
   return (

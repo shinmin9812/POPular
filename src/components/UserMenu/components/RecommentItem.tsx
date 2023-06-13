@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import { BoardTypes } from '../../../types/board';
 import { useEffect, useState } from 'react';
-import { Comment } from '../../../types/comment';
-import { Link } from 'react-router-dom';
 
 interface Props {
   parentId: string;

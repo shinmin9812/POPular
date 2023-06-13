@@ -53,10 +53,12 @@ const StoreDetailPage = () => {
   const { storeId } = useParams<PathParams>();
   const { data: store, isLoading, isError } = useGetStoreById(storeId!);
 
+  if (isLoading) return <></>;
+
   return (
     <Container isDetail={isDetail}>
       <MetaTag title={`POPULAR | ${store?.title}`} url="www.popular.com" />
-      <StoreTitle storeId={storeId!} />
+      <StoreTitle store={store!} />
       <div className="detail-top-btn">
         <button className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'} onClick={() => setIsDetail(true)}>
           상세 정보

@@ -1,5 +1,5 @@
 import { API_PATH } from '../constants/path';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Post } from '../types/post';
 
 const fetchData = async (postCategory = '') => {

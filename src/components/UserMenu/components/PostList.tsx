@@ -51,7 +51,7 @@ const PostList = () => {
     getUserInfo();
   }, []);
 
-  const { status, data, error, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['feeds'],
     (ctx) => getFeeds(0, ctx.pageParam, userId),
     {

@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import * as React from 'react';
 import { getStoreById } from '../../../api/storeApi';
 import { getLoginUser } from '../../../api/userApi';
+import { Store } from '../../../types/store';
 
 type Props = {
-  storeId: string;
+  store: Store;
 };
 
 const Container = styled.button`
@@ -14,18 +15,14 @@ const Container = styled.button`
   cursor: pointer;
 `;
 
-const TitleScrap = React.memo(({ storeId }: Props) => {
+const TitleScrap = React.memo(({ store }: Props) => {
   const [checkScrap, setCheckScrap] = useState<boolean>(false);
 
   const result = useQueries({
-    queries: [
-      { queryKey: ['store', storeId], queryFn: () => getStoreById(storeId) },
-      { queryKey: ['user'], queryFn: () => getLoginUser() },
-    ],
+    queries: [{ queryKey: ['user'], queryFn: () => getLoginUser() }],
   });
 
-  const [storeQuery, userQuery] = result;
-  const { data: store, isLoading: storeLoading } = storeQuery;
+  const [userQuery] = result;
   const { data: user, isLoading: userLoading } = userQuery;
 
   useEffect(() => {
@@ -71,7 +68,7 @@ const TitleScrap = React.memo(({ storeId }: Props) => {
     setCheckScrap(false);
   }
 
-  if (storeLoading || userLoading) return <div>Loading...</div>;
+  if (userLoading) return <div>Loading...</div>;
 
   return (
     <Container onClick={checkScrap ? unscrapHandler : scrapHandler}>

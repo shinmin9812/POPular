@@ -23,7 +23,7 @@ const feedCommentApi = async (
   postId = '',
   setComments: (comments: Comment[]) => void,
 ) => {
-  const response = await fetch(API_PATH.COMMENT.POST, {
+  await fetch(API_PATH.COMMENT.POST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -31,7 +31,6 @@ const feedCommentApi = async (
     },
     body: JSON.stringify(data),
   });
-  const result = await response.json();
   setInput('');
   getComments(postId, setComments);
 };

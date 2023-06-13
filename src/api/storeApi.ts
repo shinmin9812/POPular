@@ -1,7 +1,6 @@
 import { API_PATH } from '../constants/path';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Store, PostedStore } from '../types/store';
-import { Post } from '../types/post';
 
 interface CoordProps {
   x: number;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from '../../../common/Button/Button';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { PostedStore } from '../../../../types/store';

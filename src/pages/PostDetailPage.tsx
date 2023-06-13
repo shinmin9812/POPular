@@ -62,7 +62,7 @@ const PostDetailPage = () => {
     getComments(postId, setComments);
   }, []);
 
-  const { data, isFetching } = useQuery<Post>(['getPost'], () => {
+  const { data } = useQuery<Post>(['getPost'], () => {
     return fetchData(postId);
   });
   useEffect(() => {

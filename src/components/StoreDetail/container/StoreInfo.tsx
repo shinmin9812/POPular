@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import InfoPlace from '../components/InfoPlace';
 import InfoDetail from '../components/InfoDetail';
-import { useGetStoreById } from '../../../api/storeApi';
 import { Store } from '../../../types/store';
 
 const Container = styled.div`
@@ -120,8 +119,8 @@ const addRecentStore = (store: Store) => {
 
 interface Props {
   store: Store;
-  isLoading: boolean;
-  isError: boolean;
+  isLoading?: boolean;
+  isError?: boolean;
 }
 
 const StoreInfo = ({ store, isLoading, isError }: Props) => {

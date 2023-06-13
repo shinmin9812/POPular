@@ -65,7 +65,7 @@ const MemberMenu = () => {
       <UserProfile profileImage={profileImage} nickname={nickname} userId={userId} />
       <MenuItem link={`/community/user/${userId}`} title="내 프로필 보기" />
       <MenuItem link={`/user/${userId}/update`} title="회원정보 수정" />
-      <MenuList userId={userId} />
+      <MenuList />
       <div className="deleteUser" onClick={handleDeleteUser}>
         회원탈퇴
       </div>
