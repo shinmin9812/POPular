@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import HeaderSearchBox from './HeaderSearchBox';
 import HeaderProfile from './HeaderProfile';
 import { useEffect, useState } from 'react';
-
+import { useAppSelector } from '../../../Hooks/useSelectorHooks';
 const Container = styled.header`
   position: fixed;
   top: 0;
@@ -151,6 +151,21 @@ const Header = () => {
 
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
+  const tab = useAppSelector((state) => state.CommunitySlice.tab);
+  let currTab;
+  switch (tab) {
+    case '전체게시판':
+      currTab = 'all';
+      break;
+    case '자유게시판':
+      currTab = 'free';
+      break;
+    case '후기게시판':
+      currTab = 'review';
+      break;
+    case '모집게시판':
+      currTab = 'gather';
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -182,7 +197,7 @@ const Header = () => {
             <NavLink to={CLIENT_PATH.MAP} className={({ isActive }) => (isActive ? 'active' : '')}>
               지도
             </NavLink>
-            <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
+            <NavLink to={'/community/board/' + currTab} className={({ isActive }) => (isActive ? 'active' : '')}>
               커뮤니티
             </NavLink>
             <NavLink to={'/admin'} target="_blank">
