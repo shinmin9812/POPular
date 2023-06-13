@@ -1,8 +1,16 @@
-import { BadRequestException, Injectable, Inject, forwardRef, NotFoundException } from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	Inject,
+	forwardRef,
+	NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User } from './user.schema';
 import { Store } from 'src/stores/store.schema';
+import { Feed } from 'src/feeds/feed.schema';
+import { Comment } from 'src/comments/comment.schema';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
 import { hashPassword } from '../utils/hassing.util';
@@ -15,8 +23,11 @@ export class UserService {
 	constructor(
 		@InjectModel(User.name) private readonly userModel: Model<User>,
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
-		@Inject(forwardRef(() => NotificationsService)) private NotificationsService: NotificationsService
-	) { }
+		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
+		@InjectModel(Comment.name) private readonly commentModel: Model<Comment>,
+		@Inject(forwardRef(() => NotificationsService))
+		private NotificationsService: NotificationsService,
+	) {}
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -210,9 +221,10 @@ export class UserService {
 			content_comment: null,
 			content_store: null,
 			content_user: new Types.ObjectId(target._id),
-		}
+		};
 
-		const createdNotification = await this.NotificationsService.createNotification(notificationCreatDto)
+		const createdNotification =
+			await this.NotificationsService.createNotification(notificationCreatDto);
 		await this.updateNotification(target._id, createdNotification._id);
 
 		return user;
@@ -243,6 +255,36 @@ export class UserService {
 	}
 
 	async deleteUser(_id: string): Promise<User> {
+		const targetUser = await this.getUserById(_id);
+
+		if (!targetUser) {
+			throw new NotFoundException('해당 사용자가 없습니다.');
+		}
+
+		//삭제할 유저의 follower 목록에 있는 유저들의 following 목록에서 삭제할 유저의 ID 삭제
+		await this.userModel.updateMany(
+			{ follower: { $elemMatch: { _id: _id } } },
+			{ $pull: { follower: { _id: _id } } },
+		);
+
+		//삭제할 유저의 following 목록에 있는 유저들의 follower 목록에서 삭제할 유저의 ID 삭제
+		await this.userModel.updateMany(
+			{ following: { $elemMatch: { _id: _id } } },
+			{ $pull: { following: { _id: _id } } },
+		);
+
+		//user가 scrap한 스토어의 scrap 목록에서 user_id 제거
+		const updateQuery = {
+			$pull: { scraps: _id },
+		};
+		await this.storeModel.updateMany({ scraps: _id }, updateQuery);
+
+		//user가 작성한 댓글 삭제
+		await this.commentModel.deleteMany({ author: _id });
+
+		//user가 작성한 게시글 삭제
+		await this.feedModel.deleteMany({ author: _id });
+
 		return await this.userModel.findByIdAndDelete(_id);
 	}
 }

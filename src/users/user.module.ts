@@ -6,13 +6,17 @@ import { User, UserSchema } from './user.schema';
 import { Store, StoreSchema } from 'src/stores/store.schema';
 import { CommentsModule } from 'src/comments/comment.module';
 import { NotificationsModule } from 'src/notifications/notification.module';
+import { Feed, FeedSchema } from 'src/feeds/feed.schema';
+import { Comment, CommentSchema } from 'src/comments/comment.schema';
 
 @Module({
 	imports: [
 		MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
 		MongooseModule.forFeature([{ name: Store.name, schema: StoreSchema }]),
+		MongooseModule.forFeature([{ name: Feed.name, schema: FeedSchema }]),
+		MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
 		forwardRef(() => CommentsModule),
-		forwardRef(() => NotificationsModule)
+		forwardRef(() => NotificationsModule),
 	],
 	controllers: [UserController],
 	providers: [UserService],
