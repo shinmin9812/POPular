@@ -4,21 +4,21 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../PostDetailSlice';
 import { Comment } from '../../../types/comment';
-import getComments from '../../../api/CommentApi';
+import { getComments } from '../../../api/commentApi';
 import { API_PATH } from '../../../constants/path';
 
-type aa = {
+type postCommentBody = {
   author: string;
   content: string;
   parent: {
     type: string;
     id: string;
   };
-  recomments: aa[];
+  recomments: postCommentBody[];
 };
 
 const feedCommentApi = async (
-  data: aa,
+  data: postCommentBody,
   setInput: Dispatch<SetStateAction<string>>,
   postId = '',
   setComments: (comments: Comment[]) => void,
@@ -32,7 +32,6 @@ const feedCommentApi = async (
     body: JSON.stringify(data),
   });
   const result = await response.json();
-  console.log(data);
   setInput('');
   getComments(postId, setComments);
 };
@@ -75,7 +74,7 @@ const CommentInputContainer = ({
     setInput(e.target.value);
   };
   const onClick = () => {
-    const data: aa = {
+    const data: postCommentBody = {
       author: isMember ? isMember : '',
       content: input,
       parent: {

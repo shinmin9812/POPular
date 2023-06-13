@@ -1,43 +1,14 @@
 import { Post } from '../../../types/post';
-import { useEffect, useCallback, useMemo } from 'react';
-import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
-import { Link } from 'react-router-dom';
-import filterFunc from '../../../utils/filterFunc';
 import { Store } from '../../../types/store';
+import { useEffect, useCallback, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { communityActions } from '../CommunitySlice';
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { API_PATH, CLIENT_PATH } from '../../../constants/path';
+import { CLIENT_PATH } from '../../../constants/path';
+import { getAllFeeds, getAllFreeFeeds, getAllReviewFeeds, getAllGatherFeeds } from '../../../api/feedApi';
+import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
+import filterFunc from '../../../utils/filterFunc';
 import PostItem from '../../common/Post/PostItem';
-
-async function fetchData(postCategory = 'all') {
-  try {
-    let response;
-    let result;
-    switch (postCategory) {
-      case 'all':
-        response = await fetch(API_PATH.POST.GET.ALL);
-        result = await response.json();
-        break;
-      case 'free':
-        response = await fetch(API_PATH.POST.GET.ALL_FREE_FEEDS);
-        result = await response.json();
-        break;
-      case 'gather':
-        response = await fetch(API_PATH.POST.GET.ALL_GATHER_FEEDS);
-        result = await response.json();
-        break;
-      case 'review':
-        response = await fetch(API_PATH.POST.GET.ALL_REVIEW_FEEDS);
-        result = await response.json();
-        break;
-    }
-    return result;
-  } catch (err) {
-    alert(err);
-    return err;
-  }
-}
 
 const PostListItemContainer = () => {
   const page = useAppSelector((state) => state.CommunitySlice.page.currPage);
@@ -49,9 +20,38 @@ const PostListItemContainer = () => {
   const setPage = useCallback((page: number) => dispatch(communityActions.setPage(page)), [dispatch]);
   const postCategory = useParams().category;
 
-  const { data, isFetching } = useQuery<Post[]>(['getPosts', postCategory], () => {
-    return fetchData(postCategory);
-  });
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  const fetchData = useCallback(async (postCategory = '', setPosts: React.Dispatch<React.SetStateAction<Post[]>>) => {
+    try {
+      setLoading(true);
+      let result;
+      switch (postCategory) {
+        case 'all':
+          result = await getAllFeeds();
+          break;
+        case 'free':
+          result = await getAllFreeFeeds();
+          break;
+        case 'gather':
+          result = await getAllGatherFeeds();
+          break;
+        case 'review':
+          result = await getAllReviewFeeds();
+          break;
+        default:
+          result = [];
+      }
+      setPosts(result);
+      setLoading(false);
+    } catch (err) {
+      alert(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData(postCategory, setPosts);
+  }, [fetchData, postCategory]);
 
   // 필터 하나라도 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDate.use;
@@ -59,18 +59,18 @@ const PostListItemContainer = () => {
     if (useFilter) {
       //스토어만 따로 맵핑
       const stores: Store[] | undefined =
-        data && data.map((post: Post) => post.store_id).filter((value): value is Store => Boolean(value));
+        posts && posts.map((post: Post) => post.store_id).filter((value): value is Store => Boolean(value));
       // 필터링된 스토어리스트
       const useFilterStoreList = stores && filterFunc(stores, filterAddress, filterCategory, filterDate);
       // 필터링된 게시글들
-      const useFilterPosts = data?.filter((post) =>
+      const useFilterPosts = posts?.filter((post) =>
         useFilterStoreList?.some((store) => store._id === post.store_id?._id),
       );
       return useFilterPosts;
     } else {
-      return data;
+      return posts;
     }
-  }, [useFilter, data, filterAddress, filterCategory, filterDate]);
+  }, [useFilter, posts, filterAddress, filterCategory, filterDate]);
 
   const dividedPost: Post[][] = useMemo(() => {
     const post: Post[][] = [];
@@ -91,7 +91,7 @@ const PostListItemContainer = () => {
     setPage(1);
   }, [postCategory, setPage, originalPost]);
 
-  if (isFetching) {
+  if (loading) {
     return <div>loading...</div>;
   }
   return (

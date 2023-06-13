@@ -1,7 +1,7 @@
 import TabsWrap from '../../common/Tabs/Tabs';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { communityActions } from '../CommunitySlice';
-import { useNavigate, NavigateFunction, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const TabsContainer = () => {
@@ -24,7 +24,6 @@ const TabsContainer = () => {
       case '모집게시판':
         currTab = 'gather';
     }
-
     navigate(`/community/board/${currTab}`);
   }, [tab]);
   const tabs: string[] = ['전체게시판', '자유게시판', '후기게시판', '모집게시판'];

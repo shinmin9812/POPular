@@ -58,7 +58,7 @@ export const API_PATH = {
       // 모집 게시판 스토 조회
       ALL_GATHER_FEEDS: `${API_BASE_URL}/feeds/gather`,
     },
-    POST: `${API_BASE_URL}/feeds/:postId`,
+    POST: `${API_BASE_URL}/feeds/`,
     PUT:  `${API_BASE_URL}/feeds/:postId`,
     DELETE: {},
   },
