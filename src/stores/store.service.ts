@@ -83,17 +83,21 @@ export class StoreService {
 			throw new NotFoundException('스토어를 찾을 수 없습니다.');
 		}
 
+		let updateStore = {};
+
 		if (body.images) {
 			const base64Images = body.images;
 			const imageMapping = await handleImages(base64Images);
-			store.images = Object.values(imageMapping);
-			await store.save();
+			const images = Object.values(imageMapping);
+			updateStore = {
+				...body,
+				images: images,
+			};
+		} else {
+			updateStore = {
+				...body,
+			};
 		}
-
-		const updateStore = {
-			...body,
-			images: store.images,
-		};
 
 		return await this.storeModel.findByIdAndUpdate(_id, updateStore, {
 			new: true,
