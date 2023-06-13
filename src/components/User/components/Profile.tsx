@@ -62,7 +62,7 @@ const Profile = () => {
   }
   return (
     <Container>
-      <MetaTag title={`POPular | ${user.nickname}님의 프로필`} />
+      <MetaTag title={`POPULAR | ${user.nickname}님의 프로필`} />
       {mutation.isLoading ? (
         'loaging...'
       ) : (

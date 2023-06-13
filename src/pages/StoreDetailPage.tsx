@@ -52,7 +52,7 @@ const StoreDetailPage = () => {
 
   return (
     <>
-      {data && <MetaTag title={`POPular | ${data.title}`} url="www.popular.com" />}
+      {data && <MetaTag title={`POPULAR | ${data.title}`} url="www.popular.com" />}
       <Container isDetail={isDetail}>
         {data && (
           <>

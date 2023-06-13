@@ -136,7 +136,7 @@ const Header = () => {
           </button>
         )}
         <Link className="logo" to={CLIENT_PATH.HOME}>
-          POPular
+          POPULAR
         </Link>
 
         <nav>

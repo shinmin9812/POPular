@@ -36,7 +36,7 @@ const UserMenuPage = () => {
 
   return (
     <Container>
-      <MetaTag title={`POPular | 마이페이지`} />
+      <MetaTag title={`POPULAR | 마이페이지`} />
       {isMember ? <MemberMenu /> : <NonMemberMenu />}
     </Container>
   );

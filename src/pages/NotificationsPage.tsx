@@ -18,7 +18,7 @@ const NotificationsPage = () => {
 
   return (
     <>
-      <MetaTag title={`POPular | 알림 목록`} />
+      <MetaTag title={`POPULAR | 알림 목록`} />
       <Title>알림 목록</Title>
       {notifications.map((data: Notification) => (
         <NotificationItem type={data.type} checked={data.checked} content={data.content} />

@@ -14,7 +14,7 @@ const Container = styled.div`
 const WritePostPage = () => {
   return (
     <Container>
-      <MetaTag title="POPular | 글쓰기" />
+      <MetaTag title="POPULAR | 글쓰기" />
       <TabsContainer />
       <PostTitleContainer />
       <PostContentContainer />

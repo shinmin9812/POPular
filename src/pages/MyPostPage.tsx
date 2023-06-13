@@ -19,7 +19,7 @@ const MyPostPage = () => {
 
   return (
     <div>
-      <MetaTag title={`POPular | 내가 쓴 글`} />
+      <MetaTag title={`POPULAR | 내가 쓴 글`} />
       <Title>내가 쓴 글</Title>
       <PostList posts={posts} />
     </div>

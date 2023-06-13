@@ -5,7 +5,7 @@ import MetaTag from '../components/SEO/MetaTag';
 const SignupPage = () => {
   return (
     <Container>
-      <MetaTag title={`POPular | 회원가입`} />
+      <MetaTag title={`POPULAR | 회원가입`} />
       <PageTitle>회원가입</PageTitle>
       <SignupForm></SignupForm>
     </Container>

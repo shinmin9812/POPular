@@ -7,7 +7,7 @@ import MetaTag from '../components/SEO/MetaTag';
 const ScrapPage = () => {
   return (
     <div>
-      <MetaTag title={`POPular | 위시리스트`} />
+      <MetaTag title={`POPULAR | 위시리스트`} />
       <Title>위시리스트</Title>
       <StoreList stores={storeData} />
     </div>

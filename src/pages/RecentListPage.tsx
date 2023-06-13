@@ -15,7 +15,7 @@ const RecentListPage = () => {
 
   return (
     <>
-      <MetaTag title={`POPular | 최근 본 스토어`} />
+      <MetaTag title={`POPULAR | 최근 본 스토어`} />
       <Title>최근 본 스토어</Title>
       <StoreList stores={stores} />
     </>

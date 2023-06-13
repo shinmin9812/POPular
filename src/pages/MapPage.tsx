@@ -10,7 +10,7 @@ const Container = styled.div`
 const MapPage = () => {
   return (
     <>
-      <MetaTag title="POPular | 지도" url="www" />
+      <MetaTag title="POPULAR | 지도" url="www" />
       <Container>
         <Map />
       </Container>

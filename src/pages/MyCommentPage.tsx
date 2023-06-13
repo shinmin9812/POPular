@@ -18,7 +18,7 @@ const MyCommentPage = () => {
 
   return (
     <>
-      <MetaTag title={`POPular | 내가 쓴 댓글`} />
+      <MetaTag title={`POPULAR | 내가 쓴 댓글`} />
       <Title>내가 쓴 댓글</Title>
       <CommentList comments={comments} />
     </>

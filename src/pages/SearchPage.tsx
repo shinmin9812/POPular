@@ -26,7 +26,7 @@ const SearchPage = () => {
 
   return (
     <Container>
-      <MetaTag title={`POPular | 검색`} />
+      <MetaTag title={`POPULAR | 검색`} />
       <SearchInput placeholder="제목을 입력하세요." />
       <FilterContainer />
       <StoreList stores={stores} />

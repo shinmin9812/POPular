@@ -42,7 +42,7 @@ const PostDetailPage = () => {
   }
   return (
     <Container>
-      <MetaTag title={`POPular | ${post.title}`} />
+      <MetaTag title={`POPULAR | ${post.title}`} />
       <PostInfo
         boardType={post.board}
         title={post.title}

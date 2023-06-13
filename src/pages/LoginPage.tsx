@@ -6,7 +6,7 @@ import MetaTag from '../components/SEO/MetaTag';
 const LoginPage = () => {
   return (
     <Container>
-      <MetaTag title={`POPular | 로그인`} />
+      <MetaTag title={`POPULAR | 로그인`} />
       <PageTitle>로그인</PageTitle>
       <div>
         <LoginForm />

@@ -15,7 +15,7 @@ const Container = styled.div`
 const CommunityPage = () => {
   return (
     <Container>
-      <MetaTag title={`POPular | 커뮤니티`} />
+      <MetaTag title={`POPULAR | 커뮤니티`} />
       <TabsContainer />
       <div>
         <SearchContainerWrap placeholder="제목을 검색해주세요" />

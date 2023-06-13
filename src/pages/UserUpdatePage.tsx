@@ -22,7 +22,7 @@ const UserUpdatePage = () => {
   }
   return (
     <Container>
-      <MetaTag title={`POPular | 프로필 수정`} />
+      <MetaTag title={`POPULAR | 프로필 수정`} />
       {user ? (
         <>
           <ProfileImageModify user={user}></ProfileImageModify>
