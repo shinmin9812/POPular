@@ -295,16 +295,31 @@ export class CommentsService {
 
 	async deleteComment(id: string): Promise<void> {
 		try {
-			const deletedComment = await this.commentModel.findById(id);
+			const comment = await this.commentModel.findById(id);
+
+			if (comment) {
+				const recomments = comment.recomments;
+				if (recomments) {
+					for (const recomment of recomments) {
+						await this.deleteComment(recomment.toString());
+					}
+				}
+			}
+			if(comment.parent.type === "Feed"){
+				await this.feedsService.removeComment(comment.parent.id, new Types.ObjectId(id));
+			} else {
+				await this.removeRecomment(comment.parent.id, new Types.ObjectId(id));
+			}
+
+			const deletedComment = await this.commentModel
+				.findByIdAndRemove(id)
+				.exec();
+
 			if (!deletedComment) {
 				throw new NotFoundException(`'${id}' 아이디를 가진 댓글을 찾지 못했습니다.`);
 			}
 
-			if(deletedComment.parent.type === "Feed"){
-				await this.feedsService.removeComment(deletedComment.parent.id, new Types.ObjectId(id));
-			} else {
-				await this.removeRecomment(deletedComment.parent.id, new Types.ObjectId(id));
-			}
+
 	
 			await deletedComment.deleteOne();
 	

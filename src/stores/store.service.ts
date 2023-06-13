@@ -1,15 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, PaginateModel, PaginateResult } from 'mongoose';
+import { Model, PaginateModel, PaginateResult, Types } from 'mongoose';
 import { Store } from './store.schema';
 import { StoreRequestDto } from './dto/store.request.dto';
 import { handleImages } from 'src/utils/handle.images.util';
+import { User } from 'src/users/user.schema';
 
 @Injectable()
 export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: PaginateModel<Store>,
-	) {}
+		@InjectModel(User.name) private readonly userModel: Model<User>,
+	) { }
 
 	async getAllStores(): Promise<Store[]> {
 		return await this.storeModel.find();
@@ -81,20 +83,39 @@ export class StoreService {
 			throw new NotFoundException('스토어를 찾을 수 없습니다.');
 		}
 
-		const base64Images = body.images;
-		const imageMapping = await handleImages(base64Images);
+		let updateStore = {};
 
-		const updateStore = {
-			...body,
-			images: Object.values(imageMapping),
-		};
+		if (body.images) {
+			const base64Images = body.images;
+			const imageMapping = await handleImages(base64Images);
+			const images = Object.values(imageMapping);
+			updateStore = {
+				...body,
+				images: images,
+			};
+		} else {
+			updateStore = {
+				...body,
+				images: store.images,
+			};
+		}
 
-		return await this.storeModel.findByIdAndUpdate({ _id }, updateStore, {
+		return await this.storeModel.findByIdAndUpdate(_id, updateStore, {
 			new: true,
 		});
 	}
 
 	async deleteStores(ids: string[]): Promise<void> {
+		const stores = await this.storeModel.find({ _id: { $in: ids } });
+
+		for (const store of stores) {
+			const storeId = store._id;
+			for (const id of store.scraps) {
+				const user = await this.userModel.findById(id);
+				user.scraps.splice(user.scraps.indexOf(storeId), 1);
+				await user.save();
+			}
+		}
 		await this.storeModel.deleteMany({ _id: { $in: ids } });
 	}
 }
