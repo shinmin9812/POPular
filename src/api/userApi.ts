@@ -1,5 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { User } from '../types/user';
+import { API_PATH } from '../constants/path';
+
+export const getAllUsers = async () => {
+  const response = await (await fetch(API_PATH.USER.GET.ALL)).json();
+  return response;
+};
 
 export const getLoginUser = async () => {
   const response = await fetch('http://34.22.81.36:3000/auth/profile', {
@@ -10,6 +16,10 @@ export const getLoginUser = async () => {
     },
   });
   return response.json();
+};
+
+export const useGetAllUsers = () => {
+  return useQuery<User[]>(['allUsers'], getAllUsers);
 };
 
 export const useGetLoginuser = () => {

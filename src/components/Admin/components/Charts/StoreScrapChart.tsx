@@ -18,7 +18,9 @@ const StoreScrapChart = ({ stores }: Props) => {
         {sortedStores.map((store) => {
           return (
             <div className="store-scrap-item" key={store._id}>
-              <AdminStoreItem store={store} />
+              <div className="store-item">
+                <AdminStoreItem store={store} />
+              </div>
               <div className="scrap-count">
                 {store.scraps.length}
                 <br />
@@ -44,7 +46,12 @@ const Container = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 20px;
       padding: 0 10px;
+
+      .store-item {
+        flex-grow: 1;
+      }
 
       .scrap-count {
         padding: 10px 8px;

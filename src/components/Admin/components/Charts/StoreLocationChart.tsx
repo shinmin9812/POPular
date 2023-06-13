@@ -1,22 +1,10 @@
 import { Store } from '../../../../types/store';
-import { PieChart, Pie, Cell, Tooltip, TooltipProps, Legend } from 'recharts';
-import { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import styled from 'styled-components';
 
 interface Props {
   stores: Store[];
 }
-const CustomTooltip = ({ active, payload }: TooltipProps<ValueType, NameType>) => {
-  if (active) {
-    return (
-      <div className="custom-tooltip">
-        <p className="label">{`${payload?.[0].name} : ${payload?.[0].value}`}</p>
-      </div>
-    );
-  }
-  return null;
-};
-
 const StoreLocationChart = ({ stores }: Props) => {
   const PIE_KEY = '개점한 스토어 수';
 
@@ -58,7 +46,7 @@ const StoreLocationChart = ({ stores }: Props) => {
           ))}
         </Pie>
         <Legend />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip />
       </PieChart>
     </Container>
   );

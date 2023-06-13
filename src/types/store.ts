@@ -54,7 +54,7 @@ export interface Store {
   reservation_required: boolean;
   images: string[];
   scraps: string[];
-  createdAt?: string;
+  createdAt: string;
 }
 
 type imageDeletedStore = Omit<Store, 'images' | '_id'>;
