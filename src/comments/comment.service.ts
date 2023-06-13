@@ -7,7 +7,7 @@ import {
 	forwardRef,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Comment } from './comment.schema';
+import { Comment, ancestorinfo } from './comment.schema';
 import {
 	Model,
 	Types,
@@ -22,6 +22,7 @@ import { UserService } from 'src/users/user.service';
 import { NotificationsService } from 'src/notifications/notification.service';
 import { NotificationType } from 'src/notifications/notification.schema';
 import { User } from 'src/users/user.schema';
+import { Type } from 'class-transformer';
 
 @Injectable()
 export class CommentsService {
@@ -76,6 +77,42 @@ export class CommentsService {
 	async getCommentInfoById(id: string): Promise<Comment> {
 		try {
 			const comment = await this.commentModel.findById(id).exec();
+
+			async function generateAncestor(
+				savedComment: Comment,
+				feedsService: FeedsService,
+				commentsService: CommentsService,
+			): Promise<ancestorinfo> {
+				if (savedComment.parent.type === 'Feed') {
+					const thisParent = feedsService.getFeedInfoById(
+						savedComment.parent.id.toString(),
+					);
+					const thisBoardType = (await thisParent).board;
+					const thisId = new Types.ObjectId((await thisParent)._id);
+					return {
+						type: thisBoardType,
+						id: thisId,
+					};
+				}
+				const thisParent = commentsService.getCommentInfoById(
+					savedComment.parent.id.toString(),
+				);
+				const thisGrandparent = feedsService.getFeedInfoById(
+					(await thisParent).parent.id.toString(),
+				);
+				const thisBoardType = (await thisGrandparent).board;
+				const thisId = new Types.ObjectId((await thisGrandparent)._id);
+				return {
+					type: thisBoardType,
+					id: thisId,
+				};
+			}
+
+			comment.ancestor = await generateAncestor(
+				comment,
+				this.feedsService,
+				this,
+			);
 
 			if (!comment) {
 				throw new NotFoundException(
@@ -270,6 +307,14 @@ export class CommentsService {
 					}
 				}
 			}
+			if (comment.parent.type === 'Feed') {
+				await this.feedsService.removeComment(
+					comment.parent.id,
+					new Types.ObjectId(id),
+				);
+			} else {
+				await this.removeRecomment(comment.parent.id, new Types.ObjectId(id));
+			}
 
 			const deletedComment = await this.commentModel
 				.findByIdAndRemove(id)
@@ -280,6 +325,8 @@ export class CommentsService {
 					`'${id}' 아이디를 가진 댓글을 찾지 못했습니다.`,
 				);
 			}
+
+			await deletedComment.deleteOne();
 		} catch (err) {
 			throw new InternalServerErrorException('댓글 삭제에 실패하였습니다.');
 		}

@@ -62,6 +62,12 @@ export class FeedsController {
 		return await this.feedsService.getFeedById(id);
 	}
 
+	@ApiOperation({ summary: 'ID로 게시글 찾기(조회수 증가나 Populate 없음)' })
+	@Get('info/:id')
+	async getFeedInfoById(@Param('id') id: string) {
+		return await this.feedsService.getFeedInfoById(id);
+	}
+
 	@ApiOperation({ summary: 'ID로 게시글 댓글 조회' })
 	@Get(':id/comments')
 	async getCommentsByFeedId(@Param('id') id: string) {
