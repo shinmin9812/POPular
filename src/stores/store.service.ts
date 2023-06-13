@@ -1,14 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, PaginateModel, PaginateResult } from 'mongoose';
+import { Model, PaginateModel, PaginateResult, Types } from 'mongoose';
 import { Store } from './store.schema';
 import { StoreRequestDto } from './dto/store.request.dto';
 import { handleImages } from 'src/utils/handle.images.util';
+import { User } from 'src/users/user.schema';
 
 @Injectable()
 export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: PaginateModel<Store>,
+		@InjectModel(User.name) private readonly userModel: Model<User>,
 	) {}
 
 	async getAllStores(): Promise<Store[]> {
@@ -95,6 +97,16 @@ export class StoreService {
 	}
 
 	async deleteStores(ids: string[]): Promise<void> {
+		const stores = await this.storeModel.find({ _id: { $in: ids } });
+
+		for (const store of stores) {
+			const storeId = store._id;
+			for (const id of store.scraps) {
+				const user = await this.userModel.findById(id);
+				user.scraps.splice(user.scraps.indexOf(storeId), 1);
+				await user.save();
+			}
+		}
 		await this.storeModel.deleteMany({ _id: { $in: ids } });
 	}
 }

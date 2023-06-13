@@ -72,7 +72,7 @@ export class StoreController {
 	}
 
 	@ApiOperation({ summary: '스토어 정보 삭제하기' })
-	@Delete('')
+	@Delete()
 	async delete(@Body() ids: string[]) {
 		return await this.storeServcie.deleteStores(ids);
 	}
