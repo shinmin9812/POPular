@@ -1,21 +1,8 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import { Comment } from '../types/comment';
 import CommentList from '../components/UserMenu/components/CommentList';
 import MenuList from '../components/UserMenu/components/MenuList';
 
 const MyCommentPage = () => {
-  const [comments, setComments] = useState<Comment[]>([]);
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch('http://34.22.81.36:3000/comments');
-    const result: Comment[] = await response.json();
-    setComments(result);
-  };
-
   return (
     <Container>
       <MenuListContainer>
@@ -23,7 +10,7 @@ const MyCommentPage = () => {
       </MenuListContainer>
       <ContentContainer>
         <Title>내가 쓴 댓글</Title>
-        <CommentList comments={comments} />
+        <CommentList />
       </ContentContainer>
     </Container>
   );
