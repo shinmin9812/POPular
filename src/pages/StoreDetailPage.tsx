@@ -6,6 +6,10 @@ import StoreReview from '../components/StoreDetail/container/StoreReview';
 import { useParams } from 'react-router-dom';
 import { useGetStoreById } from '../api/storeApi';
 
+type PathParams = {
+  storeId: string;
+};
+
 const Container = styled.div<{ isDetail: boolean }>`
   .detail-top-btn {
     display: flex;
@@ -45,7 +49,7 @@ const Container = styled.div<{ isDetail: boolean }>`
 
 const StoreDetailPage = () => {
   const [isDetail, setIsDetail] = useState<boolean>(true);
-  const { storeId } = useParams();
+  const { storeId } = useParams<PathParams>();
 
   const { data } = useGetStoreById(storeId!);
 
@@ -53,7 +57,7 @@ const StoreDetailPage = () => {
     <Container isDetail={isDetail}>
       {data && (
         <>
-          <StoreTitle store={data} />
+          <StoreTitle storeId={storeId!} />
           <div className="detail-top-btn">
             <button
               className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'}
