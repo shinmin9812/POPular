@@ -260,6 +260,17 @@ export class CommentsService {
 
 	async deleteComment(id: string): Promise<void> {
 		try {
+			const comment = await this.commentModel.findById(id);
+
+			if (comment) {
+				const recomments = comment.recomments;
+				if (recomments) {
+					for (const recomment of recomments) {
+						await this.deleteComment(recomment.toString());
+					}
+				}
+			}
+
 			const deletedComment = await this.commentModel
 				.findByIdAndRemove(id)
 				.exec();

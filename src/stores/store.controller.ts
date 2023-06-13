@@ -4,8 +4,8 @@ import {
 	Delete,
 	Get,
 	Param,
+	Patch,
 	Post,
-	Put,
 	Query,
 } from '@nestjs/common';
 import { StoreRequestDto } from './dto/store.request.dto';
@@ -66,7 +66,7 @@ export class StoreController {
 	}
 
 	@ApiOperation({ summary: '스토어 정보 수정하기' })
-	@Put(':id')
+	@Patch(':id')
 	async update(@Param('id') _id: string, @Body() body: StoreRequestDto) {
 		return await this.storeServcie.updateStore(_id, body);
 	}
