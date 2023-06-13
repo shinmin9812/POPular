@@ -29,8 +29,6 @@ export class FeedsService {
 			const feeds = await this.feedModel
 				.find()
 				.populate('author')
-				.populate('store_id')
-				.populate('comments')
 				.exec();
 			return feeds;
 		} catch (err) {
@@ -55,8 +53,6 @@ export class FeedsService {
 
 			const feeds = await query
 				.populate('author')
-				.populate('store_id')
-				.populate('comments')
 				.exec();
 
 			return feeds;
@@ -253,7 +249,7 @@ export class FeedsService {
 					updatedContent = updatedContent.replace(imgData, imageUrl);
 				}
 				feedUpdateDto.content = updatedContent;
-				feedUpdateDto.images = Object.values(imageMapping);
+				feed.images = Object.values(imageMapping);
 			}
 
 			Object.assign(feed, feedUpdateDto);
