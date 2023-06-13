@@ -13,5 +13,9 @@ export const getLoginUser = async () => {
 };
 
 export const useGetLoginuser = () => {
-  return useQuery<User>(['user'], getLoginUser);
+  return useQuery<User>(['user'], getLoginUser, {
+    onError: (error) => {
+      console.log('로그인 정보를 가져오는 동안 오류가 발생했습니다:', error);
+    },
+  });
 };

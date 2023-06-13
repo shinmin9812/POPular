@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import InfoPlace from '../components/InfoPlace';
 import InfoDetail from '../components/InfoDetail';
+import { useGetStoreById } from '../../../api/storeApi';
 import { Store } from '../../../types/store';
 
 const Container = styled.div`
@@ -102,11 +103,34 @@ const Container = styled.div`
   }
 `;
 
+const addRecentStore = (store: Store) => {
+  const recentStoreString = window.localStorage.getItem('store');
+  const recentStore = recentStoreString ? JSON.parse(recentStoreString) : [];
+  const isStoreExist = recentStore.some((s: Store) => s._id === store._id);
+
+  if (recentStore.length > 4) {
+    recentStore.pop();
+  }
+
+  if (!isStoreExist) {
+    const newRecentStore = [store, ...recentStore];
+    window.localStorage.setItem('store', JSON.stringify(newRecentStore));
+  }
+};
+
 interface Props {
-  store: Store;
+  storeId: string;
 }
 
-const StoreInfo = ({ store }: Props) => {
+const StoreInfo = ({ storeId }: Props) => {
+  const { data: store, isLoading, isError } = useGetStoreById(storeId);
+
+  if (isLoading) return <div>Loding...</div>;
+
+  if (isError) return <div>Error</div>;
+
+  addRecentStore(store);
+
   return (
     <>
       <Container>

@@ -11,6 +11,7 @@ type Props = {
 
 const Container = styled.button`
   background-color: #ffffff;
+  cursor: pointer;
 `;
 
 const TitleScrap = React.memo(({ storeId }: Props) => {
@@ -28,20 +29,27 @@ const TitleScrap = React.memo(({ storeId }: Props) => {
   const { data: user, isLoading: userLoading } = userQuery;
 
   useEffect(() => {
-    if (!storeLoading && !userLoading && store && user) {
+    if (user && store) {
       setCheckScrap(store.scraps.includes(user._id));
     }
-  }, [storeLoading, userLoading, store, user]);
+  }, [store, user]);
 
-  const scrapMutation = useMutation(() => {
-    return fetch(`http://34.22.81.36:3000/users/${user._id}/scrapStore/${store._id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
+  const scrapMutation = useMutation(
+    () => {
+      return fetch(`http://34.22.81.36:3000/users/${user._id}/scrapStore/${store._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+    },
+    {
+      onError: () => {
+        window.alert('로그인이 필요한 서비스입니다.');
       },
-    });
-  });
+    },
+  );
 
   const unscrapMutation = useMutation(() => {
     return fetch(`http://34.22.81.36:3000/users/${user._id}/unscrapStore/${store._id}`, {
@@ -64,8 +72,6 @@ const TitleScrap = React.memo(({ storeId }: Props) => {
   }
 
   if (storeLoading || userLoading) return <div>Loading...</div>;
-
-  console.log(store.scraps, user.scraps);
 
   return (
     <Container onClick={checkScrap ? unscrapHandler : scrapHandler}>
