@@ -23,8 +23,8 @@ export const API_PATH = {
       BY_COORD: `${API_BASE_URL}/stores/coord`,
     },
     POST: `${API_BASE_URL}/stores`,
-    PUT: `${API_BASE_URL}/stores/:storeId`,
-    DELETE: `${API_BASE_URL}/stores/:storeId`,
+    PATCH: `${API_BASE_URL}/stores/:storeId`,
+    DELETE: `${API_BASE_URL}/stores`,
   },
 
   USER: {

@@ -5,7 +5,9 @@ import AdminStoreList from '../../components/Admin/components/Stores/AdminStoreL
 import { useState } from 'react';
 import AdminStoreItem from '../../components/Admin/components/Stores/AdminStoreItem';
 import Button from '../../components/common/Button/Button';
+import { useQueryClient } from '@tanstack/react-query';
 import { Category } from '../../types/category';
+import Modal from '../../components/common/Modal/Modal';
 
 const Container = styled.div`
   display: flex;
@@ -59,20 +61,23 @@ export interface FilterSettingValues {
 }
 
 const AdminStoreDeletePage = () => {
-  const { data: allStores, isFetched } = useGetAllStores();
+  const queryClient = useQueryClient();
+  const { data: allStores, isFetched, refetch } = useGetAllStores();
   const [selectedId, setSelectedId] = useState<string[]>([]);
-
-  console.log(selectedId);
 
   const { mutate, isSuccess } = useDeleteStore(selectedId, {
     onSuccess: () => {
       setSelectedId([]);
+      setIsModalOpen(true);
+      queryClient.refetchQueries(['allStores']);
     },
   });
 
   function deleteHandler() {
     mutate();
   }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <Container>
@@ -82,7 +87,6 @@ const AdminStoreDeletePage = () => {
           <AdminStoreList setSelectedId={setSelectedId} selectedId={selectedId} stores={allStores} selectMode={true} />
         )}
       </Card>
-      {isSuccess && <Card className="selected-store">스토어 삭제에 성공하였습니다!</Card>}
       {selectedId.length > 0 && !isSuccess && (
         <Card className="selected-store">
           <p className="title">선택된 목록</p>
@@ -94,6 +98,7 @@ const AdminStoreDeletePage = () => {
           <Button onClick={deleteHandler}>스토어 삭제하기</Button>
         </Card>
       )}
+      {isSuccess && isModalOpen && <Modal onClose={() => setIsModalOpen(false)}>스토어가 삭제되었습니다!</Modal>}
     </Container>
   );
 };
