@@ -11,7 +11,7 @@ export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: PaginateModel<Store>,
 		@InjectModel(User.name) private readonly userModel: Model<User>,
-	) { }
+	) {}
 
 	async getAllStores(): Promise<Store[]> {
 		return await this.storeModel.find();
@@ -83,15 +83,19 @@ export class StoreService {
 			throw new NotFoundException('스토어를 찾을 수 없습니다.');
 		}
 
-		const base64Images = body.images;
-		const imageMapping = await handleImages(base64Images);
+		if (body.images) {
+			const base64Images = body.images;
+			const imageMapping = await handleImages(base64Images);
+			store.images = Object.values(imageMapping);
+			await store.save();
+		}
 
 		const updateStore = {
 			...body,
-			images: Object.values(imageMapping),
+			images: store.images,
 		};
 
-		return await this.storeModel.findByIdAndUpdate({ _id }, updateStore, {
+		return await this.storeModel.findByIdAndUpdate(_id, updateStore, {
 			new: true,
 		});
 	}

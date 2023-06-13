@@ -32,7 +32,7 @@ export class CommentsService {
 		@Inject(forwardRef(() => UserService)) private UserService: UserService,
 		@Inject(forwardRef(() => NotificationsService))
 		private NotificationsService: NotificationsService,
-	) { }
+	) {}
 
 	async getAllComments(): Promise<Comment[]> {
 		try {
@@ -268,7 +268,6 @@ export class CommentsService {
 					await this.deleteComment(recomment.toString());
 				}
 			} else {
-				
 			}
 
 			const deletedComment = await this.commentModel

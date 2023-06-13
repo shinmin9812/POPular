@@ -6,6 +6,7 @@ import {
 	IsDate,
 	IsNotEmpty,
 	ValidateNested,
+	IsOptional,
 } from 'class-validator';
 import { Types } from 'mongoose';
 import { Type } from 'class-transformer';
@@ -240,11 +241,12 @@ export class StoreRequestDto {
 	reservation_required: boolean;
 
 	@IsArray()
+	@IsOptional()
 	@ApiProperty({
 		example: '[1.png, 2.png]',
 		description: '팝업 스토어 이미지',
 	})
-	images: string[];
+	images?: string[];
 
 	@IsArray()
 	@ApiProperty({
