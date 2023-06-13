@@ -52,9 +52,9 @@ export const deleteStore = async (storeId: string[]): Promise<void> => {
 
 export const editPost = async ({ storeData, storeId }: { storeData: PostedStore; storeId: string }): Promise<Store> => {
   try {
-    const request = await fetch(API_PATH.STORE.PUT.replace(':storeId', storeId), {
+    const request = await fetch(API_PATH.STORE.PATCH.replace(':storeId', storeId), {
       headers: { 'Content-Type': 'application/json' },
-      method: 'PUT',
+      method: 'PATCH',
       body: JSON.stringify(storeData),
     });
     const result = await request.json();
