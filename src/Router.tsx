@@ -25,6 +25,7 @@ import AdminStoreEditPage from './pages/Admin/AdminStoreEditPage';
 import AdminStoreEditPageDetail from './pages/Admin/AdminStoreEditPageDetail';
 import AdminStoreStatisticsPage from './pages/Admin/AdminStoreStatisticsPage';
 import AdminStoreDeletePage from './pages/Admin/AdminStoreDeletePage';
+import AdminStoreStatisticsDetailPage from './pages/Admin/AdminStoreStatisticsDetailPage';
 
 const Router = () => {
   return (
@@ -52,8 +53,12 @@ const Router = () => {
 
         <Route element={<AdminLayout />}>
           <Route path={CLIENT_PATH.ADMIN} element={<AdminPage />} />
-
-          <Route path={CLIENT_PATH.ADMIN_STORE.STATISTICS} element={<AdminStoreStatisticsPage />} />
+          <Route path={CLIENT_PATH.ADMIN_STORE.STATISTICS} element={<AdminStoreStatisticsPage />}>
+            <Route
+              path={`${CLIENT_PATH.ADMIN_STORE.STATISTICS}/:storeId`}
+              element={<AdminStoreStatisticsDetailPage />}
+            />
+          </Route>
           <Route path={CLIENT_PATH.ADMIN_STORE.ADD} element={<AdminStoreAddPage />} />
           <Route path={CLIENT_PATH.ADMIN_STORE.EDIT} element={<AdminStoreEditPage />}>
             <Route path={`${CLIENT_PATH.ADMIN_STORE.EDIT}/:storeId`} element={<AdminStoreEditPageDetail />} />

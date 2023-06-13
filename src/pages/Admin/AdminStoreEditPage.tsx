@@ -16,18 +16,12 @@ const Container = styled.div`
   }
 
   .edit-store {
+    display: flex;
+    flex-direction: column;
+
     width: 500px;
-    position: fixed;
-    top: 30px;
-    left: 360px;
-
-    height: calc(100vh - 60px);
-
-    overflow-y: scroll;
 
     opacity: 1;
-
-    z-index: 999;
 
     ::-webkit-scrollbar {
       padding: 10px 0;
@@ -36,7 +30,6 @@ const Container = styled.div`
 
   .edit-store-form {
     display: flex;
-    margin-left: 530px;
   }
 `;
 

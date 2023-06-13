@@ -2,7 +2,7 @@ import { Store } from '../../../../types/store';
 import styled from 'styled-components';
 import Tag from '../../../common/Tag/Tag';
 import dayjs from 'dayjs';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 interface Props {
   store: Store;
