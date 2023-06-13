@@ -1,12 +1,4 @@
 const getDateFunc = (targetDate: string) => {
-  const date = new Date(targetDate);
-  const datePlusHour = new Date(date.setHours(date.getHours() + 9));
-
-  const year = datePlusHour.getFullYear();
-  const month = ('0' + (1 + datePlusHour.getMonth())).slice(-2);
-  const day = ('0' + datePlusHour.getDate()).slice(-2);
-
-  return year + '-' + month + '-' + day;
+  return new Date(new Date(targetDate).getTime() + 1000 * 60 * 60 * 9).toISOString().slice(0, 10);
 };
-
 export default getDateFunc;
