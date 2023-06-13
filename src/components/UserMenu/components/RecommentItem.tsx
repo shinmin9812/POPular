@@ -1,43 +1,47 @@
 import styled from 'styled-components';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
-import { useEffect, useState } from 'react';
 import { BoardTypes } from '../../../types/board';
+import { useEffect, useState } from 'react';
+import { Comment } from '../../../types/comment';
+import { Link } from 'react-router-dom';
 
 interface Props {
   parentId: string;
-  comment: string;
+  recomment: string;
   date: string;
 }
 
-const CommentItem = ({ parentId, comment, date }: Props) => {
-  const [feedTitle, setFeedTitle] = useState('');
+const RecommentItem = ({ parentId, recomment, date }: Props) => {
+  const [parentComment, setParentComment] = useState('');
+  const [parentFeedTitle, setParentFeedTitle] = useState('');
   const [board, setBoard] = useState<BoardTypes>(BoardTypes.free);
 
-  const getFeedData = async (id: string) => {
+  const getParentData = async (parentCommentId: string) => {
     try {
-      const response = await fetch(`http://34.22.81.36:3000/feeds/${id}`);
-      const data = await response.json();
-      setFeedTitle(data.title);
+      const res = await fetch(`http://34.22.81.36:3000/comments/${parentCommentId}`);
+      const data = await res.json();
+      setParentComment(data.content);
+      setParentFeedTitle(data.parent?.id.title);
       setBoard(data.board as BoardTypes);
-      return data;
     } catch (err: any) {
       throw new Error(err.message);
     }
   };
 
   useEffect(() => {
-    getFeedData(parentId);
+    getParentData(parentId);
   }, []);
 
-  if (!feedTitle) return <></>;
+  if (!parentFeedTitle) return <></>;
   return (
     <Container>
       <div className="comment-header">
         <BoardTypeTag boardType={board} />
-        <p className="comment-post-title">{feedTitle}</p>
+        <p className="comment-post-title">{parentFeedTitle}</p>
       </div>
       <div className="comment-content">
-        <h2>{comment}</h2>
+        <div className="parent-comment">{parentComment}</div>
+        <h2>Re: {recomment}</h2>
       </div>
       <div className="comment-date">
         <p>{date}</p>
@@ -46,7 +50,7 @@ const CommentItem = ({ parentId, comment, date }: Props) => {
   );
 };
 
-export default CommentItem;
+export default RecommentItem;
 
 const Container = styled.article`
   width: 100%;
@@ -70,7 +74,14 @@ const Container = styled.article`
   .comment-content {
     width: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .parent-comment {
+      color: var(--color-gray);
+      font-size: var(--font-small);
+      padding: 8px 0;
+    }
 
     h2 {
       white-space: nowrap;
