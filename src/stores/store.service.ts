@@ -11,7 +11,7 @@ export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: PaginateModel<Store>,
 		@InjectModel(User.name) private readonly userModel: Model<User>,
-	) {}
+	) { }
 
 	async getAllStores(): Promise<Store[]> {
 		return await this.storeModel.find();
@@ -96,6 +96,7 @@ export class StoreService {
 		} else {
 			updateStore = {
 				...body,
+				images: store.images,
 			};
 		}
 
