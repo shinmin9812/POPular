@@ -9,6 +9,7 @@ import {
 	Query,
 } from '@nestjs/common';
 import { StoreRequestDto } from './dto/store.request.dto';
+import { StoreUpdateDto } from './dto/store.update.dto';
 import { StoreService } from './store.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -67,7 +68,7 @@ export class StoreController {
 
 	@ApiOperation({ summary: '스토어 정보 수정하기' })
 	@Patch(':id')
-	async update(@Param('id') _id: string, @Body() body: StoreRequestDto) {
+	async update(@Param('id') _id: string, @Body() body: StoreUpdateDto) {
 		return await this.storeServcie.updateStore(_id, body);
 	}
 

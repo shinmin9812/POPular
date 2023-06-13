@@ -35,7 +35,6 @@ export class ancestorinfo {
 	id: Types.ObjectId;
 }
 
-
 @Schema(options)
 export class Comment extends Document {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })

@@ -39,7 +39,6 @@ export class CommentsController {
 	async getCommentInfoById(@Param('id') id: string) {
 		return await this.commentsService.getCommentInfoById(id);
 	}
-	
 
 	@ApiOperation({ summary: '유저가 작성한 댓글 페이지네이션 조회' })
 	@Get('user/:userId')

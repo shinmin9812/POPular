@@ -52,10 +52,7 @@ export class FeedsService {
 				query = query.where('board', board);
 			}
 
-			const feeds = await query
-				.populate('author')
-				.populate('store_id')
-				.exec();
+			const feeds = await query.populate('author').populate('store_id').exec();
 
 			return feeds;
 		} catch (err) {

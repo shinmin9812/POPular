@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, PaginateModel, PaginateResult, Types } from 'mongoose';
 import { Store } from './store.schema';
 import { StoreRequestDto } from './dto/store.request.dto';
+import { StoreUpdateDto } from './dto/store.update.dto';
 import { handleImages } from 'src/utils/handle.images.util';
 import { User } from 'src/users/user.schema';
 
@@ -11,7 +12,7 @@ export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: PaginateModel<Store>,
 		@InjectModel(User.name) private readonly userModel: Model<User>,
-	) { }
+	) {}
 
 	async getAllStores(): Promise<Store[]> {
 		return await this.storeModel.find();
@@ -76,7 +77,7 @@ export class StoreService {
 		return await this.storeModel.create(newStore);
 	}
 
-	async updateStore(_id: string, body: StoreRequestDto): Promise<Store> {
+	async updateStore(_id: string, body: StoreUpdateDto): Promise<Store> {
 		const store = await this.storeModel.findById(_id);
 
 		if (!store) {
