@@ -26,10 +26,7 @@ export class FeedsService {
 
 	async getAllFeeds(): Promise<Feed[]> {
 		try {
-			const feeds = await this.feedModel
-				.find()
-				.populate('author')
-				.exec();
+			const feeds = await this.feedModel.find().populate('author').exec();
 			return feeds;
 		} catch (err) {
 			throw new InternalServerErrorException(
@@ -51,9 +48,7 @@ export class FeedsService {
 				query = query.where('board', board);
 			}
 
-			const feeds = await query
-				.populate('author')
-				.exec();
+			const feeds = await query.populate('author').exec();
 
 			return feeds;
 		} catch (err) {

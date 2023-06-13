@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserService } from 'src/users/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { comparePasswords } from 'src/utils/hassing.util';
@@ -13,7 +13,7 @@ export class AuthService {
 	async login(email: string, password: string): Promise<object> {
 		const user = await this.userService.getUserByEmail(email);
 		if (!user) {
-			throw new Error('존재하지 않는 이메일입니다.');
+			throw new NotFoundException('이메일 또는 비밀번호가 틀렸습니다.');
 		}
 		const isMatch = await comparePasswords(password, user.pw);
 

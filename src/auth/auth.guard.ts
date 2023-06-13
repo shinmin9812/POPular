@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
 			request['user'] = payload;
 			return true;
 		} else {
-			throw new UnauthorizedException('토큰이 발급되지 않았습니다.');
+			throw new UnauthorizedException('토큰이 유효하지 않았습니다.');
 		}
 	}
 
