@@ -8,12 +8,14 @@ import FilterInfoContainer from '../components/Community/containers/FilterInfoCo
 import PostListItemContainer from '../components/Community/containers/PostListContainer';
 import PaginationContainer from '../components/Community/containers/PaginationContainer';
 import FilterAndWriteButtonWrapContainer from '../components/Community/containers/FilterAndWriteWrapContainer';
+import MetaTag from '../components/SEO/MetaTag';
 const Container = styled.div`
   width: 100%;
 `;
 const CommunityPage = () => {
   return (
     <Container>
+      <MetaTag title={`POPULAR | 커뮤니티`} />
       <TabsContainer />
       <div>
         <SearchContainerWrap placeholder="제목을 검색해주세요" />

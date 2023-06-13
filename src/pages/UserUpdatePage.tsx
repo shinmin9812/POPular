@@ -6,6 +6,7 @@ import { SpaceLine } from '../components/UserUpdate/components/Line';
 import ProfileUpdateForm from '../components/UserUpdate/components/ProfileUpdateForm';
 import ProfileUpdatePasswordForm from '../components/UserUpdate/components/ProfileUpdatePasswordForm';
 import { useParams } from 'react-router-dom';
+import MetaTag from '../components/SEO/MetaTag';
 
 const UserUpdatePage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -21,6 +22,7 @@ const UserUpdatePage = () => {
   }
   return (
     <Container>
+      <MetaTag title={`POPULAR | 프로필 수정`} />
       {user ? (
         <>
           <ProfileImageModify user={user}></ProfileImageModify>

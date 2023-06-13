@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import MenuList from '../components/UserMenu/components/MenuList';
 import PostList from '../components/UserMenu/components/PostList';
+import MetaTag from '../components/SEO/MetaTag';
 
 const MyPostPage = () => {
   return (
     <Container>
+      <MetaTag title={`POPULAR | 내가 쓴 글`} />
       <MenuListContainer>
         <MenuList />
       </MenuListContainer>

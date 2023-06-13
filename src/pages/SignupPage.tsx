@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 import SignupForm from '../components/Signup/components/SignupForm';
+import MetaTag from '../components/SEO/MetaTag';
 
 const SignupPage = () => {
   return (
     <Container>
+      <MetaTag title={`POPULAR | 회원가입`} />
       <Intro></Intro>
       <SignupContainer>
         <PageTitle>회원가입</PageTitle>
         <SignupForm></SignupForm>
       </SignupContainer>
+      <PageTitle>회원가입</PageTitle>
+      <SignupForm></SignupForm>
     </Container>
   );
 };

@@ -4,6 +4,8 @@ import StoreTitle from '../components/StoreDetail/container/StoreTitle';
 import StoreInfo from '../components/StoreDetail/container/StoreInfo';
 import StoreReview from '../components/StoreDetail/container/StoreReview';
 import { useParams } from 'react-router-dom';
+import { useGetStoreById } from '../api/storeApi';
+import MetaTag from '../components/SEO/MetaTag';
 
 type PathParams = {
   storeId: string | undefined;
@@ -49,9 +51,11 @@ const Container = styled.div<{ isDetail: boolean }>`
 const StoreDetailPage = () => {
   const [isDetail, setIsDetail] = useState<boolean>(true);
   const { storeId } = useParams<PathParams>();
+  const { data: store, isLoading, isError } = useGetStoreById(storeId);
 
   return (
     <Container isDetail={isDetail}>
+      <MetaTag title={`POPULAR | ${store?.title}`} url="www.popular.com" />
       <StoreTitle storeId={storeId!} />
       <div className="detail-top-btn">
         <button className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'} onClick={() => setIsDetail(true)}>
@@ -64,7 +68,11 @@ const StoreDetailPage = () => {
           후기
         </button>
       </div>
-      {isDetail ? <StoreInfo storeId={storeId!} /> : <StoreReview storeId={storeId!} />}
+      {isDetail ? (
+        <StoreInfo store={store!} isLoading={isLoading} isError={isError} />
+      ) : (
+        <StoreReview storeId={storeId!} />
+      )}
     </Container>
   );
 };

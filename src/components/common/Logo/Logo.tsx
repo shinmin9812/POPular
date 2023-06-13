@@ -4,7 +4,7 @@ import { CLIENT_PATH } from '../../../constants/path';
 const Logo = () => {
   return (
     <Link className="logo" to={CLIENT_PATH.HOME}>
-      POPular
+      POPULAR
     </Link>
   );
 };

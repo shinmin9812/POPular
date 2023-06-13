@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import MetaTag from '../../SEO/MetaTag';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -116,6 +117,7 @@ const Profile = () => {
       ) : (
         <>
           <ProfileInfo>
+            <MetaTag title={`POPULAR | ${user.nickname}님의 프로필`} />
             <UserProfile>
               <div className="profile-frame">
                 {user.profile === '' ? (

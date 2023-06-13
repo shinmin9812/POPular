@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import LoginForm from '../components/Login/components/LoginForm';
 import SignupLink from '../components/Login/components/SignupLink';
+import MetaTag from '../components/SEO/MetaTag';
 
 const LoginPage = () => {
   return (
     <Container>
+      <MetaTag title="POPULAR" url="www.popular.com" />
       <Intro>모든 트렌드가 모이는 곳 팝업스토어!</Intro>
       <LoginContainer>
         <PageTitle>로그인</PageTitle>

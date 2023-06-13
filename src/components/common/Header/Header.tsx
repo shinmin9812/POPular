@@ -189,7 +189,7 @@ const Header = () => {
           </button>
         )}
         <Link className="logo" to={CLIENT_PATH.HOME}>
-          <img src="/images/logo.png" alt="임시로고" />
+          <img src="/images/logo.png" alt="POPULAR" />
         </Link>
 
         <nav>

@@ -16,6 +16,7 @@ import CommentInputContainer from '../components/PostDetail/containers/CommentIn
 import StarIcon from '../components/common/Icons/StarIcon';
 import { getComments } from '../api/CommentApi';
 import { useQuery } from '@tanstack/react-query';
+import MetaTag from '../components/SEO/MetaTag';
 
 const Container = styled.div`
   width: 100%;
@@ -78,6 +79,7 @@ const PostDetailPage = () => {
   }
   return (
     <Container>
+      <MetaTag title={`POPULAR | ${post.title}`} />
       <PostInfo
         boardType={post.board}
         title={post.title}

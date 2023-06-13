@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import CommentList from '../components/UserMenu/components/CommentList';
 import MenuList from '../components/UserMenu/components/MenuList';
+import MetaTag from '../components/SEO/MetaTag';
 
 const MyCommentPage = () => {
   return (
     <Container>
+      <MetaTag title={`POPULAR | 내가 쓴 댓글`} />
       <MenuListContainer>
         <MenuList />
       </MenuListContainer>

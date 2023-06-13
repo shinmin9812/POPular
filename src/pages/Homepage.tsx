@@ -6,6 +6,7 @@ import ReservationStoreList from '../components/Home/components/ReservationStore
 import { Line } from '../components/Home/components/Line';
 import CategoryBox from '../components/Home/components/PreferredCategory/CategoryBox';
 import { useQuery } from '@tanstack/react-query';
+import MetaTag from '../components/SEO/MetaTag';
 // import CasouselSlideList from '../components/Home/components/CarouselStore/CasouselSlideList';
 
 const Container = styled.div`

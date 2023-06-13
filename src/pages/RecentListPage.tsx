@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import StoreList from '../components/common/Store/StoreList';
 import MenuList from '../components/UserMenu/components/MenuList';
 import { storeData } from '../mocks/data/stores';
+import MetaTag from '../components/SEO/MetaTag';
 
 // dummydata로 임시 세팅
 
@@ -15,6 +16,7 @@ const RecentListPage = () => {
 
   return (
     <Container>
+      <MetaTag title={`POPULAR | 최근 본 스토어`} />
       <MenuListContainer>
         <MenuList />
       </MenuListContainer>

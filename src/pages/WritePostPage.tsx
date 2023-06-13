@@ -7,6 +7,8 @@ import ChoiceStoreBoxContainer from '../components/WritePost/containers/ChoiceSt
 import PostRegisterButtonContainer from '../components/WritePost/containers/PostRegisterButtonContainer';
 import SelectedStoreItem from '../components/WritePost/components/SelectedStoreItem';
 import { useAppSelector } from '../Hooks/useSelectorHooks';
+import MetaTag from '../components/SEO/MetaTag';
+
 const Container = styled.div`
   width: 100%;
 `;
@@ -30,6 +32,7 @@ const WritePostPage = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   return (
     <Container>
+      <MetaTag title="POPULAR | 글쓰기" />
       <TabsContainer />
       <PostTitleContainer />
       <PostContentContainer />
