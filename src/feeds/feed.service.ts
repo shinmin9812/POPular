@@ -29,6 +29,7 @@ export class FeedsService {
 			const feeds = await this.feedModel
 				.find()
 				.populate('author')
+				.populate('store_id')
 				.exec();
 			return feeds;
 		} catch (err) {
@@ -53,6 +54,7 @@ export class FeedsService {
 
 			const feeds = await query
 				.populate('author')
+				.populate('store_id')
 				.exec();
 
 			return feeds;
