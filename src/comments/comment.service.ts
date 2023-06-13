@@ -264,10 +264,11 @@ export class CommentsService {
 
 			if (comment) {
 				const recomments = comment.recomments;
-				for (const recomment of recomments) {
-					await this.deleteComment(recomment.toString());
+				if (recomments) {
+					for (const recomment of recomments) {
+						await this.deleteComment(recomment.toString());
+					}
 				}
-			} else {
 			}
 
 			const deletedComment = await this.commentModel
