@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 interface Props {
   text: string;
-  type: 'follow' | 'profileEdit';
+  type: 'follow' | 'profileEdit' | 'unfollow';
   disabled?: boolean;
   link?: string | undefined;
   onClick?: () => void;
@@ -38,9 +38,27 @@ const Button = styled.button`
 
   &.ButtonType_follow {
     background-color: var(--color-main);
+    transition: all 0.2s;
 
     .button-link {
       color: var(--color-light-gray);
+    }
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+
+  &.ButtonType_unfollow {
+    background-color: var(--color-light-black);
+    transition: all 0.2s;
+
+    .button-link {
+      color: var(--color-light-gray);
+    }
+
+    &:hover {
+      filter: brightness(1.2);
     }
   }
 

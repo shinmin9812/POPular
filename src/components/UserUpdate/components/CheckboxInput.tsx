@@ -47,8 +47,9 @@ const CheckboxInput = ({ type, value, defaultData, onChange, btnName }: Props) =
               value={value ? 'true' : 'false'}
               onChange={onChange}
               checked={Boolean(value)}
+              className="allow_notification_style"
             />
-            <label htmlFor={type}>{btnName}</label>
+            {/* <label htmlFor={type}>{btnName}</label> */}
           </div>
         )}
       </InputInner>
@@ -68,7 +69,7 @@ const Label = styled.label`
   align-items: top;
   margin-top: 5px;
   width: 200px;
-  font-size: 12px;
+  font-size: var(--font-small);
 `;
 
 const InputInner = styled.div`
@@ -100,6 +101,10 @@ const Input = styled.input`
   background-color: #f3f3f3;
   font-size: 12px;
   display: none;
+
+  &.allow_notification_style {
+    display: block;
+  }
 
   & ~ label {
     background: #eee;

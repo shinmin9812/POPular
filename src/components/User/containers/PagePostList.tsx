@@ -7,18 +7,17 @@ import styled from 'styled-components';
 import PostItem from '../../common/Post/PostItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
+import { useParams } from 'react-router-dom';
 
 async function getFeeds(
   _limit: number,
   offset: number = 1,
   filter?: string | number | readonly string[],
+  userId?: string | undefined,
 ): Promise<{ rows: Post[]; nextOffset: number; hasNextPage: boolean }> {
-  const res = await fetch(
-    `http://34.22.81.36:3000/feeds/user/648490f8dde175dd0d146256?pageIndex=${offset}&order=${filter}`,
-    {
-      method: 'GET',
-    },
-  );
+  const res = await fetch(`http://34.22.81.36:3000/feeds/user/${userId}?pageIndex=${offset}&order=${filter}`, {
+    method: 'GET',
+  });
   const data = await res.json();
   const rows: Post[] = data.docs; // length: 한번에 불러오는 데이터 수
   await new Promise((r) => setTimeout(r, 500));
@@ -37,9 +36,10 @@ type PostItemContainerProps = {
 
 const PagePostList = () => {
   const filter = useSelector((state: RootState) => state.UserSlice.filter);
+  const { userId } = useParams();
   const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage, refetch } = useInfiniteQuery(
     ['feeds'],
-    (ctx) => getFeeds(0, ctx.pageParam, filter),
+    (ctx) => getFeeds(0, ctx.pageParam, filter, userId),
     {
       getNextPageParam: (lastGroup, groups) => {
         const hasNextPage = lastGroup.hasNextPage;
@@ -68,7 +68,7 @@ const PagePostList = () => {
   }, [hasNextPage, fetchNextPage, allRows.length, isFetchingNextPage, rowVirtualizer.getVirtualItems()]);
 
   useEffect(() => {
-    refetch(); // 필터링이 변경될 때 데이터를 다시 불러오기
+    refetch();
   }, [filter, refetch]);
 
   return (
@@ -79,6 +79,8 @@ const PagePostList = () => {
         </Loading>
       ) : status === 'error' ? (
         <span>Error: {(error as Error).message}</span>
+      ) : allRows.length === 0 ? (
+        <NoData>작성한 게시물이 없습니다.</NoData>
       ) : (
         <PostContainer ref={parentRef}>
           <PostgetTotalSize height={rowVirtualizer.getTotalSize()}>
@@ -125,6 +127,11 @@ const Loading = styled.div`
   img {
     width: 100px;
   }
+`;
+
+const NoData = styled.div`
+  width: 100%;
+  text-align: center;
 `;
 
 const PostContainer = styled.div`

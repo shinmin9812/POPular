@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ProfileUploadButton from './ProfileUploadButton';
 import ProfileButton from './ProfileButton';
@@ -13,6 +13,13 @@ const ProfileImageModify = ({ user }: Props) => {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
   const [userProfile, setUserProfile] = useState<string | null>(null);
+  const profileImageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (userProfile && profileImageRef.current) {
+      profileImageRef.current.src = userProfile;
+    }
+  }, [userProfile]);
 
   const fileHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,13 +52,7 @@ const ProfileImageModify = ({ user }: Props) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          //pw: user.pw,
           profile: userProfile,
-          // introduce: user.introduce,
-          // nickname: user.nickname,
-          // phone_number: user.phone_number,
-          // interested_category: user.interested_category,
-          // allow_notification: user.allow_notification,
         }),
       });
 
@@ -77,7 +78,7 @@ const ProfileImageModify = ({ user }: Props) => {
               {user.profile === '' ? (
                 <img src={'/defaultProfile.svg'} className="default-style" />
               ) : (
-                <img src={user.profile} alt={user.nickname} className="profile-style" />
+                <img src={user.profile} alt={user.nickname} className="profile-style" ref={profileImageRef} />
               )}
             </div>
           </ProfilImage>
@@ -135,11 +136,9 @@ const ProfilImage = styled.div`
     }
 
     .profile-style {
-      width: 110px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 `;
