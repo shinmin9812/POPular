@@ -19,7 +19,7 @@ const TitleScrap = React.memo(({ storeId }: Props) => {
 
   const result = useQueries({
     queries: [
-      { queryKey: ['store'], queryFn: () => getStoreById(storeId) },
+      { queryKey: ['store', storeId], queryFn: () => getStoreById(storeId) },
       { queryKey: ['user'], queryFn: () => getLoginUser() },
     ],
   });

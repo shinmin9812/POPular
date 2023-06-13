@@ -119,12 +119,12 @@ const addRecentStore = (store: Store) => {
 };
 
 interface Props {
-  storeId: string;
+  store: Store;
+  isLoading: boolean;
+  isError: boolean;
 }
 
-const StoreInfo = ({ storeId }: Props) => {
-  const { data: store, isLoading, isError } = useGetStoreById(storeId);
-
+const StoreInfo = ({ store, isLoading, isError }: Props) => {
   if (isLoading) return <div>Loding...</div>;
 
   if (isError) return <div>Error</div>;
