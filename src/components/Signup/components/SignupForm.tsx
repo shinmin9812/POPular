@@ -154,7 +154,7 @@ const SignupForm = () => {
 
     let error = '';
     if (!isPasswordValid.test(value) && value.length > 0) {
-      error = '8~15자, 특수문자, 문자, 숫자를 포함해야 합니다.';
+      error = '특수문자, 문자, 숫자 포함 8~15자';
     }
     setErrors((prevState) => ({ ...prevState, password: error }));
   };
