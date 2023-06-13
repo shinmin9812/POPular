@@ -51,7 +51,7 @@ const Container = styled.div<{ isDetail: boolean }>`
 const StoreDetailPage = () => {
   const [isDetail, setIsDetail] = useState<boolean>(true);
   const { storeId } = useParams<PathParams>();
-  const { data: store, isLoading, isError } = useGetStoreById(storeId);
+  const { data: store, isLoading, isError } = useGetStoreById(storeId!);
 
   return (
     <Container isDetail={isDetail}>

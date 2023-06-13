@@ -9,7 +9,7 @@ import getDateFunc from '../../../utils/getDateFunc';
 
 const getComments = async (
   _limit: number,
-  offset: number = 1,
+  offset = 1,
   userId: string | undefined,
 ): Promise<{ rows: Comment[]; nextOffset: number; hasNextPage: boolean }> => {
   const res = await fetch(`http://34.22.81.36:3000/comments/user/${userId}?pageIndex=${offset}`, {
@@ -52,7 +52,7 @@ const CommentList = () => {
     getUserInfo();
   }, []);
 
-  const { status, data, error, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['feeds'],
     (ctx) => getComments(0, ctx.pageParam, userId),
     {
@@ -99,6 +99,8 @@ const CommentList = () => {
             {rowVirtualizer.getVirtualItems().map((virtualRow: any) => {
               const isLoaderRow = virtualRow.index > allRows.length - 1;
               const comment: Comment = allRows[virtualRow.index];
+
+              // console.log(comment);
 
               return (
                 <CommentItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start - 135}>

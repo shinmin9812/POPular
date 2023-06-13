@@ -22,7 +22,7 @@ const RecommentItem = ({ parentId, recomment, date }: Props) => {
       const data = await res.json();
       setParentComment(data.content);
       setParentFeedTitle(data.parent?.id.title);
-      setBoard(data.board as BoardTypes);
+      setBoard(data.parent.id.board as BoardTypes);
     } catch (err: any) {
       throw new Error(err.message);
     }
@@ -32,7 +32,6 @@ const RecommentItem = ({ parentId, recomment, date }: Props) => {
     getParentData(parentId);
   }, []);
 
-  if (!parentFeedTitle) return <></>;
   return (
     <Container>
       <div className="comment-header">

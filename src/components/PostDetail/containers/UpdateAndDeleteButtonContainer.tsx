@@ -60,6 +60,10 @@ const UpdateAndDeleteContainer = () => {
   async function DeleteFetchData() {
     const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : ''), {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     });
     const result = await response.json();
     alert(result.message);

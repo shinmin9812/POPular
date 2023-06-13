@@ -10,13 +10,14 @@ interface Props {
 }
 
 const CommentItem = ({ parentId, comment, date }: Props) => {
-  const [feedTitle, setFeedTitle] = useState('');
+  const [feedTitle, setFeedTitle] = useState(null);
   const [board, setBoard] = useState<BoardTypes>(BoardTypes.free);
 
   const getFeedData = async (id: string) => {
     try {
       const response = await fetch(`http://34.22.81.36:3000/feeds/${id}`);
       const data = await response.json();
+      if (!data._id) return;
       setFeedTitle(data.title);
       setBoard(data.board as BoardTypes);
       return data;
@@ -29,7 +30,7 @@ const CommentItem = ({ parentId, comment, date }: Props) => {
     getFeedData(parentId);
   }, []);
 
-  if (!feedTitle) return <></>;
+  if (feedTitle === null) return <></>;
   return (
     <Container>
       <div className="comment-header">
