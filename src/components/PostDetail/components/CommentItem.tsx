@@ -25,11 +25,12 @@ export const CommentAuthorName = styled.span`
   font-weight: var(--weight-light);
   width: 15%;
   font-size: var(--font-small);
+  margin-right: 20px;
 `;
 
 export const CommentContent = styled.div`
   margin: 0 5px;
-  width: 55%;
+  width: 75%;
   text-align: left;
   font-size: var(--font-small);
 `;
@@ -37,7 +38,7 @@ export const CommentContent = styled.div`
 export const CommentUpdateAt = styled.span`
   color: var(--color-gray);
   font-weight: var(--weight-light);
-  width: 30%;
+  width: 10%;
   font-size: var(--font-small);
   text-align: right;
   cursor: pointer;
@@ -71,9 +72,9 @@ const CommentItem = ({
   return (
     <Li>
       <CommentWrap onClick={setReCommentInput}>
-        <Link to={CLIENT_PATH.PROFILE.replace(':userId', comment.author._id)}>
-          <CommentAuthorName>{comment.author.nickname}</CommentAuthorName>
-        </Link>
+        <CommentAuthorName>
+          <Link to={CLIENT_PATH.PROFILE.replace(':userId', comment.author._id)}>{comment.author.nickname}</Link>
+        </CommentAuthorName>
         <CommentContent>{comment.content}</CommentContent>
         <CommentUpdateAt>{getDateFunc(comment.updatedAt)}</CommentUpdateAt>
         <CommentDeleteButton

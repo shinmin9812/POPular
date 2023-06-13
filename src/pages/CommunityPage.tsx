@@ -10,6 +10,7 @@ import PaginationContainer from '../components/Community/containers/PaginationCo
 import FilterAndWriteButtonWrapContainer from '../components/Community/containers/FilterAndWriteWrapContainer';
 const Container = styled.div`
   width: 100%;
+  height: 1200px;
 `;
 const CommunityPage = () => {
   return (

@@ -9,6 +9,7 @@ import { getAllFeeds, getAllFreeFeeds, getAllReviewFeeds, getAllGatherFeeds } fr
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import filterFunc from '../../../utils/filterFunc';
 import PostItem from '../../common/Post/PostItem';
+import PostList from '../components/PostList';
 
 const PostListItemContainer = () => {
   const page = useAppSelector((state) => state.CommunitySlice.page.currPage);
@@ -91,19 +92,18 @@ const PostListItemContainer = () => {
     setPage(1);
   }, [postCategory, setPage, originalPost]);
 
-  if (loading) {
-    return <div>loading...</div>;
-  }
   return (
-    <ul>
-      {dividedPost[page - 1]?.map((post) => (
-        <li key={post._id}>
-          <Link to={CLIENT_PATH.POST.replace(':postId', post._id)}>
-            <PostItem post={post} />
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <PostList>
+      {loading
+        ? 'loading...'
+        : dividedPost[page - 1]?.map((post) => (
+            <li key={post._id}>
+              <Link to={CLIENT_PATH.POST.replace(':postId', post._id)}>
+                <PostItem post={post} />
+              </Link>
+            </li>
+          ))}
+    </PostList>
   );
 };
 

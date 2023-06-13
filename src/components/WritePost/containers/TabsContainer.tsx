@@ -1,4 +1,5 @@
-import TabsWrap from '../../common/Tabs/Tabs';
+import Tab from '../../common/Tabs/Tabs';
+import TabsWrap from '../../common/Tabs/TabsWrap';
 import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions } from '../WritePostSlice';
 import { useEffect, useCallback } from 'react';
@@ -19,7 +20,21 @@ const TabsContainer = () => {
       setTab('자유게시판');
     }
   }, [prevPageTab, setTab]);
-  return <TabsWrap currTab={tab} onClick={setTab} tabs={tabs} />;
+  return (
+    <TabsWrap>
+      {tabs.map((item, index) => (
+        <Tab
+          key={index}
+          active={tab === item}
+          onClick={() => {
+            setTab(item);
+          }}
+        >
+          {item}
+        </Tab>
+      ))}
+    </TabsWrap>
+  );
 };
 
 export default TabsContainer;
