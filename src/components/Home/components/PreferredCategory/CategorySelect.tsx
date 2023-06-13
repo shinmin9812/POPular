@@ -1,15 +1,33 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CategorySelect = () => {
+interface isLogin {
+  isLogin: boolean;
+  userId: string | undefined;
+}
+
+const CategorySelect = ({ isLogin, userId }: isLogin) => {
   return (
     <Container>
-      <p className="text-notice">
-        <span className="title-point">선호 카테고리</span>가 없습니다.
-      </p>
-      <p className="text-setting">
-        <Link to={'/user/update'}>선호 카테고리 설정하기 +</Link>
-      </p>
+      {isLogin ? (
+        <SelectCategory>
+          <p className="text-notice">
+            <span className="title-point">선호 카테고리</span>가 없습니다.
+          </p>
+          <p className="text-setting">
+            <Link to={`/user/${userId}/update`}>선호 카테고리 설정하기 +</Link>
+          </p>
+        </SelectCategory>
+      ) : (
+        <SelectCategory>
+          <p className="text-notice">
+            <span className="title-point">선호 카테고리</span>가 없습니다.
+          </p>
+          <p className="text-setting">
+            <Link to={'/login'}>선호 카테고리 설정하기 +</Link>
+          </p>
+        </SelectCategory>
+      )}
     </Container>
   );
 };
@@ -43,5 +61,7 @@ const Container = styled.div`
     width: 100%;
   }
 `;
+
+const SelectCategory = styled.div``;
 
 export default CategorySelect;

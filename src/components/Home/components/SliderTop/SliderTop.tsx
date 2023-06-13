@@ -7,7 +7,7 @@ const SliderTop = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1000,
     //autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -22,9 +22,11 @@ const SliderTop = () => {
           <SlideItem>
             <SlideContent className="slide-01">
               <TextBox>
-                <p className="innertext-1">요즘 많이가는 핫플!</p>
+                <p className="innertext-1">요즘 많이가는 핫플!🐯</p>
                 <p className="innertext-2">'무직타이거' 팝업스토어</p>
-                <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
+                <p className="innertext-3">
+                  MZ세대 최애 <b className="bold-text">'무직타이거'</b> 팝업스토어 오픈
+                </p>
               </TextBox>
               <InnerImage className="image-1"></InnerImage>
               <Object className="object-animation"></Object>
@@ -59,7 +61,7 @@ const SliderTop = () => {
 };
 
 const SlideFrame = styled.div`
-  height: 250px;
+  height: 270px;
 `;
 const SlideBox = styled.div`
   width: 100%;
@@ -69,8 +71,8 @@ const SlideBox = styled.div`
 `;
 const SlideItem = styled.div``;
 const SlideContent = styled.div`
-  width: 97%;
-  height: 180px;
+  width: 98%;
+  height: 240px;
   background-color: orange;
   border-radius: 8px;
   margin: 0 auto;
@@ -91,12 +93,12 @@ const SlideContent = styled.div`
 `;
 const TextBox = styled.div`
   position: absolute;
-  top: 27%;
+  top: 29%;
   left: 15%;
   z-index: 5;
 
   .innertext-1 {
-    font-size: var(--font-regular);
+    font-size: var(--font-medium);
   }
 
   .innertext-2 {
@@ -108,9 +110,14 @@ const TextBox = styled.div`
   .innertext-3 {
     margin-top: 20px;
     font-size: var(--font-regular);
+    font-weight: var(--weight-light);
 
     @media all and (max-width: 767px) {
       display: none;
+    }
+
+    .bold-text {
+      font-weight: var(--weight-semi-bold);
     }
   }
 
@@ -124,7 +131,7 @@ const InnerImage = styled.div`
   right: 0px;
   opacity: 0.4;
   z-index: 3;
-  width: 340px;
+  width: 400px;
   height: 500px;
 
   &.image-1 {
@@ -151,8 +158,8 @@ const InnerImage = styled.div`
 const Object = styled.div`
   background: url('/images/tiger.png') no-repeat;
   z-index: 20;
-  width: 140px;
-  height: 140px;
+  width: 170px;
+  height: 170px;
   background-size: contain;
   z-index: 4;
 
