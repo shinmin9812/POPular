@@ -135,6 +135,12 @@ const Container = styled.header`
   }
 
   @media all and (max-width: 767px) {
+    .logo {
+      width: 200px;
+      img {
+        width: 100%;
+      }
+    }
     .prev-btn {
       display: block;
     }
