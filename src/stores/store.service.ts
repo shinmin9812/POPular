@@ -88,10 +88,10 @@ export class StoreService {
 		if (body.images) {
 			const base64Images = body.images;
 			const imageMapping = await handleImages(base64Images);
-			store.images = Object.values(imageMapping);
+			const images = Object.values(imageMapping);
 			updateStore = {
 				...body,
-				images: store.images,
+				images: images,
 			};
 		} else {
 			updateStore = {
