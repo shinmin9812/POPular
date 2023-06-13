@@ -4,7 +4,10 @@ import StoreTitle from '../components/StoreDetail/container/StoreTitle';
 import StoreInfo from '../components/StoreDetail/container/StoreInfo';
 import StoreReview from '../components/StoreDetail/container/StoreReview';
 import { useParams } from 'react-router-dom';
-import { useGetStoreById } from '../api/storeApi';
+
+type PathParams = {
+  storeId: string | undefined;
+};
 
 const Container = styled.div<{ isDetail: boolean }>`
   .detail-top-btn {
@@ -45,32 +48,23 @@ const Container = styled.div<{ isDetail: boolean }>`
 
 const StoreDetailPage = () => {
   const [isDetail, setIsDetail] = useState<boolean>(true);
-  const { storeId } = useParams();
-
-  const { data } = useGetStoreById(storeId!);
+  const { storeId } = useParams<PathParams>();
 
   return (
     <Container isDetail={isDetail}>
-      {data && (
-        <>
-          <StoreTitle store={data} />
-          <div className="detail-top-btn">
-            <button
-              className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'}
-              onClick={() => setIsDetail(true)}
-            >
-              상세 정보
-            </button>
-            <button
-              className={isDetail ? 'store-comment-btn active' : 'store-comment-btn'}
-              onClick={() => setIsDetail(false)}
-            >
-              후기
-            </button>
-          </div>
-          {isDetail ? <StoreInfo store={data} /> : <StoreReview storeId={storeId!} />}
-        </>
-      )}
+      <StoreTitle storeId={storeId!} />
+      <div className="detail-top-btn">
+        <button className={isDetail ? 'detail-info-btn' : 'detail-info-btn active'} onClick={() => setIsDetail(true)}>
+          상세 정보
+        </button>
+        <button
+          className={isDetail ? 'store-comment-btn active' : 'store-comment-btn'}
+          onClick={() => setIsDetail(false)}
+        >
+          후기
+        </button>
+      </div>
+      {isDetail ? <StoreInfo storeId={storeId!} /> : <StoreReview storeId={storeId!} />}
     </Container>
   );
 };

@@ -1,54 +1,83 @@
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQueries, useMutation } from '@tanstack/react-query';
 import styled from 'styled-components';
-import { Store } from '../../../types/store';
+import * as React from 'react';
+import { getStoreById } from '../../../api/storeApi';
+import { getLoginUser } from '../../../api/userApi';
 
 type Props = {
-  store: Store;
+  storeId: string;
 };
 
 const Container = styled.button`
   background-color: #ffffff;
+  cursor: pointer;
 `;
 
-const TitleScrap = ({ store }: Props) => {
-  // const [checkScrap, setCheckScrap] = useState(false);
+const TitleScrap = React.memo(({ storeId }: Props) => {
+  const [checkScrap, setCheckScrap] = useState<boolean>(false);
 
-  async function fetchData() {
-    const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-      method: 'GET',
+  const result = useQueries({
+    queries: [
+      { queryKey: ['store'], queryFn: () => getStoreById(storeId) },
+      { queryKey: ['user'], queryFn: () => getLoginUser() },
+    ],
+  });
+
+  const [storeQuery, userQuery] = result;
+  const { data: store, isLoading: storeLoading } = storeQuery;
+  const { data: user, isLoading: userLoading } = userQuery;
+
+  useEffect(() => {
+    if (user && store) {
+      setCheckScrap(store.scraps.includes(user._id));
+    }
+  }, [store, user]);
+
+  const scrapMutation = useMutation(
+    () => {
+      return fetch(`http://34.22.81.36:3000/users/${user._id}/scrapStore/${store._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+    },
+    {
+      onError: () => {
+        window.alert('로그인이 필요한 서비스입니다.');
+      },
+    },
+  );
+
+  const unscrapMutation = useMutation(() => {
+    return fetch(`http://34.22.81.36:3000/users/${user._id}/unscrapStore/${store._id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
-    return response.json();
+  });
+
+  function scrapHandler() {
+    scrapMutation.mutate();
+    setCheckScrap(true);
   }
 
-  const { data: user } = useQuery(['user'], fetchData);
+  function unscrapHandler() {
+    unscrapMutation.mutate();
+    setCheckScrap(false);
+  }
 
-  // async function PostData() {
-  //   const response = await fetch(`http://34.22.81.36:3000/users/${user._id}/scrapStore/${store._id}`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       scraps: [...user.scraps, store._id],
-  //     }),
-  //   });
-  //   return response.json();
-  // }
-
-  // useEffect(() => {
-  //   setCheckScrap(user.scraps.includes(store._id));
-  // }, [user, store]);
+  if (storeLoading || userLoading) return <div>Loading...</div>;
 
   return (
-    <Container>
-      <img src="/images/scrap.svg" alt="" />
+    <Container onClick={checkScrap ? unscrapHandler : scrapHandler}>
+      {checkScrap ? <img src="/images/scrap-fill.svg" alt="" /> : <img src="/images/scrap.svg" alt="" />}
     </Container>
   );
-};
+});
 
 export default TitleScrap;
