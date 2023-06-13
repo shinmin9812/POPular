@@ -47,6 +47,7 @@ const Profile = () => {
     setFollowerCount(result.follower.length);
   }, [userId, userInfo]);
 
+  // 유저 팔로우
   const followMutation = useMutation(() => {
     return fetch(`http://34.22.81.36:3000/users/${userInfo}/follow/${userId}`, {
       method: 'PATCH',
@@ -57,6 +58,7 @@ const Profile = () => {
     });
   });
 
+  // 유저 언팔로우
   const unfollowMutation = useMutation(() => {
     return fetch(`http://34.22.81.36:3000/users/${userInfo}/unfollow/${userId}`, {
       method: 'PATCH',
@@ -112,46 +114,40 @@ const Profile = () => {
   }
   return (
     <Container>
-      {followMutation.isLoading ? (
-        'loaging...'
-      ) : (
-        <>
-          <ProfileInfo>
-            <MetaTag title={`POPULAR | ${user.nickname}님의 프로필`} />
-            <UserProfile>
-              <div className="profile-frame">
-                {user.profile === '' ? (
-                  <img src={'/defaultProfile.svg'} className="default-style" />
-                ) : (
-                  <img src={user.profile} alt={user.nickname} className="profile-style" />
-                )}
-              </div>
-            </UserProfile>
-            <ProfileList>
-              <ProfileFollow title={'게시물'} number={33} />
-              <ProfileFollow title={'팔로워'} number={followerCount} />
-              <ProfileFollow title={'팔로잉'} number={user.following.length} />
-            </ProfileList>
-          </ProfileInfo>
-          <ProfileDescript>
-            <p className="user-nickname">{user.nickname}</p>
-            <p className="user-introduce">{user.introduce}</p>
-            <div className="button-position">
-              {userInfo === userId ? (
-                <ProfileButton text={'프로필수정'} type={'profileEdit'} link={`/user/${userId}/update`} />
+      <ProfileInfo>
+        <MetaTag title={`POPULAR | ${user.nickname}님의 프로필`} />
+        <UserProfile>
+          <div className="profile-frame">
+            {user.profile === '' ? (
+              <img src={'/defaultProfile.svg'} className="default-style" />
+            ) : (
+              <img src={user.profile} alt={user.nickname} className="profile-style" />
+            )}
+          </div>
+        </UserProfile>
+        <ProfileList>
+          <ProfileFollow title={'게시물'} number={33} />
+          <ProfileFollow title={'팔로워'} number={followerCount} />
+          <ProfileFollow title={'팔로잉'} number={user.following.length} />
+        </ProfileList>
+      </ProfileInfo>
+      <ProfileDescript>
+        <p className="user-nickname">{user.nickname}</p>
+        <p className="user-introduce">{user.introduce}</p>
+        <div className="button-position">
+          {userInfo === userId ? (
+            <ProfileButton text={'프로필수정'} type={'profileEdit'} link={`/user/${userId}/update`} />
+          ) : (
+            <div>
+              {checkFollower ? (
+                <ProfileButton text={'언팔로우'} type={'unfollow'} onClick={unfollowHandler} />
               ) : (
-                <div>
-                  {checkFollower ? (
-                    <ProfileButton text={'언팔로우'} type={'unfollow'} onClick={unfollowHandler} />
-                  ) : (
-                    <ProfileButton text={'팔로우'} type={'follow'} onClick={followHandler} />
-                  )}
-                </div>
+                <ProfileButton text={'팔로우'} type={'follow'} onClick={followHandler} />
               )}
             </div>
-          </ProfileDescript>
-        </>
-      )}
+          )}
+        </div>
+      </ProfileDescript>
     </Container>
   );
 };
