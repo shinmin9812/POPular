@@ -30,9 +30,8 @@ const PostRegisterButtonContainer = () => {
   };
 
   const [isMember, setIsMember] = useState();
-
+  const [gone, setGone] = useState(false);
   const currTab = tab === '자유게시판' ? 'free' : tab === '후기게시판' ? 'review' : 'gather';
-
   const register = async () => {
     const data = {
       title: postTitle,
@@ -100,13 +99,21 @@ const PostRegisterButtonContainer = () => {
   //페이지 벗어날 경우 작성했던 데이터 초기화
   useEffect(() => {
     return () => {
-      console.log('a');
-      setPostTitle('');
-      setPostContent('');
-      setChoiceStoreId('');
-      setIsUpdate({ use: false, id: '' });
+      if (!isUpdate.use) {
+        setPostTitle('');
+        setPostContent('');
+        setChoiceStoreId('');
+      } else {
+        // 페이지 떠날 때만 실행
+        if (gone) {
+          setGone(false);
+          setIsUpdate({ use: false, id: '' });
+        } else {
+          setGone(true);
+        }
+      }
     };
-  }, [location]);
+  }, [location, gone]);
 
   return (
     <PostRegisterButtonWrap>
@@ -125,7 +132,7 @@ const PostRegisterButtonContainer = () => {
           register();
         }}
       >
-        {isUpdate.use ? '수정하기' : '작성하기'}
+        {isUpdate ? '수정하기' : '작성하기'}
       </PostRegisterButton>
     </PostRegisterButtonWrap>
   );

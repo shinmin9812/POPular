@@ -83,7 +83,9 @@ const UpdateAndDeleteContainer = () => {
 
   const updatePost = () => {
     if (isAuthor) {
-      const currTab = postInfo.board === 'free' ? '자유게시판' : postInfo.board === 'review' ? '후기게시판' : 'gather';
+      const currTab =
+        postInfo.board === 'free' ? '자유게시판' : postInfo.board === 'review' ? '후기게시판' : '모집게시판';
+
       setTab(currTab);
       setPostContent(postInfo.content);
       setPostTitle(postInfo.title);
