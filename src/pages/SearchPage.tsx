@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Store } from '../types/store';
 import SearchInput from '../components/common/SearchInput/SearchInput';
-import StoreList from '../components/common/Store/StoreList';
+import SearchFilter from '../components/common/SearchInput/SearchFilter';
 import FilterContainer from '../components/Community/containers/FilterContainer';
 import MetaTag from '../components/SEO/MetaTag';
 
@@ -12,6 +12,18 @@ const Container = styled.div`
 
 const SearchPage = () => {
   const [stores, setStores] = useState<Store[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleInputChange = (e: { target: { value: SetStateAction<string> } }) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputKeyPress = (e: { code: string }) => {
+    if (e.code === 'Enter' || searchValue) {
+      setSearchValue(inputValue);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -20,16 +32,20 @@ const SearchPage = () => {
   async function fetchData() {
     const res = await fetch('http://34.22.81.36:3000/stores');
     const result: Store[] = await res.json();
-
     setStores(result);
   }
 
   return (
     <Container>
       <MetaTag title={`POPULAR | 검색`} />
-      <SearchInput placeholder="제목을 입력하세요." />
+      <SearchInput
+        placeholder="제목을 입력하세요."
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyPress={handleInputKeyPress}
+      />
       <FilterContainer />
-      <StoreList stores={stores} />
+      <SearchFilter stores={stores} value={searchValue} />
     </Container>
   );
 };

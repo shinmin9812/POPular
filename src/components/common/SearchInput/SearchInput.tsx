@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 import SearchIcon from '../Icons/SearchIcon';
 
+type Props = {
+  placeholder: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onKeyPress: React.KeyboardEventHandler<HTMLInputElement>;
+};
+
 const SearchContainer = styled.div`
   width: 100%;
   position: relative;
@@ -23,11 +30,11 @@ const SearchInput = styled.input`
   box-sizing: border-box;
 `;
 
-const SearchContainerWrap = ({ placeholder }: { placeholder: string }) => {
+const SearchContainerWrap = ({ placeholder, value, onChange, onKeyPress }: Props) => {
   return (
     <SearchContainer>
       <SearchIcon />
-      <SearchInput placeholder={placeholder} />
+      <SearchInput placeholder={placeholder} value={value} onChange={onChange} onKeyPress={onKeyPress} />
     </SearchContainer>
   );
 };
