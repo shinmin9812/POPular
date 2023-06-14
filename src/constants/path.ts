@@ -59,7 +59,7 @@ export const API_PATH = {
       ALL_GATHER_FEEDS: `${API_BASE_URL}/feeds/gather`,
     },
     POST: `${API_BASE_URL}/feeds/`,
-    PUT:  `${API_BASE_URL}/feeds/:postId`,
+    PUT: `${API_BASE_URL}/feeds/:postId`,
     DELETE: {},
   },
 
@@ -74,7 +74,7 @@ export const API_PATH = {
       // 특정 포스트의 전체 코멘트
       BY_POST: '/comment/post/:postId',
     },
-    POST:`${API_BASE_URL}/comments`,
+    POST: `${API_BASE_URL}/comments`,
     PUT: {},
     DELETE: `${API_BASE_URL}/comments/:commentId`,
   },
@@ -102,6 +102,7 @@ export const CLIENT_PATH = {
   MAP: '/map',
 
   SEARCH: '/search',
+  SEARCH_WORD: '/search/:word',
 
   BOARD: '/community/board/:category',
   POST: '/community/post/:postId',
