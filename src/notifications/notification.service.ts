@@ -30,10 +30,10 @@ export class NotificationsService {
 				.populate({
 					path: 'content_comment',
 					populate: [
-							{
-									path: 'author',
-									model: 'User',
-							},
+						{
+							path: 'author',
+							model: 'User',
+						},
 					],
 				})
 				.populate('content_user')
@@ -54,10 +54,10 @@ export class NotificationsService {
 				.populate({
 					path: 'content_comment',
 					populate: [
-							{
-									path: 'author',
-									model: 'User',
-							},
+						{
+							path: 'author',
+							model: 'User',
+						},
 					],
 				})
 				.populate('content_user')

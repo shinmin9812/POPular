@@ -216,7 +216,9 @@ export class CommentsService {
 			};
 
 			const createdNotification =
-				await this.NotificationsService.createNotification(notificationCreateDto,);
+				await this.NotificationsService.createNotification(
+					notificationCreateDto,
+				);
 			await this.UserService.updateNotification(
 				savedComment.author,
 				createdNotification._id,
@@ -294,31 +296,33 @@ export class CommentsService {
 	}
 
 	async deleteComment(ids: string[]): Promise<void> {
-    try {
-        const comments = await this.commentModel.find({ _id: { $in: ids }});
-        let recommentsToDelete: string[] = [];
-        if(comments.length > 0) {
-            comments.forEach((comment) => {
-                this.feedsService.removeComment(comment.parent.id, comment._id)
-                comment.recomments.forEach((recomment) => {
-                    recommentsToDelete.push(recomment.toString());
-                    this.removeRecomment(comment._id, recomment);
-                });
-            })
-        }
+		try {
+			const comments = await this.commentModel.find({ _id: { $in: ids } });
+			let recommentsToDelete: string[] = [];
+			if (comments.length > 0) {
+				comments.forEach(comment => {
+					this.feedsService.removeComment(comment.parent.id, comment._id);
+					comment.recomments.forEach(recomment => {
+						recommentsToDelete.push(recomment.toString());
+						this.removeRecomment(comment._id, recomment);
+					});
+				});
+			}
 
-        if (recommentsToDelete.length > 0) {
-            await this.deleteComment(recommentsToDelete);
-        }
+			if (recommentsToDelete.length > 0) {
+				await this.deleteComment(recommentsToDelete);
+			}
 
-        const deleteResult = await this.commentModel.deleteMany({ _id: { $in: ids }}).exec();
-        if (deleteResult.deletedCount === 0) {
-            throw new NotFoundException(
-                `해당 아이디를 가진 댓글들을 찾지 못했습니다.`,
-            );
-        }
-    } catch (err) {
-        throw new InternalServerErrorException('댓글 삭제에 실패하였습니다.');
-    }
-}
+			const deleteResult = await this.commentModel
+				.deleteMany({ _id: { $in: ids } })
+				.exec();
+			if (deleteResult.deletedCount === 0) {
+				throw new NotFoundException(
+					`해당 아이디를 가진 댓글들을 찾지 못했습니다.`,
+				);
+			}
+		} catch (err) {
+			throw new InternalServerErrorException('댓글 삭제에 실패하였습니다.');
+		}
+	}
 }

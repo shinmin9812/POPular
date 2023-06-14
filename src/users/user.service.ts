@@ -33,7 +33,7 @@ export class UserService {
 		private NotificationsService: NotificationsService,
 		@Inject(forwardRef(() => FeedsService))
 		private FeedsService: FeedsService,
-	) { }
+	) {}
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -288,13 +288,13 @@ export class UserService {
 		//user가 작성한 댓글 삭제(comment.service에서 deleteComment를 가져와서 사용해야함)
 		const comments = await this.commentModel.find({ author: _id }).select(_id);
 
-		const commentIds = comments.map((comment) => comment._id);
+		const commentIds = comments.map(comment => comment._id);
 		await this.CommentsService.deleteComment(commentIds);
 
 		// user가 작성한 게시글 삭제(feed.service에서 deleteFeed를 가져와서 사용해야함)
 		const feeds = await this.feedModel.find({ author: _id }).select(_id);
 
-		const feedIds = feeds.map((feed) => feed._id);
+		const feedIds = feeds.map(feed => feed._id);
 		await this.FeedsService.deleteFeed(feedIds);
 
 		return await this.userModel.findByIdAndDelete(_id);
