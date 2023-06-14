@@ -27,7 +27,15 @@ export class NotificationsService {
 
 			const notifications = await query
 				.populate('content_store')
-				.populate('content_comment')
+				.populate({
+					path: 'content_comment',
+					populate: [
+							{
+									path: 'author',
+									model: 'User',
+							},
+					],
+				})
 				.populate('content_user')
 				.exec();
 
@@ -43,7 +51,15 @@ export class NotificationsService {
 			const notification = await this.notificationModel
 				.findById(id)
 				.populate('content_store')
-				.populate('content_comment')
+				.populate({
+					path: 'content_comment',
+					populate: [
+							{
+									path: 'author',
+									model: 'User',
+							},
+					],
+				})
 				.populate('content_user')
 				.exec();
 
