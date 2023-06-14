@@ -46,6 +46,11 @@ const Container = styled.div`
   .item-title {
     font-weight: var(--weight-semi-bold);
     font-size: var(--font-regular);
+    width: 200px;
+    padding: 2px 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .item-period {
