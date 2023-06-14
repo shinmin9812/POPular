@@ -30,30 +30,9 @@ import AdminUserStatisticsPage from './pages/Admin/AdminUserStatisticsPage';
 import AdminUserDetailPage from './pages/Admin/AdminUserDetailPage';
 import AdminUserEditPage from './pages/Admin/AdminUserEditPage';
 import AdminUserDeletePage from './pages/Admin/AdminUserDeletePage';
-import { useEffect, useState } from 'react';
-import { User } from './types/user';
-import PrivateRoute from './PrivateRoute';
-import callApi from './utils/callApi';
+import AuthChecker from './AuthChecker';
 
 const Router = () => {
-  const [userData, setUserData] = useState<User>();
-  const getUserInfo = async () => {
-    try {
-      const response = await callApi('GET', API_PATH.AUTH.GET.PROFILE);
-      if (response.ok) {
-        const data = await response.json();
-        setUserData(data);
-        return;
-      } else return;
-    } catch (err: any) {
-      throw new Error(err);
-    }
-  };
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -71,30 +50,15 @@ const Router = () => {
           <Route path={CLIENT_PATH.STORE_DETAIL} element={<StoreDetailPage />}></Route>
           <Route path={CLIENT_PATH.USER_RECENT} element={<RecentListPage />}></Route>
 
-          <Route
-            path={CLIENT_PATH.WRITE}
-            element={<PrivateRoute userData={userData} component={<WritePostPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_SCRAP}
-            element={<PrivateRoute userData={userData} component={<ScrapPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_NOTIFICATIONS}
-            element={<PrivateRoute userData={userData} component={<NotificationsPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_POSTS}
-            element={<PrivateRoute userData={userData} component={<MyPostPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_COMMENTS}
-            element={<PrivateRoute userData={userData} component={<MyCommentPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_UPDATE}
-            element={<PrivateRoute userData={userData} component={<UserUpdatePage />} />}
-          />
+          <Route element={<AuthChecker />}>
+            <Route path={CLIENT_PATH.WRITE} element={<WritePostPage />} />
+            <Route path={CLIENT_PATH.USER_SCRAP} element={<ScrapPage />} />
+            <Route path={CLIENT_PATH.USER_POSTS} element={<MyPostPage />} />
+            <Route path={CLIENT_PATH.USER_NOTIFICATIONS} element={<NotificationsPage />} />
+            <Route path={CLIENT_PATH.USER_POSTS} element={<MyPostPage />} />
+            <Route path={CLIENT_PATH.USER_COMMENTS} element={<MyCommentPage />} />
+            <Route path={CLIENT_PATH.USER_UPDATE} element={<UserUpdatePage />} />
+          </Route>
         </Route>
 
         <Route element={<AdminLayout />}>

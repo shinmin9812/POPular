@@ -9,8 +9,6 @@ export const getAllUsers = async () => {
 
 export const getUserById = async (userId: string) => {
   const response = await (await fetch(`${API_PATH.USER.GET.BY_ID.replace(':userId', userId)}`)).json();
-
-  console.log(response);
   return response;
 };
 
