@@ -114,7 +114,7 @@ const PostRegisterButtonContainer = () => {
       }
     };
   }, [location, gone]);
-
+  console.log(isUpdate);
   return (
     <PostRegisterButtonWrap>
       <PostRegisterButton
@@ -132,7 +132,7 @@ const PostRegisterButtonContainer = () => {
           register();
         }}
       >
-        {isUpdate ? '수정하기' : '작성하기'}
+        {isUpdate.use ? '수정하기' : '작성하기'}
       </PostRegisterButton>
     </PostRegisterButtonWrap>
   );
