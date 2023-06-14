@@ -96,10 +96,10 @@ export class CommentsController {
 
 	@ApiOperation({ summary: '댓글 삭제하기' })
 	@ApiBearerAuth('Authorization')
-	@Delete(':id')
+	@Delete()
 	@UseGuards(AuthGuard)
-	async deleteComment(@Param('id') id: string) {
-		await this.commentsService.deleteComment(id);
+	async deleteComment(@Body('ids') ids: string[]) {
+		await this.commentsService.deleteComment(ids);
 		return { message: '댓글이 삭제되었습니다.' };
 	}
 }

@@ -3,6 +3,8 @@ import {
 	NotFoundException,
 	BadRequestException,
 	InternalServerErrorException,
+	forwardRef,
+	Inject,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
@@ -16,12 +18,15 @@ import { FeedCreateDto } from './dto/feed.create.dto';
 import { FeedUpdateDto } from './dto/feed.update.dto';
 import { extractImages } from 'src/utils/extract.images.util';
 import { handleImages } from 'src/utils/handle.images.util';
+import { CommentsService } from 'src/comments/comment.service';
 
 @Injectable()
 export class FeedsService {
 	constructor(
 		@InjectModel(Feed.name)
 		private readonly feedModel: AggregatePaginateModel<Feed>,
+		@Inject(forwardRef(() => CommentsService))
+		private commentsService: CommentsService,
 	) {}
 
 	async getAllFeeds(): Promise<Feed[]> {
@@ -335,17 +340,26 @@ export class FeedsService {
 			.exec();
 	}
 
-	async deleteFeed(id: string): Promise<void> {
-		try {
-			const deletedFeed = await this.feedModel.findByIdAndRemove(id).exec();
-
-			if (!deletedFeed) {
-				throw new NotFoundException(
-					`'${id}' 아이디를 가진 글을 찾지 못했습니다.`,
-				);
-			}
-		} catch (err) {
-			throw new InternalServerErrorException('글 삭제에 실패하였습니다.');
-		}
-	}
+	async deleteFeed(ids: string[]): Promise<void> {
+    try {
+        const feeds: Feed[] = await this.feedModel.find({ _id: { $in: ids }});
+        if(feeds.length > 0){
+            let commentsToDelete: string[] = [];
+            feeds.forEach((feed: Feed) => {
+                feed.comments.forEach((comment) => {
+                    commentsToDelete.push(comment.toString());
+                });
+                this.commentsService.deleteComment(commentsToDelete);
+            });
+        }
+        const deleteResult = await this.feedModel.deleteMany({ _id: { $in: ids }}).exec();
+        if (deleteResult.deletedCount === 0) {
+            throw new NotFoundException(
+                `해당 아이디를 가진 글들을 찾지 못했습니다.`,
+            );
+        }
+    } catch (err) {
+        throw new InternalServerErrorException('글 삭제에 실패하였습니다.');
+    }
+}
 }
