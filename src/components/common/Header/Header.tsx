@@ -182,7 +182,7 @@ const Header = () => {
             <NavLink to={CLIENT_PATH.MAP} className={({ isActive }) => (isActive ? 'active' : '')}>
               지도
             </NavLink>
-            <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
+            <NavLink to={CLIENT_PATH.BOARD_ALL} className={({ isActive }) => (isActive ? 'active' : '')}>
               커뮤니티
             </NavLink>
             <NavLink to={'/admin'} target="_blank">

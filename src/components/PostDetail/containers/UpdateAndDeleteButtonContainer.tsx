@@ -70,8 +70,10 @@ const UpdateAndDeleteContainer = () => {
     navigate('/community/board/all');
   }
 
+  const isAuthor = postInfo && isMember === postInfo.author._id;
+
   const deletePost = () => {
-    if (postInfo && isMember === postInfo.author._id) {
+    if (isAuthor) {
       DeleteFetchData();
     } else {
       alert('작성자가 아닙니다');
@@ -79,7 +81,7 @@ const UpdateAndDeleteContainer = () => {
   };
 
   const updatePost = () => {
-    if (postInfo && isMember === postInfo.author._id) {
+    if (isAuthor) {
       const currTab = postInfo.board === 'free' ? '자유게시판' : postInfo.board === 'review' ? '후기게시판' : 'gather';
       setTab(currTab);
       setPostContent(postInfo.content);
@@ -91,7 +93,7 @@ const UpdateAndDeleteContainer = () => {
       alert('작성자가 아닙니다');
     }
   };
-  return <UpdateAndDelete deletePost={deletePost} updatePost={updatePost}></UpdateAndDelete>;
+  return isAuthor ? <UpdateAndDelete deletePost={deletePost} updatePost={updatePost}></UpdateAndDelete> : <div></div>;
 };
 
 export default UpdateAndDeleteContainer;

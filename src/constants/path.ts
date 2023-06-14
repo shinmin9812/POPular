@@ -102,7 +102,7 @@ export const CLIENT_PATH = {
   MAP: '/map',
 
   SEARCH: '/search',
-
+  BOARD_ALL: '/community/board',
   BOARD: '/community/board/:category',
   POST: '/community/post/:postId',
   WRITE: '/community/write',

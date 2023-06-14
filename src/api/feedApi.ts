@@ -6,7 +6,7 @@ const fetchData = async (postCategory = '') => {
   try {
     let result;
     switch (postCategory) {
-      case 'all':
+      case '':
         result = await getAllFeeds();
         break;
       case 'free':

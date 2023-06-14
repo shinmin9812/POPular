@@ -101,7 +101,7 @@ const GlobalNavigation = () => {
             <p>홈</p>
           </div>
         </NavLink>
-        <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink to={CLIENT_PATH.BOARD_ALL} className={({ isActive }) => (isActive ? 'active' : '')}>
           <div className="nav_link">
             <CommunityIcon />
             <p>커뮤니티</p>

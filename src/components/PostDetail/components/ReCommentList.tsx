@@ -23,9 +23,11 @@ const ReCommentItem = styled.li`
 const ReComment = ({
   reComments,
   commentDelete,
+  isMember,
 }: {
   reComments: Comment[] | undefined;
-  commentDelete: (commentId: string, authorId: string) => Promise<void>;
+  commentDelete: (commentId: string) => Promise<void>;
+  isMember: string | undefined;
 }) => {
   return (
     <ReCommentWrap>
@@ -35,13 +37,17 @@ const ReComment = ({
           <CommentAuthorName>{reComment.author.nickname}</CommentAuthorName>
           <CommentContent>{reComment.content}</CommentContent>
           <CommentUpdateAt>{getDateFunc(reComment.updatedAt)}</CommentUpdateAt>
-          <CommentDeleteButton
-            onClick={() => {
-              commentDelete(reComment._id, reComment.author._id);
-            }}
-          >
-            <XmarkIcon />
-          </CommentDeleteButton>
+          {isMember === reComment.author._id ? (
+            <CommentDeleteButton
+              onClick={() => {
+                commentDelete(reComment._id);
+              }}
+            >
+              <XmarkIcon />
+            </CommentDeleteButton>
+          ) : (
+            <CommentDeleteButton></CommentDeleteButton>
+          )}
         </ReCommentItem>
       ))}
     </ReCommentWrap>

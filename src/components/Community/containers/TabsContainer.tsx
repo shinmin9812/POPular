@@ -18,7 +18,7 @@ const TabsContainer = () => {
 
   useEffect(() => {
     switch (postCategory) {
-      case 'all':
+      case undefined:
         currTab = '전체게시판';
         break;
       case 'free':
@@ -43,7 +43,7 @@ const TabsContainer = () => {
           onClick={() => {
             switch (item) {
               case '전체게시판':
-                navigate(CLIENT_PATH.BOARD.replace(':category', 'all'));
+                navigate(CLIENT_PATH.BOARD_ALL);
                 break;
               case '자유게시판':
                 navigate(CLIENT_PATH.BOARD.replace(':category', 'free'));

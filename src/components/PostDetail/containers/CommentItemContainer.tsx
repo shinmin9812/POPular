@@ -37,11 +37,7 @@ const CommentItemContainer = ({ comment }: { comment: Comment }) => {
     }
   };
 
-  const commentDeleteApi = async (commentId: string, authorId: string) => {
-    if (isMember !== authorId) {
-      alert('작성자가 아닙니다');
-      return;
-    }
+  const commentDeleteApi = async (commentId: string) => {
     const response = await fetch(API_PATH.COMMENT.DELETE.replace(':commentId', commentId), {
       method: 'DELETE',
       headers: {
@@ -64,6 +60,7 @@ const CommentItemContainer = ({ comment }: { comment: Comment }) => {
         setReCommentInput((prev) => !prev);
       }}
       commentDelete={commentDeleteApi}
+      isMember={isMember}
     />
   );
 };

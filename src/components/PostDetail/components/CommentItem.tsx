@@ -18,6 +18,7 @@ export const Li = styled.li`
   padding: 15px 0 15px 15px;
   line-height: 20px;
   text-align: center;
+  cursor: pointer;
 `;
 
 export const CommentAuthorName = styled.span`
@@ -62,12 +63,13 @@ const CommentItem = ({
   reCommentInput,
   setReCommentInput,
   commentDelete,
-}: //  ReComment
-{
+  isMember,
+}: {
   comment: Comment;
   reCommentInput: boolean;
   setReCommentInput: () => void;
-  commentDelete: (commentId: string, authorId: string) => Promise<void>;
+  commentDelete: (commentId: string) => Promise<void>;
+  isMember: string | undefined;
 }) => {
   return (
     <Li>
@@ -77,17 +79,21 @@ const CommentItem = ({
         </CommentAuthorName>
         <CommentContent>{comment.content}</CommentContent>
         <CommentUpdateAt>{getDateFunc(comment.updatedAt)}</CommentUpdateAt>
-        <CommentDeleteButton
-          onClick={(e) => {
-            e.stopPropagation(); // 상단에 있는 setReCommentInput 방지
-            commentDelete(comment._id, comment.author._id);
-          }}
-        >
-          <XmarkIcon />
-        </CommentDeleteButton>
+        {comment.author._id === isMember ? (
+          <CommentDeleteButton
+            onClick={(e) => {
+              e.stopPropagation(); // 상단에 있는 setReCommentInput 방지
+              commentDelete(comment._id);
+            }}
+          >
+            <XmarkIcon />
+          </CommentDeleteButton>
+        ) : (
+          <CommentDeleteButton></CommentDeleteButton>
+        )}
       </CommentWrap>
       {comment.recomments && comment.recomments.length > 0 && (
-        <ReComment reComments={comment.recomments} commentDelete={commentDelete} />
+        <ReComment reComments={comment.recomments} commentDelete={commentDelete} isMember={isMember} />
       )}
       {reCommentInput && (
         <ReCommentInputWrap>
