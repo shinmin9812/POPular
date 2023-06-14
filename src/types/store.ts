@@ -55,6 +55,7 @@ export interface Store {
   images: string[];
   scraps: string[];
   createdAt: string;
+  updatedAt: string;
 }
 
 type imageDeletedStore = Omit<Store, 'images' | '_id'>;
