@@ -87,6 +87,7 @@ const defaultFormValues: PostedStore = {
   reservation_required: false,
   images: [],
   scraps: [],
+  createdAt: '',
 };
 
 interface Props {

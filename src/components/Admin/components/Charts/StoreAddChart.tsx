@@ -1,5 +1,4 @@
 import { Store } from '../../../../types/store';
-import dayjs from 'dayjs';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
 import getDataByCreatedAt from '../../../../utils/getDataByCreatedAt';
