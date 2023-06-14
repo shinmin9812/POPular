@@ -92,7 +92,11 @@ export const API_PATH = {
     DELETE: {},
   },
 
-  AUTH: {},
+  AUTH: {
+    GET: {
+      PROFILE: `${API_BASE_URL}/auth/profile`,
+    },
+  },
 };
 
 export const CLIENT_PATH = {
