@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { User } from '../../../../types/user';
 import { Store } from '../../../../types/store';
 import CategoryItems from './CategoryItems';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface UserProps {
   users: User | null;
@@ -16,10 +16,6 @@ type CategoryItemProps = {
 const CategoryRecommend = ({ users, stores }: UserProps) => {
   const interestedCategories = users?.interested_category || [];
   const [selectCategory, setSelectCategory] = useState(interestedCategories[0]);
-
-  useEffect(() => {
-    console.log(selectCategory);
-  }, [selectCategory]);
 
   return (
     <Container>

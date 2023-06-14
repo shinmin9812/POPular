@@ -18,7 +18,6 @@ interface ContainerProps {
 const CategoryBox = ({ stores, text }: Props) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [isLogin, setIsLogin] = useState(false);
-
   const isCatagory =
     userData?.interested_category.length === 0 || userData?.interested_category === undefined ? false : true;
 
@@ -77,6 +76,10 @@ const Container = styled.div<ContainerProps>`
     text-align: center;
     color: var(--color-main);
   }
+
+  @media all and (max-width: 767px) {
+    height: ${(props) => (props.isLogin ? '850px' : '270px')};
+  }
 `;
 
 const ContainerBackground = styled.div<{ isLogin: boolean; isCatagory?: boolean }>`
@@ -95,6 +98,8 @@ const ContainerBackground = styled.div<{ isLogin: boolean; isCatagory?: boolean 
 
     @media all and (max-width: 767px) {
       height: ${(props) => (props.isLogin ? '850px' : '270px')};
+      width: 100%;
+      border-radius: 0px;
     }
   }
 `;
