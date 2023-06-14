@@ -14,7 +14,7 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-05-30 15:17:01',
-    comments: [commentData[0]],
+    comments: [],
   },
   {
     _id: '12346',
@@ -26,7 +26,7 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+    comments: [],
   },
   {
     _id: '75648',
@@ -38,7 +38,7 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+    comments: [],
   },
   {
     _id: '373685',
@@ -50,7 +50,7 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+    comments: [],
   },
   {
     _id: '7543567',
@@ -62,7 +62,7 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+    comments: [],
   },
   {
     _id: '624526',
@@ -74,7 +74,7 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+    comments: [],
   },
   {
     _id: '52432',
@@ -86,6 +86,6 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+    comments: [],
   },
 ];

@@ -7,26 +7,6 @@ interface Props {
   stores: Store[];
 }
 
-const Container = styled.div`
-  width: 100%;
-
-  .nothing {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 200px;
-
-    font-size: var(--font-large);
-    font-weight: var(--weight-semi-bold);
-
-    line-height: 1.3;
-
-    text-align: center;
-    word-break: keep-all;
-  }
-`;
-
 const StoreList = ({ stores }: Props) => {
   return (
     <Container className="store-list">
@@ -54,3 +34,23 @@ const StoreList = ({ stores }: Props) => {
 };
 
 export default StoreList;
+
+const Container = styled.div`
+  width: 100%;
+
+  .nothing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 200px;
+
+    font-size: var(--font-large);
+    font-weight: var(--weight-semi-bold);
+
+    line-height: 1.3;
+
+    text-align: center;
+    word-break: keep-all;
+  }
+`;

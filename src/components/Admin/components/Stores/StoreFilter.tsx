@@ -139,7 +139,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
   padding: 20px 0;
 
   border-radius: 20px;

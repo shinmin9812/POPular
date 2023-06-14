@@ -1,17 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ModalContainer from './ModalContainer';
 import Card from '../Card/Card';
 
 interface Props {
   children: React.ReactNode;
-  onClose: () => void;
 }
 
-const Modal = ({ children, onClose }: Props) => {
-  // console.log('modal');
+const Modal = ({ children }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  document.body.style.overflow = 'hidden';
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLDivElement;
@@ -21,7 +25,6 @@ const Modal = ({ children, onClose }: Props) => {
       document.body.style.overflow = 'auto';
       modalRef.current?.classList.remove('closing');
       modalRef.current?.classList.add('closed');
-      onClose();
     }, 300);
   };
 

@@ -37,17 +37,14 @@ const CommentItemContainer = ({ comment }: { comment: Comment }) => {
     }
   };
 
-  const commentDeleteApi = async (commentId: string, authorId: string) => {
-    if (isMember !== authorId) {
-      alert('작성자가 아닙니다');
-      return;
-    }
-    const response = await fetch(API_PATH.COMMENT.DELETE.replace(':commentId', commentId), {
+  const commentDeleteApi = async (commentId: string) => {
+    const response = await fetch(API_PATH.COMMENT.DELETE, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${localStorage.getItem('token')}`,
       },
+      body: JSON.stringify({ ids: [commentId] }),
     });
     const result = await response.json();
     alert(result.message);
@@ -64,6 +61,7 @@ const CommentItemContainer = ({ comment }: { comment: Comment }) => {
         setReCommentInput((prev) => !prev);
       }}
       commentDelete={commentDeleteApi}
+      isMember={isMember}
     />
   );
 };

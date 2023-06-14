@@ -143,7 +143,8 @@ const Loading = styled.div`
 `;
 
 const PostContainer = styled.div`
-  height: calc(100% - 460px);
+  height: calc(100vh - 165px);
+  overflow: auto;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -160,11 +161,17 @@ const PostContainer = styled.div`
 
 const PostgetTotalSize = styled.div<PostgetTotalSizeProps>`
   height: ${(props) => props.height}px;
+  width: 95%;
   margin: 0 auto;
+  position: relative;
 `;
 
 const PostItemContainer = styled.div<PostItemContainerProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 120px;
-  margin: 20px 0;
+  height: ${(props) => props.size}px;
+  margin: 0;
+  transform: translateY(${(props) => props.size + props.start - 260}px);
 `;

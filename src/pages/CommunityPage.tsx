@@ -11,6 +11,7 @@ import FilterAndWriteButtonWrapContainer from '../components/Community/container
 import MetaTag from '../components/SEO/MetaTag';
 const Container = styled.div`
   width: 100%;
+  height: 1200px;
 `;
 const CommunityPage = () => {
   return (

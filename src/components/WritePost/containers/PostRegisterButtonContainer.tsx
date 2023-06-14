@@ -30,9 +30,8 @@ const PostRegisterButtonContainer = () => {
   };
 
   const [isMember, setIsMember] = useState();
-
+  const [gone, setGone] = useState(false);
   const currTab = tab === '자유게시판' ? 'free' : tab === '후기게시판' ? 'review' : 'gather';
-
   const register = async () => {
     const data = {
       title: postTitle,
@@ -65,10 +64,6 @@ const PostRegisterButtonContainer = () => {
         });
       }
       if (response.ok) {
-        setPostTitle('');
-        setPostContent('');
-        setChoiceStoreId('');
-        setIsUpdate({ use: false, id: '' });
         navigate(CLIENT_PATH.BOARD.replace(':category', currTab));
       }
     } catch (err: any) {
@@ -100,15 +95,31 @@ const PostRegisterButtonContainer = () => {
   useEffect(() => {
     getUserInfo();
   }, []);
+
+  //페이지 벗어날 경우 작성했던 데이터 초기화
+  useEffect(() => {
+    return () => {
+      if (!isUpdate.use) {
+        setPostTitle('');
+        setPostContent('');
+        setChoiceStoreId('');
+      } else {
+        // 페이지 떠날 때만 실행
+        if (gone) {
+          setGone(false);
+          setIsUpdate({ use: false, id: '' });
+        } else {
+          setGone(true);
+        }
+      }
+    };
+  }, [location, gone]);
+
   return (
     <PostRegisterButtonWrap>
       <PostRegisterButton
         isUpdate={true}
         onClick={() => {
-          setPostTitle('');
-          setPostContent('');
-          setChoiceStoreId('');
-          setIsUpdate({ use: false, id: '' });
           alert('이전 페이지로 돌아갑니다.');
           navigate(CLIENT_PATH.BOARD.replace(':category', currTab));
         }}
@@ -121,7 +132,7 @@ const PostRegisterButtonContainer = () => {
           register();
         }}
       >
-        {isUpdate.use ? '수정하기' : '작성하기'}
+        {isUpdate ? '수정하기' : '작성하기'}
       </PostRegisterButton>
     </PostRegisterButtonWrap>
   );

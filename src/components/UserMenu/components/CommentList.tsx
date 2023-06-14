@@ -71,8 +71,8 @@ const CommentList = () => {
   const rowVirtualizer = useVirtualizer({
     count: hasNextPage ? allRows.length + 1 : allRows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 135,
-    overscan: 0,
+    estimateSize: () => 140,
+    overscan: 7,
   });
 
   useEffect(() => {
@@ -96,14 +96,12 @@ const CommentList = () => {
       ) : (
         <CommentContainer ref={parentRef}>
           <CommentGetTotalSize height={rowVirtualizer.getTotalSize()}>
-            {rowVirtualizer.getVirtualItems().map((virtualRow: any) => {
+            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
               const isLoaderRow = virtualRow.index > allRows.length - 1;
               const comment: Comment = allRows[virtualRow.index];
 
-              // console.log(comment);
-
               return (
-                <CommentItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start - 135}>
+                <CommentItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start + 120}>
                   {isLoaderRow ? (
                     hasNextPage ? (
                       <Loading>
@@ -112,17 +110,17 @@ const CommentList = () => {
                     ) : (
                       'Nothing more to load'
                     )
-                  ) : comment.parent.type === 'Feed' ? (
+                  ) : comment?.parent?.type === 'Feed' ? (
                     <CommentItem
-                      parentId={comment.parent.id}
-                      comment={comment.content}
-                      date={getDateFunc(comment.updatedAt)}
+                      parentId={comment?.parent?.id}
+                      comment={comment?.content}
+                      date={getDateFunc(comment?.updatedAt)}
                     />
                   ) : (
                     <RecommentItem
-                      parentId={comment.parent.id}
-                      recomment={comment.content}
-                      date={getDateFunc(comment.updatedAt)}
+                      parentId={comment?.parent?.id}
+                      recomment={comment?.content}
+                      date={getDateFunc(comment?.updatedAt)}
                     />
                   )}
                 </CommentItemContainer>
@@ -155,7 +153,8 @@ const Loading = styled.div`
 `;
 
 const CommentContainer = styled.div`
-  height: calc(100% - 460px);
+  height: calc(100vh - 165px);
+  overflow: auto;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -172,11 +171,17 @@ const CommentContainer = styled.div`
 
 const CommentGetTotalSize = styled.div<CommentGetTotalSizeProps>`
   height: ${(props) => props.height}px;
+  width: 100%;
   margin: 0 auto;
+  position: relative;
 `;
 
 const CommentItemContainer = styled.div<CommentItemContainerProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 120px;
-  margin: 20px 0;
+  height: ${(props) => props.size}px;
+  margin: 0;
+  transform: translateY(${(props) => props.size + props.start - 260}px);
 `;

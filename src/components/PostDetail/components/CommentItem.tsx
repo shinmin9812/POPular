@@ -18,6 +18,7 @@ export const Li = styled.li`
   padding: 15px 0 15px 15px;
   line-height: 20px;
   text-align: center;
+  cursor: pointer;
 `;
 
 export const CommentAuthorName = styled.span`
@@ -25,11 +26,12 @@ export const CommentAuthorName = styled.span`
   font-weight: var(--weight-light);
   width: 15%;
   font-size: var(--font-small);
+  margin-right: 20px;
 `;
 
 export const CommentContent = styled.div`
   margin: 0 5px;
-  width: 55%;
+  width: 75%;
   text-align: left;
   font-size: var(--font-small);
 `;
@@ -37,7 +39,7 @@ export const CommentContent = styled.div`
 export const CommentUpdateAt = styled.span`
   color: var(--color-gray);
   font-weight: var(--weight-light);
-  width: 30%;
+  width: 10%;
   font-size: var(--font-small);
   text-align: right;
   cursor: pointer;
@@ -61,32 +63,37 @@ const CommentItem = ({
   reCommentInput,
   setReCommentInput,
   commentDelete,
-}: //  ReComment
-{
+  isMember,
+}: {
   comment: Comment;
   reCommentInput: boolean;
   setReCommentInput: () => void;
-  commentDelete: (commentId: string, authorId: string) => Promise<void>;
+  commentDelete: (commentId: string) => Promise<void>;
+  isMember: string | undefined;
 }) => {
   return (
     <Li>
       <CommentWrap onClick={setReCommentInput}>
-        <Link to={CLIENT_PATH.PROFILE.replace(':userId', comment.author._id)}>
-          <CommentAuthorName>{comment.author.nickname}</CommentAuthorName>
-        </Link>
+        <CommentAuthorName>
+          <Link to={CLIENT_PATH.PROFILE.replace(':userId', comment.author._id)}>{comment.author.nickname}</Link>
+        </CommentAuthorName>
         <CommentContent>{comment.content}</CommentContent>
         <CommentUpdateAt>{getDateFunc(comment.updatedAt)}</CommentUpdateAt>
-        <CommentDeleteButton
-          onClick={(e) => {
-            e.stopPropagation(); // 상단에 있는 setReCommentInput 방지
-            commentDelete(comment._id, comment.author._id);
-          }}
-        >
-          <XmarkIcon />
-        </CommentDeleteButton>
+        {comment.author._id === isMember ? (
+          <CommentDeleteButton
+            onClick={(e) => {
+              e.stopPropagation(); // 상단에 있는 setReCommentInput 방지
+              commentDelete(comment._id);
+            }}
+          >
+            <XmarkIcon />
+          </CommentDeleteButton>
+        ) : (
+          <CommentDeleteButton></CommentDeleteButton>
+        )}
       </CommentWrap>
       {comment.recomments && comment.recomments.length > 0 && (
-        <ReComment reComments={comment.recomments} commentDelete={commentDelete} />
+        <ReComment reComments={comment.recomments} commentDelete={commentDelete} isMember={isMember} />
       )}
       {reCommentInput && (
         <ReCommentInputWrap>

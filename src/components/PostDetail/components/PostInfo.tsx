@@ -2,10 +2,12 @@ import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import { BoardTypes } from '../../../types/board';
 import styled from 'styled-components';
 import getDateFunc from '../../../utils/getDateFunc';
-
+import { CLIENT_PATH } from '../../../constants/path';
+import { Link } from 'react-router-dom';
 interface PostInfoType {
   boardType: BoardTypes;
   title: string;
+  authorId: string;
   nickName: string;
   updatedAt: string;
   likes: number;
@@ -38,6 +40,10 @@ const BottomInfo = styled.div`
   color: var(--color-gray);
   margin: 10px 0;
   font-size: var(--font-small);
+
+  a {
+    color: var(--color-gray);
+  }
 `;
 const RightInfo = styled.div`
   display: flex;
@@ -47,14 +53,17 @@ const RightInfo = styled.div`
   font-size: var(--font-small);
 `;
 
-const PostInfo = ({ boardType, title, nickName, updatedAt, likes, comments, views }: PostInfoType) => {
+const PostInfo = ({ boardType, title, authorId, nickName, updatedAt, likes, comments, views }: PostInfoType) => {
   return (
     <PostInfoWrap>
       <BoardTypeTag boardType={boardType} />
       <RowWrap>
         <ColumnWrap>
           <PostTitle>{title}</PostTitle>
-          <BottomInfo>{`${nickName} | ${getDateFunc(updatedAt)}`}</BottomInfo>
+          <BottomInfo>
+            <Link to={CLIENT_PATH.PROFILE.replace(':userId', authorId)}>{nickName}</Link>
+            {` | ${getDateFunc(updatedAt)}`}
+          </BottomInfo>
         </ColumnWrap>
         <ColumnWrap>
           <RightInfo>

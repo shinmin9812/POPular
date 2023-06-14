@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useQueries, useMutation } from '@tanstack/react-query';
 import styled from 'styled-components';
 import * as React from 'react';
-import { getStoreById } from '../../../api/storeApi';
 import { getLoginUser } from '../../../api/userApi';
 import { Store } from '../../../types/store';
 
