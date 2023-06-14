@@ -12,14 +12,14 @@ const isTypeStore = (item: any): item is Store => {
 };
 
 const RecentListPage = () => {
-  const [stores, setStores] = useState<Store[]>([]);
+  const [stores, setStores] = useState<Store[]>();
   const items = localStorage.getItem('store');
   const getStores = () => {
     if (items) {
-      const stores: [{}] = JSON.parse(items);
+      const stores: Store[] = JSON.parse(items);
       if (stores.every(isTypeStore)) {
         setStores(stores);
-      } else setStores([]);
+      } else return;
     }
   };
 
@@ -35,7 +35,17 @@ const RecentListPage = () => {
       </MenuListContainer>
       <ContentContainer>
         <Title>최근 본 스토어</Title>
-        <StoreList stores={stores} />
+        {stores ? (
+          <StoreList stores={stores} />
+        ) : (
+          <div className="nothing">
+            <p>
+              해당 스토어가
+              <br />
+              존재하지 않습니다!
+            </p>
+          </div>
+        )}
       </ContentContainer>
     </Container>
   );
@@ -99,6 +109,22 @@ const ContentContainer = styled.div`
     margin: 10px 20px;
     border-radius: 8px;
     background-color: var(--color-light-gray);
+  }
+
+  .nothing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 200px;
+
+    font-size: var(--font-large);
+    font-weight: var(--weight-semi-bold);
+
+    line-height: 1.3;
+
+    text-align: center;
+    word-break: keep-all;
   }
 `;
 

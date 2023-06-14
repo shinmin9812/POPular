@@ -5,28 +5,34 @@ import MetaTag from '../components/SEO/MetaTag';
 import { useEffect, useState } from 'react';
 import { CLIENT_PATH } from '../constants/path';
 import MenuItem from '../components/UserMenu/components/MenuItem';
+import { User } from '../types/user';
+import { Store } from '../types/store';
 
-const ScrapPage = () => {
-  const [userId, setUserId] = useState('');
-  const getUserInfo = async () => {
-    try {
-      const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      const data = await response.json();
-      setUserId(data._id);
-    } catch (err: any) {
-      throw new Error(err);
+const ScrapPage = ({ userData }: { userData: User | undefined }) => {
+  const [stores, setStores] = useState<Store[]>([]);
+
+  const fetchStore = async (storeId: string) => {
+    const res = await fetch(`http://34.22.81.36:3000/stores/store/${storeId}`);
+    const data = await res.json();
+    return data;
+  };
+
+  const getStoreData = async () => {
+    if (userData) {
+      const res = await fetch(`http://34.22.81.36:3000/users/${userData._id}/scraps`);
+      const storeIdData = await res.json();
+      const storeData = await Promise.all(
+        storeIdData.map((id: string) => {
+          return fetchStore(id);
+        }),
+      );
+      setStores(storeData);
     }
   };
 
   useEffect(() => {
-    getUserInfo();
-  }, []);
+    getStoreData();
+  }, [userData]);
 
   return (
     <Container>
@@ -37,7 +43,7 @@ const ScrapPage = () => {
       </MenuListContainer>
       <ContentContainer>
         <Title>위시리스트</Title>
-        <StyledStoreList userId={userId} />
+        <StyledStoreList stores={stores} />
       </ContentContainer>
     </Container>
   );

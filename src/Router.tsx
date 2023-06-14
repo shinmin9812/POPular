@@ -77,7 +77,7 @@ const Router = () => {
           />
           <Route
             path={CLIENT_PATH.USER_SCRAP}
-            element={<PrivateRoute userData={userData} component={<ScrapPage />} />}
+            element={<PrivateRoute userData={userData} component={<ScrapPage userData={userData} />} />}
           />
           <Route
             path={CLIENT_PATH.USER_NOTIFICATIONS}
