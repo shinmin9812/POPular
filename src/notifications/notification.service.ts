@@ -22,10 +22,14 @@ export class NotificationsService {
 			let query = this.notificationModel.find();
 
 			if (userId) {
-				query = query.where('userId', userId);
+				query = query.where('user_id', userId);
 			}
 
-			const notifications = await query.populate('content').exec();
+			const notifications = await query
+				.populate('content_store')
+				.populate('content_comment')
+				.populate('content_user')
+				.exec();
 
 			return notifications;
 		} catch (err) {
@@ -38,7 +42,6 @@ export class NotificationsService {
 		try {
 			const notification = await this.notificationModel
 				.findById(id)
-				.populate('user_id')
 				.populate('content_store')
 				.populate('content_comment')
 				.populate('content_user')

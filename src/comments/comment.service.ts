@@ -295,40 +295,32 @@ export class CommentsService {
 			.exec();
 	}
 
-	async deleteComment(id: string): Promise<void> {
-		try {
-			const comment = await this.commentModel.findById(id);
+	async deleteComment(ids: string[]): Promise<void> {
+    try {
+        const comments = await this.commentModel.find({ _id: { $in: ids }});
+        let recommentsToDelete: string[] = [];
+        if(comments.length > 0) {
+            comments.forEach((comment) => {
+                this.feedsService.removeComment(comment.parent.id, comment._id)
+                comment.recomments.forEach((recomment) => {
+                    recommentsToDelete.push(recomment.toString());
+                    this.removeRecomment(comment._id, recomment);
+                });
+            })
+        }
 
-			if (comment) {
-				const recomments = comment.recomments;
-				if (recomments) {
-					for (const recomment of recomments) {
-						await this.deleteComment(recomment.toString());
-					}
-				}
-			}
-			if (comment.parent.type === 'Feed') {
-				await this.feedsService.removeComment(
-					comment.parent.id,
-					new Types.ObjectId(id),
-				);
-			} else {
-				await this.removeRecomment(comment.parent.id, new Types.ObjectId(id));
-			}
+        if (recommentsToDelete.length > 0) {
+            await this.deleteComment(recommentsToDelete);
+        }
 
-			const deletedComment = await this.commentModel
-				.findByIdAndRemove(id)
-				.exec();
-
-			if (!deletedComment) {
-				throw new NotFoundException(
-					`'${id}' 아이디를 가진 댓글을 찾지 못했습니다.`,
-				);
-			}
-
-			await deletedComment.deleteOne();
-		} catch (err) {
-			throw new InternalServerErrorException('댓글 삭제에 실패하였습니다.');
-		}
-	}
+        const deleteResult = await this.commentModel.deleteMany({ _id: { $in: ids }}).exec();
+        if (deleteResult.deletedCount === 0) {
+            throw new NotFoundException(
+                `해당 아이디를 가진 댓글들을 찾지 못했습니다.`,
+            );
+        }
+    } catch (err) {
+        throw new InternalServerErrorException('댓글 삭제에 실패하였습니다.');
+    }
+}
 }
