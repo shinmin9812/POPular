@@ -27,7 +27,6 @@ import AdminStoreStatisticsPage from './pages/Admin/AdminStoreStatisticsPage';
 import AdminStoreDeletePage from './pages/Admin/AdminStoreDeletePage';
 import AdminStoreStatisticsDetailPage from './pages/Admin/AdminStoreStatisticsDetailPage';
 import AdminUserStatisticsPage from './pages/Admin/AdminUserStatisticsPage';
-import AdminUserStatisticsDetailPage from './pages/Admin/AdminUserDetailPage';
 import AdminUserDetailPage from './pages/Admin/AdminUserDetailPage';
 import AdminUserEditPage from './pages/Admin/AdminUserEditPage';
 import AdminUserDeletePage from './pages/Admin/AdminUserDeletePage';

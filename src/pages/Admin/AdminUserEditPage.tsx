@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
-import { useGetAllStores } from '../../api/storeApi';
-import AdminStoreList from '../../components/Admin/components/Stores/AdminStoreList';
 import { Outlet } from 'react-router-dom';
 import { useGetAllUsers } from '../../api/userApi';
 import AdminUserList from '../../components/Admin/components/Users/AdminUserList';

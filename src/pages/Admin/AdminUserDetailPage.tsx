@@ -78,7 +78,7 @@ const AdminUserDetailPage = () => {
   const { userId } = useParams();
   const { data: user } = useGetUserById(userId!, { cacheTime: 0 });
   const { pathname } = useLocation();
-  const [editMode, setEditMode] = useState<boolean>(false);
+  const [, setEditMode] = useState<boolean>(false);
 
   useEffect(() => {
     if (pathname.split('/')[3] === 'edit') setEditMode(true);
