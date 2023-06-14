@@ -223,7 +223,7 @@ export class UserService {
 		const notificationCreatDto = {
 			type: NotificationType.FOLLOW,
 			board: null,
-			user_id: user._id.toString(),
+			user_id: target._id.toString(),
 			content_comment: null,
 			content_store: null,
 			content_user: new Types.ObjectId(target._id),
