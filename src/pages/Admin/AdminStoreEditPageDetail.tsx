@@ -16,7 +16,7 @@ const AdminStoreEditPageDetail = () => {
   const { storeId } = useParams();
   const { data } = useGetStoreById(storeId!, { cacheTime: 0 });
 
-  return <Container>{data ? <StoreForm defaultData={data} /> : <div>Loading</div>}</Container>;
+  return <Container>{data ? <StoreForm defaultData={data} /> : <></>}</Container>;
 };
 
 export default AdminStoreEditPageDetail;
