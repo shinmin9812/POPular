@@ -58,16 +58,17 @@ const UpdateAndDeleteContainer = () => {
   };
 
   async function DeleteFetchData() {
-    const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : ''), {
+    const response = await fetch(API_PATH.POST.DELETE, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${localStorage.getItem('token')}`,
       },
+      body: JSON.stringify({ ids: [postId] }),
     });
     const result = await response.json();
     alert(result.message);
-    navigate('/community/board/all');
+    navigate('/community/board');
   }
 
   const isAuthor = postInfo && isMember === postInfo.author._id;

@@ -38,12 +38,13 @@ const CommentItemContainer = ({ comment }: { comment: Comment }) => {
   };
 
   const commentDeleteApi = async (commentId: string) => {
-    const response = await fetch(API_PATH.COMMENT.DELETE.replace(':commentId', commentId), {
+    const response = await fetch(API_PATH.COMMENT.DELETE, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${localStorage.getItem('token')}`,
       },
+      body: JSON.stringify({ ids: [commentId] }),
     });
     const result = await response.json();
     alert(result.message);

@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
 const TitleNameWrap = styled.span`
-  width: 5%;
+  width: fit-content;
   text-align: center;
   line-height: 33px;
   font-size: var(--font-medium);
+  @media (max-width: 420px) {
+    font-size: var(--font-small);
+  }
 `;
 
 const Input = styled.input`
@@ -31,11 +34,6 @@ const TitleInputWrap = styled.div`
   gap: 10px;
 
   padding: 0 20px;
-
-  p {
-    width: fit-content;
-    font-size: 20px;
-  }
 `;
 
 const PostTitle = ({ value, onChange }: { value: string; onChange: (title: string) => void }) => {

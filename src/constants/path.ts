@@ -60,7 +60,7 @@ export const API_PATH = {
     },
     POST: `${API_BASE_URL}/feeds/`,
     PUT:  `${API_BASE_URL}/feeds/:postId`,
-    DELETE: {},
+    DELETE: `${API_BASE_URL}/feeds/`,
   },
 
   COMMENT: {
@@ -76,7 +76,7 @@ export const API_PATH = {
     },
     POST:`${API_BASE_URL}/comments`,
     PUT: {},
-    DELETE: `${API_BASE_URL}/comments/:commentId`,
+    DELETE: `${API_BASE_URL}/comments/`,
   },
 
   NOTIFICATION: {

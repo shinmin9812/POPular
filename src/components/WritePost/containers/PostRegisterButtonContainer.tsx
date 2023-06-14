@@ -65,10 +65,6 @@ const PostRegisterButtonContainer = () => {
         });
       }
       if (response.ok) {
-        setPostTitle('');
-        setPostContent('');
-        setChoiceStoreId('');
-        setIsUpdate({ use: false, id: '' });
         navigate(CLIENT_PATH.BOARD.replace(':category', currTab));
       }
     } catch (err: any) {
@@ -100,15 +96,23 @@ const PostRegisterButtonContainer = () => {
   useEffect(() => {
     getUserInfo();
   }, []);
+
+  //페이지 벗어날 경우 작성했던 데이터 초기화
+  useEffect(() => {
+    return () => {
+      console.log('a');
+      setPostTitle('');
+      setPostContent('');
+      setChoiceStoreId('');
+      setIsUpdate({ use: false, id: '' });
+    };
+  }, [location]);
+
   return (
     <PostRegisterButtonWrap>
       <PostRegisterButton
         isUpdate={true}
         onClick={() => {
-          setPostTitle('');
-          setPostContent('');
-          setChoiceStoreId('');
-          setIsUpdate({ use: false, id: '' });
           alert('이전 페이지로 돌아갑니다.');
           navigate(CLIENT_PATH.BOARD.replace(':category', currTab));
         }}

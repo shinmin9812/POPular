@@ -53,7 +53,7 @@ const Pagination = ({
             setPage(currPage - 1);
           }
         }}
-      >{`< `}</MovementButton>
+      >{`< Prev`}</MovementButton>
       <PageList>
         {pageGroup.map(
           (page) =>
@@ -76,7 +76,7 @@ const Pagination = ({
             setPage(currPage + 1);
           }
         }}
-      >{` >`}</MovementButton>
+      >{`Next >`}</MovementButton>
     </PageListWrap>
   );
 };
