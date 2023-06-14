@@ -5,7 +5,7 @@ import StoreAddChart from '../../components/Admin/components/Charts/StoreAddChar
 import StoreLocationChart from '../../components/Admin/components/Charts/StoreLocationChart';
 import StoreScrapChart from '../../components/Admin/components/Charts/StoreScrapChart';
 import AdminStoreList from '../../components/Admin/components/Stores/AdminStoreList';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import StoreTitle from '../../components/StoreDetail/container/StoreTitle';
 import StoreInfo from '../../components/StoreDetail/container/StoreInfo';
 
@@ -43,7 +43,12 @@ const Container = styled.div`
 `;
 
 const AdminStoreStatisticsPage = () => {
-  const { data: allStores } = useGetAllStores();
+  const navigate = useNavigate();
+  const { data: allStores } = useGetAllStores({
+    onSuccess: () => {
+      if (allStores) navigate(`./${allStores![0]._id}`);
+    },
+  });
   const { storeId } = useParams();
 
   return (
