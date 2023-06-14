@@ -10,6 +10,11 @@ interface Props {
   text: string;
 }
 
+interface ContainerProps {
+  isLogin: boolean;
+  isCatagory?: boolean;
+}
+
 const CategoryBox = ({ stores, text }: Props) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [isLogin, setIsLogin] = useState(false);
@@ -44,7 +49,7 @@ const CategoryBox = ({ stores, text }: Props) => {
   };
 
   return (
-    <Container>
+    <Container isLogin={isLogin} isCatagory={isCatagory}>
       <ContainerBackground isLogin={isLogin} isCatagory={isCatagory}>
         <CategoryInner>
           <h2>{text}</h2>
@@ -60,9 +65,10 @@ const CategoryBox = ({ stores, text }: Props) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<ContainerProps>`
   width: 100%;
   margin: 70px 0px;
+  height: ${(props) => (props.isLogin && props.isCatagory ? '520px' : '270px')};
 
   h2 {
     font-weight: var(--weight-semi-bold);

@@ -1,16 +1,36 @@
 import styled from 'styled-components';
-import { Store } from '../../../../types/store';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 interface Props {
-  stores: Store[];
+  catecoryList: string;
 }
 
-const CategoryItems = ({ stores }: Props) => {
+const CategoryItems = ({ catecoryList }: Props) => {
+  const [categoryData, setCategoryData] = useState<any[]>([]);
+  useEffect(() => {
+    getCategoryItems();
+  }, [catecoryList]);
+
+  const getCategoryItems = async () => {
+    try {
+      const response = await fetch(`http://34.22.81.36:3000/stores/category/${catecoryList}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setCategoryData(data);
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  };
+
   return (
     <Container>
       <CategoryItemList>
-        {stores.slice(0, 4).map((store) => {
+        {categoryData.slice(0, 4).map((store) => {
           const location = store.location.split(' ').slice(0, 2).join(' ');
           return (
             <CategoryItem key={store._id}>
