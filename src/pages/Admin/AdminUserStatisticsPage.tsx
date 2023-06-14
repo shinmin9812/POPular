@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
 import { useGetAllUsers } from '../../api/userApi';
 import UserAddChart from '../../components/Admin/components/Charts/UserAddChart';
+import UserFollowerChart from '../../components/Admin/components/Charts/UserFollowerChart';
+import UserCategoryCharts from '../../components/Admin/components/Charts/UserCategoryCharts';
 
 const Container = styled.div`
   display: flex;
@@ -49,14 +51,14 @@ const AdminUserStatisticsPage = () => {
             <p className="title">유저 가입 추이</p>
             <UserAddChart users={allUsers} />
           </Card>
-          {/* <Card className="user-add-chart">
-            <p className="title">지역별 점포 수 분포</p>
-            <StoreLocationChart users={allStores} />
+          <Card className="user-follower-chart">
+            <p className="title">최다 팔로워 유저</p>
+            <UserFollowerChart users={allUsers} />
           </Card>
           <Card className="user-scrap-chart">
-            <p className="title">스토어별 스크랩 순위</p>
-            <StoreScrapChart users={allStores} />
-          </Card> */}
+            <p className="title">유저 선호 카테고리</p>
+            <UserCategoryCharts users={allUsers} />
+          </Card>
         </div>
       )}
 

@@ -6,6 +6,7 @@ interface DataValue {
 
 export default function getDataByCreatedAt(title: string, data: DataValue[]) {
   const daymap = new Map();
+
   const convertedUsers = data.map((item) => {
     return {
       ...item,
