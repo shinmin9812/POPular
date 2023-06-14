@@ -11,19 +11,27 @@ import { CLIENT_PATH } from '../constants/path';
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
+  const getUserNotification = async () => {
+    const res = await fetch('http://34.22.81.36:3000/notifications/user/6479cd31b0b0d8f69ffcfc55', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+  };
+
   useEffect(() => {
-    fetch('/user/id/12341231')
-      .then((data) => data.json())
-      .then((userData) => {
-        setNotifications(userData.notifications || []);
-      });
+    getUserNotification();
   }, []);
 
   return (
     <Container>
       <MetaTag title={`POPULAR | 알림 목록`} />
       <MenuListContainer>
-        <MenuItem link={CLIENT_PATH.USER_NOTIFICATIONS} title="알림 목록" />
+        <NotificationMenu link={CLIENT_PATH.USER_NOTIFICATIONS} title="알림 목록" />
         <MenuList />
       </MenuListContainer>
       <ContentContainer>
@@ -42,6 +50,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
 `;
+
 const MenuListContainer = styled.div`
   display: none;
   a {
@@ -80,6 +89,13 @@ const MenuListContainer = styled.div`
         font-size: calc(var(--font-regular) + 2px);
       }
     }
+  }
+`;
+
+const NotificationMenu = styled(MenuItem)`
+  display: none;
+  @media screen and (min-width: 768px) {
+    display: block;
   }
 `;
 

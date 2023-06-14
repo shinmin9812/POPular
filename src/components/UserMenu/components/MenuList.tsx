@@ -31,7 +31,6 @@ export default MenuList;
 const MenuListContainer = styled.div`
   width: 350px;
   margin: 0;
-  border-top: 1px solid gray;
   a,
   div {
     display: block;
