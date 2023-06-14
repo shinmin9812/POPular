@@ -2,38 +2,12 @@ import styled from 'styled-components';
 import { Store } from '../../../types/store';
 import StoreItem from './StoreItem';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 interface Props {
-  userId: string;
+  stores: Store[];
 }
 
-const StoreList = ({ userId }: Props) => {
-  const [stores, setStores] = useState<Store[]>([]);
-
-  const fetchStore = async (storeId: string) => {
-    const res = await fetch(`http://34.22.81.36:3000/stores/store/${storeId}`);
-    const data = await res.json();
-    return data;
-  };
-
-  const getStoreData = async () => {
-    if (userId) {
-      const res = await fetch(`http://34.22.81.36:3000/users/${userId}/scraps`);
-      const storeIdData = await res.json();
-      const storeData = await Promise.all(
-        storeIdData.map((id: string) => {
-          return fetchStore(id);
-        }),
-      );
-      setStores(storeData);
-    }
-  };
-
-  useEffect(() => {
-    getStoreData();
-  }, [userId]);
-
+const StoreList = ({ stores }: Props) => {
   return (
     <Container className="store-list">
       {stores.length > 0 ? (
