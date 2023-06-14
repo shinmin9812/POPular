@@ -39,6 +39,8 @@ const ItemContainer = styled.div`
 
   display: flex;
   align-items: center;
+  color: ${(props) => props.checked && 'var(--color-light-black)'};
+  opacity: ${(props) => (props.checked ? 0.3 : 1)};
 `;
 
 const Content = styled.div`

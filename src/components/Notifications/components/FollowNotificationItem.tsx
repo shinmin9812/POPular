@@ -6,6 +6,7 @@ interface Props {
   follower: User;
   checked: boolean;
 }
+
 const FollowNotificationItem = ({ follower, checked }: Props) => {
   return (
     <ItemContainer checked={checked}>
@@ -29,6 +30,8 @@ const ItemContainer = styled.div`
 
   display: flex;
   align-items: center;
+  color: ${(props) => props.checked && 'var(--color-light-black)'};
+  opacity: ${(props) => (props.checked ? 0.3 : 1)};
 `;
 
 const Message = styled.p`

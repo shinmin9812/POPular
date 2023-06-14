@@ -6,10 +6,11 @@ import CommentIconMini from '../../common/Icons/CommentIconMini';
 interface Props {
   commentData: Comment;
   board: string;
+  checked: boolean;
 }
-const CommentNotificationItem = ({ commentData, board }: Props) => {
+const CommentNotificationItem = ({ commentData, board, checked }: Props) => {
   return (
-    <Container>
+    <Container checked={checked}>
       <CommentIconMini />
       <Content>
         <Message>{commentData.author.nickname}님이 댓글을 작성했습니다.</Message>
@@ -37,6 +38,9 @@ const Container = styled.div`
 
   display: flex;
   align-items: center;
+
+  color: ${(props) => props.checked && 'var(--color-light-black)'};
+  opacity: ${(props) => (props.checked ? 0.3 : 1)};
 `;
 
 const Content = styled.div`
