@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import Header from './Header/Header';
 import GlovalNavigation from './GNA/GlobalNavigation';
+import Footer from './Footer/Footer';
 
 const Wrapper = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
@@ -75,6 +76,7 @@ const Layout = () => {
         <Outlet />
       </OutletWrapper>
       <GlovalNavigation />
+      <Footer />
     </Wrapper>
   );
 };
