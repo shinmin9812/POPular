@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { Post } from '../types/post';
 import { Comment } from '../types/comment';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState, useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from '../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
 import PostInfo from '../components/PostDetail/components/PostInfo';
@@ -15,8 +16,8 @@ import LikesAndReportsContainer from '../components/PostDetail/containers/LikeAn
 import CommentInputContainer from '../components/PostDetail/containers/CommentInputContainer';
 import StarIcon from '../components/common/Icons/StarIcon';
 import { getComments } from '../api/CommentApi';
-import { useQuery } from '@tanstack/react-query';
 import MetaTag from '../components/SEO/MetaTag';
+import { API_PATH } from '../constants/path';
 
 const Container = styled.div`
   width: 100%;
@@ -39,7 +40,7 @@ const RatingsWrap = styled.div`
 `;
 
 async function fetchData(postId = '') {
-  const response = await fetch(`http://34.22.81.36:3000/feeds/${postId}`);
+  const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId));
   const result: Post = await response.json();
   return result;
 }
@@ -48,19 +49,29 @@ const PostDetailPage = () => {
   const [post, setPost] = useState<Post | null>(null);
   const comments = useAppSelector((state) => state.PostDetailSlice.comment);
   const dispatch = useAppDispatch();
-  const setComments = (comments: Comment[]) => {
-    return dispatch(PostDetailActions.setComment(comments));
-  };
-  const setLikes = (likes: string[]) => {
-    return dispatch(PostDetailActions.setLikes(likes));
-  };
-  const setReports = (reports: string[]) => {
-    return dispatch(PostDetailActions.setReports(reports));
-  };
+  const setComments = useCallback(
+    (comments: Comment[]) => {
+      return dispatch(PostDetailActions.setComment(comments));
+    },
+    [dispatch],
+  );
+  const setLikes = useCallback(
+    (likes: string[]) => {
+      return dispatch(PostDetailActions.setLikes(likes));
+    },
+    [dispatch],
+  );
+
+  const setReports = useCallback(
+    (reports: string[]) => {
+      return dispatch(PostDetailActions.setReports(reports));
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     getComments(postId, setComments);
-  }, []);
+  }, [postId, setComments]);
 
   const { data } = useQuery<Post>(['getPost'], () => {
     return fetchData(postId);
@@ -71,7 +82,7 @@ const PostDetailPage = () => {
       setLikes(data.likes);
       setReports(data.reports);
     }
-  }, [data]);
+  }, [setPost, setLikes, setReports, data]);
 
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {
@@ -84,6 +95,7 @@ const PostDetailPage = () => {
         boardType={post.board}
         title={post.title}
         nickName={post.author.nickname}
+        authorId={post.author._id}
         updatedAt={post.updatedAt}
         likes={post.likes.length}
         views={post.views}

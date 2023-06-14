@@ -37,10 +37,12 @@ const MovementButton = styled.button`
 const Pagination = ({
   currPage,
   setPage,
+  pageGroup,
   totalPage,
 }: {
   currPage: number;
   setPage: (page: number) => void;
+  pageGroup: number[];
   totalPage: number[];
 }) => {
   return (
@@ -53,17 +55,20 @@ const Pagination = ({
         }}
       >{`< Prev`}</MovementButton>
       <PageList>
-        {totalPage.map((page) => (
-          <PageItem
-            key={page}
-            onClick={() => {
-              setPage(page);
-            }}
-            active={page === currPage}
-          >
-            {page}
-          </PageItem>
-        ))}
+        {pageGroup.map(
+          (page) =>
+            page > 0 && (
+              <PageItem
+                key={page}
+                onClick={() => {
+                  setPage(page);
+                }}
+                active={page === currPage}
+              >
+                {page}
+              </PageItem>
+            ),
+        )}
       </PageList>
       <MovementButton
         onClick={() => {

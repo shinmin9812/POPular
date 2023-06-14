@@ -11,6 +11,10 @@ const PostRegisterButton = styled.button<{ isUpdate: boolean }>`
   + button {
     margin-left: 10px;
   }
+  @media (max-width: 500px) {
+    width: 70px;
+    font-size: var(--font-micro);
+  }
 `;
 
 export default PostRegisterButton;

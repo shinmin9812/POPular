@@ -19,17 +19,18 @@ const FlexDiv = styled.div`
 const RatingAndRegisterWrap = styled.div`
   display: flex;
   width: 50%;
-  margin-top: 10px;
   margin-left: auto;
   justify-content: space-between;
-  @media (max-width: 768px) {
-    width: 100%;
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 50%;
   }
 `;
 
 const WritePostPage = () => {
   const selectedStoreId = useAppSelector((state) => state.WritePostSlice.choiceStoreId);
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
+
   return (
     <Container>
       <MetaTag title="POPULAR | 글쓰기" />

@@ -58,20 +58,23 @@ const UpdateAndDeleteContainer = () => {
   };
 
   async function DeleteFetchData() {
-    const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : ''), {
+    const response = await fetch(API_PATH.POST.DELETE, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${localStorage.getItem('token')}`,
       },
+      body: JSON.stringify({ ids: [postId] }),
     });
     const result = await response.json();
     alert(result.message);
-    navigate('/community/board/all');
+    navigate('/community/board');
   }
 
+  const isAuthor = postInfo && isMember === postInfo.author._id;
+
   const deletePost = () => {
-    if (postInfo && isMember === postInfo.author._id) {
+    if (isAuthor) {
       DeleteFetchData();
     } else {
       alert('작성자가 아닙니다');
@@ -79,8 +82,10 @@ const UpdateAndDeleteContainer = () => {
   };
 
   const updatePost = () => {
-    if (postInfo && isMember === postInfo.author._id) {
-      const currTab = postInfo.board === 'free' ? '자유게시판' : postInfo.board === 'review' ? '후기게시판' : 'gather';
+    if (isAuthor) {
+      const currTab =
+        postInfo.board === 'free' ? '자유게시판' : postInfo.board === 'review' ? '후기게시판' : '모집게시판';
+
       setTab(currTab);
       setPostContent(postInfo.content);
       setPostTitle(postInfo.title);
@@ -91,7 +96,7 @@ const UpdateAndDeleteContainer = () => {
       alert('작성자가 아닙니다');
     }
   };
-  return <UpdateAndDelete deletePost={deletePost} updatePost={updatePost}></UpdateAndDelete>;
+  return isAuthor ? <UpdateAndDelete deletePost={deletePost} updatePost={updatePost}></UpdateAndDelete> : <div></div>;
 };
 
 export default UpdateAndDeleteContainer;

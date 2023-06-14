@@ -72,7 +72,7 @@ const CommentInputContainer = ({
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
-  const onClick = () => {
+  const RegisterComment = () => {
     const data: postCommentBody = {
       author: isMember ? isMember : '',
       content: input,
@@ -85,7 +85,7 @@ const CommentInputContainer = ({
     feedCommentApi(data, setInput, postId, setComments);
     setReCommentInput && setReCommentInput();
   };
-  return <CommentInput onChange={onChange} value={input} onClick={onClick} />;
+  return <CommentInput onChange={onChange} value={input} RegisterComment={RegisterComment} />;
 };
 
 export default CommentInputContainer;
