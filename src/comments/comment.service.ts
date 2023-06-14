@@ -108,9 +108,11 @@ export class CommentsService {
 				};
 			}
 
-			comment.ancestor = await generateAncestor(comment, this.feedsService, this);
-			
-
+			comment.ancestor = await generateAncestor(
+				comment,
+				this.feedsService,
+				this,
+			);
 
 			if (!comment) {
 				throw new NotFoundException(
@@ -305,8 +307,11 @@ export class CommentsService {
 					}
 				}
 			}
-			if(comment.parent.type === "Feed"){
-				await this.feedsService.removeComment(comment.parent.id, new Types.ObjectId(id));
+			if (comment.parent.type === 'Feed') {
+				await this.feedsService.removeComment(
+					comment.parent.id,
+					new Types.ObjectId(id),
+				);
 			} else {
 				await this.removeRecomment(comment.parent.id, new Types.ObjectId(id));
 			}
@@ -316,13 +321,12 @@ export class CommentsService {
 				.exec();
 
 			if (!deletedComment) {
-				throw new NotFoundException(`'${id}' 아이디를 가진 댓글을 찾지 못했습니다.`);
+				throw new NotFoundException(
+					`'${id}' 아이디를 가진 댓글을 찾지 못했습니다.`,
+				);
 			}
 
-
-	
 			await deletedComment.deleteOne();
-	
 		} catch (err) {
 			throw new InternalServerErrorException('댓글 삭제에 실패하였습니다.');
 		}
