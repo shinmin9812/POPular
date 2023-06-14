@@ -142,4 +142,12 @@ export class UserController {
 	async deleteUser(@Param('id') _id: string): Promise<User> {
 		return await this.userService.deleteUser(_id);
 	}
+
+	@ApiOperation({ summary: '유저 정보 선택 삭제하기' })
+	@ApiBearerAuth('Authorization')
+	@Delete()
+	@UseGuards(AuthGuard)
+	async deleteSelectUsers(@Body() ids: string[]): Promise<void> {
+		return await this.userService.deleteUsers(ids);
+	}
 }
