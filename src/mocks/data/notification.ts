@@ -14,7 +14,7 @@ export const notificationData: Notification[] = [
     checked: false,
   },
   {
-    _id: '1234',
+    _id: '1235',
     type: NotificationType.Recomment,
     board: BoardTypes.free,
     user_id: '648490f8dde175dd0d146256',
@@ -22,14 +22,14 @@ export const notificationData: Notification[] = [
     checked: false,
   },
   {
-    _id: '1234',
+    _id: '1236',
     type: NotificationType.Follow,
     user_id: '648490f8dde175dd0d146256',
     content_user: userData[0],
     checked: false,
   },
   {
-    _id: '1234',
+    _id: '1237',
     type: NotificationType.Ad,
     user_id: '648490f8dde175dd0d146256',
     content_store: storeData[0],

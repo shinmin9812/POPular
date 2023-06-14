@@ -4,7 +4,7 @@ import { notificationData } from './notification';
 
 export const userData: User[] = [
   {
-    _id: '12341231',
+    _id: '648490f8dde175dd0d146256',
     email: 'elice@elice.com',
     pw: '213231',
     name: '홍길동',
@@ -18,6 +18,6 @@ export const userData: User[] = [
     following: [],
     profile: 'https://image.rocketpunch.com/company/20527/elice_logo_1643264201.png?s=400x400&t=inside',
     interested_category: [Category.art],
-    notifications: notificationData,
+    notifications: ['1234', '1235'],
   },
 ];

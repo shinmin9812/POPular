@@ -22,5 +22,5 @@ export interface User {
   interested_category: Category[];
   allow_notification: boolean;
   scraps: string[];
-  notifications: Notification[];
+  notifications: string[];
 }

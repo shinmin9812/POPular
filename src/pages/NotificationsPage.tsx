@@ -1,32 +1,11 @@
 import styled from 'styled-components';
-import NotificationItem from '../components/Notifications/components/NotificationItem';
-import { Notification } from '../types/notification';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import MetaTag from '../components/SEO/MetaTag';
 import MenuList from '../components/UserMenu/components/MenuList';
 import MenuItem from '../components/UserMenu/components/MenuItem';
 import { CLIENT_PATH } from '../constants/path';
+import NotificationList from '../components/Notifications/components/NotificationList';
 
 const NotificationsPage = () => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-
-  const getUserNotification = async () => {
-    const res = await fetch('http://34.22.81.36:3000/notifications/user/6479cd31b0b0d8f69ffcfc55', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    const data = await res.json();
-    console.log(data);
-  };
-
-  useEffect(() => {
-    getUserNotification();
-  }, []);
-
   return (
     <Container>
       <MetaTag title={`POPULAR | 알림 목록`} />
@@ -36,9 +15,7 @@ const NotificationsPage = () => {
       </MenuListContainer>
       <ContentContainer>
         <Title>알림 목록</Title>
-        {notifications.map((data: Notification) => (
-          <NotificationItem type={data.type} checked={data.checked} content={data.content} />
-        ))}
+        <NotificationList />
       </ContentContainer>
     </Container>
   );
@@ -78,6 +55,11 @@ const MenuListContainer = styled.div`
       width: 200px;
       position: sticky;
       top: 100px;
+    }
+    & > a {
+      width: 200px;
+      position: sticky;
+      top: 45px;
     }
     a,
     div > a,

@@ -6,38 +6,7 @@ import { NotificationType } from '../../../types/notification';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 
 const NotificationItem = ({ type, content }: { type: NotificationType; content: any; checked: boolean }) => {
-  return (
-    <ItemContainer>
-      {type === 'Follow' && 'nickname' in content && (
-        <>
-          <UserIconMini />
-          <Notification>
-            <Message>{content.nickname}님이 회원님을 팔로우합니다.</Message>
-          </Notification>
-        </>
-      )}
-      {type === 'Comment' && 'author' in content && (
-        <>
-          <CommentIconMini />
-          <Notification>
-            <Message>{content.author.nickname}님이 댓글을 작성했습니다.</Message>
-            <CommentInfo>
-              <BoardTypeTag boardType={content.board} />
-              <p>{content.post}</p>
-            </CommentInfo>
-          </Notification>
-        </>
-      )}
-      {type === 'Store' && 'title' in content && (
-        <>
-          <StoreIconMini />
-          <Notification>
-            <Message>{content.title} 오픈!</Message>
-          </Notification>
-        </>
-      )}
-    </ItemContainer>
-  );
+  return <ItemContainer></ItemContainer>;
 };
 
 export default NotificationItem;
