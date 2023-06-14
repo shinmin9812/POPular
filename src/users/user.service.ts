@@ -226,7 +226,7 @@ export class UserService {
 			user_id: target._id.toString(),
 			content_comment: null,
 			content_store: null,
-			content_user: new Types.ObjectId(target._id),
+			content_user: new Types.ObjectId(user._id),
 		};
 
 		const createdNotification =
