@@ -10,13 +10,14 @@ import { Model, Types } from 'mongoose';
 import { User } from './user.schema';
 import { Store } from 'src/stores/store.schema';
 import { Feed } from 'src/feeds/feed.schema';
-import { Comment } from 'src/comments/comment.schema';
 import { UserSignupDto } from './dto/user.signup.dto';
 import { UserUpdateDto } from './dto/user.update.dto';
 import { hashPassword } from '../utils/hassing.util';
 import { handleImage } from 'src/utils/handle.image.util';
 import { NotificationsService } from 'src/notifications/notification.service';
 import { NotificationType } from 'src/notifications/notification.schema';
+import { CommentsService } from 'src/comments/comment.service';
+import { Comment } from 'src/comments/comment.schema';
 
 @Injectable()
 export class UserService {
@@ -25,6 +26,8 @@ export class UserService {
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
 		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
 		@InjectModel(Comment.name) private readonly commentModel: Model<Comment>,
+		@Inject(forwardRef(() => CommentsService))
+		private CommentsService: CommentsService,
 		@Inject(forwardRef(() => NotificationsService))
 		private NotificationsService: NotificationsService,
 	) {}
@@ -279,12 +282,21 @@ export class UserService {
 		};
 		await this.storeModel.updateMany({ scraps: _id }, updateQuery);
 
-		//user가 작성한 댓글 삭제
-		await this.commentModel.deleteMany({ author: _id });
+		//user가 작성한 댓글 삭제(comment.service에서 deleteComment를 가져와서 사용해야함)
+		const comments = await this.commentModel.find({ author: _id }).select(_id);
+		for (const commentId of comments) {
+			await this.commentModel.findByIdAndDelete({ _id: commentId._id });
+		}
 
-		//user가 작성한 게시글 삭제
-		await this.feedModel.deleteMany({ author: _id });
+		//user가 작성한 게시글 삭제(feed.service에서 deleteFeed를 가져와서 사용해야함)
+		// await this.feedModel.deleteMany({ author: _id });
 
 		return await this.userModel.findByIdAndDelete(_id);
+	}
+
+	async deleteUsers(ids: string[]): Promise<void> {
+		for (const id of ids) {
+			await this.deleteUser(id);
+		}
 	}
 }

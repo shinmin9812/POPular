@@ -58,6 +58,12 @@ export class StoreService {
 		});
 	}
 
+	async getStoresByCategory(category: string): Promise<Store[]> {
+		return await this.storeModel.find({
+			category: category,
+		});
+	}
+
 	async createStore(body: StoreRequestDto): Promise<Store> {
 		const base64Images = body.images;
 		const imageMapping = await handleImages(base64Images);
@@ -86,10 +92,11 @@ export class StoreService {
 
 		let updateStore = {};
 
-		if (body.images) {
-			const base64Images = body.images;
-			const imageMapping = await handleImages(base64Images);
-			const images = Object.values(imageMapping);
+		const base64Images = body.images;
+		const imageMapping = await handleImages(base64Images);
+		const images = Object.values(imageMapping);
+
+		if (images !== store.images) {
 			updateStore = {
 				...body,
 				images: images,
@@ -97,7 +104,6 @@ export class StoreService {
 		} else {
 			updateStore = {
 				...body,
-				images: store.images,
 			};
 		}
 
