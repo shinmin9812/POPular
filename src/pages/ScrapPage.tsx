@@ -1,10 +1,31 @@
-import { storeData } from '../mocks/data/stores';
 import StoreList from '../components/common/Store/StoreList';
 import styled from 'styled-components';
 import MenuList from '../components/UserMenu/components/MenuList';
 import MetaTag from '../components/SEO/MetaTag';
+import { useEffect, useState } from 'react';
 
 const ScrapPage = () => {
+  const [userId, setUserId] = useState('');
+  const getUserInfo = async () => {
+    try {
+      const response = await fetch('http://34.22.81.36:3000/auth/profile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      const data = await response.json();
+      setUserId(data._id);
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   return (
     <Container>
       <MetaTag title={`POPULAR | 위시리스트`} />
@@ -13,7 +34,7 @@ const ScrapPage = () => {
       </MenuListContainer>
       <ContentContainer>
         <Title>위시리스트</Title>
-        <StyledStoreList stores={storeData} />
+        <StyledStoreList userId={userId} />
       </ContentContainer>
     </Container>
   );

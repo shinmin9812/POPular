@@ -2,32 +2,38 @@ import styled from 'styled-components';
 import { Store } from '../../../types/store';
 import StoreItem from './StoreItem';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 interface Props {
-  stores: Store[];
+  userId: string;
 }
 
-const Container = styled.div`
-  width: 100%;
+const StoreList = ({ userId }: Props) => {
+  const [stores, setStores] = useState<Store[]>([]);
 
-  .nothing {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  const fetchStore = async (storeId: string) => {
+    const res = await fetch(`http://34.22.81.36:3000/stores/store/${storeId}`);
+    const data = await res.json();
+    return data;
+  };
 
-    height: 200px;
+  const getStoreData = async () => {
+    if (userId) {
+      const res = await fetch(`http://34.22.81.36:3000/users/${userId}/scraps`);
+      const storeIdData = await res.json();
+      const storeData = await Promise.all(
+        storeIdData.map((id: string) => {
+          return fetchStore(id);
+        }),
+      );
+      setStores(storeData);
+    }
+  };
 
-    font-size: var(--font-large);
-    font-weight: var(--weight-semi-bold);
+  useEffect(() => {
+    getStoreData();
+  }, [userId]);
 
-    line-height: 1.3;
-
-    text-align: center;
-    word-break: keep-all;
-  }
-`;
-
-const StoreList = ({ stores }: Props) => {
   return (
     <Container className="store-list">
       {stores.length > 0 ? (
@@ -54,3 +60,23 @@ const StoreList = ({ stores }: Props) => {
 };
 
 export default StoreList;
+
+const Container = styled.div`
+  width: 100%;
+
+  .nothing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 200px;
+
+    font-size: var(--font-large);
+    font-weight: var(--weight-semi-bold);
+
+    line-height: 1.3;
+
+    text-align: center;
+    word-break: keep-all;
+  }
+`;
