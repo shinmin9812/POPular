@@ -216,9 +216,7 @@ export class CommentsService {
 			};
 
 			const createdNotification =
-				await this.NotificationsService.createNotification(
-					notificationCreateDto,
-				);
+				await this.NotificationsService.createNotification(notificationCreateDto,);
 			await this.UserService.updateNotification(
 				savedComment.author,
 				createdNotification._id,
