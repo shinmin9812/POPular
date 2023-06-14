@@ -1,5 +1,4 @@
 import { Store } from '../../../../types/store';
-import dayjs from 'dayjs';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
 import getDataByCreatedAt from '../../../../utils/getDataByCreatedAt';
@@ -11,8 +10,6 @@ const StoreAddChart = ({ stores }: Props) => {
   const BAR_KEY = '추가된 점포';
 
   const data = getDataByCreatedAt(BAR_KEY, stores);
-
-  console.log(data);
 
   return (
     <Container>
@@ -31,7 +28,7 @@ const StoreAddChart = ({ stores }: Props) => {
 };
 
 const Container = styled.div`
-  width: 100%;
+  width: 400px;
   height: 300px;
 `;
 

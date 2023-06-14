@@ -4,6 +4,7 @@ import { useGetAllUsers } from '../../api/userApi';
 import UserAddChart from '../../components/Admin/components/Charts/UserAddChart';
 import UserFollowerChart from '../../components/Admin/components/Charts/UserFollowerChart';
 import UserCategoryCharts from '../../components/Admin/components/Charts/UserCategoryCharts';
+import AdminUserList from '../../components/Admin/components/Users/AdminUserList';
 
 const Container = styled.div`
   display: flex;
@@ -62,18 +63,18 @@ const AdminUserStatisticsPage = () => {
         </div>
       )}
 
-      {/* <div className="user-search">
+      <div className="user-search">
         <Card className="user-search-box">
-          <p className="title">스토어 검색</p>
-          {allStores && <AdminStoreList users={allStores} />}
+          <p className="title">유저 검색</p>
+          {allUsers && <AdminUserList users={allUsers} />}
         </Card>
-        {userId && allStores && (
+        {/* {userId && allStores && (
           <Card className="user-scrap-chart">
             <StoreTitle user={allStores.find((user) => user._id === userId)!} />
             <StoreInfo user={allStores.find((user) => user._id === userId)!} />
           </Card>
-        )}
-      </div> */}
+        )} */}
+      </div>
     </Container>
   );
 };

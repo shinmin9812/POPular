@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { User } from '../../../../types/user';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface Props {
   users: User[];
@@ -29,6 +29,8 @@ const UserCategoryCharts = ({ users }: Props) => {
       [BAR_KEY]: value,
     });
   }
+
+  data.sort((a, b) => b[BAR_KEY] - a[BAR_KEY]);
 
   return (
     <Container>

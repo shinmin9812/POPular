@@ -59,7 +59,7 @@ const AdminStoreStatisticsPage = () => {
             <p className="title">최근 추가된 점포수</p>
             <StoreAddChart stores={allStores} />
           </Card>
-          <Card className="store-add-chart">
+          <Card className="store-location-chart">
             <p className="title">지역별 점포 수 분포</p>
             <StoreLocationChart stores={allStores} />
           </Card>
