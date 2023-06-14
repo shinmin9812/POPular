@@ -14,7 +14,9 @@ export interface Notification {
   _id: string;
   type: NotificationType;
   board?: BoardTypes;
-  user_id?: string;
-  content: User | Comment | Store;
+  user_id: string;
+  content_user?: User | null;
+  content_comment?: Comment | null;
+  content_store?: Store | null;
   checked: boolean;
 }
