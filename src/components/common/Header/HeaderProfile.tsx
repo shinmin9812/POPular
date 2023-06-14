@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -14,12 +15,12 @@ const Container = styled.div`
   }
 `;
 
-const HeaderProfile = () => {
+const HeaderProfile = (src: string) => {
   return (
     <Container>
-      <a href="/usermenu">
-        <img src="/defaultProfile.svg" alt="" />
-      </a>
+      <Link to="/usermenu">
+        <img src={src} alt="profile" />
+      </Link>
     </Container>
   );
 };

@@ -1,22 +1,35 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { CLIENT_PATH } from './constants/path';
-import { useGetValidToken } from './api/AuthApi';
+import { useGetTokenValid } from './api/authApi';
 
-const AuthChecker = () => {
-  const { data, isFetched } = useGetValidToken();
+interface Props {
+  admin?: boolean;
+}
 
-  if (isFetched) {
-    return data!._id ? (
+const AuthChecker = ({ admin }: Props) => {
+  const { data, isFetching } = useGetTokenValid();
+
+  if (isFetching) return <></>;
+
+  if (admin) {
+    return data!.role === 'admin' ? (
       <Outlet />
     ) : (
       <>
-        {alert('로그인을 해주세요!')}
-        <Navigate to={CLIENT_PATH.LOGIN} />
+        {alert('관리자 전용 페이지입니다!')}
+        <Navigate to="/" />
       </>
     );
   }
 
-  return <></>;
+  return data!._id ? (
+    <Outlet />
+  ) : (
+    <>
+      {alert('로그인을 해주세요!')}
+      <Navigate to={CLIENT_PATH.LOGIN} />
+    </>
+  );
 };
 
 export default AuthChecker;

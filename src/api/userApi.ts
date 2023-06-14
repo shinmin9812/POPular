@@ -39,16 +39,12 @@ export const useGetAllUsers = () => {
   return useQuery<User[]>(['allUsers'], getAllUsers);
 };
 
-export const useGetUserById = (userId: string, option: object) => {
+export const useGetUserById = (userId: string, option?: object) => {
   return useQuery<User>(['user', userId], () => getUserById(userId), option);
 };
 
-export const useGetLoginuser = () => {
-  return useQuery<User>(['user'], getLoginUser, {
-    onError: (error) => {
-      console.log('로그인 정보를 가져오는 동안 오류가 발생했습니다:', error);
-    },
-  });
+export const useGetLoginuser = (options?: object) => {
+  return useQuery<User>(['user'], getLoginUser, options);
 };
 
 export const useDeleteUsers = (userIds: string[], option?: object) => {

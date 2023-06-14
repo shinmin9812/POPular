@@ -19,7 +19,7 @@ const PostItem = ({ post }: Props) => {
           </PostItemCategory>
           <PostItemTitle>{post.title}</PostItemTitle>
           <PostItemBottom>
-            {new Date(post.updatedAt).toISOString().slice(0, 10)} | {post.author.nickname} | 💜 {post.likes.length}
+            {new Date(post.updatedAt).toISOString().slice(0, 10)} | {post.author.nickname} | 💜 {post.likes}
           </PostItemBottom>
         </PostItemInfo>
         <PostItemImage>
