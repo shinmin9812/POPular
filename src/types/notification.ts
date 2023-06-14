@@ -4,10 +4,10 @@ import { Store } from './store';
 import { User } from './user';
 
 export const enum NotificationType {
-  Follow = 'Follow',
-  Comment = 'Comment',
-  Recomment = 'Comment',
-  Ad = 'Store',
+  Follow = 'follow',
+  Comment = 'comment',
+  Recomment = 'recomment',
+  Ad = 'ad',
 }
 
 export interface Notification {
