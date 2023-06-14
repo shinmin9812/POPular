@@ -1,19 +1,29 @@
 import styled from 'styled-components';
 import StoreList from '../components/common/Store/StoreList';
 import MenuList from '../components/UserMenu/components/MenuList';
-import { storeData } from '../mocks/data/stores';
 import MetaTag from '../components/SEO/MetaTag';
+import { useEffect, useState } from 'react';
+import { Store } from '../types/store';
 
-// dummydata로 임시 세팅
+const isTypeStore = (item: any): item is Store => {
+  return true;
+};
 
 const RecentListPage = () => {
-  // const items: string | null = localStorage.getItem('recent');
-  // let stores;
-  // if (items !== null) {
-  //   stores = JSON.parse(items);
-  // }
-  const stores = storeData;
+  const [stores, setStores] = useState<Store[]>([]);
+  const items = localStorage.getItem('store');
+  const getStores = () => {
+    if (items) {
+      const stores: [{}] = JSON.parse(items);
+      if (stores.every(isTypeStore)) {
+        setStores(stores);
+      } else setStores([]);
+    }
+  };
 
+  useEffect(() => {
+    getStores();
+  }, []);
   return (
     <Container>
       <MetaTag title={`POPULAR | 최근 본 스토어`} />
