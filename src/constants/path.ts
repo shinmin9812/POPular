@@ -82,7 +82,7 @@ export const API_PATH = {
     GET: {
       // 모든 알림 조회
       ALL: '/notification/all',
-      // 특정 id 알림 조회
+      // 특정 id 알림 조회adsdsa
       BY_ID: '/notification/id/:notificationId',
       // 특정 유저의 전체 알림 조회
       BY_USER_ID: '/notification/user/:userId',

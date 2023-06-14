@@ -47,6 +47,17 @@ export const getAllGatherFeeds = async () => {
   return response;
 };
 
+<<<<<<< Updated upstream
+=======
+export const useGetAllFeeds = (option?: object) => {
+  return useQuery<Post[]>(['allFeeds'], () => getAllFeeds(), option);
+};
+
+export const useGetStoreReviewFeeds = (storeId: string, option?: object) => {
+  return useQuery<Post[]>(['storeReviewFeeds', storeId], () => getStoreReviewFeeds(storeId), option);
+};
+
+>>>>>>> Stashed changes
 export const useGetAllReviewFeeds = (option?: object) => {
   return useQuery<Post[]>(['reviewFeeds'], () => getAllReviewFeeds(), option);
 };
