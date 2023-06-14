@@ -53,8 +53,6 @@ const AdminUserList = ({ users, selectMode, selectedId, setSelectedId }: Props) 
     clickFilter();
   }, [users]);
 
-  console.log(searchedUsers);
-
   return (
     <Container>
       <UserFilter setFilterSetting={setFilterSetting} clickFilter={clickFilter} filterSetting={filterSetting} />

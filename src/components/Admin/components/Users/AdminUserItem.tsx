@@ -43,6 +43,10 @@ const Container = styled.div`
 
     transition: all 0.3s;
 
+    &.active {
+      background-color: #faedff;
+    }
+
     strong {
       font-weight: 600;
     }

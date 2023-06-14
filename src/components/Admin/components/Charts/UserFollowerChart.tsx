@@ -6,14 +6,12 @@ interface Props {
   users: User[];
 }
 const UserFollowerChart = ({ users }: Props) => {
-  const sortedUsers = users.sort((a, b) => b.follower.length - a.follower.length).slice(0, 3);
-
-  console.log(sortedUsers);
+  const most = users.sort((a, b) => b.follower.length - a.follower.length)[0];
 
   return (
     <Container>
       <div className="first">
-        <UserBlock user={users[11]} />
+        <UserBlock user={most} />
       </div>
     </Container>
   );

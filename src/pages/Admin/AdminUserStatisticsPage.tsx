@@ -5,6 +5,7 @@ import UserAddChart from '../../components/Admin/components/Charts/UserAddChart'
 import UserFollowerChart from '../../components/Admin/components/Charts/UserFollowerChart';
 import UserCategoryCharts from '../../components/Admin/components/Charts/UserCategoryCharts';
 import AdminUserList from '../../components/Admin/components/Users/AdminUserList';
+import { Outlet } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -42,8 +43,6 @@ const Container = styled.div`
 const AdminUserStatisticsPage = () => {
   const { data: allUsers } = useGetAllUsers();
 
-  console.log(allUsers);
-
   return (
     <Container>
       {allUsers && (
@@ -68,12 +67,7 @@ const AdminUserStatisticsPage = () => {
           <p className="title">유저 검색</p>
           {allUsers && <AdminUserList users={allUsers} />}
         </Card>
-        {/* {userId && allStores && (
-          <Card className="user-scrap-chart">
-            <StoreTitle user={allStores.find((user) => user._id === userId)!} />
-            <StoreInfo user={allStores.find((user) => user._id === userId)!} />
-          </Card>
-        )} */}
+        <Outlet />
       </div>
     </Container>
   );
