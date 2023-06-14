@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
+import CommentIconMini from '../../common/Icons/CommentIconMini';
 
 interface Props {
   commentData: Comment;
@@ -8,19 +9,22 @@ interface Props {
 }
 const CommentNotificationItem = ({ commentData, board }: Props) => {
   return (
-    <ItemContainer>
-      <Message>{commentData.author.nickname}님이 댓글을 작성했습니다.</Message>
-      <CommentContainer>
-        <BoardTypeTag boardType={board} />
-        <CommentContent>{commentData.content}</CommentContent>
-      </CommentContainer>
-    </ItemContainer>
+    <Container>
+      <CommentIconMini />
+      <Content>
+        <Message>{commentData.author.nickname}님이 댓글을 작성했습니다.</Message>
+        <CommentContainer>
+          <BoardTypeTag boardType={board} />
+          <CommentContent>{commentData.content}</CommentContent>
+        </CommentContainer>
+      </Content>
+    </Container>
   );
 };
 
 export default CommentNotificationItem;
 
-const ItemContainer = styled.div`
+const Container = styled.div`
   width: 95%;
   height: 80px;
   padding: 0 20px;
@@ -32,19 +36,28 @@ const ItemContainer = styled.div`
   border-radius: 8px;
 
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
+`;
+
+const Content = styled.div`
+  margin: 0 18px;
+  flex: 1;
 `;
 
 const Message = styled.p`
-  margin: 4px 0;
+  margin-bottom: 4px;
 `;
 
 const CommentContainer = styled.div`
   display: flex;
-  margin: 4px 0;
+  margin: 10px 0 0;
 `;
 
 const CommentContent = styled.p`
+  font-size: var(--font-regular);
   margin-left: 10px;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

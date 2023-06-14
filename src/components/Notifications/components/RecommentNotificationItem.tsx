@@ -12,14 +12,14 @@ interface Props {
 const RecommentNotificationItem = ({ recommentData, board, checked }: Props) => {
   return (
     <ItemContainer checked={checked}>
-      <ItemHeader>
-        <CommentIconMini />
+      <CommentIconMini />
+      <Content>
         <Message>{recommentData.author.nickname}님이 대댓글을 작성했습니다.</Message>
-      </ItemHeader>
-      <CommentContainer>
-        <BoardTypeTag boardType={board} />
-        <CommentContent>{recommentData.content}</CommentContent>
-      </CommentContainer>
+        <CommentContainer>
+          <BoardTypeTag boardType={board} />
+          <CommentContent>{recommentData.content}</CommentContent>
+        </CommentContainer>
+      </Content>
     </ItemContainer>
   );
 };
@@ -38,27 +38,26 @@ const ItemContainer = styled.div`
   border-radius: 8px;
 
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
 `;
 
-const ItemHeader = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 4px;
+const Content = styled.div`
+  margin: 0 18px;
+  flex: 1;
 `;
 
 const Message = styled.p`
-  margin: 0 10px;
+  margin-bottom: 4px;
 `;
 
 const CommentContainer = styled.div`
   display: flex;
-  margin-top: 8px;
-  margin-left: 28px;
+  margin: 10px 0 0;
 `;
 
 const CommentContent = styled.p`
+  font-size: var(--font-regular);
+
   margin-left: 10px;
   flex: 1;
   white-space: nowrap;

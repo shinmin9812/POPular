@@ -32,5 +32,9 @@ const ItemContainer = styled.div`
 `;
 
 const Message = styled.p`
-  margin: 0 10px;
+  margin: 0 20px;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
