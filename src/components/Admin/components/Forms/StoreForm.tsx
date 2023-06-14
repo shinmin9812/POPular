@@ -14,6 +14,7 @@ import StoreInfo from '../../../StoreDetail/container/StoreInfo';
 import StoreTitle from '../../../StoreDetail/container/StoreTitle';
 import Modal from '../../../common/Modal/Modal';
 import { useQueryClient } from '@tanstack/react-query';
+import AlertModal from '../../../common/Modals/AlertModal';
 
 const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
@@ -86,6 +87,7 @@ const defaultFormValues: PostedStore = {
   reservation_required: false,
   images: [],
   scraps: [],
+  createdAt: '',
 };
 
 interface Props {
@@ -501,8 +503,16 @@ const StoreForm = ({ defaultData }: Props) => {
         <StoreTitle store={{ ...watch(), _id: 'fake' }} />
         <StoreInfo store={{ ...watch(), _id: 'fake' }} />
       </Card>
-      {modalOpen && postIsSuccess && <Modal onClose={() => setModalOpen(false)}>스토어가 추가되었습니다!</Modal>}
-      {modalOpen && editIsSuccess && <Modal onClose={() => setModalOpen(false)}>스토어가 수정되었습니다!</Modal>}
+      {modalOpen && postIsSuccess && (
+        <Modal>
+          <AlertModal content="스토어가 생성되었습니다!" onClose={setModalOpen} />
+        </Modal>
+      )}
+      {modalOpen && editIsSuccess && (
+        <Modal>
+          <AlertModal content="스토어가 수정되었습니다!" onClose={setModalOpen} />
+        </Modal>
+      )}
     </Container>
   );
 };
@@ -512,6 +522,10 @@ const Container = styled.div`
   gap: 30px;
   position: relative;
   width: 100%;
+
+  button:hover {
+    cursor: pointer;
+  }
 
   form {
     display: flex;

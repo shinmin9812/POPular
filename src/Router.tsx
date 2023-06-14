@@ -25,6 +25,11 @@ import AdminStoreEditPage from './pages/Admin/AdminStoreEditPage';
 import AdminStoreEditPageDetail from './pages/Admin/AdminStoreEditPageDetail';
 import AdminStoreStatisticsPage from './pages/Admin/AdminStoreStatisticsPage';
 import AdminStoreDeletePage from './pages/Admin/AdminStoreDeletePage';
+import AdminStoreStatisticsDetailPage from './pages/Admin/AdminStoreStatisticsDetailPage';
+import AdminUserStatisticsPage from './pages/Admin/AdminUserStatisticsPage';
+import AdminUserDetailPage from './pages/Admin/AdminUserDetailPage';
+import AdminUserEditPage from './pages/Admin/AdminUserEditPage';
+import AdminUserDeletePage from './pages/Admin/AdminUserDeletePage';
 
 const Router = () => {
   return (
@@ -53,18 +58,27 @@ const Router = () => {
 
         <Route element={<AdminLayout />}>
           <Route path={CLIENT_PATH.ADMIN} element={<AdminPage />} />
-
-          <Route path={CLIENT_PATH.ADMIN_STORE.STATISTICS} element={<AdminStoreStatisticsPage />} />
+          <Route path={CLIENT_PATH.ADMIN_STORE.STATISTICS} element={<AdminStoreStatisticsPage />}>
+            <Route
+              path={`${CLIENT_PATH.ADMIN_STORE.STATISTICS}/:storeId`}
+              element={<AdminStoreStatisticsDetailPage />}
+            />
+          </Route>
           <Route path={CLIENT_PATH.ADMIN_STORE.ADD} element={<AdminStoreAddPage />} />
           <Route path={CLIENT_PATH.ADMIN_STORE.EDIT} element={<AdminStoreEditPage />}>
             <Route path={`${CLIENT_PATH.ADMIN_STORE.EDIT}/:storeId`} element={<AdminStoreEditPageDetail />} />
           </Route>
           <Route path={CLIENT_PATH.ADMIN_STORE.DELETE} element={<AdminStoreDeletePage />} />
 
-          <Route path={CLIENT_PATH.ADMIN_USER.STATISTICS} element={<AdminPage />} />
-          <Route path={CLIENT_PATH.ADMIN_USER.ADD} element={<AdminPage />} />
-          <Route path={CLIENT_PATH.ADMIN_USER.EDIT} element={<AdminPage />} />
-          <Route path={CLIENT_PATH.ADMIN_USER.DELETE} element={<AdminPage />} />
+          <Route path={CLIENT_PATH.ADMIN_USER.STATISTICS} element={<AdminUserStatisticsPage />}>
+            <Route path={`${CLIENT_PATH.ADMIN_USER.STATISTICS}/:userId`} element={<AdminUserDetailPage />} />
+          </Route>
+          <Route />
+          <Route path={CLIENT_PATH.ADMIN_USER.ADD} element={<AdminPage />}></Route>
+          <Route path={CLIENT_PATH.ADMIN_USER.EDIT} element={<AdminUserEditPage />}>
+            <Route path={`${CLIENT_PATH.ADMIN_USER.EDIT}/:userId`} element={<AdminUserDetailPage />} />
+          </Route>
+          <Route path={CLIENT_PATH.ADMIN_USER.DELETE} element={<AdminUserDeletePage />} />
 
           <Route path={CLIENT_PATH.ADMIN_FEED.STATISTICS} element={<AdminPage />} />
           <Route path={CLIENT_PATH.ADMIN_FEED.EDIT} element={<AdminPage />} />

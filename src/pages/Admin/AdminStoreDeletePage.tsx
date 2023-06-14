@@ -8,6 +8,7 @@ import Button from '../../components/common/Button/Button';
 import { useQueryClient } from '@tanstack/react-query';
 import { Category } from '../../types/category';
 import Modal from '../../components/common/Modal/Modal';
+import AlertModal from '../../components/common/Modals/AlertModal';
 
 const Container = styled.div`
   display: flex;
@@ -38,11 +39,25 @@ const Container = styled.div`
     }
   }
 
-  .selected-store {
+  .selected-stores {
     position: relative;
     width: 500px;
     left: 40px;
     padding-bottom: 60px;
+
+    .selected-store {
+      transition: all 0.3s;
+    }
+
+    .selected-store:hover {
+      cursor: pointer;
+      transform: translateY(-6px);
+      box-shadow: 0px 6px 22px -6px rgba(0, 0, 0, 0.3);
+    }
+
+    .selected-store a {
+      pointer-events: none;
+    }
 
     button {
       position: absolute;
@@ -77,7 +92,7 @@ const AdminStoreDeletePage = () => {
     mutate();
   }
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   return (
     <Container>
@@ -88,17 +103,31 @@ const AdminStoreDeletePage = () => {
         )}
       </Card>
       {selectedId.length > 0 && !isSuccess && (
-        <Card className="selected-store">
+        <Card className="selected-stores">
           <p className="title">선택된 목록</p>
           {allStores!.map((store) => {
             if (selectedId.includes(store._id)) {
-              return <AdminStoreItem key={store._id} store={store} />;
+              return (
+                <div
+                  className="selected-store"
+                  key={store._id}
+                  onClick={() => {
+                    setSelectedId((prev) => prev.filter((id) => id !== store._id));
+                  }}
+                >
+                  <AdminStoreItem key={store._id} store={store} />
+                </div>
+              );
             }
           })}
           <Button onClick={deleteHandler}>스토어 삭제하기</Button>
         </Card>
       )}
-      {isSuccess && isModalOpen && <Modal onClose={() => setIsModalOpen(false)}>스토어가 삭제되었습니다!</Modal>}
+      {isSuccess && isModalOpen && (
+        <Modal>
+          <AlertModal onClose={setIsModalOpen} content="스토어가 삭제되었습니다!"></AlertModal>
+        </Modal>
+      )}
     </Container>
   );
 };

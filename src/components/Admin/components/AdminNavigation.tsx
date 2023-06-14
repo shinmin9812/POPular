@@ -75,10 +75,6 @@ const Accodions = [
         path: CLIENT_PATH.ADMIN_USER.STATISTICS,
       },
       {
-        name: '유저 추가',
-        path: CLIENT_PATH.ADMIN_USER.ADD,
-      },
-      {
         name: '유저 수정',
         path: CLIENT_PATH.ADMIN_USER.EDIT,
       },

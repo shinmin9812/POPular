@@ -23,4 +23,5 @@ export interface User {
   allow_notification: boolean;
   scraps: string[];
   notifications: Notification[];
+  createdAt: string;
 }

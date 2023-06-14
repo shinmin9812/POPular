@@ -1,6 +1,5 @@
 import { Category } from '../../types/category';
 import { RoleTypes, User } from '../../types/user';
-import { notificationData } from './notification';
 
 export const userData: User[] = [
   {
@@ -18,6 +17,7 @@ export const userData: User[] = [
     following: [],
     profile: 'https://image.rocketpunch.com/company/20527/elice_logo_1643264201.png?s=400x400&t=inside',
     interested_category: [Category.art],
-    notifications: notificationData,
+    notifications: [],
+    createdAt: '2023-06-09T09:03:48.455+00:00',
   },
 ];
