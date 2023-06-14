@@ -1,18 +1,36 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Store } from '../../../types/store';
 import StoreIconMini from '../../common/Icons/StoreIconMini';
 
 interface Props {
+  id: string;
   storeData: Store;
   checked: boolean;
 }
 
-const AdNotificationItem = ({ storeData, checked }: Props) => {
+const handleChecked = async (checked: boolean, id: string) => {
+  if (!checked) {
+    fetch(`http://34.22.81.36:3000/notifications/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        checked: true,
+      }),
+    });
+  }
+};
+
+const AdNotificationItem = ({ id, storeData, checked }: Props) => {
   return (
-    <ItemContainer checked={checked}>
-      <StoreIconMini />
-      <Message>{storeData.title} 오픈!</Message>
-    </ItemContainer>
+    <Link to={`/store/${storeData._id}`} onClick={() => handleChecked(checked, id)}>
+      <ItemContainer checked={checked}>
+        <StoreIconMini />
+        <Message>{storeData.title} 오픈!</Message>
+      </ItemContainer>
+    </Link>
   );
 };
 

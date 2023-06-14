@@ -1,18 +1,36 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { User } from '../../../types/user';
 import UserIconMini from '../../common/Icons/UserIconMini';
 
 interface Props {
+  id: string;
   follower: User;
   checked: boolean;
 }
 
-const FollowNotificationItem = ({ follower, checked }: Props) => {
+const handleChecked = async (checked: boolean, id: string) => {
+  if (!checked) {
+    fetch(`http://34.22.81.36:3000/notifications/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        checked: true,
+      }),
+    });
+  }
+};
+
+const FollowNotificationItem = ({ id, follower, checked }: Props) => {
   return (
-    <ItemContainer checked={checked}>
-      <UserIconMini />
-      <Message>{follower.nickname}님이 회원님을 팔로우합니다.</Message>
-    </ItemContainer>
+    <Link to={`/community/user/${follower._id}`} onClick={() => handleChecked(checked, id)}>
+      <ItemContainer checked={checked}>
+        <UserIconMini />
+        <Message>{follower.nickname}님이 회원님을 팔로우합니다.</Message>
+      </ItemContainer>
+    </Link>
   );
 };
 

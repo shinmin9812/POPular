@@ -19,7 +19,6 @@ const NotificationList = () => {
       },
     });
     const data = await res.json();
-    console.log(data);
     setNotifications(data);
   };
   useEffect(() => {
@@ -30,11 +29,12 @@ const NotificationList = () => {
     <NotificationListContainer>
       {notifications.map((data, idx) => {
         if (data.type === 'follow')
-          return <FollowNotificationItem key={idx} follower={data.content_user} checked={data.checked} />;
+          return <FollowNotificationItem key={idx} id={data._id} follower={data.content_user} checked={data.checked} />;
         else if (data.type === 'comment')
           return (
             <CommentNotificationItem
               key={idx}
+              id={data._id}
               commentData={data.content_comment}
               board={data.board}
               checked={data.checked}
@@ -44,13 +44,14 @@ const NotificationList = () => {
           return (
             <RecommentNotificationItem
               key={idx}
+              id={data._id}
               recommentData={data.content_comment}
               board={data.board}
               checked={data.checked}
             />
           );
         else if (data.type === 'ad')
-          return <AdNotificationItem key={idx} storeData={data.content_store} checked={data.checked} />;
+          return <AdNotificationItem key={idx} id={data._id} storeData={data.content_store} checked={data.checked} />;
       })}
     </NotificationListContainer>
   );

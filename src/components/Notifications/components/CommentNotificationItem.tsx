@@ -1,25 +1,44 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import CommentIconMini from '../../common/Icons/CommentIconMini';
 
 interface Props {
+  id: string;
   commentData: Comment;
   board: string;
   checked: boolean;
 }
-const CommentNotificationItem = ({ commentData, board, checked }: Props) => {
+
+const handleChecked = async (checked: boolean, id: string) => {
+  if (!checked) {
+    fetch(`http://34.22.81.36:3000/notifications/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        checked: true,
+      }),
+    });
+  }
+};
+
+const CommentNotificationItem = ({ id, commentData, board, checked }: Props) => {
   return (
-    <Container checked={checked}>
-      <CommentIconMini />
-      <Content>
-        <Message>{commentData.author.nickname}님이 댓글을 작성했습니다.</Message>
-        <CommentContainer>
-          <BoardTypeTag boardType={board} />
-          <CommentContent>{commentData.content}</CommentContent>
-        </CommentContainer>
-      </Content>
-    </Container>
+    <Link to={`/community/post/${commentData.parent.id}`} onClick={() => handleChecked(checked, id)}>
+      <Container checked={checked}>
+        <CommentIconMini />
+        <Content>
+          <Message>{commentData.author.nickname}님이 댓글을 작성했습니다.</Message>
+          <CommentContainer>
+            <BoardTypeTag boardType={board} />
+            <CommentContent>{commentData.content}</CommentContent>
+          </CommentContainer>
+        </Content>
+      </Container>
+    </Link>
   );
 };
 

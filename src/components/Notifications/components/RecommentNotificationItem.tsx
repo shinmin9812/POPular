@@ -1,26 +1,59 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import CommentIconMini from '../../common/Icons/CommentIconMini';
 
 interface Props {
+  id: string;
   recommentData: Comment;
   board: string;
   checked: boolean;
 }
 
-const RecommentNotificationItem = ({ recommentData, board, checked }: Props) => {
+const RecommentNotificationItem = ({ id, recommentData, board, checked }: Props) => {
+  const [feedId, setFeedId] = useState('');
+  const handleChecked = async (checked: boolean, id: string) => {
+    if (!checked) {
+      fetch(`http://34.22.81.36:3000/notifications/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          checked: true,
+        }),
+      });
+    }
+  };
+
+  const getFeedId = async (commentId: string) => {
+    try {
+      const res = await fetch(`http://34.22.81.36:3000/comments/info/${commentId}`);
+      const data = await res.json();
+      if (data.ancestor) setFeedId(data.ancestor.id);
+    } catch (err) {
+      alert('항목을 찾을 수 없습니다.');
+    }
+  };
+
+  useEffect(() => {
+    getFeedId(recommentData._id);
+  }, []);
   return (
-    <ItemContainer checked={checked}>
-      <CommentIconMini />
-      <Content>
-        <Message>{recommentData.author.nickname}님이 대댓글을 작성했습니다.</Message>
-        <CommentContainer>
-          <BoardTypeTag boardType={board} />
-          <CommentContent>{recommentData.content}</CommentContent>
-        </CommentContainer>
-      </Content>
-    </ItemContainer>
+    <Link to={`/community/post/${feedId}`} onClick={() => handleChecked(checked, id)}>
+      <ItemContainer checked={checked}>
+        <CommentIconMini />
+        <Content>
+          <Message>{recommentData.author.nickname}님이 대댓글을 작성했습니다.</Message>
+          <CommentContainer>
+            <BoardTypeTag boardType={board} />
+            <CommentContent>{recommentData.content}</CommentContent>
+          </CommentContainer>
+        </Content>
+      </ItemContainer>
+    </Link>
   );
 };
 
