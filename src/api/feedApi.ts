@@ -42,9 +42,18 @@ export const getAllReviewFeeds = async () => {
   return response;
 };
 
+export const getStoreReviewFeeds = async (storeId: string) => {
+  const response = await (await fetch(`${API_PATH.POST.GET.ALL_REVIEW_FEEDS}/${storeId}`)).json();
+  return response;
+};
+
 export const getAllGatherFeeds = async () => {
   const response = await (await fetch(API_PATH.POST.GET.ALL_GATHER_FEEDS)).json();
   return response;
+};
+
+export const useGetStoreReviewFeeds = (storeId: string, option?: object) => {
+  return useQuery<Post[]>(['storeReviewFeeds', storeId], () => getStoreReviewFeeds(storeId), option);
 };
 
 export const useGetAllReviewFeeds = (option?: object) => {
