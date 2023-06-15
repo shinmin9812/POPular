@@ -7,25 +7,40 @@ import { Store } from '../types/store';
 import { CLIENT_PATH } from '../constants/path';
 import MenuItem from '../components/UserMenu/components/MenuItem';
 
-const isTypeStore = (item: any): item is Store => {
-  return true;
-};
-
 const RecentListPage = () => {
-  const [stores, setStores] = useState<Store[]>();
-  const items = localStorage.getItem('store');
-  const getStores = () => {
-    if (items) {
-      const stores: Store[] = JSON.parse(items);
-      if (stores.every(isTypeStore)) {
-        setStores(stores);
-      } else return;
+  const [existingStores, setExistingStores] = useState<Store[]>();
+
+  async function checkStorage(array: Store[]): Promise<Store[]> {
+    const storageStores: Store[] = [];
+
+    for (const item of array) {
+      try {
+        const response = await fetch(`http://34.22.81.36:3000/stores/store/${item._id}`);
+        if (response.ok) {
+          storageStores.push(item);
+        }
+      } catch (err: any) {
+        throw new Error(err.message);
+      }
     }
-  };
+
+    return storageStores;
+  }
+
+  const item = localStorage.getItem('store');
+  const objectArray: Store[] = item && JSON.parse(item);
 
   useEffect(() => {
-    getStores();
+    checkStorage(objectArray)
+      .then((result) => {
+        localStorage.setItem('store', JSON.stringify(result));
+        setExistingStores(result);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }, []);
+
   return (
     <Container>
       <MetaTag title={`POPULAR | 최근 본 스토어`} />
@@ -35,8 +50,8 @@ const RecentListPage = () => {
       </MenuListContainer>
       <ContentContainer>
         <Title>최근 본 스토어</Title>
-        {stores ? (
-          <StoreList stores={stores} />
+        {existingStores ? (
+          <StoreList stores={existingStores} />
         ) : (
           <div className="nothing">
             <p>
