@@ -26,7 +26,7 @@ const Container = styled.div<{ currentIdx: number }>`
       bottom: -100%;
     }
     100% {
-      bottom: 5rem;
+      bottom: 7.5rem;
     }
   }
 

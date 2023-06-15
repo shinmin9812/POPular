@@ -9,6 +9,8 @@ interface Props {
 }
 
 const Container = styled.article`
+  position: relative;
+
   display: flex;
   width: 100%;
   min-width: 300px;
@@ -66,6 +68,14 @@ const Container = styled.article`
       width: fit-content;
       font-size: var(--font-small);
     }
+
+    .scraps {
+      position: absolute;
+      right: 30px;
+      bottom: 30px;
+      color: #adadad;
+      font-weight: 600;
+    }
   }
 
   &:hover {
@@ -87,6 +97,12 @@ const StoreItem = ({ store, onClick }: Props) => {
         <p className="store-date">
           {dayjs(store.start_date).format('YYYY/MM/DD')} - {dayjs(store.end_date).format('YYYY/MM/DD')}
         </p>
+        <div className="scraps">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#adadad" width="16" height="14" viewBox="0 0 24 20">
+            <path d="M19 24l-7-6-7 6v-24h14v24z" />
+          </svg>
+          {store.scraps.length}
+        </div>
         <Tag>{store.category}</Tag>
       </div>
     </Container>
