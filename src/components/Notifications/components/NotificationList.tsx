@@ -7,6 +7,7 @@ import CommentNotificationItem from './CommentNotificationItem';
 import FollowNotificationItem from './FollowNotificationItem';
 import { Notification } from '../../../types/notification';
 import RecommentNotificationItem from './RecommentNotificationItem';
+import { Link } from 'react-router-dom';
 
 const NotificationList = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -29,6 +30,14 @@ const NotificationList = () => {
   useEffect(() => {
     getUserNotification();
   }, [userData]);
+
+  if (userData && !userData.allow_notification)
+    return (
+      <LinkContainer>
+        <p>알림 설정을 허용해주세요!</p>
+        <StyledLink to={`/user/${userData._id}/update`}>알림 설정하러 가기🔔</StyledLink>
+      </LinkContainer>
+    );
   return (
     <NotificationListContainer>
       {notifications &&
@@ -67,6 +76,27 @@ const NotificationList = () => {
 };
 
 export default NotificationList;
+
+const LinkContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-light-gray);
+  border-radius: 8px;
+
+  p {
+    font-size: 25px;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  font-size: 25px;
+  margin: 20px 0;
+  text-decoration: underline;
+`;
 
 const NotificationListContainer = styled.section`
   width: 100%;
