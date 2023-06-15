@@ -45,7 +45,7 @@ export const API_PATH = {
       // 포스트 ID 조회
       BY_ID: `${API_BASE_URL}/feeds/:postId`,
       // 특정 유저의 전체 포스트 조회
-      BY_USER: '/post/user/:userId',
+      BY_USER: `${API_BASE_URL}/feeds/user/:userId`,
       // 포스트 게시판 조회
       BY_BOARD: '/post/board/:boardId',
       // 특정 스토어의 후기 조회

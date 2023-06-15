@@ -52,6 +52,11 @@ export const getAllGatherFeeds = async () => {
   return response;
 };
 
+export const getUserFeeds = async (userId: string) => {
+  const response = await (await fetch(API_PATH.POST.GET.BY_USER.replace(':userId', userId))).json();
+  return response;
+};
+
 export const useGetAllFeeds = (option?: object) => {
   return useQuery<Post[]>(['allFeeds'], () => getAllFeeds(), option);
 };
@@ -66,4 +71,8 @@ export const useGetAllReviewFeeds = (option?: object) => {
 
 export const useGetFeeds = (postCategory = '') => {
   return useQuery<Post[]>(['getPosts', postCategory], () => fetchData(postCategory));
+};
+
+export const useGetFeedsByUserId = (userId: string, option?: object) => {
+  return useQuery<{ totalDocs: number }>(['feeds', userId], () => getUserFeeds(userId), option);
 };

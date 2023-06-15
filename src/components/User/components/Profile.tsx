@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import MetaTag from '../../SEO/MetaTag';
+import { useGetFeedsByUserId } from '../../../api/feedApi';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -19,6 +20,8 @@ const Profile = () => {
     getUserInfo();
     fetchData();
   }, [userId, userInfo]);
+
+  const { data: feeds } = useGetFeedsByUserId(userId!);
 
   const getUserInfo = async () => {
     try {
@@ -126,7 +129,7 @@ const Profile = () => {
           </div>
         </UserProfile>
         <ProfileList>
-          <ProfileFollow title={'게시물'} number={33} />
+          <ProfileFollow title={'게시물'} number={feeds?.totalDocs ? feeds.totalDocs : 0} />
           <ProfileFollow title={'팔로워'} number={followerCount} />
           <ProfileFollow title={'팔로잉'} number={user.following.length} />
         </ProfileList>
