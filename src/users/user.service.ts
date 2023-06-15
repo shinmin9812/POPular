@@ -34,7 +34,7 @@ export class UserService {
 		private NotificationsService: NotificationsService,
 		@Inject(forwardRef(() => FeedsService))
 		private FeedsService: FeedsService,
-	) {}
+	) { }
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -50,6 +50,11 @@ export class UserService {
 
 	async getScrapsById(_id: string): Promise<Types.ObjectId[]> {
 		const user = await this.userModel.findById(_id).select('scraps');
+
+		if (!user) {
+			throw new NotFoundException('해당 사용자를 찾을 수 없습니다.');
+		}
+
 		return user?.scraps;
 	}
 
@@ -147,7 +152,9 @@ export class UserService {
 			user.save();
 			store.save();
 		} else {
-			throw new BadRequestException({ message: '제대로 값을 못 받아옴' });
+			throw new BadRequestException({
+				message: '유저 또는 스토어의 정보를 불러오지 못했습니다.',
+			});
 		}
 
 		return user;
@@ -159,6 +166,14 @@ export class UserService {
 
 		const storeObjId = new Types.ObjectId(storeId);
 		const userObjId = new Types.ObjectId(userId);
+
+		if (!user) {
+			throw new NotFoundException('해당 유저가 없습니다.');
+		}
+
+		if (!store) {
+			throw new NotFoundException('해당 스토어가 없습니다');
+		}
 
 		if (user && store) {
 			const sIndex = user.scraps.indexOf(storeObjId);
@@ -195,6 +210,14 @@ export class UserService {
 	async updateFollow(user_id: string, target_id: string): Promise<User> {
 		const user = await this.userModel.findById(user_id);
 		const target = await this.userModel.findById(target_id);
+
+		if (!user) {
+			throw new NotFoundException('해당 유저가 없습니다.');
+		}
+
+		if (!target) {
+			throw new NotFoundException('팔로우할 유저가 없습니다');
+		}
 
 		const followingInfo = {
 			_id: user._id.toString(),
@@ -240,6 +263,14 @@ export class UserService {
 	async updateUnfollow(user_id: string, target_id: string): Promise<User> {
 		const user = await this.userModel.findById(user_id);
 		const target = await this.userModel.findById(target_id);
+
+		if (!user) {
+			throw new NotFoundException('해당 유저가 없습니다.');
+		}
+
+		if (!target) {
+			throw new NotFoundException('팔로우할 유저가 없습니다');
+		}
 
 		if (user && target) {
 			for (const item of user.following) {
@@ -290,28 +321,39 @@ export class UserService {
 		const comments = await this.commentModel.find({ author: _id }).select(_id);
 
 		const commentIds = comments.map(comment => comment._id);
-		await this.CommentsService.deleteComment(commentIds);
-
+		if (commentIds.length > 0) {
+			await this.CommentsService.deleteComment(commentIds);
+		} else {
+			throw new NotFoundException("댓글을 찾지 못했습니다.")
+		}
 		// user가 작성한 게시글 삭제(feed.service에서 deleteFeed를 가져와서 사용해야함)
 		const feeds = await this.feedModel.find({ author: _id }).select(_id);
 
 		const feedIds = feeds.map(feed => feed._id);
-		await this.FeedsService.deleteFeed(feedIds);
+		if (feedIds.length > 0) {
+			await this.FeedsService.deleteFeed(feedIds);
+		} else {
+			throw new NotFoundException("게시글을 찾지 못했습니다.")
+		}
 
 		// user관련 알림 삭제(notification.service에서 deleteNotification을 가져와서 사용해야함)
 		const userNotifications = await this.notificationModel.find({ user_id: _id }).select(_id);
 		const userRelatedNotifications = await this.notificationModel.find({ content_user: _id }).select(_id);
 
 		const notifications = [...userNotifications, ...userRelatedNotifications];
-		if(notifications.length > 0) {
+		if (notifications.length > 0) {
 			const notificationsIds = notifications.map(notification => notification._id);
+			console.log(notificationsIds);
 			await this.NotificationsService.deleteNotifications(notificationsIds);
 		}
-		
+
 		return await this.userModel.findByIdAndDelete(_id);
 	}
 
 	async deleteUsers(ids: string[]): Promise<void> {
+		if (ids.length === 0) {
+			throw new NotFoundException('');
+		}
 		for (const id of ids) {
 			await this.deleteUser(id);
 		}

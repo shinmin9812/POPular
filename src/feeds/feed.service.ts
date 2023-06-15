@@ -84,6 +84,10 @@ export class FeedsService {
 		return await this.getFeedsByBoard('free');
 	}
 
+	async getFeedsByStore(id: string): Promise<Feed[]> {
+		return await this.feedModel.find({ store_id: id });
+	}
+
 	async getPaginateByUserId(
 		id: string,
 		pageIndex: number,
