@@ -53,35 +53,39 @@ const AdminStoreStatisticsPage = () => {
 
   return (
     <Container>
-      {allStores && (
-        <div className="store-charts">
-          <Card className="store-add-chart">
-            <p className="title">최근 추가된 점포수</p>
-            <StoreAddChart stores={allStores} />
-          </Card>
-          <Card className="store-location-chart">
-            <p className="title">지역별 점포 수 분포</p>
-            <StoreLocationChart stores={allStores} />
-          </Card>
-          <Card className="store-scrap-chart">
-            <p className="title">스토어별 스크랩 순위</p>
-            <StoreScrapChart stores={allStores} />
-          </Card>
-        </div>
-      )}
+      {allStores && allStores.length > 0 ? (
+        <>
+          <div className="store-charts">
+            <Card className="store-add-chart">
+              <p className="title">최근 추가된 점포수</p>
+              <StoreAddChart stores={allStores} />
+            </Card>
+            <Card className="store-location-chart">
+              <p className="title">지역별 점포 수 분포</p>
+              <StoreLocationChart stores={allStores} />
+            </Card>
+            <Card className="store-scrap-chart">
+              <p className="title">스토어별 스크랩 순위</p>
+              <StoreScrapChart stores={allStores} />
+            </Card>
+          </div>
 
-      <div className="store-search">
-        <Card className="store-search-box">
-          <p className="title">스토어 검색</p>
-          {allStores && <AdminStoreList stores={allStores} />}
-        </Card>
-        {storeId && allStores && (
-          <Card className="store-scrap-chart">
-            <StoreTitle store={allStores.find((store) => store._id === storeId)!} />
-            <StoreInfo store={allStores.find((store) => store._id === storeId)!} />
-          </Card>
-        )}
-      </div>
+          <div className="store-search">
+            <Card className="store-search-box">
+              <p className="title">스토어 검색</p>
+              {allStores && <AdminStoreList stores={allStores} />}
+            </Card>
+            {storeId && allStores && (
+              <Card className="store-scrap-chart">
+                <StoreTitle store={allStores.find((store) => store._id === storeId)!} />
+                <StoreInfo store={allStores.find((store) => store._id === storeId)!} />
+              </Card>
+            )}
+          </div>
+        </>
+      ) : (
+        <Card>스토어가 존재하지 않습니다!</Card>
+      )}
     </Container>
   );
 };

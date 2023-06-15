@@ -41,7 +41,7 @@ const AdminFeedStatisticsPage = () => {
 
   return (
     <Container>
-      {isFetched && allFeeds!.length > 0 && (
+      {isFetched && allFeeds!.length > 0 ? (
         <>
           <div className="feed-charts">
             <Card className="feed-add-chart">
@@ -64,6 +64,8 @@ const AdminFeedStatisticsPage = () => {
             </Card>
           </div>
         </>
+      ) : (
+        <Card>피드가 존재하지 않습니다!</Card>
       )}
     </Container>
   );

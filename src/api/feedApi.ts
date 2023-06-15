@@ -1,5 +1,5 @@
 import { API_PATH } from '../constants/path';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Post } from '../types/post';
 import { UnPopulatedPost } from '../components/StoreDetail/components/ReviewPost';
 
@@ -58,6 +58,20 @@ export const getUserFeeds = async (userId: string) => {
   return response;
 };
 
+export const deleteFeeds = async (feedIds: string[]): Promise<void> => {
+  try {
+    await fetch(API_PATH.POST.DELETE, {
+      headers: { 'Content-Type': 'application/json', authorization: `Bearer ${localStorage.getItem('token')}` },
+      method: 'DELETE',
+      body: JSON.stringify({
+        ids: feedIds,
+      }),
+    });
+  } catch (err) {
+    throw new Error('피드 삭제를 실패하였습니다!');
+  }
+};
+
 export const useGetAllFeeds = (option?: object) => {
   return useQuery<Post[]>(['allFeeds'], () => getAllFeeds(), option);
 };
@@ -76,4 +90,8 @@ export const useGetFeeds = (postCategory = '') => {
 
 export const useGetFeedsByUserId = (userId: string, option?: object) => {
   return useQuery<{ totalDocs: number }>(['feeds', userId], () => getUserFeeds(userId), option);
+};
+
+export const useDeleteFeeds = (feedIds: string[], option?: object) => {
+  return useMutation(() => deleteFeeds(feedIds), option);
 };

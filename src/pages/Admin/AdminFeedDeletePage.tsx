@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
-import { useDeleteUsers, useGetAllUsers } from '../../api/userApi';
 import { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import { useQueryClient } from '@tanstack/react-query';
 import Modal from '../../components/common/Modal/Modal';
 import AlertModal from '../../components/common/Modals/AlertModal';
-import AdminUserList from '../../components/Admin/components/Users/AdminUserList';
-import AdminUserItem from '../../components/Admin/components/Users/AdminUserItem';
+import { useDeleteFeeds, useGetAllFeeds } from '../../api/feedApi';
+import AdminFeedList from '../../components/Admin/components/Feeds/AdminFeedList';
+import AdminFeedItem from '../../components/Admin/components/Feeds/AdminFeedItem';
 
 const Container = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const Container = styled.div`
     font-weight: 700;
   }
 
-  .delete-user {
+  .delete-feed {
     width: 500px;
     position: fixed;
     top: 30px;
@@ -38,23 +38,23 @@ const Container = styled.div`
     }
   }
 
-  .selected-users {
+  .selected-feeds {
     position: relative;
-    width: 500px;
+    width: 600px;
     left: 40px;
     padding-bottom: 60px;
 
-    .selected-user {
+    .selected-feed {
       transition: all 0.3s;
     }
 
-    .selected-user:hover {
+    .selected-feed:hover {
       cursor: pointer;
       transform: translateY(-6px);
       box-shadow: 0px 6px 22px -6px rgba(0, 0, 0, 0.3);
     }
 
-    .selected-user a {
+    .selected-feed a {
       pointer-events: none;
     }
 
@@ -66,16 +66,16 @@ const Container = styled.div`
   }
 `;
 
-const AdminUserDeletePage = () => {
+const AdminFeedDeletePage = () => {
   const queryClient = useQueryClient();
-  const { data: allUsers } = useGetAllUsers();
+  const { data: allFeeds } = useGetAllFeeds();
   const [selectedId, setSelectedId] = useState<string[]>([]);
 
-  const { mutate, isSuccess } = useDeleteUsers(selectedId, {
+  const { mutate, isSuccess } = useDeleteFeeds(selectedId, {
     onSuccess: () => {
       setSelectedId([]);
       setIsModalOpen(true);
-      queryClient.refetchQueries(['allUsers']);
+      queryClient.refetchQueries(['allFeeds']);
     },
   });
 
@@ -87,40 +87,40 @@ const AdminUserDeletePage = () => {
 
   return (
     <Container>
-      <Card className="delete-user">
-        <p className="title">유저 삭제</p>
-        {allUsers && allUsers.length > 0 && (
-          <AdminUserList setSelectedId={setSelectedId} selectedId={selectedId} users={allUsers} selectMode={true} />
+      <Card className="delete-feed">
+        <p className="title">피드 삭제</p>
+        {allFeeds && allFeeds.length > 0 && (
+          <AdminFeedList setSelectedId={setSelectedId} selectedId={selectedId} feeds={allFeeds} selectMode={true} />
         )}
       </Card>
       {selectedId.length > 0 && (
-        <Card className="selected-users">
+        <Card className="selected-feeds">
           <p className="title">선택된 목록</p>
-          {allUsers!.map((user) => {
-            if (selectedId.includes(user._id)) {
+          {allFeeds!.map((feed) => {
+            if (selectedId.includes(feed._id)) {
               return (
                 <div
-                  className="selected-user"
-                  key={user._id}
+                  className="selected-feed"
+                  key={feed._id}
                   onClick={() => {
-                    setSelectedId((prev) => prev.filter((id) => id !== user._id));
+                    setSelectedId((prev) => prev.filter((id) => id !== feed._id));
                   }}
                 >
-                  <AdminUserItem key={user._id} user={user} />
+                  <AdminFeedItem key={feed._id} feed={feed} />
                 </div>
               );
             }
           })}
-          <Button onClick={deleteHandler}>유저 삭제하기</Button>
+          <Button onClick={deleteHandler}>피드 삭제하기</Button>
         </Card>
       )}
       {isSuccess && isModalOpen && (
         <Modal>
-          <AlertModal onClose={setIsModalOpen} content="유저가 삭제되었습니다!"></AlertModal>
+          <AlertModal onClose={setIsModalOpen} content="피드가 삭제되었습니다!"></AlertModal>
         </Modal>
       )}
     </Container>
   );
 };
 
-export default AdminUserDeletePage;
+export default AdminFeedDeletePage;

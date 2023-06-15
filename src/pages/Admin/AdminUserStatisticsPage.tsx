@@ -45,30 +45,33 @@ const AdminUserStatisticsPage = () => {
 
   return (
     <Container>
-      {allUsers && (
-        <div className="user-charts">
-          <Card className="user-add-chart">
-            <p className="title">유저 가입 추이</p>
-            <UserAddChart users={allUsers} />
-          </Card>
-          <Card className="user-follower-chart">
-            <p className="title">최다 팔로워 유저</p>
-            <UserFollowerChart users={allUsers} />
-          </Card>
-          <Card className="user-scrap-chart">
-            <p className="title">유저 선호 카테고리</p>
-            <UserCategoryCharts users={allUsers} />
-          </Card>
-        </div>
+      {allUsers && allUsers.length > 0 ? (
+        <>
+          <div className="user-charts">
+            <Card className="user-add-chart">
+              <p className="title">유저 가입 추이</p>
+              <UserAddChart users={allUsers} />
+            </Card>
+            <Card className="user-follower-chart">
+              <p className="title">최다 팔로워 유저</p>
+              <UserFollowerChart users={allUsers} />
+            </Card>
+            <Card className="user-scrap-chart">
+              <p className="title">유저 선호 카테고리</p>
+              <UserCategoryCharts users={allUsers} />
+            </Card>
+          </div>
+          <div className="user-search">
+            <Card className="user-search-box">
+              <p className="title">유저 검색</p>
+              {allUsers && <AdminUserList users={allUsers} />}
+            </Card>
+            <Outlet />
+          </div>
+        </>
+      ) : (
+        <Card>유저가 존재하지 않습니다!</Card>
       )}
-
-      <div className="user-search">
-        <Card className="user-search-box">
-          <p className="title">유저 검색</p>
-          {allUsers && <AdminUserList users={allUsers} />}
-        </Card>
-        <Outlet />
-      </div>
     </Container>
   );
 };

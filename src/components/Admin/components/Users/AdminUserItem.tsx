@@ -8,13 +8,11 @@ interface Props {
 }
 
 const AdminUserItem = ({ user }: Props) => {
-  console.log(user);
   return (
     <Container>
       <NavLink to={`./${user._id}`} className={({ isActive }) => (isActive ? 'active' : '')}>
         <div className="profile">
-          <img src={user.profile} alt="profile" />
-          <div className="date">{dayjs(user.createdAt).format('YYYY-MM-DD')} 가입</div>
+          {user.profile ? <img src={user.profile} alt="profile" /> : <img src="/defaultProfile.svg" alt="profile" />}
         </div>
         <div className="info">
           <div className="unique-id">
@@ -23,6 +21,7 @@ const AdminUserItem = ({ user }: Props) => {
           <div className="name">{user.name}</div>
           <div className="nickname">{user.nickname}</div>
           <div className="introduce">{user.introduce}</div>
+          <div className="date">{dayjs(user.createdAt).format('YYYY-MM-DD')} 가입</div>
         </div>
       </NavLink>
     </Container>
@@ -56,18 +55,13 @@ const Container = styled.div`
       flex-direction: column;
       align-items: center;
       gap: 6px;
-      height: 100%;
+      height: 80px;
       margin-right: 20px;
 
       img {
         height: 100%;
         aspect-ratio: 1/1;
         border-radius: 50%;
-      }
-
-      .date {
-        font-size: 11px;
-        color: #969696;
       }
     }
 
@@ -94,6 +88,11 @@ const Container = styled.div`
 
       .introduce {
         font-size: 12px;
+      }
+
+      .date {
+        font-size: 11px;
+        color: #969696;
       }
     }
   }

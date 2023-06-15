@@ -95,7 +95,11 @@ const AdminUserDetailPage = () => {
         <Card>
           <Container>
             <div className="profile">
-              <img src={user.profile} alt="profile" />
+              {user.profile ? (
+                <img src={user.profile} alt="profile" />
+              ) : (
+                <img src="/defaultProfile.svg" alt="profile" />
+              )}
             </div>
             <div className="names">
               <div className="name">

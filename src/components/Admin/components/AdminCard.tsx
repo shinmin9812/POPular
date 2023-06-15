@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useGetLoginuser } from '../../../api/userApi';
 
 const Container = styled.div`
   display: flex;
@@ -41,13 +42,20 @@ const Container = styled.div`
 `;
 
 const AdminCard = () => {
+  const { data } = useGetLoginuser();
+  console.log(data);
+
   return (
     <Container>
-      <img src="https://t3.ftcdn.net/jpg/03/62/56/24/360_F_362562495_Gau0POzcwR8JCfQuikVUTqzMFTo78vkF.jpg" alt="" />
-      <div className="admin-info">
-        <p>관리자</p>
-        <strong>홍길동</strong>
-      </div>
+      {data && (
+        <>
+          <img src={data.profile ? data.profile : '/defaultProfile.svg'} alt="admin-profile" />
+          <div className="admin-info">
+            <p>관리자</p>
+            <strong>{data.nickname}</strong>
+          </div>
+        </>
+      )}
     </Container>
   );
 };
