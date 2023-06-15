@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import UserProfile from './UserProfile';
 import MenuList from './MenuList';
-import Logo from '../../common/Icons/DummyLogo';
 import { useEffect, useState } from 'react';
 import MenuItem from './MenuItem';
 import { useNavigate } from 'react-router-dom';
@@ -76,9 +75,11 @@ const MemberMenu = () => {
 export default MemberMenu;
 
 const Container = styled.div`
-  & > a {
+  margin: 20px 0;
+  & > a,
+  .deleteUser {
     display: block;
-    width: 350px;
+    width: 300px;
     height: 65px;
     font-size: var(--font-medium);
     border-bottom: 0.5px solid var(--color-gray);
@@ -92,21 +93,17 @@ const Container = styled.div`
       font-size: calc(var(--font-medium) + 2px);
     }
   }
-  margin: 20px 0;
-  .deleteUser {
-    display: block;
-    width: 350px;
-    height: 65px;
-    font-size: var(--font-medium);
-    border-bottom: 0.5px solid var(--color-gray);
-    padding: 20px;
-    margin: 0;
-    cursor: pointer;
 
-    :hover {
-      transition: all 0.1s ease;
-      color: var(--color-main);
-      font-size: calc(var(--font-medium) + 2px);
+  @media screen and (max-width: 768px) {
+    & > a,
+    .deleteUser {
+      height: 55px;
+      font-size: var(--font-regular);
+      :hover {
+        transition: all 0.1s ease;
+        color: var(--color-main);
+        font-size: calc(var(--font-regular) + 2px);
+      }
     }
   }
 `;
