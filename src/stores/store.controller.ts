@@ -115,7 +115,7 @@ export class StoreController {
 	@ApiInternalServerErrorResponse({
 		description: '쿼리문이 없거나 조회에 실패했을 경우',
 	})
-	@Get('/coord')
+	@Get('coord')
 	async getStoresByCoord(@Query() query: CoordQuery): Promise<Store[]> {
 		const { x, y, distance } = query;
 		const longtitude = Number(y);
