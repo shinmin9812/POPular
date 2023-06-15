@@ -1,23 +1,40 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { User } from '../../../../types/user';
 import { Store } from '../../../../types/store';
 import CategoryItems from './CategoryItems';
+import { useEffect, useState } from 'react';
 
 interface UserProps {
   users: User | null;
   stores: Store[];
 }
 
+type CategoryItemProps = {
+  active: 'active' | 'item';
+};
+
 const CategoryRecommend = ({ users, stores }: UserProps) => {
   const interestedCategories = users?.interested_category || [];
+  const [selectCategory, setSelectCategory] = useState(interestedCategories[0]);
+
+  useEffect(() => {
+    console.log(selectCategory);
+  }, [selectCategory]);
+
   return (
     <Container>
       <CategoryList>
         {interestedCategories.map((category) => (
-          <CategoryItem key={category}>{category}</CategoryItem>
+          <CategoryItem
+            key={category}
+            onClick={() => setSelectCategory(category)}
+            active={selectCategory === category ? 'active' : 'item'}
+          >
+            {category}
+          </CategoryItem>
         ))}
       </CategoryList>
-      <CategoryItems stores={stores} />
+      <CategoryItems catecoryList={selectCategory} />
     </Container>
   );
 };
@@ -34,13 +51,38 @@ const CategoryList = styled.div`
   justify-content: center;
 `;
 
-const CategoryItem = styled.div`
+const CategoryItem = styled.div<CategoryItemProps>`
   border-radius: 20px;
-  background-color: var(--color-main);
   padding: 5px 18px;
   color: var(--color-light-gray);
   font-weight: var(--weight-regular);
   font-size: var(--font-small);
+  cursor: pointer;
+  transition: all 0.2s;
+
+  ${(props) =>
+    props.active === 'active' &&
+    css`
+      background-color: var(--color-main);
+      color: var(--color-white);
+
+      &:hover {
+        background-color: var(--color-main);
+        color: #fff;
+      }
+    `}
+
+  ${(props) =>
+    props.active === 'item' &&
+    css`
+      background-color: var(--color-light-black);
+      color: var(--color-white);
+
+      &:hover {
+        background-color: var(--color-main);
+        color: #fff;
+      }
+    `}
 `;
 
 export default CategoryRecommend;

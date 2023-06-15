@@ -20,6 +20,7 @@ export interface CommunityInitialState {
   };
   page: {
     currPage: number;
+    pageGroup: number[];
     totalPage: number[];
   };
 }
@@ -47,6 +48,7 @@ const initialState: CommunityInitialState = {
   },
   page: {
     currPage: 1,
+    pageGroup: [1],
     totalPage: [1],
   },
 };
@@ -60,6 +62,9 @@ const CommunitySlice = createSlice({
     },
     setPage(state, action: PayloadAction<number>) {
       state.page.currPage = action.payload;
+    },
+    setPageGroup(state, action: PayloadAction<number[]>) {
+      state.page.pageGroup = action.payload;
     },
     setTotalPage(state, action: PayloadAction<number[]>) {
       state.page.totalPage = action.payload;

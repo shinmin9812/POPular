@@ -27,16 +27,25 @@ const RegisterButton = styled.button`
 const CommentInput = ({
   value,
   onChange,
-  onClick,
+  RegisterComment,
 }: {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => void;
+  RegisterComment: () => void;
 }) => {
   return (
     <CommentInputWrap>
-      <Input placeholder="댓글을 입력해주세요" onChange={onChange} value={value} />
-      <RegisterButton onClick={onClick}>등록하기</RegisterButton>
+      <Input
+        placeholder="댓글을 입력해주세요"
+        onChange={onChange}
+        value={value}
+        onKeyUp={(e) => {
+          if (e.key === 'Enter') {
+            RegisterComment();
+          }
+        }}
+      />
+      <RegisterButton onClick={RegisterComment}>등록하기</RegisterButton>
     </CommentInputWrap>
   );
 };

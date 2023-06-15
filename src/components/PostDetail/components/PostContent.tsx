@@ -98,6 +98,10 @@ const PostContentWrap = styled.div`
     margin-left: 40px;
     margin-right: 40px;
   }
+
+  img {
+    max-width: 500px;
+  }
 `;
 
 const PostContent = ({ content }: { content: string }) => {

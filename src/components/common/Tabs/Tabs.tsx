@@ -27,28 +27,4 @@ const Tab = styled.p<{ active: boolean }>`
     `}
 `;
 
-const BoardTabs = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-const TabsWrap = ({ tabs, currTab, onClick }: { tabs: string[]; currTab: string; onClick: (tab: string) => void }) => {
-  return (
-    <BoardTabs>
-      {tabs.map((tab, index) => (
-        <Tab
-          key={index}
-          active={currTab === tab}
-          onClick={() => {
-            onClick(tab);
-          }}
-        >
-          {tab}
-        </Tab>
-      ))}
-    </BoardTabs>
-  );
-};
-
-export default TabsWrap;
+export default Tab;

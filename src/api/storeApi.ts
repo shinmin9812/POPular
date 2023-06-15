@@ -63,8 +63,8 @@ export const editPost = async ({ storeData, storeId }: { storeData: PostedStore;
   }
 };
 
-export const useGetAllStores = () => {
-  return useQuery<Store[]>(['allStores'], getAllStores);
+export const useGetAllStores = (options?: object) => {
+  return useQuery<Store[]>(['allStores'], getAllStores, options);
 };
 
 export const useGetStoreById = (storeId: string, option?: object) => {

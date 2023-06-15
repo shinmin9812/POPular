@@ -29,9 +29,8 @@ export const API_PATH = {
 
   USER: {
     GET: {
-      ALL: '/user/all',
-      BY_ID: '/user/id/:userId',
-      BY_NICKNAME: '/user/nickname/:userNickname',
+      ALL: `${API_BASE_URL}/users`,
+      BY_ID: `${API_BASE_URL}/users/:userId`,
     },
     POST: {
       LOGIN: '/login',
@@ -59,8 +58,8 @@ export const API_PATH = {
       ALL_GATHER_FEEDS: `${API_BASE_URL}/feeds/gather`,
     },
     POST: `${API_BASE_URL}/feeds/`,
-    PUT:  `${API_BASE_URL}/feeds/:postId`,
-    DELETE: {},
+    PUT: `${API_BASE_URL}/feeds/:postId`,
+    DELETE: `${API_BASE_URL}/feeds/`,
   },
 
   COMMENT: {
@@ -74,9 +73,9 @@ export const API_PATH = {
       // 특정 포스트의 전체 코멘트
       BY_POST: '/comment/post/:postId',
     },
-    POST:`${API_BASE_URL}/comments`,
+    POST: `${API_BASE_URL}/comments`,
     PUT: {},
-    DELETE: `${API_BASE_URL}/comments/:commentId`,
+    DELETE: `${API_BASE_URL}/comments/`,
   },
 
   NOTIFICATION: {
@@ -93,7 +92,11 @@ export const API_PATH = {
     DELETE: {},
   },
 
-  AUTH: {},
+  AUTH: {
+    GET: {
+      PROFILE: `${API_BASE_URL}/auth/profile`,
+    },
+  },
 };
 
 export const CLIENT_PATH = {
@@ -102,7 +105,7 @@ export const CLIENT_PATH = {
   MAP: '/map',
 
   SEARCH: '/search',
-
+  BOARD_ALL: '/community/board',
   BOARD: '/community/board/:category',
   POST: '/community/post/:postId',
   WRITE: '/community/write',

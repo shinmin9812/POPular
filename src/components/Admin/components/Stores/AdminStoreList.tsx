@@ -57,7 +57,7 @@ const AdminStoreList = ({ stores, selectMode, selectedId, setSelectedId }: Props
           selectMode ? (
             <label key={store._id}>
               <input
-                defaultChecked={selectedId!.includes(store._id) ? true : false}
+                checked={selectedId!.includes(store._id) ? true : false}
                 type="checkbox"
                 onChange={(e) => {
                   e.target.checked

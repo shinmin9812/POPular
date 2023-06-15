@@ -25,6 +25,7 @@ const Button = styled.button`
   a {
     font-size: 14px;
     color: var(--color-white);
+    width: 100%;
   }
 
   + span {
@@ -36,10 +37,12 @@ const WriteButton = () => {
   const token = localStorage.getItem('token');
   return (
     <Button>
-      <Link to={token ? CLIENT_PATH.WRITE : CLIENT_PATH.LOGIN}>글쓰기</Link>
-      <PenIconWrap>
-        <PenIcon />
-      </PenIconWrap>
+      <Link to={token ? CLIENT_PATH.WRITE : CLIENT_PATH.LOGIN}>
+        글쓰기
+        <PenIconWrap>
+          <PenIcon />
+        </PenIconWrap>
+      </Link>
     </Button>
   );
 };
