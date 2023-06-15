@@ -75,15 +75,17 @@ const PostListItemContainer = () => {
   }
   return (
     <PostList>
-      {isFetching
-        ? 'loading...'
-        : dividedPost[page - 1]?.map((post) => (
-            <li key={post._id}>
-              <Link to={CLIENT_PATH.POST.replace(':postId', post._id)}>
-                <PostItem post={post} />
-              </Link>
-            </li>
-          ))}
+      {isFetching ? (
+        <></>
+      ) : (
+        dividedPost[page - 1]?.map((post) => (
+          <li key={post._id}>
+            <Link to={CLIENT_PATH.POST.replace(':postId', post._id)}>
+              <PostItem post={post} />
+            </Link>
+          </li>
+        ))
+      )}
     </PostList>
   );
 };

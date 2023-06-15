@@ -50,6 +50,18 @@ const Container = styled.div`
   box-shadow: 1px 1px 10px #eee;
   margin-bottom: 10px;
   border-radius: 8px;
+  animation: appear-post 1s forwards;
+
+  @keyframes appear-post {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   &:hover {
     cursor: pointer;

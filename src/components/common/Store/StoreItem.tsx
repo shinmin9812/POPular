@@ -78,6 +78,19 @@ const Container = styled.article`
     }
   }
 
+  animation: appear-post 1s forwards;
+
+  @keyframes appear-post {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   &:hover {
     cursor: pointer;
   }

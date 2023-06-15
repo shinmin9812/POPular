@@ -109,7 +109,6 @@ const ContentContainer = styled.div`
   & li {
     margin: 10px 20px;
     border-radius: 8px;
-    background-color: var(--color-light-gray);
   }
 `;
 
