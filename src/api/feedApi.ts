@@ -1,6 +1,7 @@
 import { API_PATH } from '../constants/path';
 import { useQuery } from '@tanstack/react-query';
 import { Post } from '../types/post';
+import { UnPopulatedPost } from '../components/StoreDetail/components/ReviewPost';
 
 const fetchData = async (postCategory = '') => {
   try {
@@ -43,7 +44,7 @@ export const getAllReviewFeeds = async () => {
 };
 
 export const getStoreReviewFeeds = async (storeId: string) => {
-  const response = await (await fetch(`${API_PATH.POST.GET.ALL_REVIEW_FEEDS}/${storeId}`)).json();
+  const response = await (await fetch(`${API_PATH.POST.GET.REVIEW_BY_STORE.replace(':storeId', storeId)}`)).json();
   return response;
 };
 
@@ -62,7 +63,7 @@ export const useGetAllFeeds = (option?: object) => {
 };
 
 export const useGetStoreReviewFeeds = (storeId: string, option?: object) => {
-  return useQuery<Post[]>(['storeReviewFeeds', storeId], () => getStoreReviewFeeds(storeId), option);
+  return useQuery<UnPopulatedPost[]>(['storeReviewFeeds', storeId], () => getStoreReviewFeeds(storeId), option);
 };
 
 export const useGetAllReviewFeeds = (option?: object) => {

@@ -31,6 +31,7 @@ import AdminUserDetailPage from './pages/Admin/AdminUserDetailPage';
 import AdminUserEditPage from './pages/Admin/AdminUserEditPage';
 import AdminUserDeletePage from './pages/Admin/AdminUserDeletePage';
 import AuthChecker from './AuthChecker';
+import AdminFeedStatisticsPage from './pages/Admin/AdminFeedStatisticsPage';
 
 const Router = () => {
   return (
@@ -86,10 +87,9 @@ const Router = () => {
             </Route>
             <Route path={CLIENT_PATH.ADMIN_USER.DELETE} element={<AdminUserDeletePage />} />
 
-            <Route path={CLIENT_PATH.ADMIN_FEED.STATISTICS} element={<AdminPage />} />
+            <Route path={CLIENT_PATH.ADMIN_FEED.STATISTICS} element={<AdminFeedStatisticsPage />} />
             <Route path={CLIENT_PATH.ADMIN_FEED.EDIT} element={<AdminPage />} />
-            <Route path={CLIENT_PATH.ADMIN_FEED.DELETE} element={<AdminPage />} />
-
+            <Route path={CLIENT_PATH.ADMIN_FEED.DELETE} element={<AdminUserDeletePage />} />
             <Route path={CLIENT_PATH.ADMIN_NOTIFICATION.SEND} element={<AdminPage />} />
             <Route path={CLIENT_PATH.ADMIN_NOTIFICATION.EDIT} element={<AdminPage />} />
           </Route>
