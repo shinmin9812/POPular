@@ -33,12 +33,12 @@ const MenuList = () => {
 export default MenuList;
 
 const MenuListContainer = styled.div`
-  width: 350px;
+  width: 300px;
   margin: 0;
   a,
   div {
     display: block;
-    width: 350px;
+    width: 300px;
     height: 65px;
     font-size: var(--font-medium);
     border-bottom: 0.5px solid var(--color-gray);
@@ -55,5 +55,19 @@ const MenuListContainer = styled.div`
 
   .logout {
     border-top: 1px solid gray;
+  }
+
+  @media screen and (max-width: 768px) {
+    a,
+    div {
+      height: 55px;
+      font-size: var(--font-regular);
+
+      :hover {
+        transition: all 0.1s ease;
+        color: var(--color-main);
+        font-size: calc(var(--font-regular) + 2px);
+      }
+    }
   }
 `;

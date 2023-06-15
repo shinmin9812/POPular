@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { CLIENT_PATH } from '../../../constants/path';
 import LoginLink from './LoginLink';
 import MenuItem from './MenuItem';
-import Logo from '../../common/Icons/DummyLogo';
 import { Link } from 'react-router-dom';
 
 const NonMemberMenu = () => {
@@ -14,13 +13,10 @@ const NonMemberMenu = () => {
         <MenuItem link={CLIENT_PATH.USER_SCRAP} title="위시리스트" />
         <MenuItem link={CLIENT_PATH.USER_POSTS} title="내가 쓴 글" />
         <MenuItem link={CLIENT_PATH.USER_COMMENTS} title="내가 쓴 댓글" />
-        <Link className="signup" to="/signup">
+        <Link className="signup" to={CLIENT_PATH.SIGNUP}>
           회원가입
         </Link>
       </MenuList>
-      <LogoContainer>
-        <Logo color="#bfbfbf" />
-      </LogoContainer>
     </>
   );
 };
@@ -29,15 +25,17 @@ export default NonMemberMenu;
 
 const MenuList = styled.div`
   width: 300px;
-  margin: 40px 20px;
+  display: flex;
+  flex-direction: column;
   a,
   div {
-    display: block;
-    width: 350px;
+    display: flex;
+    align-items: center;
+    width: 300px;
     height: 65px;
     font-size: var(--font-medium);
     border-bottom: 0.5px solid var(--color-gray);
-    padding: 20px;
+    padding-left: 90px;
     margin: 0;
     cursor: pointer;
 
@@ -51,11 +49,4 @@ const MenuList = styled.div`
   .signup {
     border-top: 1px solid gray;
   }
-`;
-
-const LogoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 100px;
 `;

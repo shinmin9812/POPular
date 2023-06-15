@@ -11,8 +11,6 @@ const SignupPage = () => {
         <PageTitle>회원가입</PageTitle>
         <SignupForm></SignupForm>
       </SignupContainer>
-      <PageTitle>회원가입</PageTitle>
-      <SignupForm></SignupForm>
     </Container>
   );
 };

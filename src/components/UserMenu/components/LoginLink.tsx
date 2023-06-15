@@ -20,7 +20,7 @@ const LoginLink = () => {
 export default LoginLink;
 
 const LinkContainer = styled.div`
-  width: 350px;
+  width: 300px;
   padding: 4px 12px 16px 8px;
   border-bottom: 1px solid var(--color-gray);
   display: flex;
