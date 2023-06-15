@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { User } from '../../../types/user';
+import { Post } from '../../../types/post';
 import ProfileFollow from './ProfileFollow';
 import ProfileButton from './ProfileButton';
 import { useParams } from 'react-router-dom';
@@ -14,11 +15,21 @@ const Profile = () => {
   const [checkFollower, setCheckFollower] = useState(false);
   const [followerCount, setFollowerCount] = useState(0);
   const [isFollowLoading, setIsFollowLoading] = useState(false);
+  const [feedNumber, setFeedNumber] = useState<Post[]>([]);
 
   useEffect(() => {
     getUserInfo();
     fetchData();
+    getFeedNumber();
   }, [userId, userInfo]);
+
+  let feedNumbers: string[] = [];
+  for (let i = 0; i < feedNumber.length; i++) {
+    const currentFeed = feedNumber[i];
+    if (userId && currentFeed.author._id.includes(userId)) {
+      feedNumbers.push(currentFeed.author._id);
+    }
+  }
 
   const getUserInfo = async () => {
     try {
@@ -31,6 +42,22 @@ const Profile = () => {
       });
       const data = await response.json();
       setUserInfo(data._id);
+      return data;
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  };
+
+  const getFeedNumber = async () => {
+    try {
+      const response = await fetch('http://34.22.81.36:3000/feeds', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setFeedNumber(data);
       return data;
     } catch (err: any) {
       throw new Error(err);
@@ -126,7 +153,7 @@ const Profile = () => {
           </div>
         </UserProfile>
         <ProfileList>
-          <ProfileFollow title={'게시물'} number={33} />
+          <ProfileFollow title={'게시물'} number={feedNumbers.length} />
           <ProfileFollow title={'팔로워'} number={followerCount} />
           <ProfileFollow title={'팔로잉'} number={user.following.length} />
         </ProfileList>
@@ -154,6 +181,10 @@ const Profile = () => {
 
 const Container = styled.div`
   padding: 20px 0px;
+
+  @media all and (max-width: 767px) {
+    padding: 5px 0px 20px;
+  }
 `;
 
 const ProfileInfo = styled.div`
@@ -180,11 +211,9 @@ const UserProfile = styled.div`
     }
 
     .profile-style {
-      width: 110px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 `;

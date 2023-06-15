@@ -34,9 +34,10 @@ export const API_PATH = {
     },
     POST: {
       LOGIN: '/login',
+      CHECK_NICKNAME: `${API_BASE_URL}/users/checknickname`,
     },
-    PUT: {},
-    DELETE: {},
+    PATCH: `${API_BASE_URL}/users/:userId`,
+    DELETE: `${API_BASE_URL}/users/:userId`,
   },
 
   POST: {

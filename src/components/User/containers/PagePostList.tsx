@@ -115,6 +115,10 @@ const PagePostList = () => {
 const Container = styled.div`
   position: static;
   margin-top: 30px;
+
+  @media all and (max-width: 767px) {
+    margin-top: 10px;
+  }
 `;
 
 const Loading = styled.div`

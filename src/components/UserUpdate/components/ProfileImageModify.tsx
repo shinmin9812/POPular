@@ -4,6 +4,7 @@ import ProfileUploadButton from './ProfileUploadButton';
 import ProfileButton from './ProfileButton';
 import { User } from '../../../types/user';
 import { useParams } from 'react-router-dom';
+import { API_PATH } from '../../../constants/path';
 
 interface Props {
   user: User;
@@ -45,7 +46,8 @@ const ProfileImageModify = ({ user }: Props) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://34.22.81.36:3000/users/${userId}`, {
+      if (!userId) return;
+      const response = await fetch(API_PATH.USER.PATCH.replace(':userId', userId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
