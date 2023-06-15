@@ -55,10 +55,15 @@ const Container = styled.div`
     margin-top: 20px;
     font-size: var(--font-medium);
     font-weight: var(--weight-semi-bold);
+
+    @media all and (max-width: 767px) {
+      margin-top: 10px;
+      font-size: var(--font-regular);
+    }
   }
 
   @media all and (max-width: 767px) {
-    width: 100%;
+    width: 90%;
   }
 `;
 

@@ -56,6 +56,10 @@ const CarouselContainer = styled.div`
     font-weight: var(--weight-semi-bold);
     font-size: var(--font-medium);
     margin-bottom: 20px;
+
+    @media all and (max-width: 767px) {
+      font-size: var(--font-regular);
+    }
   }
 
   button {

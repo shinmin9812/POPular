@@ -69,7 +69,7 @@ const CategoryBox = ({ stores, text }: Props) => {
 const Container = styled.div<ContainerProps>`
   width: 100%;
   margin: 70px 0px;
-  height: ${(props) => (props.isLogin && props.isCatagory ? '520px' : '270px')};
+  height: ${(props) => (props.isLogin && props.isCatagory ? '520px' : '260px')};
 
   h2 {
     font-weight: var(--weight-semi-bold);
@@ -77,10 +77,14 @@ const Container = styled.div<ContainerProps>`
     margin-bottom: 20px;
     text-align: center;
     color: var(--color-main);
+
+    @media all and (max-width: 767px) {
+      font-size: var(--font-regular);
+    }
   }
 
   @media all and (max-width: 767px) {
-    height: ${(props) => (props.isLogin ? '850px' : '270px')};
+    height: ${(props) => (props.isLogin && props.isCatagory ? '850px' : '240px')};
   }
 `;
 
@@ -92,14 +96,14 @@ const ContainerBackground = styled.div<{ isLogin: boolean; isCatagory?: boolean 
     position: absolute;
     left: 50%;
     width: 95%;
-    height: ${(props) => (props.isLogin && props.isCatagory ? '520px' : '270px')};
+    height: ${(props) => (props.isLogin && props.isCatagory ? '520px' : '260px')};
     background-color: rgb(249 244 253);
     transform: translateX(-50%);
     z-index: 0;
     border-radius: 30px;
 
     @media all and (max-width: 767px) {
-      height: ${(props) => (props.isLogin ? '850px' : '270px')};
+      height: ${(props) => (props.isLogin && props.isCatagory ? '850px' : '240px')};
       width: 100%;
       border-radius: 0px;
     }

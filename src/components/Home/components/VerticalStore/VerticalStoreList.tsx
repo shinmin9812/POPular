@@ -77,6 +77,8 @@ const TitleBox = styled.div`
 
   @media all and (max-width: 767px) {
     display: block;
+
+    font-size: var(--font-regular);
   }
 `;
 

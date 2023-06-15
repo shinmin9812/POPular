@@ -29,29 +29,30 @@ const SliderTop = () => {
                 </p>
               </TextBox>
               <InnerImage className="image-1"></InnerImage>
-              <Object className="object-animation"></Object>
+              <Object className="object-animation object-1"></Object>
             </SlideContent>
           </SlideItem>
           <SlideItem>
             <SlideContent className="slide-02">
               <TextBox>
-                <p className="innertext-1">요즘 많이가는 핫플!</p>
-                <p className="innertext-2">'무직타이거' 팝업스토어</p>
-                <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
+                <p className="innertext-1">리엘 X 더 현대 서울</p>
+                <p className="innertext-2">디자이너브랜드 RE_L(리엘)</p>
+                <p className="innertext-3">리엘 X 더 현대 서울 팝업 스토어로 초대합니다!</p>
               </TextBox>
               <InnerImage className="image-2"></InnerImage>
-              <Object className="object-animation"></Object>
+              <InnerImage className="image-2-1"></InnerImage>
+              <Object className="object-animation object-2"></Object>
             </SlideContent>
           </SlideItem>
           <SlideItem>
             <SlideContent className="slide-03">
               <TextBox>
-                <p className="innertext-1">요즘 많이가는 핫플!</p>
-                <p className="innertext-2">'무직타이거' 팝업스토어</p>
+                <p className="innertext-1">맛있는 커피와 함께!</p>
+                <p className="innertext-2">'블루보틀' 팝업스토어</p>
                 <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
               </TextBox>
               <InnerImage className="image-3"></InnerImage>
-              <Object className="object-animation"></Object>
+              <Object className="object-animation object-3"></Object>
             </SlideContent>
           </SlideItem>
         </CustomSlider>
@@ -88,7 +89,7 @@ const SlideContent = styled.div`
   }
 
   &.slide-03 {
-    background-color: #d4c2dc;
+    background-color: rgb(241 241 241);
   }
 `;
 const TextBox = styled.div`
@@ -128,46 +129,57 @@ const TextBox = styled.div`
 
 const InnerImage = styled.div`
   position: absolute;
-  right: 0px;
-  opacity: 0.4;
-  z-index: 3;
-  width: 400px;
-  height: 500px;
 
   &.image-1 {
     background: linear-gradient(to right, lemonchiffon, lemonchiffon 10%, transparent),
       url('/images/main-back.jpeg') no-repeat;
     background-size: contain;
     background-position: center top;
+    right: 0px;
+    opacity: 0.4;
+    z-index: 3;
+    width: 400px;
+    height: 500px;
   }
 
   &.image-2 {
-    background: linear-gradient(to right, lightblue, lightblue 10%, transparent),
-      url('/images/main-back.jpeg') no-repeat;
+    background: url('/images/main-back2.png') no-repeat;
     background-size: contain;
     background-position: center top;
+    right: -45px;
+    bottom: -140px;
+    z-index: 3;
+    width: 700px;
+    height: 500px;
+  }
+
+  &.image-2-1 {
+    background: url('/images/main-back2.png') no-repeat;
+    background-size: contain;
+    background-position: center top;
+    right: -270px;
+    top: -80px;
+    z-index: 3;
+    width: 800px;
+    height: 400px;
   }
 
   &.image-3 {
-    background: linear-gradient(to right, #d4c2dc, #d4c2dc 10%, transparent), url('/images/main-back.jpeg') no-repeat;
+    background: linear-gradient(to right, rgb(241 241 241), rgb(241 241 241) 10%, transparent),
+      url('/images/main-back3.jpg') no-repeat;
     background-size: contain;
     background-position: center top;
+    right: -14px;
+    bottom: 0px;
+    opacity: 0.5;
+    z-index: 3;
+    width: 500px;
+    height: 400px;
   }
 `;
 
 const Object = styled.div`
-  background: url('/images/tiger.png') no-repeat;
   z-index: 20;
-  width: 170px;
-  height: 170px;
-  background-size: contain;
-  z-index: 4;
-
-  position: absolute;
-  bottom: 0;
-  right: 20%;
-  animation: identifier 0.9s;
-
   @keyframes identifier {
     0% {
       transform: translateY(80px);
@@ -175,6 +187,43 @@ const Object = styled.div`
     100% {
       transform: translateY(0px);
     }
+  }
+
+  &.object-1 {
+    background: url('/images/tiger.png') no-repeat;
+    width: 170px;
+    height: 170px;
+    background-size: contain;
+
+    position: absolute;
+    bottom: 0;
+    right: 20%;
+    animation: identifier 0.9s;
+  }
+
+  &.object-2 {
+    background: url('/images/rabbit.png') no-repeat;
+    width: 300px;
+    height: 300px;
+    background-size: contain;
+
+    position: absolute;
+    bottom: -40px;
+    right: 15%;
+    animation: identifier 0.9s;
+  }
+
+  &.object-3 {
+    background: url('/images/bottle.png') no-repeat;
+    width: 200px;
+    height: 200px;
+    background-size: contain;
+    z-index: 4;
+
+    position: absolute;
+    bottom: 0;
+    right: 20%;
+    animation: identifier 0.9s;
   }
 
   @media all and (max-width: 767px) {
