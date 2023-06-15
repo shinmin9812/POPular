@@ -27,7 +27,7 @@ export class FeedsService {
 		private readonly feedModel: AggregatePaginateModel<Feed>,
 		@Inject(forwardRef(() => CommentsService))
 		private commentsService: CommentsService,
-	) {}
+	) { }
 
 	async getAllFeeds(): Promise<Feed[]> {
 		try {
@@ -253,14 +253,30 @@ export class FeedsService {
 			}
 
 			if (feedUpdateDto.content) {
-				const base64Images = extractImages(feedUpdateDto.content);
+				//이미지 추출용 이미지 변수
+				const originalImages = extractImages(feedUpdateDto.content);
+
+				//내용 추출용 이미지 변수
+				const exceptImages = await handleImages(originalImages);
+
+				//기존 이미지 배열
+				const httpImages = originalImages.filter(image => image.startsWith('http://'));
+
+				//추가 이미지 배열
+				const base64Images = originalImages.filter(image => image.startsWith('data:image/'))
 				const imageMapping = await handleImages(base64Images);
+				const transformImages = Object.values(imageMapping);
+
+				//DB 저장용 이미지 경로 배열
+				const imageUrls = [...httpImages, ...transformImages];
+
 				let updatedContent = feedUpdateDto.content;
-				for (const [imgData, imageUrl] of Object.entries(imageMapping)) {
+				for (const [imgData, imageUrl] of Object.entries(exceptImages)) {
 					updatedContent = updatedContent.replace(imgData, imageUrl);
 				}
+
 				feedUpdateDto.content = updatedContent;
-				feed.images = Object.values(imageMapping);
+				feed.images = imageUrls;
 			}
 
 			Object.assign(feed, feedUpdateDto);
