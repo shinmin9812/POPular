@@ -9,12 +9,15 @@ import { Model } from 'mongoose';
 import { NotificationUpdateDto } from './dto/notification.update.dto';
 import { Notification } from 'src/notifications/notification.schema';
 import { NotificationCreateDto } from './dto/notification.create.dto';
+import { User } from 'src/users/user.schema';
 
 @Injectable()
 export class NotificationsService {
 	constructor(
 		@InjectModel(Notification.name)
 		private readonly notificationModel: Model<Notification>,
+		@InjectModel(User.name)
+		private readonly userModel: Model<User>,
 	) {}
 
 	async getNotifications(userId?: string): Promise<Notification[]> {
@@ -91,6 +94,30 @@ export class NotificationsService {
 			createdNotification.content_store = notificationCreateDto.content_store;
 
 			return await createdNotification.save();
+		} catch (err) {
+			if (err.name === 'ValidationError') {
+				console.log(err);
+				throw new BadRequestException('잘못된 데이터를 입력하셨습니다.');
+			}
+			console.error(err);
+			throw new InternalServerErrorException('알림 생성에 실패하였습니다.');
+		}
+	}
+
+	async createNotificationsForAll(
+		notificationCreateDto: NotificationCreateDto,
+	): Promise<Notification[]> {
+		try {
+			const targetUsers = await this.userModel.find().exec();
+			const notificationPromises = targetUsers.map(async (user) => {
+				const notificationDto = {
+					...notificationCreateDto,
+					user_id: user._id,
+				};
+				return this.createNotification(notificationDto);
+			});
+			const createdNotifications = await Promise.all(notificationPromises);
+			return createdNotifications;
 		} catch (err) {
 			if (err.name === 'ValidationError') {
 				console.log(err);
