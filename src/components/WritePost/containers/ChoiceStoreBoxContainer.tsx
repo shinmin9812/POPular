@@ -55,7 +55,7 @@ const ChoiceStoreBoxContainer = () => {
     } else if (searchValue.length > 0) {
       storeList = searchFilter(stores, searchValue);
     } else {
-      storeList = filterFunc(stores, filterAddress, filterCategory, filterDate, choiceStoreId);
+      storeList = filterFunc(stores, filterAddress, filterCategory, filterDate);
     }
   }
 

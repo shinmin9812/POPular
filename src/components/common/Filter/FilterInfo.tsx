@@ -17,7 +17,7 @@ const FilterInfoItem = styled.div`
 
 const FilterInfoItemWrap = styled.div`
   display: flex;
-  margin-top: 10px;
+  margin: 14px 0;
 `;
 
 const CancelFilter = styled.button`

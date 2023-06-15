@@ -27,7 +27,22 @@ const PostListItemContainer = () => {
   const dispatch = useAppDispatch();
   const setPageGroup = useCallback((page: number[]) => dispatch(communityActions.setPageGroup(page)), [dispatch]);
   const setTotalPage = useCallback((page: number[]) => dispatch(communityActions.setTotalPage(page)), [dispatch]);
+  const setFilterCategoryUse = (use: boolean) => dispatch(communityActions.setFilterCategoryUse(use));
+  const setFilterAddressUse = (use: boolean) => dispatch(communityActions.setFilterAddressUse(use));
+  const setFilterDurationUse = (use: boolean) => dispatch(communityActions.setFilterDurationUse(use));
+  const setFilterCategoryValue = (category: string) => dispatch(communityActions.setFilterCategoryValue(category));
+  const setFilterAddressValue = (address: string) => dispatch(communityActions.setFilterAddressValue(address));
   const postCategory = useParams().category;
+
+  useEffect(() => {
+    if (searchValue.length > 0) {
+      setFilterCategoryUse(false);
+      setFilterAddressUse(false);
+      setFilterDurationUse(false);
+      setFilterCategoryValue('카테고리');
+      setFilterAddressValue('지역');
+    }
+  }, [searchValue]);
   const { data, isFetching, isError } = useGetFeeds(postCategory);
   // 필터 하나라도 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDate.use;

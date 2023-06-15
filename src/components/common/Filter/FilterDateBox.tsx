@@ -39,6 +39,7 @@ const DateSelectCompleteButton = styled.button`
   width: 50px;
   margin-top: auto;
   margin-left: 10px;
+  cursor: pointer;
 `;
 
 const DateInput = styled.input`
