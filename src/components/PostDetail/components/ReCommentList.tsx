@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 import ReCommentArrowIcon from '../../common/Icons/ReCommentArrowIcon';
 import XmarkIcon from '../../common/Icons/XmarkIcon';
-import { CommentAuthorName, CommentContent, CommentUpdateAt, CommentDeleteButton } from './CommentItem';
+import {
+  CommentWrap,
+  CommentInfoWrap,
+  CommentAuthorName,
+  CommentContent,
+  CommentUpdateAt,
+  CommentDeleteButton,
+} from './CommentItem';
 import { Comment } from '../../../types/comment';
 import getDateFunc from '../../../utils/getDateFunc';
 const ReCommentWrap = styled.ul`
@@ -17,6 +24,15 @@ const ReCommentItem = styled.li`
   padding: 15px 0 15px 15px;
   + li {
     border-top: 1px var(--color-light-gray) solid;
+  }
+  svg {
+    margin-right: 5px;
+  }
+  @media (max-width: 768px) {
+    div {
+      width: 100%;
+      text-align: left;
+    }
   }
 `;
 
@@ -34,20 +50,24 @@ const ReComment = ({
       {reComments?.map((reComment, index) => (
         <ReCommentItem key={reComment._id + index}>
           <ReCommentArrowIcon />
-          <CommentAuthorName>{reComment.author.nickname}</CommentAuthorName>
-          <CommentContent>{reComment.content}</CommentContent>
-          <CommentUpdateAt>{getDateFunc(reComment.updatedAt)}</CommentUpdateAt>
-          {isMember === reComment.author._id ? (
-            <CommentDeleteButton
-              onClick={() => {
-                commentDelete(reComment._id);
-              }}
-            >
-              <XmarkIcon />
-            </CommentDeleteButton>
-          ) : (
-            <CommentDeleteButton></CommentDeleteButton>
-          )}
+          <CommentWrap>
+            <CommentInfoWrap>
+              <CommentAuthorName>{reComment.author.nickname}</CommentAuthorName>
+              <CommentContent>{reComment.content}</CommentContent>
+              <CommentUpdateAt>{getDateFunc(reComment.updatedAt)}</CommentUpdateAt>
+            </CommentInfoWrap>
+            {isMember === reComment.author._id ? (
+              <CommentDeleteButton
+                onClick={() => {
+                  commentDelete(reComment._id);
+                }}
+              >
+                <XmarkIcon />
+              </CommentDeleteButton>
+            ) : (
+              <CommentDeleteButton></CommentDeleteButton>
+            )}
+          </CommentWrap>
         </ReCommentItem>
       ))}
     </ReCommentWrap>

@@ -6,9 +6,22 @@ import XmarkIcon from '../../common/Icons/XmarkIcon';
 import getDateFunc from '../../../utils/getDateFunc';
 import { Link } from 'react-router-dom';
 import { CLIENT_PATH } from '../../../constants/path';
-const CommentWrap = styled.div`
+export const CommentWrap = styled.div`
   display: flex;
   cursor: pointer;
+  width: 100%;
+`;
+
+export const CommentInfoWrap = styled.div`
+  display: flex;
+  width: 100%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    div {
+      width: 100%;
+      text-align: left;
+    }
+  }
 `;
 
 export const Li = styled.li`
@@ -21,7 +34,7 @@ export const Li = styled.li`
   cursor: pointer;
 `;
 
-export const CommentAuthorName = styled.span`
+export const CommentAuthorName = styled.div`
   color: var(--color-light-black);
   font-weight: var(--weight-light);
   width: 15%;
@@ -30,13 +43,12 @@ export const CommentAuthorName = styled.span`
 `;
 
 export const CommentContent = styled.div`
-  margin: 0 5px;
   width: 75%;
   text-align: left;
   font-size: var(--font-small);
 `;
 
-export const CommentUpdateAt = styled.span`
+export const CommentUpdateAt = styled.div`
   color: var(--color-gray);
   font-weight: var(--weight-light);
   width: 10%;
@@ -74,11 +86,13 @@ const CommentItem = ({
   return (
     <Li>
       <CommentWrap onClick={setReCommentInput}>
-        <CommentAuthorName>
-          <Link to={CLIENT_PATH.PROFILE.replace(':userId', comment.author._id)}>{comment.author.nickname}</Link>
-        </CommentAuthorName>
-        <CommentContent>{comment.content}</CommentContent>
-        <CommentUpdateAt>{getDateFunc(comment.updatedAt)}</CommentUpdateAt>
+        <CommentInfoWrap>
+          <CommentAuthorName>
+            <Link to={CLIENT_PATH.PROFILE.replace(':userId', comment.author._id)}>{comment.author.nickname}</Link>
+          </CommentAuthorName>
+          <CommentContent>{comment.content}</CommentContent>
+          <CommentUpdateAt>{getDateFunc(comment.updatedAt)}</CommentUpdateAt>
+        </CommentInfoWrap>
         {comment.author._id === isMember ? (
           <CommentDeleteButton
             onClick={(e) => {

@@ -102,6 +102,12 @@ const PostContentWrap = styled.div`
   img {
     max-width: 500px;
   }
+
+  @media (max-width: 768px) {
+    img {
+      max-width: 300px;
+    }
+  }
 `;
 
 const PostContent = ({ content }: { content: string }) => {
