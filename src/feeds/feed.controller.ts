@@ -88,6 +88,18 @@ export class FeedsController {
 		return await this.feedsService.getAllFreeFeeds();
 	}
 
+	@ApiOperation({ summary: '스토어별 후기 게시판 조회' })
+	@ApiOkResponse({
+		description: '스토어별 후기 게시판 조회 성공',
+	})
+	@ApiNotFoundResponse({
+		description: '해당하는 ID의 스토어가 없을 경우',
+	})
+	@Get('review/store/:storeId')
+	async getFeedsByStore(@Param('storeId') id: string): Promise<Feed[]> {
+		return await this.feedsService.getFeedsByStore(id);
+	}
+
 	@ApiOperation({ summary: 'ID로 게시글 조회' })
 	@ApiOkResponse({
 		description: 'ID로 게시글 조회 성공',
@@ -106,10 +118,10 @@ export class FeedsController {
 
 	@ApiOperation({ summary: 'ID로 게시글 찾기(조회수 증가나 Populate 없음)' })
 	@ApiOkResponse({
-		description: 'ID로 댓글 정보 조회 성공',
+		description: 'ID로 게시글 정보 조회 성공',
 	})
 	@ApiNotFoundResponse({
-		description: '해당하는 ID의 댓글이 없을 경우',
+		description: '해당하는 ID의 게시글이 없을 경우',
 	})
 	@ApiBadRequestResponse({
 		description: 'ID가 없을 경우',

@@ -49,6 +49,11 @@ export class UserService {
 
 	async getScrapsById(_id: string): Promise<Types.ObjectId[]> {
 		const user = await this.userModel.findById(_id).select('scraps');
+
+		if (!user) {
+			throw new NotFoundException('해당 사용자를 찾을 수 없습니다.');
+		}
+
 		return user?.scraps;
 	}
 
@@ -146,7 +151,9 @@ export class UserService {
 			user.save();
 			store.save();
 		} else {
-			throw new BadRequestException({ message: '제대로 값을 못 받아옴' });
+			throw new BadRequestException({
+				message: '유저 또는 스토어의 정보를 불러오지 못했습니다.',
+			});
 		}
 
 		return user;
@@ -158,6 +165,14 @@ export class UserService {
 
 		const storeObjId = new Types.ObjectId(storeId);
 		const userObjId = new Types.ObjectId(userId);
+
+		if (!user) {
+			throw new NotFoundException('해당 유저가 없습니다.');
+		}
+
+		if (!store) {
+			throw new NotFoundException('해당 스토어가 없습니다');
+		}
 
 		if (user && store) {
 			const sIndex = user.scraps.indexOf(storeObjId);
@@ -194,6 +209,14 @@ export class UserService {
 	async updateFollow(user_id: string, target_id: string): Promise<User> {
 		const user = await this.userModel.findById(user_id);
 		const target = await this.userModel.findById(target_id);
+
+		if (!user) {
+			throw new NotFoundException('해당 유저가 없습니다.');
+		}
+
+		if (!target) {
+			throw new NotFoundException('팔로우할 유저가 없습니다');
+		}
 
 		const followingInfo = {
 			_id: user._id.toString(),
@@ -239,6 +262,14 @@ export class UserService {
 	async updateUnfollow(user_id: string, target_id: string): Promise<User> {
 		const user = await this.userModel.findById(user_id);
 		const target = await this.userModel.findById(target_id);
+
+		if (!user) {
+			throw new NotFoundException('해당 유저가 없습니다.');
+		}
+
+		if (!target) {
+			throw new NotFoundException('팔로우할 유저가 없습니다');
+		}
 
 		if (user && target) {
 			for (const item of user.following) {
@@ -301,6 +332,9 @@ export class UserService {
 	}
 
 	async deleteUsers(ids: string[]): Promise<void> {
+		if (ids.length === 0) {
+			throw new NotFoundException('');
+		}
 		for (const id of ids) {
 			await this.deleteUser(id);
 		}
