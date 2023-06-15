@@ -65,9 +65,6 @@ export class UserController {
 	@ApiOkResponse({
 		description: 'ID로 유저 정보 조회 성공',
 	})
-	@ApiNotFoundResponse({
-		description: '해당하는 ID의 유저를 찾지 못한 경우',
-	})
 	@ApiInternalServerErrorResponse({
 		description: '잘못된 ID를 입력했을 경우',
 	})
@@ -80,9 +77,6 @@ export class UserController {
 	@ApiOperation({ summary: 'ID로 유저 스크랩 정보 조회' })
 	@ApiOkResponse({
 		description: 'ID로 유저 스크랩 정보 조회 성공',
-	})
-	@ApiNotFoundResponse({
-		description: '해당하는 ID의 유저를 찾지 못한 경우',
 	})
 	@ApiInternalServerErrorResponse({
 		description: '잘못된 ID를 입력했을 경우',
@@ -101,7 +95,7 @@ export class UserController {
 		description: '잘못된 데이터를 입력했을 경우',
 	})
 	@ApiBody({ type: String })
-	@Post('/checknickname')
+	@Post('checknickname')
 	async checkNickname(@Body() body: checknickname): Promise<string> {
 		return await this.userService.checkDuplicateNickname(body.nickname);
 	}
@@ -114,7 +108,7 @@ export class UserController {
 		description: '잘못된 데이터를 입력했을 경우',
 	})
 	@ApiBody({ type: String })
-	@Post('/checkemail')
+	@Post('checkemail')
 	async checkEmail(@Body() body: checkemail): Promise<string> {
 		return await this.userService.checkDuplicateEmail(body.email);
 	}

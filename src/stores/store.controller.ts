@@ -77,7 +77,10 @@ export class StoreController {
 		description: 'ID로 스토어 정보 조회 성공',
 	})
 	@ApiNotFoundResponse({
-		description: '해당하는 ID의 스토어를 찾지 못한 경우',
+		description: '해당하는 ID의 스토어가 없을 경우',
+	})
+	@ApiInternalServerErrorResponse({
+		description: 'ID가 비어있을 경우',
 	})
 	@ApiParam({ name: 'id', type: String })
 	@Get('store/:id')
@@ -90,7 +93,10 @@ export class StoreController {
 		description: '날짜로 스토어 정보 조회 성공 ',
 	})
 	@ApiNotFoundResponse({
-		description: '시작 날짜 또는 종료 날짜가 비어 있을 경우',
+		description: '시작 날짜 또는 종료 날짜를 잘못 입력했을 경우',
+	})
+	@ApiInternalServerErrorResponse({
+		description: '날짜가 비어있을 경우',
 	})
 	@ApiParam({ name: 'start', type: Date })
 	@ApiParam({ name: 'end', type: Date })
@@ -107,9 +113,8 @@ export class StoreController {
 		description: '좌표 위치 주변 스토어 정보 조회 성공 ',
 	})
 	@ApiInternalServerErrorResponse({
-		description: '쿼리문이 없어 조회에 실패했을 경우',
+		description: '쿼리문이 없거나 조회에 실패했을 경우',
 	})
-	@ApiQuery({ type: CoordQuery })
 	@Get('/coord')
 	async getStoresByCoord(@Query() query: CoordQuery): Promise<Store[]> {
 		const { x, y, distance } = query;
@@ -129,6 +134,9 @@ export class StoreController {
 		description: '카테고리별 스토어 정보 조회 성공',
 	})
 	@ApiNotFoundResponse({
+		description: '해당하는 카테고리가 없을 경우',
+	})
+	@ApiInternalServerErrorResponse({
 		description: '카테고리가 비어있을 경우',
 	})
 	@ApiParam({ name: 'category', type: String })
@@ -144,7 +152,7 @@ export class StoreController {
 		description: '스토어 정보 등록 성공',
 	})
 	@ApiBadRequestResponse({
-		description: '잘못된 데이터를 입력했을 경우',
+		description: '잘못된 데이터를 입력하거나 입력할 데이터가 누락될 경우',
 	})
 	@ApiInternalServerErrorResponse({
 		description: '스토어 생성에 실패했을 경우',
@@ -181,9 +189,6 @@ export class StoreController {
 	@ApiOperation({ summary: '스토어 정보 삭제하기' })
 	@ApiOkResponse({
 		description: '스토어 정보 삭제 성공',
-	})
-	@ApiNotFoundResponse({
-		description: '해당하는 ID의 스토어를 찾지 못한 경우',
 	})
 	@ApiBadRequestResponse({
 		description: '잘못된 데이터를 입력했을 경우',
