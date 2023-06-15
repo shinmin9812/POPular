@@ -102,6 +102,21 @@ const Container = styled.div`
   }
 `;
 
+const addRecentStore = (store: Store) => {
+  const recentStoreString = window.localStorage.getItem('store');
+  const recentStore = recentStoreString ? JSON.parse(recentStoreString) : [];
+  const isStoreExist = recentStore.some((s: Store) => s._id === store._id);
+
+  if (recentStore.length > 4) {
+    recentStore.pop();
+  }
+
+  if (!isStoreExist) {
+    const newRecentStore = [store, ...recentStore];
+    window.localStorage.setItem('store', JSON.stringify(newRecentStore));
+  }
+};
+
 interface Props {
   store: Store;
   isLoading?: boolean;
@@ -112,6 +127,8 @@ const StoreInfo = ({ store, isLoading, isError }: Props) => {
   if (isLoading) return <div>Loding...</div>;
 
   if (isError) return <div>Error</div>;
+
+  addRecentStore(store);
 
   return (
     <>

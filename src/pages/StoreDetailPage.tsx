@@ -6,7 +6,6 @@ import StoreReview from '../components/StoreDetail/container/StoreReview';
 import { useParams } from 'react-router-dom';
 import { useGetStoreById } from '../api/storeApi';
 import MetaTag from '../components/SEO/MetaTag';
-import { Store } from '../types/store';
 
 type PathParams = {
   storeId: string | undefined;
@@ -49,29 +48,12 @@ const Container = styled.div<{ isDetail: boolean }>`
   overflow-x: hidden;
 `;
 
-const addRecentStore = (store: Store) => {
-  const recentStoreString = window.localStorage.getItem('store');
-  const recentStore = recentStoreString ? JSON.parse(recentStoreString) : [];
-  const isStoreExist = recentStore.some((s: Store) => s._id === store._id);
-
-  if (recentStore.length > 4) {
-    recentStore.pop();
-  }
-
-  if (!isStoreExist) {
-    const newRecentStore = [store, ...recentStore];
-    window.localStorage.setItem('store', JSON.stringify(newRecentStore));
-  }
-};
-
 const StoreDetailPage = () => {
   const [isDetail, setIsDetail] = useState<boolean>(true);
   const { storeId } = useParams<PathParams>();
   const { data: store, isLoading, isError } = useGetStoreById(storeId!);
 
   if (isLoading) return <></>;
-
-  addRecentStore(store);
 
   return (
     <Container isDetail={isDetail}>
