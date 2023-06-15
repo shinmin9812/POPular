@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetAllFeeds, useGetAllReviewFeeds } from '../../api/feedApi';
-import getDataByCreatedAt from '../../utils/getDataByCreatedAt';
-import AddChart from '../../components/Admin/components/Charts/AddLineChart';
+import { useGetAllFeeds } from '../../api/feedApi';
 import AddLineChart from '../../components/Admin/components/Charts/AddLineChart';
-import WeeklyFeedChart from '../../components/Admin/components/Charts/FeedViewsChart';
 import FeedViewsChart from '../../components/Admin/components/Charts/FeedViewsChart';
+import FeedLikeChart from '../../components/Admin/components/Charts/FeedLikeChart';
+import AdminFeedList from '../../components/Admin/components/Feeds/AdminFeedList';
 
 const Container = styled.div`
   display: flex;
@@ -30,10 +28,7 @@ const Container = styled.div`
   }
 
   .feed-search {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-
+    width: 100%;
     .feed-search-box {
       height: 100%;
       overflow-y: hidden;
@@ -42,41 +37,34 @@ const Container = styled.div`
 `;
 
 const AdminFeedStatisticsPage = () => {
-  const navigate = useNavigate();
-  const { data: allFeeds } = useGetAllFeeds({
-    onSuccess: () => {},
-  });
+  const { data: allFeeds, isFetched } = useGetAllFeeds();
 
   return (
     <Container>
-      {allFeeds && (
-        <div className="feed-charts">
-          <Card className="feed-add-chart">
-            <p className="title">피드 등록 추이</p>
-            <AddLineChart barKey="등록된 피드 수" data={allFeeds} />
-          </Card>
-          <Card className="feed-weekly-chart">
-            <p className="title">최다 조회수 피드</p>
-            <FeedViewsChart feeds={allFeeds} />
-          </Card>
-          <Card className="store-scrap-chart">
-            <p className="title">스토어별 스크랩 순위</p>
-          </Card>
-        </div>
+      {isFetched && allFeeds!.length > 0 && (
+        <>
+          <div className="feed-charts">
+            <Card className="feed-add-chart">
+              <p className="title">피드 등록 추이</p>
+              <AddLineChart barKey="등록된 피드 수" data={allFeeds!} />
+            </Card>
+            <Card className="feed-weekly-chart">
+              <p className="title">최다 조회수 피드</p>
+              <FeedViewsChart feeds={allFeeds!} />
+            </Card>
+            <Card className="feed-likes-chart">
+              <p className="title">최다 추천 피드</p>
+              <FeedLikeChart feeds={allFeeds!} />
+            </Card>
+          </div>
+          <div className="feed-search">
+            <Card className="feed-search-box">
+              <p className="title">피드 검색</p>
+              {allFeeds && <AdminFeedList feeds={allFeeds} />}
+            </Card>
+          </div>
+        </>
       )}
-
-      {/* <div className="store-search">
-        <Card className="store-search-box">
-          <p className="title">스토어 검색</p>
-          {allStores && <AdminStoreList stores={allStores} />}
-        </Card>
-        {storeId && allStores && (
-          <Card className="store-scrap-chart">
-            <StoreTitle store={allStores.find((store) => store._id === storeId)!} />
-            <StoreInfo store={allStores.find((store) => store._id === storeId)!} />
-          </Card>
-        )}
-      </div> */}
     </Container>
   );
 };

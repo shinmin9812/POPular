@@ -35,7 +35,7 @@ const AddLineChart = ({ barKey, data }: Props) => {
 };
 
 const Container = styled.div`
-  width: 400px;
+  width: 100%;
   height: 300px;
 `;
 

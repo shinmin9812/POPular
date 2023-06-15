@@ -1,4 +1,3 @@
-import React from 'react';
 import { Post } from '../../../../types/post';
 import PostItem from '../../../common/Post/PostItem';
 import styled from 'styled-components';
@@ -16,8 +15,8 @@ const Container = styled.div`
   }
 `;
 
-const FeedViewsChart = ({ feeds }: Props) => {
-  const sortedFeed = feeds.sort((a, b) => b.views - a.views).slice(0, 10);
+const FeedLikeChart = ({ feeds }: Props) => {
+  const sortedFeed = feeds.sort((a, b) => b.likes.length - a.likes.length).slice(0, 10);
   return (
     <Container>
       <ul>
@@ -31,4 +30,4 @@ const FeedViewsChart = ({ feeds }: Props) => {
   );
 };
 
-export default FeedViewsChart;
+export default FeedLikeChart;
