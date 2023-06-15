@@ -6,14 +6,29 @@ import { WritePostSliceActions, isUpdate } from '../../WritePost/WritePostSlice'
 import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { Post } from '../../../types/post';
 import { API_PATH } from '../../../constants/path';
+import callApi from '../../../utils/callApi';
+import { User } from '../../../types/user';
+
+const getUserInfo = async (setUserData: React.Dispatch<React.SetStateAction<User | undefined>>) => {
+  try {
+    const response = await callApi('GET', API_PATH.AUTH.GET.PROFILE);
+    if (response.ok) {
+      const data = await response.json();
+      setUserData(data);
+      return;
+    } else return;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};
 
 const UpdateAndDeleteContainer = () => {
   const navigate: NavigateFunction = useNavigate();
 
-  const [isMember, setIsMember] = useState();
+  const [userData, setUserData] = useState<User>();
   const [postInfo, setPostInfo] = useState<Post>();
   useEffect(() => {
-    getUserInfo();
+    getUserInfo(setUserData);
     getPostInfo();
   }, []);
 
@@ -34,23 +49,6 @@ const UpdateAndDeleteContainer = () => {
 
   const postId = useParams().postId;
 
-  const getUserInfo = async () => {
-    try {
-      const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      const data = await response.json();
-      setIsMember(data._id);
-    } catch (err: any) {
-      throw new Error(err);
-      return null;
-    }
-  };
-
   const getPostInfo = async () => {
     const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : ''));
     const result = await response.json();
@@ -58,20 +56,13 @@ const UpdateAndDeleteContainer = () => {
   };
 
   async function DeleteFetchData() {
-    const response = await fetch(API_PATH.POST.DELETE, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ ids: [postId] }),
-    });
+    const response = await callApi('DELETE', API_PATH.POST.DELETE, { ids: [postId ? postId : ''] });
     const result = await response.json();
     alert(result.message);
     navigate('/community/board');
   }
 
-  const isAuthor = postInfo && isMember === postInfo.author._id;
+  const isAuthor = postInfo && userData?._id === postInfo.author._id;
 
   const deletePost = () => {
     if (isAuthor) {

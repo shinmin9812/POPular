@@ -39,11 +39,12 @@ const RatingsWrap = styled.div`
   }
 `;
 
-async function fetchData(postId = '') {
+async function fetchData(postId = '', setPost: React.Dispatch<React.SetStateAction<Post | null>>) {
   const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId));
   const result: Post = await response.json();
-  return result;
+  setPost(result);
 }
+
 const PostDetailPage = () => {
   const postId = useParams().postId;
   const [post, setPost] = useState<Post | null>(null);
@@ -70,19 +71,20 @@ const PostDetailPage = () => {
   );
 
   useEffect(() => {
+    fetchData(postId, setPost);
+  }, []);
+
+  useEffect(() => {
     getComments(postId, setComments);
   }, [postId, setComments]);
 
-  const { data } = useQuery<Post>(['getPost'], () => {
-    return fetchData(postId);
-  });
   useEffect(() => {
-    if (data) {
-      setPost(data);
-      setLikes(data.likes);
-      setReports(data.reports);
+    if (post) {
+      setPost(post);
+      setLikes(post.likes);
+      setReports(post.reports);
     }
-  }, [setPost, setLikes, setReports, data]);
+  }, [setPost, setLikes, setReports, post]);
 
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {

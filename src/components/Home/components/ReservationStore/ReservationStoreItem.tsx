@@ -27,9 +27,11 @@ const ReservationStoreItem = ({ store }: Props) => {
 const Container = styled.div``;
 
 const InnerContent = styled.div`
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+
   .item-image {
-    border-radius: 8px;
-    overflow: hidden;
     height: 200px;
 
     &:hover img {
@@ -47,18 +49,30 @@ const InnerContent = styled.div`
 
   .item-description {
     margin-top: 10px;
+    padding: 12px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 100px;
+    background-image: linear-gradient(to bottom, rgba(182, 182, 182, 0.03), rgba(16, 16, 16, 0.751));
+
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
   }
 
   .item-title {
     font-weight: var(--weight-semi-bold);
     font-size: var(--font-regular);
+    color: var(--color-white);
   }
 
   .item-period {
     margin-top: 7px;
     font-weight: var(--weight-light);
     font-size: var(--font-small);
-    color: var(--color-light-black);
+    color: var(--color-light-gray);
   }
 `;
 

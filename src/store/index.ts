@@ -3,6 +3,7 @@ import CommunitySlice from '../components/Community/CommunitySlice';
 import WritePostSlice from '../components/WritePost/WritePostSlice';
 import UserSlice from '../components/User/UserSlice';
 import PostDetailSlice from '../components/PostDetail/PostDetailSlice';
+import SearchSlice from '../components/Search/SearchSlice';
 import { api } from '../api/useQueries';
 
 const store = configureStore({
@@ -11,6 +12,7 @@ const store = configureStore({
     WritePostSlice,
     PostDetailSlice,
     UserSlice,
+    SearchSlice,
     [api.reducerPath]: api.reducer,
   },
 

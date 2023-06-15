@@ -21,7 +21,6 @@ const filterFunc = (
   if (choiceStoreId && choiceStoreId.length > 0) {
     return arr.filter((store) => store._id === choiceStoreId);
   }
-
   return arr.filter((store) => {
     // 지역필터링 했을 경우 비교, 사용하지 않을 경우 모두 통과
     const addressCondition = address.use ? store.postcode.sido === address.value : true;

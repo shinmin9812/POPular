@@ -6,46 +6,41 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../PostDetailSlice';
 import { API_PATH } from '../../../constants/path';
+import callApi from '../../../utils/callApi';
+import { User } from '../../../types/user';
+
+export type CommentDeleteBody = {
+  ids: string[];
+};
+
+const getUserInfo = async (setUserData: React.Dispatch<React.SetStateAction<User | undefined>>) => {
+  try {
+    const response = await callApi('GET', API_PATH.AUTH.GET.PROFILE);
+    if (response.ok) {
+      const data = await response.json();
+      setUserData(data);
+      return;
+    } else return;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};
 
 const CommentItemContainer = ({ comment }: { comment: Comment }) => {
-  const postId = useParams().postId;
+  const [reCommentInput, setReCommentInput] = useState(false);
+  const [userData, setUserData] = useState<User>();
   const dispatch = useAppDispatch();
   const setComments = (comments: Comment[]) => {
     return dispatch(PostDetailActions.setComment(comments));
   };
+  const postId = useParams().postId;
 
-  const [reCommentInput, setReCommentInput] = useState(false);
-  const [isMember, setIsMember] = useState();
   useEffect(() => {
-    getUserInfo();
+    getUserInfo(setUserData);
   }, []);
-  const getUserInfo = async () => {
-    try {
-      const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      const data = await response.json();
-      setIsMember(data._id);
-    } catch (err: any) {
-      const errorMessage = err as Error;
-      console.log(errorMessage);
-      return null;
-    }
-  };
 
   const commentDeleteApi = async (commentId: string) => {
-    const response = await fetch(API_PATH.COMMENT.DELETE, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ ids: [commentId] }),
-    });
+    const response = await callApi('DELETE', API_PATH.COMMENT.DELETE, { ids: [commentId] });
     const result = await response.json();
     alert(result.message);
     getComments(postId, setComments);
@@ -61,7 +56,7 @@ const CommentItemContainer = ({ comment }: { comment: Comment }) => {
         setReCommentInput((prev) => !prev);
       }}
       commentDelete={commentDeleteApi}
-      isMember={isMember}
+      isMember={userData?._id}
     />
   );
 };

@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { Store } from '../types/store';
 import SearchInput from '../components/common/SearchInput/SearchInput';
 import SearchFilter from '../components/common/SearchInput/SearchFilter';
-import FilterContainer from '../components/Community/containers/FilterContainer';
+import FilterContainer from '../components/Search/containers/FilterContainer';
+import FilterInfoContainer from '../components/Search/containers/FilterInfoContainer';
+import SearchStoreListContainer from '../components/Search/containers/SearchStoreListContainer';
 import MetaTag from '../components/SEO/MetaTag';
 
 const Container = styled.div`
@@ -45,7 +47,8 @@ const SearchPage = () => {
         onKeyPress={handleInputKeyPress}
       />
       <FilterContainer />
-      <SearchFilter stores={stores} value={searchValue} />
+      <FilterInfoContainer />
+      <SearchStoreListContainer />
     </Container>
   );
 };

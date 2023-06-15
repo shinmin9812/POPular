@@ -9,6 +9,17 @@ interface Props {
 }
 
 const VerticalStoreList = ({ stores, text }: Props) => {
+  const currentDate = new Date();
+  const sortedStores = stores.slice().sort(function (a, b) {
+    let dateA = new Date(a.start_date);
+    let dateB = new Date(b.start_date);
+
+    let diffA = Math.abs(currentDate.getTime() - dateA.getTime());
+    let diffB = Math.abs(currentDate.getTime() - dateB.getTime());
+
+    return diffA - diffB;
+  });
+
   return (
     <Container>
       <ContentInner>
@@ -26,7 +37,7 @@ const VerticalStoreList = ({ stores, text }: Props) => {
           <div className="box-image"></div>
         </TitleBoxPC>
         <ItemsBox>
-          {stores.slice(0, 4).map((store) => (
+          {sortedStores.slice(0, 4).map((store) => (
             <Item key={store._id}>
               <Link to={`/store/${store._id}`}>
                 <VerticalStoreItem store={store}></VerticalStoreItem>
