@@ -18,9 +18,6 @@ const NonMemberMenu = () => {
           회원가입
         </Link>
       </MenuList>
-      <LogoContainer>
-        <Logo color="#bfbfbf" />
-      </LogoContainer>
     </>
   );
 };
@@ -29,15 +26,17 @@ export default NonMemberMenu;
 
 const MenuList = styled.div`
   width: 300px;
-  margin: 40px 20px;
+  display: flex;
+  flex-direction: column;
   a,
   div {
-    display: block;
-    width: 350px;
+    display: flex;
+    align-items: center;
+    width: 300px;
     height: 65px;
     font-size: var(--font-medium);
     border-bottom: 0.5px solid var(--color-gray);
-    padding: 20px;
+    padding-left: 90px;
     margin: 0;
     cursor: pointer;
 
@@ -51,11 +50,4 @@ const MenuList = styled.div`
   .signup {
     border-top: 1px solid gray;
   }
-`;
-
-const LogoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 100px;
 `;

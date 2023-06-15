@@ -69,10 +69,6 @@ const MemberMenu = () => {
       <div className="deleteUser" onClick={handleDeleteUser}>
         회원탈퇴
       </div>
-
-      <LogoContainer>
-        <Logo color="#bfbfbf" />
-      </LogoContainer>
     </Container>
   );
 };
@@ -113,11 +109,4 @@ const Container = styled.div`
       font-size: calc(var(--font-medium) + 2px);
     }
   }
-`;
-
-const LogoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 20px;
 `;
