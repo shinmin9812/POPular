@@ -169,7 +169,7 @@ export class NotificationsController {
 	@ApiBearerAuth('Authorization')
 	@Delete()
 	@UseGuards(AuthGuard)
-	async deleteNotifications(@Body('ids') ids: string[]) {
+	async deleteNotifications(@Body() ids: string[]) {
 		await this.notificationService.deleteNotifications(ids);
 		return { message: '알림이 삭제되었습니다.' };
 	}

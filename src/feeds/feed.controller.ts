@@ -290,7 +290,7 @@ export class FeedsController {
 	@ApiBearerAuth('Authorization')
 	@Delete()
 	@UseGuards(AuthGuard)
-	async deleteFeed(@Body('ids') ids: string[]) {
+	async deleteFeed(@Body() ids: string[]) {
 		await this.feedsService.deleteFeed(ids);
 		return { message: '글이 삭제되었습니다.' };
 	}
