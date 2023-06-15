@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Store } from '../../../types/store';
 import Tag from '../Tag/Tag';
+import dayjs from 'dayjs';
 
 interface Props {
   store: Store;
@@ -73,9 +74,6 @@ const Container = styled.article`
 `;
 
 const StoreItem = ({ store, onClick }: Props) => {
-  // 주소지에서 상위 2단계만 추출
-  const location = store.location.split(' ').slice(0, 2).join(' ');
-
   return (
     <Container onClick={onClick}>
       <figure>
@@ -83,9 +81,11 @@ const StoreItem = ({ store, onClick }: Props) => {
       </figure>
       <div className="store-info">
         <h3 className="store-title">{store.title}</h3>
-        <p className="store-location">{location}</p>
+        <p className="store-location">
+          {store.postcode.sido} {store.postcode.sigungu}
+        </p>
         <p className="store-date">
-          {store.start_date} - {store.end_date}
+          {dayjs(store.start_date).format('YYYY/MM/DD')} - {dayjs(store.end_date).format('YYYY/MM/DD')}
         </p>
         <Tag>{store.category}</Tag>
       </div>

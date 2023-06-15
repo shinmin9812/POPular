@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import CommentIconMini from '../../common/Icons/CommentIconMini';
+import { BoardTypes } from '../../../types/board';
 
 interface Props {
   id: string;
   commentData: Comment;
-  board: string;
+  board: BoardTypes;
   checked: boolean;
 }
 
@@ -61,7 +62,7 @@ const CommentNotificationItem = ({ id, commentData, board, checked }: Props) => 
 
 export default CommentNotificationItem;
 
-const Container = styled.div`
+const Container = styled.div<{ checked: boolean }>`
   width: 95%;
   height: 80px;
   margin: 10px auto;

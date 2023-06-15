@@ -6,7 +6,7 @@ const Contour = styled.div`
   width: 1px;
   background-color: #e1e1e1;
 
-  @media all and (max-width: 767px) {
+  @media all and (max-width: 1024px) {
     width: 100%;
     height: 1px;
   }
@@ -68,7 +68,7 @@ const Container = styled.footer`
     }
   }
 
-  @media all and (max-width: 767px) {
+  @media all and (max-width: 1024px) {
     display: flex;
     flex-direction: column;
     height: fit-content;

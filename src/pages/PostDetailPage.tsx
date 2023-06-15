@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Post } from '../types/post';
 import { Comment } from '../types/comment';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState, useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from '../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
@@ -121,7 +120,7 @@ const PostDetailPage = () => {
       <PostContent content={post ? post.content : ''}></PostContent>
       <FlexDiv>
         <LikesAndReportsContainer />
-        <UpdateAndDeleteContainer />
+        <UpdateAndDeleteContainer post={post} />
       </FlexDiv>
       <CommentListContainer />
       <CommentInputContainer />

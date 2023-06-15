@@ -44,7 +44,7 @@ const FollowNotificationItem = ({ id, follower, checked }: Props) => {
               <Message>{follower.nickname}님이 회원님을 팔로우합니다.</Message>
             </ItemContainer>
           </Link>
-          <RemoveButton onClick={() => RemoveNotification(id)}>×</RemoveButton>
+          <RemoveButton onClick={() => RemoveNotification(id)}>x</RemoveButton>
         </Container>
       ) : null}
     </>
@@ -53,7 +53,7 @@ const FollowNotificationItem = ({ id, follower, checked }: Props) => {
 
 export default FollowNotificationItem;
 
-const Container = styled.div`
+const Container = styled.div<{ checked: boolean }>`
   width: 95%;
   height: 80px;
   margin: 8px auto;

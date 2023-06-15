@@ -2,13 +2,17 @@ import styled from 'styled-components';
 import MenuItem from './MenuItem';
 import { CLIENT_PATH } from '../../../constants/path';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../User/UserSlice';
 
 const MenuList = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLogout = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     localStorage.removeItem('token');
     alert('다음에 또 만나요!');
+    dispatch(setUser(null));
     navigate('/');
   };
 

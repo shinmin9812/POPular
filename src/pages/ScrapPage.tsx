@@ -5,10 +5,11 @@ import MetaTag from '../components/SEO/MetaTag';
 import { useEffect, useState } from 'react';
 import { CLIENT_PATH } from '../constants/path';
 import MenuItem from '../components/UserMenu/components/MenuItem';
-import { User } from '../types/user';
 import { Store } from '../types/store';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
-const ScrapPage = ({ userData }: { userData: User | undefined }) => {
+const ScrapPage = () => {
   const [stores, setStores] = useState<Store[]>([]);
 
   const fetchStore = async (storeId: string) => {
@@ -16,6 +17,8 @@ const ScrapPage = ({ userData }: { userData: User | undefined }) => {
     const data = await res.json();
     return data;
   };
+
+  const userData = useSelector((state: RootState) => state.UserSlice.user);
 
   const getStoreData = async () => {
     if (userData) {

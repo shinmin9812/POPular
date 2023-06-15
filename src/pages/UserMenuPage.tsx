@@ -31,7 +31,9 @@ const UserMenuPage = () => {
   };
 
   useEffect(() => {
-    getUserInfo();
+    if (localStorage.getItem('token')) {
+      getUserInfo();
+    }
   }, []);
 
   return (

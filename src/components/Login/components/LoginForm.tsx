@@ -2,6 +2,10 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useGetLoginuser } from '../../../api/userApi';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../User/UserSlice';
+import { User } from '../../../types/user';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -18,6 +22,16 @@ const LoginForm = () => {
       setErrorMessage('');
     }
   };
+
+  const dispatch = useDispatch();
+
+  const { refetch } = useGetLoginuser({
+    enabled: false,
+    onSuccess: (data: User) => {
+      dispatch(setUser(data));
+      navigate('/');
+    },
+  });
 
   const emailInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const passwordInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -42,7 +56,7 @@ const LoginForm = () => {
           const data = await response.json();
           localStorage.setItem('token', data.token);
           alert('반갑습니다💜');
-          navigate('/');
+          refetch();
         } else {
           setErrorMessage('이메일 또는 비밀번호가 일치하지 않습니다.');
           throw new Error('로그인에 실패했습니다.');

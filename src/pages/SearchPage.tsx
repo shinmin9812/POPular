@@ -2,7 +2,6 @@ import { SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Store } from '../types/store';
 import SearchInput from '../components/common/SearchInput/SearchInput';
-import SearchFilter from '../components/common/SearchInput/SearchFilter';
 import FilterContainer from '../components/Search/containers/FilterContainer';
 import FilterInfoContainer from '../components/Search/containers/FilterInfoContainer';
 import SearchStoreListContainer from '../components/Search/containers/SearchStoreListContainer';
@@ -13,7 +12,7 @@ const Container = styled.div`
 `;
 
 const SearchPage = () => {
-  const [stores, setStores] = useState<Store[]>([]);
+  const [, setStores] = useState<Store[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
 

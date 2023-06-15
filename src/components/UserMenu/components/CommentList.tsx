@@ -21,7 +21,7 @@ const getComments = async (
     await new Promise((r) => setTimeout(r, 500));
     return { rows, nextOffset: offset + 1, hasNextPage: data.hasNextPage };
   } catch (err: any) {
-    console.log(err.message);
+    throw new Error(err.message);
   }
 };
 
@@ -60,7 +60,7 @@ const CommentList = () => {
   }, []);
 
   const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['feeds'],
+    ['comments'],
     (ctx) => getComments(0, ctx.pageParam, userId),
     {
       getNextPageParam: (lastGroup, groups) => {

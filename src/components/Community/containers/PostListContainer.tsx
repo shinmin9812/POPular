@@ -71,7 +71,7 @@ const PostListItemContainer = () => {
   }, [page, dividedPost, setPageGroup]);
 
   if (isError) {
-    return;
+    return <></>;
   }
   return (
     <PostList>

@@ -1,6 +1,5 @@
 import { BoardTypes } from '../../types/board';
 import { Post } from '../../types/post';
-import { commentData } from './comment';
 import { userData } from './user';
 
 export const postData: Post[] = [
@@ -14,6 +13,7 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-05-30 15:17:01',
+    createdAt: '2023-05-30 15:17:01',
     comments: [],
   },
   {
@@ -26,6 +26,8 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
     comments: [],
   },
   {
@@ -38,6 +40,8 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
     comments: [],
   },
   {
@@ -50,6 +54,8 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
     comments: [],
   },
   {
@@ -62,6 +68,8 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
     comments: [],
   },
   {
@@ -74,6 +82,8 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
     comments: [],
   },
   {
@@ -86,6 +96,8 @@ export const postData: Post[] = [
     reports: [],
     views: 0,
     updatedAt: '2023-03-21',
+
+    createdAt: '2023-05-30 15:17:01',
     comments: [],
   },
 ];

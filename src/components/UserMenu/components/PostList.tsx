@@ -8,7 +8,7 @@ import PostItem from '../../common/Post/PostItem';
 
 const getFeeds = async (
   _limit: number,
-  offset: number = 1,
+  offset = 1,
   userId: string | undefined,
 ): Promise<{ rows: Post[]; nextOffset: number; hasNextPage: boolean }> => {
   const res = await fetch(`http://34.22.81.36:3000/feeds/user/${userId}?pageIndex=${offset}`, {
@@ -98,6 +98,7 @@ const PostList = () => {
             {rowVirtualizer.getVirtualItems().map((virtualRow: any) => {
               const isLoaderRow = virtualRow.index > allRows.length - 1;
               const post: Post = allRows[virtualRow.index];
+              if (!post) return <span key={virtualRow.index}></span>;
               return (
                 <PostItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start - 130}>
                   {isLoaderRow ? (
