@@ -8,7 +8,6 @@ interface Props {
 }
 
 const AdminUserItem = ({ user }: Props) => {
-  console.log(user);
   return (
     <Container>
       <NavLink to={`./${user._id}`} className={({ isActive }) => (isActive ? 'active' : '')}>

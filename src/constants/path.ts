@@ -36,7 +36,7 @@ export const API_PATH = {
       LOGIN: '/login',
     },
     PUT: {},
-    DELETE: {},
+    DELETE: `${API_BASE_URL}/users`,
   },
 
   POST: {

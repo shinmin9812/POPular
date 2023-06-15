@@ -80,10 +80,6 @@ const Router = () => {
               <Route path={`${CLIENT_PATH.ADMIN_USER.STATISTICS}/:userId`} element={<AdminUserDetailPage />} />
             </Route>
             <Route />
-            <Route path={CLIENT_PATH.ADMIN_USER.ADD} element={<AdminPage />}></Route>
-            <Route path={CLIENT_PATH.ADMIN_USER.EDIT} element={<AdminUserEditPage />}>
-              <Route path={`${CLIENT_PATH.ADMIN_USER.EDIT}/:userId`} element={<AdminUserDetailPage />} />
-            </Route>
             <Route path={CLIENT_PATH.ADMIN_USER.DELETE} element={<AdminUserDeletePage />} />
 
             <Route path={CLIENT_PATH.ADMIN_FEED.STATISTICS} element={<AdminPage />} />

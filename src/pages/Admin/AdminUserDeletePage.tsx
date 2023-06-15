@@ -93,7 +93,7 @@ const AdminUserDeletePage = () => {
           <AdminUserList setSelectedId={setSelectedId} selectedId={selectedId} users={allUsers} selectMode={true} />
         )}
       </Card>
-      {selectedId.length > 0 && !isSuccess && (
+      {selectedId.length > 0 && (
         <Card className="selected-users">
           <p className="title">선택된 목록</p>
           {allUsers!.map((user) => {
