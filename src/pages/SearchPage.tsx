@@ -48,7 +48,6 @@ const SearchPage = () => {
       />
       <FilterContainer />
       <FilterInfoContainer />
-      <SearchFilter stores={stores} value={searchValue} />
       <SearchStoreListContainer />
     </Container>
   );

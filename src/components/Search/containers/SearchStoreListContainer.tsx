@@ -16,10 +16,12 @@ const SearchStoreListContainer = () => {
   const filterDate = useAppSelector((state) => state.SearchSlice.durationFilter);
   const filterAddress = useAppSelector((state) => state.SearchSlice.addressFilter);
   const filterCategory = useAppSelector((state) => state.SearchSlice.categoryFilter);
-
+  console.log(stores);
   useEffect(() => {
     fetchData(setStores);
   }, []);
+  console.log(stores);
+
   return (
     <ul>
       {stores ? (
