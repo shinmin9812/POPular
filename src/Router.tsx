@@ -34,6 +34,7 @@ import { useEffect, useState } from 'react';
 import { User } from './types/user';
 import PrivateRoute from './PrivateRoute';
 import callApi from './utils/callApi';
+import AdminFeedStatisticsPage from './pages/Admin/AdminFeedStatisticsPage';
 
 const Router = () => {
   const [userData, setUserData] = useState<User>();
@@ -121,7 +122,7 @@ const Router = () => {
           </Route>
           <Route path={CLIENT_PATH.ADMIN_USER.DELETE} element={<AdminUserDeletePage />} />
 
-          <Route path={CLIENT_PATH.ADMIN_FEED.STATISTICS} element={<AdminPage />} />
+          <Route path={CLIENT_PATH.ADMIN_FEED.STATISTICS} element={<AdminFeedStatisticsPage />} />
           <Route path={CLIENT_PATH.ADMIN_FEED.EDIT} element={<AdminPage />} />
           <Route path={CLIENT_PATH.ADMIN_FEED.DELETE} element={<AdminPage />} />
 

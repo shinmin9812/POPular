@@ -1,14 +1,13 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
-import { User } from '../../../../types/user';
 import getDataByCreatedAt from '../../../../utils/getDataByCreatedAt';
 
 interface Props {
-  users: User[];
+  barKey: string;
+  data: any[];
 }
-const UserAddChart = ({ users }: Props) => {
-  const LINE_KEY = '가입 유저';
-  const data = getDataByCreatedAt(LINE_KEY, users);
+const AddLineChart = ({ barKey, data }: Props) => {
+  const convertedData = getDataByCreatedAt(barKey, data);
 
   return (
     <Container>
@@ -16,7 +15,7 @@ const UserAddChart = ({ users }: Props) => {
         <LineChart
           width={500}
           height={300}
-          data={data}
+          data={convertedData}
           margin={{
             top: 5,
             right: 30,
@@ -28,7 +27,7 @@ const UserAddChart = ({ users }: Props) => {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Line type="monotone" dataKey={LINE_KEY} stroke="#b71e1e" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey={barKey} stroke="#8884d8" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     </Container>
@@ -40,4 +39,4 @@ const Container = styled.div`
   height: 300px;
 `;
 
-export default UserAddChart;
+export default AddLineChart;
