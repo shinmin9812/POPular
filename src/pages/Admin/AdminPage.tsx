@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
-import { useQueries } from '@tanstack/react-query';
 import { useGetAllData } from '../../api/adminApi';
 import StoreAddChart from '../../components/Admin/components/Charts/StoreAddChart';
 import UserAddChart from '../../components/Admin/components/Charts/UserAddChart';

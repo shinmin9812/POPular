@@ -3,9 +3,9 @@ import SearchIcon from '../Icons/SearchIcon';
 
 type Props = {
   placeholder: string;
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  onKeyPress: React.KeyboardEventHandler<HTMLInputElement>;
+  value?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
 };
 
 const SearchContainer = styled.div`

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Post } from '../../../../types/post';
 import PostItem from '../../../common/Post/PostItem';
 import styled from 'styled-components';

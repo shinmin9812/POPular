@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom';
 import HeaderSearchBox from './HeaderSearchBox';
 import HeaderProfile from './HeaderProfile';
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../../Hooks/useSelectorHooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { useGetLoginuser } from '../../../api/userApi';
@@ -227,11 +226,5 @@ const Header = () => {
     </Container>
   );
 };
-
-const Login = styled(NavLink)`
-  font-size: 20px;
-  font-weight: 300;
-  color: var(--color-main);
-`;
 
 export default Header;

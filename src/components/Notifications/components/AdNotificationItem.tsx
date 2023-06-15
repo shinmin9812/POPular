@@ -53,7 +53,7 @@ const AdNotificationItem = ({ id, storeData, checked }: Props) => {
 
 export default AdNotificationItem;
 
-const Container = styled.div`
+const Container = styled.div<{ checked: boolean }>`
   width: 95%;
   height: 80px;
   margin: 8px auto;

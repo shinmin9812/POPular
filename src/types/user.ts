@@ -1,5 +1,4 @@
 import { Category } from './category';
-import { Notification } from './notification';
 
 export const enum RoleTypes {
   USER = 'user',

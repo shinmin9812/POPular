@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Tag from '../../../common/Tag/Tag';
 import dayjs from 'dayjs';
 import { Post } from '../../../../types/post';
 import BoardTypeTag from '../../../common/Board/BoardTypeTag';
