@@ -23,33 +23,63 @@ const handleChecked = async (checked: boolean, id: string) => {
   }
 };
 
+const RemoveNotification = async (id: string) => {
+  fetch(`http://34.22.81.36:3000/notifications/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+};
+
 const AdNotificationItem = ({ id, storeData, checked }: Props) => {
   return (
-    <Link to={`/store/${storeData._id}`} onClick={() => handleChecked(checked, id)}>
-      <ItemContainer checked={checked}>
-        <StoreIconMini />
-        <Message>{storeData.title} 오픈!</Message>
-      </ItemContainer>
-    </Link>
+    <>
+      {storeData ? (
+        <Container checked={checked}>
+          <Link to={`/store/${storeData._id}`} onClick={() => handleChecked(checked, id)}>
+            <ItemContainer>
+              <StoreIconMini />
+              <Message>{storeData.title} 오픈!</Message>
+            </ItemContainer>
+          </Link>
+          <RemoveButton onClick={() => RemoveNotification(id)}>×</RemoveButton>
+        </Container>
+      ) : null}
+    </>
   );
 };
 
 export default AdNotificationItem;
 
-const ItemContainer = styled.div`
+const Container = styled.div`
   width: 95%;
   height: 80px;
-  padding: 0 20px;
   margin: 8px auto;
   border: 1px solid var(--color-light-gray);
+
   transition: all 0.3s ease 0s;
   box-shadow: rgb(238, 238, 238) 1px 1px 10px;
   border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
+  opacity: ${(props) => (props.checked ? 0.3 : 1)};
+
+  a {
+    color: ${(props) => props.checked && 'var(--color-light-black)'};
+    flex: 1;
+    height: 100%;
+    padding-left: 20px;
+  }
+`;
+
+const ItemContainer = styled.div`
   display: flex;
   align-items: center;
-  color: ${(props) => props.checked && 'var(--color-light-black)'};
-  opacity: ${(props) => (props.checked ? 0.3 : 1)};
+  height: 100%;
 `;
 
 const Message = styled.p`
@@ -58,4 +88,19 @@ const Message = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const RemoveButton = styled.span`
+  color: var(--color-light-black);
+  padding: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+
+  :hover {
+    transition: all 0.1s ease;
+    opacity: 1;
+    color: var(--color-red);
+    transform: scale(1.5);
+  }
+  transition: all 0.1s ease;
 `;

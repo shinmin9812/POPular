@@ -19,7 +19,7 @@ const NotificationList = () => {
       },
     });
     const data = await res.json();
-    setNotifications(data);
+    setNotifications(data.reverse());
   };
   useEffect(() => {
     getUserNotification();
