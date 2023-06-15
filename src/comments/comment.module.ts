@@ -6,10 +6,12 @@ import { CommentsService } from './comment.service';
 import { FeedsModule } from 'src/feeds/feed.module';
 import { UserModule } from 'src/users/user.module';
 import { NotificationsModule } from 'src/notifications/notification.module';
+import { Notification, NotificationSchema } from 'src/notifications/notification.schema';
 
 @Module({
 	imports: [
 		MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
+		MongooseModule.forFeature([{ name: Notification.name, schema: NotificationSchema }]),
 		forwardRef(() => FeedsModule),
 		forwardRef(() => UserModule),
 		forwardRef(() => NotificationsModule),
