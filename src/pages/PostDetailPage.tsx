@@ -23,6 +23,7 @@ const Container = styled.div`
 `;
 
 const FlexDiv = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -89,6 +90,7 @@ const PostDetailPage = () => {
   if (post === null) {
     return <div>Loading...</div>;
   }
+
   return (
     <Container>
       <MetaTag title={`POPULAR | ${post.title}`} />
@@ -96,6 +98,8 @@ const PostDetailPage = () => {
         boardType={post.board}
         title={post.title}
         nickName={post.author.nickname}
+        profile={post.author.profile}
+        follower={post.author.follower.length}
         authorId={post.author._id}
         updatedAt={post.updatedAt}
         likes={post.likes.length}
