@@ -20,19 +20,23 @@ export const deleteUsers = async (userIds: string[]): Promise<void> => {
       body: JSON.stringify(userIds),
     });
   } catch (err) {
-    throw new Error('스토어 삭제를 실패하였습니다!');
+    throw new Error('유저 삭제를 실패하였습니다!');
   }
 };
 
 export const getLoginUser = async () => {
-  const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-  return response.json();
+  try {
+    const response = await fetch('http://34.22.81.36:3000/auth/profile', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.json();
+  } catch (err) {
+    return;
+  }
 };
 
 export const useGetAllUsers = () => {

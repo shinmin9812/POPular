@@ -22,7 +22,9 @@ const CategoryBox = ({ stores, text }: Props) => {
     userData?.interested_category.length === 0 || userData?.interested_category === undefined ? false : true;
 
   useEffect(() => {
-    getUserInfo();
+    if (localStorage.getItem('token')) {
+      getUserInfo();
+    }
   }, []);
 
   const getUserInfo = async () => {

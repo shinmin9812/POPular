@@ -22,14 +22,12 @@ const getUserInfo = async (setUserData: React.Dispatch<React.SetStateAction<User
   }
 };
 
-const UpdateAndDeleteContainer = () => {
+const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
   const navigate: NavigateFunction = useNavigate();
 
   const [userData, setUserData] = useState<User>();
-  const [postInfo, setPostInfo] = useState<Post>();
   useEffect(() => {
     getUserInfo(setUserData);
-    getPostInfo();
   }, []);
 
   const dispatch = useAppDispatch();
@@ -49,12 +47,6 @@ const UpdateAndDeleteContainer = () => {
 
   const postId = useParams().postId;
 
-  const getPostInfo = async () => {
-    const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : ''));
-    const result = await response.json();
-    setPostInfo(result);
-  };
-
   async function DeleteFetchData() {
     const response = await callApi('DELETE', API_PATH.POST.DELETE, { ids: [postId ? postId : ''] });
     const result = await response.json();
@@ -62,7 +54,7 @@ const UpdateAndDeleteContainer = () => {
     navigate('/community/board');
   }
 
-  const isAuthor = postInfo && userData?._id === postInfo.author._id;
+  const isAuthor = post && userData?._id === post.author._id;
 
   const deletePost = () => {
     if (isAuthor) {
@@ -74,14 +66,13 @@ const UpdateAndDeleteContainer = () => {
 
   const updatePost = () => {
     if (isAuthor) {
-      const currTab =
-        postInfo.board === 'free' ? '자유게시판' : postInfo.board === 'review' ? '후기게시판' : '모집게시판';
+      const currTab = post.board === 'free' ? '자유게시판' : post.board === 'review' ? '후기게시판' : '모집게시판';
 
       setTab(currTab);
-      setPostContent(postInfo.content);
-      setPostTitle(postInfo.title);
-      postInfo.store_id && setChoiceStoreId(postInfo.store_id._id);
-      setIsUpdate({ use: true, id: postInfo._id });
+      setPostContent(post.content);
+      setPostTitle(post.title);
+      post.store_id && setChoiceStoreId(post.store_id._id);
+      setIsUpdate({ use: true, id: post._id });
       navigate('/community/write');
     } else {
       alert('작성자가 아닙니다');

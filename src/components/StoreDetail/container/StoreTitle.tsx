@@ -68,9 +68,6 @@ const StoreTitle = ({ store }: Props) => {
         <p className="title">{store.title}</p>
         <div className="title-btns">
           <TitleScrap store={store} />
-          <button className="share-btn">
-            <img src="/images/share.svg" alt="" />
-          </button>
         </div>
       </div>
       <Slider {...settings}>

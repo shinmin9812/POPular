@@ -120,7 +120,7 @@ const PostDetailPage = () => {
       <PostContent content={post ? post.content : ''}></PostContent>
       <FlexDiv>
         <LikesAndReportsContainer />
-        <UpdateAndDeleteContainer />
+        <UpdateAndDeleteContainer post={post} />
       </FlexDiv>
       <CommentListContainer />
       <CommentInputContainer />

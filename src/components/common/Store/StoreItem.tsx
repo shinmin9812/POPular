@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Store } from '../../../types/store';
 import Tag from '../Tag/Tag';
+import dayjs from 'dayjs';
 
 interface Props {
   store: Store;
@@ -84,7 +85,7 @@ const StoreItem = ({ store, onClick }: Props) => {
           {store.postcode.sido} {store.postcode.sigungu}
         </p>
         <p className="store-date">
-          {store.start_date} - {store.end_date}
+          {dayjs(store.start_date).format('YYYY/MM/DD')} - {dayjs(store.end_date).format('YYYY/MM/DD')}
         </p>
         <Tag>{store.category}</Tag>
       </div>
