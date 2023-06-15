@@ -9,7 +9,7 @@ export interface Post {
   author: User;
   board: BoardTypes;
   content: string;
-  images?: string[];
+  images: string[];
   store_id?: Store;
   ratings?: number;
   likes: string[];

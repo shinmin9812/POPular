@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { Post } from '../../../types/post';
-import ReviewPost from './ReviewPost';
+import ReviewPost, { UnPopulatedPost } from './ReviewPost';
 import Button from '../../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import Skeleton from './Skeleton';
+import { Link } from 'react-router-dom';
 
 const Container = styled.section`
   li {
@@ -41,19 +41,23 @@ const ReviewBoardLink = styled.section`
 `;
 
 interface Props {
-  posts: Post[];
+  posts: UnPopulatedPost[] | undefined;
   isFetching: boolean;
 }
 
 const ReviewList = ({ posts, isFetching }: Props) => {
   const navigate = useNavigate();
 
-  if (!isFetching && posts.length === 0) {
+  if (!isFetching && posts!.length === 0) {
     return (
       <Container>
         <p className="no-reviews">해당 스토어의 후기가 없습니다!</p>
       </Container>
     );
+  }
+
+  if (isFetching) {
+    return <></>;
   }
 
   return (
@@ -62,28 +66,21 @@ const ReviewList = ({ posts, isFetching }: Props) => {
         <h3>최근 후기 포스트</h3>
         <Button
           onClick={() => {
-            navigate('/');
+            navigate('/community/board/review');
           }}
         >
           후기 게시판
         </Button>
       </ReviewBoardLink>
-      {posts ? (
-        posts.map((post) => {
-          return (
-            <li key={post._id}>
+      {posts!.map((post) => {
+        return (
+          <li key={post._id}>
+            <Link to={`/community/post/${post._id}`}>
               <ReviewPost post={post} />
-            </li>
-          );
-        })
-      ) : (
-        <>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-        </>
-      )}
+            </Link>
+          </li>
+        );
+      })}
       <div className="more-view">
         <Button onClick={() => navigate('/community/board/review')}>후기 더 보기</Button>
       </div>

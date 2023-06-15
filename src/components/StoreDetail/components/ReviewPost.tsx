@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Post } from '../../../types/post';
+import { useGetUserById } from '../../../api/userApi';
 
 const Container = styled.article`
   margin-bottom: 20px;
@@ -11,7 +12,10 @@ const Container = styled.article`
 
     background-color: #eeeeee;
 
+    overflow: hidden;
+
     img {
+      width: 100%;
       object-fit: cover;
     }
   }
@@ -52,21 +56,33 @@ const Container = styled.article`
   }
 `;
 
+export interface UnPopulatedPost extends Omit<Post, 'author'> {
+  author: string;
+}
+
 interface Props {
-  post: Post;
+  post: UnPopulatedPost;
 }
 
 const ReviewPost = ({ post }: Props) => {
+  const { data: user } = useGetUserById(post.author);
+
+  console.log(post);
+
+  if (!user) return <></>;
+
   return (
     <Container>
-      <figure className="thumbnail-box">
-        <img className="thumbnail" src={post.images ? post.images[0] : ''} alt={post.title} />
-      </figure>
       <div className="post-info">
+        {post.images?.length > 0 && (
+          <figure className="thumbnail-box">
+            <img className="thumbnail" src={post.images[0]} alt={post.title} />
+          </figure>
+        )}
         <div className="user-info">
-          {!post.author.profile ? <img src="/defaultProfile.svg" /> : <img src={post.author.profile} />}
-          <p className="user-name">{post.author.nickname}</p>
-          <span className="user-followers"> · {post.author.follower.length} followers</span>
+          {user.profile ? <img src="/defaultProfile.svg" /> : <img src={user.profile} />}
+          <p className="user-name">{user.nickname}</p>
+          <span className="user-followers"> · {user.follower.length} followers</span>
         </div>
         <p className="content">{post.content.replace(/<[^>]*>?/g, '')}</p>
       </div>
