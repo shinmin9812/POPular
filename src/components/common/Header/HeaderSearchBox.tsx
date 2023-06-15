@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import SearchIcon from '../Icons/SearchIcon';
+import { useNavigate } from 'react-router-dom';
+import { KeyboardEvent, useState } from 'react';
 
 const Container = styled.div`
   position: relative;
@@ -40,10 +42,33 @@ const Container = styled.div`
 `;
 
 const HeaderSearchBox = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const movePage = useNavigate();
+
+  const handleInputHeaderSearch = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchValue) {
+      movePage('/search', { state: { value: searchValue } });
+      setSearchValue('');
+    }
+  };
+
+  const handleChangeHeaderSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleButtonHeaderSearch = () => {
+    if (searchValue) {
+      movePage('/search', { state: { value: searchValue } });
+      setSearchValue('');
+    }
+  };
+
   return (
     <Container>
-      <input type="text"></input>
-      <SearchIcon />
+      <input type="text" value={searchValue} onKeyPress={handleInputHeaderSearch} onChange={handleChangeHeaderSearch} />
+      <button onClick={handleButtonHeaderSearch}>
+        <SearchIcon />
+      </button>
     </Container>
   );
 };
