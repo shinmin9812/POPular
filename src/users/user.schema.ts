@@ -41,7 +41,7 @@ export class User extends Document {
 	@Prop({ default: [] })
 	interested_category: string[];
 
-	@Prop({ default: '' })
+	@Prop({ default: 'http://34.22.81.36:3000/uploads/defaultProfile.svg' })
 	profile: string;
 
 	@Prop({ default: '한 줄 소개를 넣어주세요!' })
