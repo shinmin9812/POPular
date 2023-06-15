@@ -59,7 +59,7 @@ export const API_PATH = {
     },
     POST: `${API_BASE_URL}/feeds/`,
     PUT: `${API_BASE_URL}/feeds/:postId`,
-    DELETE: `${API_BASE_URL}/feeds/`,
+    DELETE: `${API_BASE_URL}/feeds`,
   },
 
   COMMENT: {

@@ -15,9 +15,8 @@ const Container = styled.div`
   animation: appear-user 0.5s forwards;
 
   .profile {
-    width: 40%;
+    width: 160px;
     aspect-ratio: 1/1;
-    border: 3px solid #a34bb2;
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.8);
@@ -70,7 +69,7 @@ const UserBlock = ({ user }: Props) => {
   return (
     <Container>
       <div className="profile">
-        <img src={user.profile} alt="profile" />
+        <img src={user.profile ? user.profile : '/defaultProfile.svg'} alt="profile" /> :
       </div>
       <div className="info">
         <p className="nickname">{user.nickname}</p>

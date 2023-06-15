@@ -9,9 +9,6 @@ interface Props {
 
 const AdminFeedItem = ({ feed }: Props) => {
   const createdAt = dayjs(feed.createdAt).format('YYYY-MM-DD');
-
-  console.log(feed);
-
   return (
     <Container>
       <a href={`/community/post/${feed._id}`} target="_blank">
@@ -54,7 +51,6 @@ const AdminFeedItem = ({ feed }: Props) => {
 const Container = styled.div`
   a {
     display: flex;
-
     justify-content: space-between;
 
     width: 100%;
@@ -94,6 +90,11 @@ const Container = styled.div`
         gap: 6px;
         font-size: 12px;
       }
+    }
+
+    .thumbnail {
+      height: 100%;
+      aspect-ratio: 1/1;
     }
   }
 `;

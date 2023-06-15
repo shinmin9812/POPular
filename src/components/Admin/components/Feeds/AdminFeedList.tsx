@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FeedFilterSettingValues, SearchTypeCase, defaultFilterSetting } from './FeedFilter';
 import { Post } from '../../../../types/post';
 import FeedFilter from './FeedFilter';
@@ -11,9 +11,12 @@ export const enum StoreItemMode {
 
 interface Props {
   feeds: Post[];
+  selectMode?: boolean;
+  selectedId?: string[];
+  setSelectedId?: Dispatch<SetStateAction<string[]>>;
 }
 
-const AdminFeedList = ({ feeds }: Props) => {
+const AdminFeedList = ({ feeds, selectMode, selectedId, setSelectedId }: Props) => {
   const [filterSetting, setFilterSetting] = useState<FeedFilterSettingValues>(defaultFilterSetting);
   const [searchedFeeds, setSearchedFeeds] = useState<Post[]>(feeds);
 
@@ -52,13 +55,32 @@ const AdminFeedList = ({ feeds }: Props) => {
     <Container>
       <FeedFilter setFilterSetting={setFilterSetting} clickFilter={clickFilter} filterSetting={filterSetting} />
       <ul>
-        {searchedFeeds.map((feed) => {
-          return (
+        {searchedFeeds.map((feed) =>
+          selectMode ? (
+            <label key={feed._id}>
+              <input
+                checked={selectedId!.includes(feed._id) ? true : false}
+                type="checkbox"
+                onChange={(e) => {
+                  e.target.checked
+                    ? setSelectedId!((prev) => [...prev, feed._id])
+                    : setSelectedId!((prev) => prev.filter((id) => id !== feed._id));
+                }}
+              />
+              <div className={`select-box ${selectedId!.includes(feed._id) ? 'selected' : ''}`}>
+                <div className="feed-item">
+                  <li>
+                    <AdminFeedItem feed={feed} />
+                  </li>
+                </div>
+              </div>
+            </label>
+          ) : (
             <li key={feed._id}>
               <AdminFeedItem feed={feed} />
             </li>
-          );
-        })}
+          ),
+        )}
       </ul>
     </Container>
   );
