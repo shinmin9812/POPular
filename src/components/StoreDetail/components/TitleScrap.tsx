@@ -70,8 +70,8 @@ const TitleScrap = React.memo(({ store }: Props) => {
   if (userLoading) return <div>Loading...</div>;
 
   return (
-    <Container onClick={checkScrap ? unscrapHandler : scrapHandler}>
-      {checkScrap ? <img src="/images/scrap-fill.svg" alt="" /> : <img src="/images/scrap.svg" alt="" />}
+    <Container>
+      {/* {checkScrap ? <img src="/images/scrap-fill.svg" alt="" /> : <img src="/images/scrap.svg" alt="" />} */}
     </Container>
   );
 });

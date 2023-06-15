@@ -6,6 +6,7 @@ const Container = styled.div`
   aspect-ratio: 1/1;
 
   border-radius: 50%;
+  overflow: hidden;
 
   img {
     width: 100%;
@@ -15,11 +16,11 @@ const Container = styled.div`
   }
 `;
 
-const HeaderProfile = (src: string) => {
+const HeaderProfile = ({ src }: { src: string }) => {
   return (
     <Container>
       <Link to="/usermenu">
-        <img src={src} alt="profile" />
+        <img src={src} alt="profile" onError={() => 'this.src="/defaultProfile.svg"'} />
       </Link>
     </Container>
   );

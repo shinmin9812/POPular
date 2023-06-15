@@ -169,7 +169,6 @@ const Header = () => {
   const { refetch } = useGetLoginuser({
     enabled: false,
     onSuccess: (data: User) => {
-      console.log('a');
       dispatch(setUser(data));
     },
   });
@@ -188,7 +187,9 @@ const Header = () => {
   }, [position]);
 
   useEffect(() => {
-    refetch();
+    if (localStorage.getItem('token')) {
+      refetch();
+    }
   }, []);
 
   return (
@@ -220,11 +221,17 @@ const Header = () => {
         </nav>
         <div className="sub-links">
           <HeaderSearchBox />
-          <HeaderProfile src={user?.profile!} />
+          {user ? <HeaderProfile src={user.profile} /> : <Login to="/login">LOGIN</Login>}
         </div>
       </div>
     </Container>
   );
 };
+
+const Login = styled(NavLink)`
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--color-main);
+`;
 
 export default Header;

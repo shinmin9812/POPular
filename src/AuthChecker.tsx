@@ -9,7 +9,7 @@ interface Props {
 const AuthChecker = ({ admin }: Props) => {
   const { data, isFetching } = useGetTokenValid();
 
-  if (isFetching) return <></>;
+  if (isFetching) return <Outlet />;
 
   if (admin) {
     return data!.role === 'admin' ? (
