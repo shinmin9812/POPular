@@ -12,7 +12,7 @@ export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: PaginateModel<Store>,
 		@InjectModel(User.name) private readonly userModel: Model<User>,
-	) { }
+	) {}
 
 	async getAllStores(): Promise<Store[]> {
 		return await this.storeModel.find();
@@ -91,8 +91,10 @@ export class StoreService {
 		}
 
 		const storeImages = body.images;
-		const images = storeImages.filter((image) => image.startsWith("http://"));
-		const filteredImages = storeImages.filter((image) => !image.startsWith("http://"));
+		const images = storeImages.filter(image => image.startsWith('http://'));
+		const filteredImages = storeImages.filter(
+			image => !image.startsWith('http://'),
+		);
 
 		const imageMapping = await handleImages(filteredImages);
 		const transformImages = Object.values(imageMapping);
@@ -101,7 +103,7 @@ export class StoreService {
 		const updateStore = {
 			...body,
 			images: imageUrls,
-		}
+		};
 
 		return await this.storeModel.findByIdAndUpdate(_id, updateStore, {
 			new: true,
