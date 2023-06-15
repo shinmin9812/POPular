@@ -101,6 +101,18 @@ const CategoryItem = styled.li`
   border-radius: 10px;
   box-shadow: #d7cdd726 0px 0px 3px 3px;
   background-color: var(--color-white);
+  animation: Up 1s;
+
+  @keyframes Up {
+    0% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
 
   @media all and (min-width: 768px) and (max-width: 1023px) {
     width: 45%;
@@ -159,6 +171,18 @@ const Notice = styled.div`
   box-shadow: #d7cdd726 0px 0px 3px 3px;
   margin: 0px auto;
   margin-top: 60px;
+  animation: Up 1s;
+
+  @keyframes Up {
+    0% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
 
   @media all and (max-width: 767px) {
     width: 95%;
