@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { CLIENT_PATH } from '../../../constants/path';
 import LoginLink from './LoginLink';
 import MenuItem from './MenuItem';
-import Logo from '../../common/Icons/DummyLogo';
 import { Link } from 'react-router-dom';
 
 const NonMemberMenu = () => {
@@ -14,7 +13,7 @@ const NonMemberMenu = () => {
         <MenuItem link={CLIENT_PATH.USER_SCRAP} title="위시리스트" />
         <MenuItem link={CLIENT_PATH.USER_POSTS} title="내가 쓴 글" />
         <MenuItem link={CLIENT_PATH.USER_COMMENTS} title="내가 쓴 댓글" />
-        <Link className="signup" to="/signup">
+        <Link className="signup" to={CLIENT_PATH.SIGNUP}>
           회원가입
         </Link>
       </MenuList>
