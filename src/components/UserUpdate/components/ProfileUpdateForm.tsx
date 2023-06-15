@@ -6,6 +6,7 @@ import CheckboxInput from './CheckboxInput';
 import { User } from '../../../types/user';
 import { useParams } from 'react-router-dom';
 import { isEqual } from '../../../utils/correctArrayCheck';
+import { API_PATH } from '../../../constants/path';
 import autoHyphen from '../../../utils/autoHyphen';
 
 interface Props {
@@ -58,7 +59,7 @@ const ProfileUpdateForm = ({ user }: Props) => {
   // 닉네임 중복 체크
   const checkingNickname = async (nickname: string) => {
     try {
-      const response = await fetch('http://34.22.81.36:3000/users/checknickname', {
+      const response = await fetch(API_PATH.USER.POST.CHECK_NICKNAME, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -156,7 +157,8 @@ const ProfileUpdateForm = ({ user }: Props) => {
     }
 
     try {
-      const response = await fetch(`http://34.22.81.36:3000/users/${userId}`, {
+      if (!userId) return;
+      const response = await fetch(API_PATH.USER.PATCH.replace(':userId', userId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

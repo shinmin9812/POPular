@@ -4,13 +4,13 @@ import FormInput from './FormInput';
 import ProfileButton from './ProfileButton';
 import { useParams } from 'react-router-dom';
 import { User } from '../../../types/user';
+import { API_PATH } from '../../../constants/path';
 
 interface Props {
   user: User;
 }
 
 const ProfileUpdatePasswordForm = ({ user }: Props) => {
-  //console.log();
   const { userId } = useParams();
   const token = localStorage.getItem('token');
   const [userPassword, setUserPassword] = useState({
@@ -56,7 +56,8 @@ const ProfileUpdatePasswordForm = ({ user }: Props) => {
     }
 
     try {
-      const response = await fetch(`http://34.22.81.36:3000/users/${userId}`, {
+      if (!userId) return;
+      const response = await fetch(API_PATH.USER.PATCH.replace(':userId', userId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -64,12 +65,6 @@ const ProfileUpdatePasswordForm = ({ user }: Props) => {
         },
         body: JSON.stringify({
           pw: password,
-          // profile: user.profile,
-          // introduce: user.introduce,
-          // nickname: user.nickname,
-          // phone_number: user.phone_number,
-          // interested_category: user.interested_category,
-          // allow_notification: user.allow_notification,
         }),
       });
 

@@ -69,6 +69,10 @@ const Container = styled.div`
     background-color: #fff;
     filter: brightness(0.97);
   }
+
+  @media all and (max-width: 767px) {
+    padding: 20px 15px;
+  }
 `;
 
 const ContainerInner = styled.div`
@@ -78,12 +82,12 @@ const ContainerInner = styled.div`
 `;
 
 const PostItemImage = styled.div`
-  width: 20%;
+  width: 13%;
   position: relative;
 
   .temporary-image {
     position: absolute;
-    width: 120px;
+    width: 100%;
     height: 80px;
     border-radius: 8px;
     overflow: hidden;
@@ -91,15 +95,22 @@ const PostItemImage = styled.div`
     right: 0;
 
     img {
-      width: 120px;
+      width: 100%;
       height: 80px;
       object-fit: cover;
     }
   }
+  @media all and (max-width: 767px) {
+    width: 28%;
+  }
 `;
 
 const PostItemInfo = styled.div`
-  width: 80%;
+  width: 87%;
+
+  @media all and (max-width: 767px) {
+    width: 72%;
+  }
 `;
 
 const PostItemCategory = styled.div`
@@ -130,9 +141,12 @@ const PostItemTitle = styled.div`
   white-space: nowrap;
   padding: 5px 0px;
   margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   @media all and (max-width: 767px) {
-    font-size: var(--font-regular);
+    font-size: var(--font-small);
   }
 `;
 
