@@ -335,6 +335,7 @@ export class CommentsService {
 				);
 			}
 		} catch (err) {
+			console.log(err);
 			throw new InternalServerErrorException('댓글 삭제에 실패하였습니다.');
 		}
 	}

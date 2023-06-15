@@ -189,6 +189,7 @@ export class NotificationsService {
 				);
 			}
 		} catch (err) {
+			console.log(err);
 			throw new InternalServerErrorException('알림 삭제에 실패하였습니다.');
 		}
 	}
