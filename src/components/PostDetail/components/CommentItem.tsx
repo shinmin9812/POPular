@@ -3,9 +3,9 @@ import { Comment } from '../../../types/comment';
 import CommentInputContainer from '../containers/CommentInputContainer';
 import ReComment from './ReCommentList';
 import XmarkIcon from '../../common/Icons/XmarkIcon';
-import getDateFunc from '../../../utils/getDateFunc';
 import { Link } from 'react-router-dom';
 import { CLIENT_PATH } from '../../../constants/path';
+import dayjs from 'dayjs';
 export const CommentWrap = styled.div`
   display: flex;
   cursor: pointer;
@@ -36,14 +36,54 @@ export const Li = styled.li`
 
 export const CommentAuthorName = styled.div`
   color: var(--color-light-black);
-  font-weight: var(--weight-light);
-  width: 15%;
+  font-weight: 500;
+  width: fit-content;
   font-size: var(--font-small);
   margin-right: 20px;
+
+  a {
+    .profile {
+      padding-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .profile-pic {
+        width: 30px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .nickname {
+          color: #000;
+          font-size: 16px;
+          width: 60px;
+          text-align: left;
+          white-space: no-wrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          em {
+            color: #a0a0a0;
+            font-size: 12px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
 `;
 
 export const CommentContent = styled.div`
+  display: flex;
+  align-items: center;
   width: 75%;
+  padding: 10px 0;
   text-align: left;
   font-size: var(--font-small);
 `;
@@ -59,9 +99,9 @@ export const CommentUpdateAt = styled.div`
 
 export const CommentDeleteButton = styled.button`
   display: flex;
+  align-items: center;
   background: none;
   width: 78px;
-  padding-top: 2px;
   justify-content: center;
 `;
 
@@ -88,10 +128,20 @@ const CommentItem = ({
       <CommentWrap onClick={setReCommentInput}>
         <CommentInfoWrap>
           <CommentAuthorName>
-            <Link to={CLIENT_PATH.PROFILE.replace(':userId', comment.author._id)}>{comment.author.nickname}</Link>
+            <Link to={CLIENT_PATH.PROFILE.replace(':userId', comment.author._id)}>
+              <div className="profile">
+                <img
+                  src={comment.author.profile ? comment.author.profile : '/defaultProfile.svg'}
+                  className="profile-pic"
+                />
+                <div className="info">
+                  <p className="nickname">{comment.author.nickname}</p>
+                </div>
+              </div>
+            </Link>
           </CommentAuthorName>
           <CommentContent>{comment.content}</CommentContent>
-          <CommentUpdateAt>{getDateFunc(comment.updatedAt)}</CommentUpdateAt>
+          <CommentUpdateAt>{dayjs(comment.updatedAt).format('YYYY-MM-DD HH:mm:ss')}</CommentUpdateAt>
         </CommentInfoWrap>
         {comment.author._id === isMember ? (
           <CommentDeleteButton

@@ -15,7 +15,7 @@ const Container = styled.div`
   animation: appear-user 0.5s forwards;
 
   .profile {
-    width: 40%;
+    width: 30%;
     aspect-ratio: 1/1;
     border: 3px solid #a34bb2;
     border-radius: 50%;

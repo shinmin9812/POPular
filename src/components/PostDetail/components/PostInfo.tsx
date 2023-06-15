@@ -24,6 +24,7 @@ const PostInfoWrap = styled.div`
   margin-bottom: 15px;
 
   .board {
+    width: fit-content;
     transform-origin: left;
     transform: scale(1.5);
   }

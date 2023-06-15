@@ -13,7 +13,15 @@ const Button = styled.button`
   background: none;
   align-items: center;
   font-size: var(--font-small);
+  font-weight: 600;
+  color: #a7a7a7;
+  transition: all 0.4s;
   cursor: pointer;
+
+  &.active {
+    transform: scale(1.4);
+    color: #161616;
+  }
 
   svg {
     transition: all 0.5s;
@@ -47,6 +55,7 @@ const LikesAndReports = ({
         onClick={() => {
           onClick('like');
         }}
+        className={checkLike ? 'active' : ''}
       >
         <LikeIcon fill={checkLike ? 'var(--color-main)' : 'var(--color-gray)'} />
         <NameWrap>좋아요</NameWrap>
@@ -56,6 +65,7 @@ const LikesAndReports = ({
         onClick={() => {
           onClick('report');
         }}
+        className={checkReport ? 'active' : ''}
       >
         <ReportIcon fill={checkReport ? 'var(--color-red)' : 'var(--color-gray)'} />
         <NameWrap>싫어요</NameWrap>

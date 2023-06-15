@@ -17,6 +17,7 @@ import StarIcon from '../components/common/Icons/StarIcon';
 import { getComments } from '../api/CommentApi';
 import MetaTag from '../components/SEO/MetaTag';
 import { API_PATH } from '../constants/path';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100%;
@@ -108,17 +109,19 @@ const PostDetailPage = () => {
       />
       {post.store_id && (
         <StoreWrap>
-          <StoreItem store={post.store_id} />
-          {post.ratings && (
-            <RatingsWrap>
-              <span>평점:</span>
-              {Array(post.ratings)
-                .fill(0)
-                .map((i, index) => (
-                  <StarIcon key={index} fill="var(--color-sub)" width={20} />
-                ))}
-            </RatingsWrap>
-          )}
+          <Link to={`/store/${post.store_id._id}`}>
+            <StoreItem store={post.store_id} />
+            {post.ratings && (
+              <RatingsWrap>
+                <span>평점:</span>
+                {Array(post.ratings)
+                  .fill(0)
+                  .map((i, index) => (
+                    <StarIcon key={index} fill="var(--color-sub)" width={20} />
+                  ))}
+              </RatingsWrap>
+            )}
+          </Link>
         </StoreWrap>
       )}
       <PostContent content={post ? post.content : ''}></PostContent>

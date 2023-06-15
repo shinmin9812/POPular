@@ -10,21 +10,27 @@ import {
   CommentDeleteButton,
 } from './CommentItem';
 import { Comment } from '../../../types/comment';
-import getDateFunc from '../../../utils/getDateFunc';
+import { Link } from 'react-router-dom';
+import { CLIENT_PATH } from '../../../constants/path';
+import dayjs from 'dayjs';
 const ReCommentWrap = styled.ul`
-  background-color: #fafafa;
-  border: 1px solid #dddddd;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   margin-top: 10px;
-  width: 86%;
-  margin-left: 14%;
+  margin-left: 80px;
+
+  @media (max-width: 768px) {
+    margin-left: 20px;
+  }
 `;
 
 const ReCommentItem = styled.li`
   display: flex;
   padding: 15px 0 15px 15px;
-  + li {
-    border-top: 1px var(--color-light-gray) solid;
-  }
+  width: 100%;
+  box-shadow: rgb(212, 212, 212) 1px 1px 10px;
+  border-radius: 20px;
   svg {
     margin-right: 5px;
   }
@@ -52,9 +58,21 @@ const ReComment = ({
           <ReCommentArrowIcon />
           <CommentWrap>
             <CommentInfoWrap>
-              <CommentAuthorName>{reComment.author.nickname}</CommentAuthorName>
+              <CommentAuthorName>
+                <Link to={CLIENT_PATH.PROFILE.replace(':userId', reComment.author._id)}>
+                  <div className="profile">
+                    <img
+                      src={reComment.author.profile ? reComment.author.profile : '/defaultProfile.svg'}
+                      className="profile-pic"
+                    />
+                    <div className="info">
+                      <p className="nickname">{reComment.author.nickname}</p>
+                    </div>
+                  </div>
+                </Link>
+              </CommentAuthorName>
               <CommentContent>{reComment.content}</CommentContent>
-              <CommentUpdateAt>{getDateFunc(reComment.updatedAt)}</CommentUpdateAt>
+              <CommentUpdateAt>{dayjs(reComment.updatedAt).format('YYYY-MM-DD HH:mm:ss')}</CommentUpdateAt>
             </CommentInfoWrap>
             {isMember === reComment.author._id ? (
               <CommentDeleteButton
