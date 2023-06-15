@@ -133,5 +133,3 @@ const AdminStoreDeletePage = () => {
 };
 
 export default AdminStoreDeletePage;
-
-const allStores = [];

@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { RootState } from '../../../store';
 import { useGetLoginuser } from '../../../api/userApi';
 
 const Container = styled.div`

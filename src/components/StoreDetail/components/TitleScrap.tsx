@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import * as React from 'react';
 import { getLoginUser } from '../../../api/userApi';

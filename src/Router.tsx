@@ -28,7 +28,6 @@ import AdminStoreDeletePage from './pages/Admin/AdminStoreDeletePage';
 import AdminStoreStatisticsDetailPage from './pages/Admin/AdminStoreStatisticsDetailPage';
 import AdminUserStatisticsPage from './pages/Admin/AdminUserStatisticsPage';
 import AdminUserDetailPage from './pages/Admin/AdminUserDetailPage';
-import AdminUserEditPage from './pages/Admin/AdminUserEditPage';
 import AdminUserDeletePage from './pages/Admin/AdminUserDeletePage';
 import AuthChecker from './AuthChecker';
 import AdminFeedStatisticsPage from './pages/Admin/AdminFeedStatisticsPage';

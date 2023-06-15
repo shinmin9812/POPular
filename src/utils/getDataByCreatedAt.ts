@@ -37,5 +37,7 @@ export default function getDataByCreatedAt(title: string, data: DataValue[]) {
     result = result.slice(result.length - 10, result.length);
   }
 
+  result.sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime());
+
   return result;
 }

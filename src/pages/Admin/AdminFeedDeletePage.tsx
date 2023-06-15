@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Card from '../../components/common/Card/Card';
-import { useDeleteUsers } from '../../api/userApi';
 import { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import { useQueryClient } from '@tanstack/react-query';
