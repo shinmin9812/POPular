@@ -15,9 +15,13 @@ const Duration = styled.button`
   border-radius: 8px;
   font-size: 14px;
   padding: 10px;
+  font-weight: 700;
   cursor: pointer;
+
   @media (max-width: 520px) {
+    padding: 6px;
     font-size: var(--font-micro);
+    text-align: start;
   }
 `;
 

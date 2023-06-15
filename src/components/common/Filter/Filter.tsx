@@ -13,14 +13,17 @@ const Select = styled.select<{ width: number }>`
   font-size: var(--font-small);
   margin-top: 10px;
   text-align: center;
+  font-weight: 700;
   cursor: pointer;
 
   + select {
     margin-left: 9px;
   }
 
-  @media (max-width: 520px) {
+  @media (max-width: 768px) {
+    text-align: left;
     font-size: var(--font-micro);
+    padding: 6px;
   }
 `;
 
