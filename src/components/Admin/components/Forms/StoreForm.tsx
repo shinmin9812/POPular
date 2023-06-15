@@ -88,6 +88,7 @@ const defaultFormValues: PostedStore = {
   images: [],
   scraps: [],
   createdAt: '',
+  updatedAt: '',
 };
 
 interface Props {

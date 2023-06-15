@@ -10,15 +10,19 @@ import getDateFunc from '../../../utils/getDateFunc';
 const getComments = async (
   _limit: number,
   offset = 1,
-  userId: string | undefined,
+  userId: string,
 ): Promise<{ rows: Comment[]; nextOffset: number; hasNextPage: boolean }> => {
-  const res = await fetch(`http://34.22.81.36:3000/comments/user/${userId}?pageIndex=${offset}`, {
-    method: 'GET',
-  });
-  const data = await res.json();
-  const rows: Comment[] = data.docs; // length: 한번에 불러오는 데이터 수
-  await new Promise((r) => setTimeout(r, 500));
-  return { rows, nextOffset: offset + 1, hasNextPage: data.hasNextPage };
+  try {
+    const res = await fetch(`http://34.22.81.36:3000/comments/user/${userId}?pageIndex=${offset}`, {
+      method: 'GET',
+    });
+    const data = await res.json();
+    const rows: Comment[] = data.docs; // length: 한번에 불러오는 데이터 수
+    await new Promise((r) => setTimeout(r, 500));
+    return { rows, nextOffset: offset + 1, hasNextPage: data.hasNextPage };
+  } catch (err: any) {
+    throw new Error(err.message);
+  }
 };
 
 type CommentGetTotalSizeProps = {
@@ -42,10 +46,13 @@ const CommentList = () => {
           authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
+      if (!response.ok) {
+        throw new Error('유저 정보를 불러올 수 없습니다.');
+      }
       const data = await response.json();
       setUserId(data._id);
     } catch (err: any) {
-      throw new Error(err);
+      console.log(err.message);
     }
   };
   useEffect(() => {
@@ -53,7 +60,7 @@ const CommentList = () => {
   }, []);
 
   const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['feeds'],
+    ['comments'],
     (ctx) => getComments(0, ctx.pageParam, userId),
     {
       getNextPageParam: (lastGroup, groups) => {
@@ -101,7 +108,7 @@ const CommentList = () => {
               const comment: Comment = allRows[virtualRow.index];
 
               return (
-                <CommentItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start + 120}>
+                <CommentItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start - 120}>
                   {isLoaderRow ? (
                     hasNextPage ? (
                       <Loading>
@@ -110,18 +117,22 @@ const CommentList = () => {
                     ) : (
                       'Nothing more to load'
                     )
-                  ) : comment?.parent?.type === 'Feed' ? (
-                    <CommentItem
-                      parentId={comment?.parent?.id}
-                      comment={comment?.content}
-                      date={getDateFunc(comment?.updatedAt)}
-                    />
                   ) : (
-                    <RecommentItem
-                      parentId={comment?.parent?.id}
-                      recomment={comment?.content}
-                      date={getDateFunc(comment?.updatedAt)}
-                    />
+                    comment &&
+                    comment.parent &&
+                    (comment.parent.type === 'Feed' ? (
+                      <CommentItem
+                        parentId={comment.parent.id}
+                        comment={comment.content}
+                        date={getDateFunc(comment.updatedAt)}
+                      />
+                    ) : (
+                      <RecommentItem
+                        parentId={comment.parent.id}
+                        recomment={comment.content}
+                        date={getDateFunc(comment.updatedAt)}
+                      />
+                    ))
                   )}
                 </CommentItemContainer>
               );
@@ -183,5 +194,5 @@ const CommentItemContainer = styled.div<CommentItemContainerProps>`
   width: 100%;
   height: ${(props) => props.size}px;
   margin: 0;
-  transform: translateY(${(props) => props.size + props.start - 260}px);
+  transform: translateY(${(props) => props.size + props.start}px);
 `;

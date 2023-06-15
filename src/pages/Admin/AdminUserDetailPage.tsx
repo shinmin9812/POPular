@@ -65,6 +65,11 @@ const Container = styled.div`
     gap: 10px;
   }
 
+  .phone-number {
+    font-weight: 600;
+    font-size: 20px;
+  }
+
   .allow-noti {
     padding: 10px;
     background-color: #686868;
@@ -108,6 +113,7 @@ const AdminUserDetailPage = () => {
                 <strong>Following</strong> {user.following.length}
               </div>
             </div>
+            <div className="phone-number">{user.phone_number}</div>
             <div className="category">
               {user.interested_category.map((item) => (
                 <Tag key={item}>{item}</Tag>

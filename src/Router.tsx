@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/common/Layout';
 import HomePage from './pages/Homepage';
-import { CLIENT_PATH, API_PATH } from './constants/path';
+import { CLIENT_PATH } from './constants/path';
 import MapPage from './pages/MapPage';
 import SearchPage from './pages/SearchPage';
 import CommunityPage from './pages/CommunityPage';
@@ -30,30 +30,9 @@ import AdminUserStatisticsPage from './pages/Admin/AdminUserStatisticsPage';
 import AdminUserDetailPage from './pages/Admin/AdminUserDetailPage';
 import AdminUserEditPage from './pages/Admin/AdminUserEditPage';
 import AdminUserDeletePage from './pages/Admin/AdminUserDeletePage';
-import { useEffect, useState } from 'react';
-import { User } from './types/user';
-import PrivateRoute from './PrivateRoute';
-import callApi from './utils/callApi';
+import AuthChecker from './AuthChecker';
 
 const Router = () => {
-  const [userData, setUserData] = useState<User>();
-  const getUserInfo = async () => {
-    try {
-      const response = await callApi('GET', API_PATH.AUTH.GET.PROFILE);
-      if (response.ok) {
-        const data = await response.json();
-        setUserData(data);
-        return;
-      } else return;
-    } catch (err: any) {
-      throw new Error(err);
-    }
-  };
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -71,62 +50,49 @@ const Router = () => {
           <Route path={CLIENT_PATH.STORE_DETAIL} element={<StoreDetailPage />}></Route>
           <Route path={CLIENT_PATH.USER_RECENT} element={<RecentListPage />}></Route>
 
-          <Route
-            path={CLIENT_PATH.WRITE}
-            element={<PrivateRoute userData={userData} component={<WritePostPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_SCRAP}
-            element={<PrivateRoute userData={userData} component={<ScrapPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_NOTIFICATIONS}
-            element={<PrivateRoute userData={userData} component={<NotificationsPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_POSTS}
-            element={<PrivateRoute userData={userData} component={<MyPostPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_COMMENTS}
-            element={<PrivateRoute userData={userData} component={<MyCommentPage />} />}
-          />
-          <Route
-            path={CLIENT_PATH.USER_UPDATE}
-            element={<PrivateRoute userData={userData} component={<UserUpdatePage />} />}
-          />
+          <Route element={<AuthChecker />}>
+            <Route path={CLIENT_PATH.WRITE} element={<WritePostPage />} />
+            <Route path={CLIENT_PATH.USER_SCRAP} element={<ScrapPage />} />
+            <Route path={CLIENT_PATH.USER_POSTS} element={<MyPostPage />} />
+            <Route path={CLIENT_PATH.USER_NOTIFICATIONS} element={<NotificationsPage />} />
+            <Route path={CLIENT_PATH.USER_POSTS} element={<MyPostPage />} />
+            <Route path={CLIENT_PATH.USER_COMMENTS} element={<MyCommentPage />} />
+            <Route path={CLIENT_PATH.USER_UPDATE} element={<UserUpdatePage />} />
+          </Route>
         </Route>
 
-        <Route element={<AdminLayout />}>
-          <Route path={CLIENT_PATH.ADMIN} element={<AdminPage />} />
-          <Route path={CLIENT_PATH.ADMIN_STORE.STATISTICS} element={<AdminStoreStatisticsPage />}>
-            <Route
-              path={`${CLIENT_PATH.ADMIN_STORE.STATISTICS}/:storeId`}
-              element={<AdminStoreStatisticsDetailPage />}
-            />
-          </Route>
-          <Route path={CLIENT_PATH.ADMIN_STORE.ADD} element={<AdminStoreAddPage />} />
-          <Route path={CLIENT_PATH.ADMIN_STORE.EDIT} element={<AdminStoreEditPage />}>
-            <Route path={`${CLIENT_PATH.ADMIN_STORE.EDIT}/:storeId`} element={<AdminStoreEditPageDetail />} />
-          </Route>
-          <Route path={CLIENT_PATH.ADMIN_STORE.DELETE} element={<AdminStoreDeletePage />} />
+        <Route element={<AuthChecker admin={true} />}>
+          <Route element={<AdminLayout />}>
+            <Route path={CLIENT_PATH.ADMIN} element={<AdminPage />} />
+            <Route path={CLIENT_PATH.ADMIN_STORE.STATISTICS} element={<AdminStoreStatisticsPage />}>
+              <Route
+                path={`${CLIENT_PATH.ADMIN_STORE.STATISTICS}/:storeId`}
+                element={<AdminStoreStatisticsDetailPage />}
+              />
+            </Route>
+            <Route path={CLIENT_PATH.ADMIN_STORE.ADD} element={<AdminStoreAddPage />} />
+            <Route path={CLIENT_PATH.ADMIN_STORE.EDIT} element={<AdminStoreEditPage />}>
+              <Route path={`${CLIENT_PATH.ADMIN_STORE.EDIT}/:storeId`} element={<AdminStoreEditPageDetail />} />
+            </Route>
+            <Route path={CLIENT_PATH.ADMIN_STORE.DELETE} element={<AdminStoreDeletePage />} />
 
-          <Route path={CLIENT_PATH.ADMIN_USER.STATISTICS} element={<AdminUserStatisticsPage />}>
-            <Route path={`${CLIENT_PATH.ADMIN_USER.STATISTICS}/:userId`} element={<AdminUserDetailPage />} />
-          </Route>
-          <Route />
-          <Route path={CLIENT_PATH.ADMIN_USER.ADD} element={<AdminPage />}></Route>
-          <Route path={CLIENT_PATH.ADMIN_USER.EDIT} element={<AdminUserEditPage />}>
-            <Route path={`${CLIENT_PATH.ADMIN_USER.EDIT}/:userId`} element={<AdminUserDetailPage />} />
-          </Route>
-          <Route path={CLIENT_PATH.ADMIN_USER.DELETE} element={<AdminUserDeletePage />} />
+            <Route path={CLIENT_PATH.ADMIN_USER.STATISTICS} element={<AdminUserStatisticsPage />}>
+              <Route path={`${CLIENT_PATH.ADMIN_USER.STATISTICS}/:userId`} element={<AdminUserDetailPage />} />
+            </Route>
+            <Route />
+            <Route path={CLIENT_PATH.ADMIN_USER.ADD} element={<AdminPage />}></Route>
+            <Route path={CLIENT_PATH.ADMIN_USER.EDIT} element={<AdminUserEditPage />}>
+              <Route path={`${CLIENT_PATH.ADMIN_USER.EDIT}/:userId`} element={<AdminUserDetailPage />} />
+            </Route>
+            <Route path={CLIENT_PATH.ADMIN_USER.DELETE} element={<AdminUserDeletePage />} />
 
-          <Route path={CLIENT_PATH.ADMIN_FEED.STATISTICS} element={<AdminPage />} />
-          <Route path={CLIENT_PATH.ADMIN_FEED.EDIT} element={<AdminPage />} />
-          <Route path={CLIENT_PATH.ADMIN_FEED.DELETE} element={<AdminPage />} />
+            <Route path={CLIENT_PATH.ADMIN_FEED.STATISTICS} element={<AdminPage />} />
+            <Route path={CLIENT_PATH.ADMIN_FEED.EDIT} element={<AdminPage />} />
+            <Route path={CLIENT_PATH.ADMIN_FEED.DELETE} element={<AdminPage />} />
 
-          <Route path={CLIENT_PATH.ADMIN_NOTIFICATION.SEND} element={<AdminPage />} />
-          <Route path={CLIENT_PATH.ADMIN_NOTIFICATION.EDIT} element={<AdminPage />} />
+            <Route path={CLIENT_PATH.ADMIN_NOTIFICATION.SEND} element={<AdminPage />} />
+            <Route path={CLIENT_PATH.ADMIN_NOTIFICATION.EDIT} element={<AdminPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

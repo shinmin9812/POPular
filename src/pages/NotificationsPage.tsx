@@ -51,16 +51,6 @@ const MenuListContainer = styled.div`
     display: block;
     width: 200px;
 
-    & > div {
-      width: 200px;
-      position: sticky;
-      top: 100px;
-    }
-    & > a {
-      width: 200px;
-      position: sticky;
-      top: 45px;
-    }
     a,
     div > a,
     div > div {

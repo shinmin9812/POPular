@@ -14,6 +14,7 @@ export interface Post {
   ratings?: number;
   likes: string[];
   reports: string[];
+  createdAt: string;
   updatedAt: string;
   comments: Comment[];
   views: number;

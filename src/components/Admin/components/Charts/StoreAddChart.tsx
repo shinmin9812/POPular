@@ -28,7 +28,7 @@ const StoreAddChart = ({ stores }: Props) => {
 };
 
 const Container = styled.div`
-  width: 400px;
+  width: 100%;
   height: 300px;
 `;
 

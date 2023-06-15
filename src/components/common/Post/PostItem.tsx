@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Post } from '../../../types/post';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
+import dayjs from 'dayjs';
 
 interface Props {
   post: Post;
@@ -19,7 +20,16 @@ const PostItem = ({ post }: Props) => {
           </PostItemCategory>
           <PostItemTitle>{post.title}</PostItemTitle>
           <PostItemBottom>
-            {new Date(post.updatedAt).toISOString().slice(0, 10)} | {post.author.nickname} | 💜 {post.likes.length}
+            <span>{dayjs(post.updatedAt).format('YYYY-MM-DD')} </span>|
+            <div className="info">
+              {typeof post.author === 'object' ? (
+                <>
+                  <span>{post.author.nickname}</span>|<span>💜 {post.likes.length}</span>
+                </>
+              ) : (
+                `💜 ${post.likes.length > 0 ? post.likes.length : '0'}`
+              )}
+            </div>
           </PostItemBottom>
         </PostItemInfo>
         <PostItemImage>
@@ -87,9 +97,16 @@ const PostItemCategory = styled.div`
 `;
 
 const PostItemBottom = styled.div`
+  display: flex;
+  gap: 10px;
   margin-top: 10px;
   font-size: 12px;
   color: var(--color-gray);
+
+  .info {
+    display: flex;
+    gap: 10px;
+  }
 `;
 
 const PostItemTitle = styled.div`

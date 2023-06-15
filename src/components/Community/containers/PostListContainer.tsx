@@ -19,10 +19,8 @@ const PostListItemContainer = () => {
   const dispatch = useAppDispatch();
   const setPageGroup = useCallback((page: number[]) => dispatch(communityActions.setPageGroup(page)), [dispatch]);
   const setTotalPage = useCallback((page: number[]) => dispatch(communityActions.setTotalPage(page)), [dispatch]);
-  const setPage = useCallback((page: number) => dispatch(communityActions.setPage(page)), [dispatch]);
   const postCategory = useParams().category;
-  const { data, isFetching } = useGetFeeds(postCategory);
-
+  const { data, isFetching, isError } = useGetFeeds(postCategory);
   // 필터 하나라도 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDate.use;
   const originalPost: Post[] | undefined = useMemo(() => {
@@ -72,11 +70,9 @@ const PostListItemContainer = () => {
     setPageGroup(newPageGroup);
   }, [page, dividedPost, setPageGroup]);
 
-  useEffect(() => {
-    // 탭 이동 시 페이지 초기화
-    setPage(1);
-  }, [postCategory, setPage]);
-
+  if (isError) {
+    return <></>;
+  }
   return (
     <PostList>
       {isFetching

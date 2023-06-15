@@ -13,6 +13,7 @@ const TabsContainer = () => {
   const dispatch = useAppDispatch();
   const setTab = (tab: string) => dispatch(communityActions.setTab(tab));
   const postCategory = useParams().category;
+  const setPage = (page: number) => dispatch(communityActions.setPage(page));
 
   let currTab: string;
 
@@ -30,6 +31,10 @@ const TabsContainer = () => {
       case 'gather':
         currTab = '모집게시판';
     }
+    if (currTab !== tab) {
+      setPage(1);
+    }
+
     currTab && setTab(currTab);
   }, [postCategory]);
 

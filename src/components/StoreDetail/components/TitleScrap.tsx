@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useQueries, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import * as React from 'react';
 import { getLoginUser } from '../../../api/userApi';
@@ -11,24 +11,34 @@ type Props = {
 
 const Container = styled.button`
   background-color: #ffffff;
+  color: var(--color-main);
+  font-size: 30px;
   cursor: pointer;
 `;
 
 const TitleScrap = React.memo(({ store }: Props) => {
   const [checkScrap, setCheckScrap] = useState<boolean>(false);
 
-  const result = useQueries({
-    queries: [{ queryKey: ['user'], queryFn: () => getLoginUser() }],
+  const {
+    data: user,
+    isLoading: userLoading,
+    refetch,
+  } = useQuery(['user'], () => getLoginUser(), {
+    enabled: !!localStorage.getItem('token'),
   });
-
-  const [userQuery] = result;
-  const { data: user, isLoading: userLoading } = userQuery;
 
   useEffect(() => {
     if (user && store) {
       setCheckScrap(store.scraps.includes(user._id));
     }
   }, [store, user]);
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      console.log('a');
+      refetch();
+    }
+  }, []);
 
   const scrapMutation = useMutation(
     () => {
@@ -58,20 +68,19 @@ const TitleScrap = React.memo(({ store }: Props) => {
   });
 
   function scrapHandler() {
-    scrapMutation.mutate();
-    setCheckScrap(true);
+    checkScrap ? unscrapMutation.mutate() : scrapMutation.mutate();
+    setCheckScrap((prev) => !prev);
   }
 
-  function unscrapHandler() {
-    unscrapMutation.mutate();
-    setCheckScrap(false);
-  }
-
-  if (userLoading) return <div>Loading...</div>;
+  if (userLoading) return <></>;
 
   return (
-    <Container onClick={checkScrap ? unscrapHandler : scrapHandler}>
-      {checkScrap ? <img src="/images/scrap-fill.svg" alt="" /> : <img src="/images/scrap.svg" alt="" />}
+    <Container
+      onClick={() => {
+        scrapHandler();
+      }}
+    >
+      {checkScrap ? <div>★</div> : <div>☆</div>}
     </Container>
   );
 });

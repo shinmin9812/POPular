@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import ReviewList from '../components/ReviewList';
-import { useGetAllReviewFeeds, useGetStoreReviewFeeds } from '../../../api/feedApi';
+import { useGetStoreReviewFeeds } from '../../../api/feedApi';
 
 const Container = styled.section`
   width: 100%;
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const StoreReview = ({ storeId }: Props) => {
-  const { data: posts, isFetching } = useGetStoreReviewFeeds(storeId);
+  const { data: posts } = useGetStoreReviewFeeds(storeId);
 
   console.log(posts);
 

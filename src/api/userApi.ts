@@ -9,8 +9,6 @@ export const getAllUsers = async () => {
 
 export const getUserById = async (userId: string) => {
   const response = await (await fetch(`${API_PATH.USER.GET.BY_ID.replace(':userId', userId)}`)).json();
-
-  console.log(response);
   return response;
 };
 
@@ -22,35 +20,35 @@ export const deleteUsers = async (userIds: string[]): Promise<void> => {
       body: JSON.stringify(userIds),
     });
   } catch (err) {
-    throw new Error('스토어 삭제를 실패하였습니다!');
+    throw new Error('유저 삭제를 실패하였습니다!');
   }
 };
 
 export const getLoginUser = async () => {
-  const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-  return response.json();
+  try {
+    const response = await fetch('http://34.22.81.36:3000/auth/profile', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.json();
+  } catch (err) {
+    return;
+  }
 };
 
 export const useGetAllUsers = () => {
   return useQuery<User[]>(['allUsers'], getAllUsers);
 };
 
-export const useGetUserById = (userId: string, option: object) => {
+export const useGetUserById = (userId: string, option?: object) => {
   return useQuery<User>(['user', userId], () => getUserById(userId), option);
 };
 
-export const useGetLoginuser = () => {
-  return useQuery<User>(['user'], getLoginUser, {
-    onError: (error) => {
-      console.log('로그인 정보를 가져오는 동안 오류가 발생했습니다:', error);
-    },
-  });
+export const useGetLoginuser = (options?: object) => {
+  return useQuery<User>(['user'], getLoginUser, options);
 };
 
 export const useDeleteUsers = (userIds: string[], option?: object) => {

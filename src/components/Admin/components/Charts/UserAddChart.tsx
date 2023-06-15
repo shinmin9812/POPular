@@ -28,7 +28,7 @@ const UserAddChart = ({ users }: Props) => {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Line type="monotone" dataKey={LINE_KEY} stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey={LINE_KEY} stroke="#b71e1e" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     </Container>
