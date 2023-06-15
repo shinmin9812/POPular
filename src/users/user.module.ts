@@ -18,10 +18,10 @@ import { FeedsModule } from 'src/feeds/feed.module';
 		MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
 		forwardRef(() => CommentsModule),
 		forwardRef(() => NotificationsModule),
-		forwardRef(() => FeedsModule)
+		forwardRef(() => FeedsModule),
 	],
 	controllers: [UserController],
 	providers: [UserService],
 	exports: [UserService],
 })
-export class UserModule { }
+export class UserModule {}

@@ -183,7 +183,7 @@ export class StoreRequestDto {
 
 	@ValidateNested()
 	@ApiProperty({
-		example: '{ type: Point, coordinates: [127.6346, 34.1245](경도, 위도 순) }',
+		example: '{ type: Point, coordinates: [127.6346, 34.1245] }',
 		description: '팝업 스토어 위치 좌표',
 		required: true,
 	})

@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -15,14 +16,16 @@ export class AuthGuard implements CanActivate {
 	async canActivate(context: ExecutionContext): Promise<boolean> {
 		const request = context.switchToHttp().getRequest();
 		const token = this.extractTokenFromHeader(request);
-		if (token) {
+		try {
 			const payload = await this.jwtService.verifyAsync(token, {
 				secret: process.env.JWT_SECRET_KEY,
 			});
 			request['user'] = payload;
 			return true;
-		} else {
-			throw new UnauthorizedException('토큰이 유효하지 않았습니다.');
+		} catch (err) {
+			if (err instanceof jwt.TokenExpiredError) {
+				throw new UnauthorizedException('JWT 토큰이 만료되었습니다.');
+			}
 		}
 	}
 

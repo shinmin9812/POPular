@@ -346,25 +346,27 @@ export class FeedsService {
 	}
 
 	async deleteFeed(ids: string[]): Promise<void> {
-    try {
-        const feeds: Feed[] = await this.feedModel.find({ _id: { $in: ids }});
-        if(feeds.length > 0){
-            let commentsToDelete: string[] = [];
-            feeds.forEach((feed: Feed) => {
-                feed.comments.forEach((comment) => {
-                    commentsToDelete.push(comment.toString());
-                });
-                this.commentsService.deleteComment(commentsToDelete);
-            });
-        }
-        const deleteResult = await this.feedModel.deleteMany({ _id: { $in: ids }}).exec();
-        if (deleteResult.deletedCount === 0) {
-            throw new NotFoundException(
-                `해당 아이디를 가진 글들을 찾지 못했습니다.`,
-            );
-        }
-    } catch (err) {
-        throw new InternalServerErrorException('글 삭제에 실패하였습니다.');
-    }
-}
+		try {
+			const feeds: Feed[] = await this.feedModel.find({ _id: { $in: ids } });
+			if (feeds.length > 0) {
+				let commentsToDelete: string[] = [];
+				feeds.forEach((feed: Feed) => {
+					feed.comments.forEach(comment => {
+						commentsToDelete.push(comment.toString());
+					});
+					this.commentsService.deleteComment(commentsToDelete);
+				});
+			}
+			const deleteResult = await this.feedModel
+				.deleteMany({ _id: { $in: ids } })
+				.exec();
+			if (deleteResult.deletedCount === 0) {
+				throw new NotFoundException(
+					`해당 아이디를 가진 글들을 찾지 못했습니다.`,
+				);
+			}
+		} catch (err) {
+			throw new InternalServerErrorException('글 삭제에 실패하였습니다.');
+		}
+	}
 }
