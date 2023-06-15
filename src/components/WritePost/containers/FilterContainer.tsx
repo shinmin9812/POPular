@@ -36,7 +36,7 @@ const FilterContainer = () => {
     return <div></div>;
   } else {
     return (
-      <FilterBox width={100}>
+      <FilterBox>
         <Filter
           value={categoryFilterValue.value}
           onChange={(e) => {

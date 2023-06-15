@@ -3,16 +3,12 @@ import PenIcon from '../../common/Icons/PenIcon';
 import { Link } from 'react-router-dom';
 import { CLIENT_PATH } from '../../../constants/path';
 
-const PenIconWrap = styled.span`
-  margin-left: 5px;
-`;
-
 const Button = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 25%;
+  width: 28%;
   height: 39px;
   margin-left: 10px;
   background-color: var(--color-sub);
@@ -22,14 +18,20 @@ const Button = styled.button`
   margin-top: 10px;
   cursor: pointer;
 
+  @media (max-width: 768px) {
+    width: fit-content;
+  }
   a {
     font-size: 14px;
     color: var(--color-white);
     width: 100%;
   }
 
-  + span {
-    margin-left: 10px;
+  span {
+    margin-right: 10px;
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 `;
 
@@ -38,10 +40,8 @@ const WriteButton = () => {
   return (
     <Button>
       <Link to={token ? CLIENT_PATH.WRITE : CLIENT_PATH.LOGIN}>
-        글쓰기
-        <PenIconWrap>
-          <PenIcon />
-        </PenIconWrap>
+        <span>글쓰기</span>
+        <PenIcon />
       </Link>
     </Button>
   );

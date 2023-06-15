@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import ReCommentArrowIcon from '../../common/Icons/ReCommentArrowIcon';
-import XmarkIcon from '../../common/Icons/XmarkIcon';
 import {
   CommentWrap,
   CommentInfoWrap,
@@ -80,7 +79,7 @@ const ReComment = ({
                   commentDelete(reComment._id);
                 }}
               >
-                <XmarkIcon />
+                x
               </CommentDeleteButton>
             ) : (
               <CommentDeleteButton></CommentDeleteButton>

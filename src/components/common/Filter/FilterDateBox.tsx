@@ -10,10 +10,6 @@ const DateBoxContainer = styled.div`
   right: 0;
   position: absolute;
   z-index: 10;
-
-  @media (max-width: 620px) {
-    right: -70%;
-  }
 `;
 
 const DateBoxWrap = styled.div`

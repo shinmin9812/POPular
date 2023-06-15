@@ -31,7 +31,7 @@ const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
     const response = await callApi('DELETE', API_PATH.POST.DELETE, JSON.stringify([postId ? postId : '']));
     const result = await response.json();
     alert(result.message);
-    navigate('/community/board');
+    navigate(-1);
   }
 
   const isAuthor = post && UserData?._id === post.author._id;

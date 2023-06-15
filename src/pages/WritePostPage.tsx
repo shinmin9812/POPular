@@ -21,8 +21,7 @@ const RatingAndRegisterWrap = styled.div`
   width: fit-content;
   margin-left: auto;
   margin-top: 20px;
-  justify-content: flex-end;
-  gap: 20px;
+  justify-content: space-between;
   width: 100%;
 `;
 

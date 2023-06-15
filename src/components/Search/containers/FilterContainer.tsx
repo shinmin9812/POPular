@@ -28,7 +28,7 @@ const FilterContainer = () => {
   // redux 기간 설정 전 validation을 위한 상태
   const [endDateTarget, setEndDateTarget] = useState(durationFilterValue.endDate);
   return (
-    <FilterBox width={100}>
+    <FilterBox>
       <Filter
         value={categoryFilterValue.value}
         onChange={(e) => {

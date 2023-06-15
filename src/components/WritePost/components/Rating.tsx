@@ -8,10 +8,18 @@ const RatingWrap = styled.div`
 
 const TitleNameWrap = styled.span`
   font-size: var(--font-medium);
+  @media (max-width: 500px) {
+    font-size: 15px;
+  }
 `;
 
 const CursorBox = styled.div`
   cursor: pointer;
+  @media (max-width: 500px) {
+    svg {
+      width: 20px;
+    }
+  }
 `;
 
 const Rating = ({ children }: { children: JSX.Element }) => {

@@ -9,27 +9,25 @@ const Li = styled.li`
 `;
 
 const ChoiceButton = styled.button<{ choice: boolean }>`
-  position: absolute;
-  right: 0;
   padding: 0 5px;
   color: var(--color-white);
   background-color: ${(props) => (props.choice ? 'var(--color-gray)' : 'var(--color-sub)')};
   height: 30px;
   font-size: 12px;
-  width: fit-content;
+  width: 40px;
   margin-bottom: 20px;
   margin-right: 20px;
   border-radius: 8px;
   cursor: pointer;
   @media (max-width: 450px) {
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
     height: 30px;
     width: 40px;
   }
 `;
 
 const Label = styled.label`
-  width: 80%;
+  width: 85%;
 `;
 
 const ChoiceStoreItem = ({

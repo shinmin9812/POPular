@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import CommentInputContainer from '../containers/CommentInputContainer';
 import ReComment from './ReCommentList';
-import XmarkIcon from '../../common/Icons/XmarkIcon';
 import { Link } from 'react-router-dom';
 import { CLIENT_PATH } from '../../../constants/path';
 import dayjs from 'dayjs';
@@ -103,6 +102,15 @@ export const CommentDeleteButton = styled.button`
   background: none;
   width: 78px;
   justify-content: center;
+  color: var(--color-gray);
+  cursor: pointer;
+
+  :hover {
+    opacity: 1;
+    color: var(--color-red);
+    transform: scale(1.5);
+  }
+  transition: all 0.3s ease;
 `;
 
 const ReCommentInputWrap = styled.div`
@@ -150,7 +158,7 @@ const CommentItem = ({
               commentDelete(comment._id);
             }}
           >
-            <XmarkIcon />
+            x
           </CommentDeleteButton>
         ) : (
           <CommentDeleteButton></CommentDeleteButton>

@@ -18,10 +18,9 @@ const Duration = styled.button`
   font-weight: 700;
   cursor: pointer;
 
-  @media (max-width: 520px) {
+  @media (max-width: 768px) {
     padding: 6px;
-    font-size: var(--font-micro);
-    text-align: start;
+    font-size: 12px;
   }
 `;
 

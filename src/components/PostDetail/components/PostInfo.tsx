@@ -113,7 +113,6 @@ const PostInfo = ({
   follower,
   views,
 }: PostInfoType) => {
-  console.log(updatedAt);
   return (
     <PostInfoWrap>
       <Link to={`/community/board/${boardType}`} className="board">

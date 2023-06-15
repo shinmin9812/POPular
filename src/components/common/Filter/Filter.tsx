@@ -21,8 +21,7 @@ const Select = styled.select<{ width: number }>`
   }
 
   @media (max-width: 768px) {
-    text-align: left;
-    font-size: var(--font-micro);
+    font-size: 12px;
     padding: 6px;
   }
 `;

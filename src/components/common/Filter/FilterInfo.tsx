@@ -24,6 +24,7 @@ const CancelFilter = styled.button`
   background: none;
   color: var(--color-red);
   cursor: pointer;
+  margin-left: 5px;
 `;
 
 const FilterInfo = ({
