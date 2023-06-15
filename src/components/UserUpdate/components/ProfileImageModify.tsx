@@ -57,7 +57,7 @@ const ProfileImageModify = ({ user }: Props) => {
       });
 
       if (response.ok) {
-        // const data = await response.json();
+        const data = await response.json();
         alert('회원정보 수정이 완료되었습니다.');
       } else {
         throw new Error('회원정보 수정에 실패했습니다.');

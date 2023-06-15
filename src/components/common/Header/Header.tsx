@@ -7,6 +7,11 @@ import HeaderSearchBox from './HeaderSearchBox';
 import HeaderProfile from './HeaderProfile';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../Hooks/useSelectorHooks';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { useGetLoginuser } from '../../../api/userApi';
+import { setUser } from '../../User/UserSlice';
+import { User } from '../../../types/user';
 const Container = styled.header`
   position: fixed;
   top: 0;
@@ -154,9 +159,19 @@ const Container = styled.header`
 const Header = () => {
   const isHome = useLocation().pathname === CLIENT_PATH.HOME;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state: RootState) => state.UserSlice.user);
 
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
+
+  const { refetch } = useGetLoginuser({
+    enabled: false,
+    onSuccess: (data: User) => {
+      if (data._id) dispatch(setUser(data));
+    },
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -170,6 +185,12 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [position]);
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      refetch();
+    }
+  }, []);
 
   return (
     <Container className={`${visible ? '' : 'hide'}${position === 0 ? 'top' : ''}`}>
@@ -191,18 +212,26 @@ const Header = () => {
             <NavLink to={CLIENT_PATH.BOARD_ALL} className={({ isActive }) => (isActive ? 'active' : '')}>
               커뮤니티
             </NavLink>
-            <NavLink to={'/admin'} target="_blank">
-              관리자
-            </NavLink>
+            {user?.role === 'admin' && (
+              <NavLink to={'/admin'} target="_blank">
+                관리자
+              </NavLink>
+            )}
           </div>
         </nav>
         <div className="sub-links">
           <HeaderSearchBox />
-          <HeaderProfile />
+          {user ? <HeaderProfile src={user.profile} /> : <Login to="/login">LOGIN</Login>}
         </div>
       </div>
     </Container>
   );
 };
+
+const Login = styled(NavLink)`
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--color-main);
+`;
 
 export default Header;
