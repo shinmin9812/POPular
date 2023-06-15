@@ -1,35 +1,15 @@
 import UpdateAndDelete from '../components/UpdateAndDeleteButtons';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
+import { useAppDispatch, useAppSelector } from '../../../Hooks/useSelectorHooks';
 import { WritePostSliceActions, isUpdate } from '../../WritePost/WritePostSlice';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { Post } from '../../../types/post';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
-import { User } from '../../../types/user';
-
-const getUserInfo = async (setUserData: React.Dispatch<React.SetStateAction<User | undefined>>) => {
-  try {
-    const response = await callApi('GET', API_PATH.AUTH.GET.PROFILE);
-    if (response.ok) {
-      const data = await response.json();
-      setUserData(data);
-      return;
-    } else return;
-  } catch (err: any) {
-    throw new Error(err);
-  }
-};
 
 const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
   const navigate: NavigateFunction = useNavigate();
-
-  const [userData, setUserData] = useState<User>();
-  useEffect(() => {
-    getUserInfo(setUserData);
-  }, []);
-
+  const UserData = useAppSelector((state) => state.UserSlice.user);
   const dispatch = useAppDispatch();
   const setTab = (tab: string) => dispatch(WritePostSliceActions.setTab(tab));
   const setPostContent = (content: string) => {
@@ -54,7 +34,7 @@ const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
     navigate('/community/board');
   }
 
-  const isAuthor = post && userData?._id === post.author._id;
+  const isAuthor = post && UserData?._id === post.author._id;
 
   const deletePost = () => {
     if (isAuthor) {

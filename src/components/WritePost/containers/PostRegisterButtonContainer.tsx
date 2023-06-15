@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { API_PATH, CLIENT_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
-import { User } from '../../../types/user';
 
 export type writePostBody = {
   ratings?: number | undefined;
@@ -17,22 +16,10 @@ export type writePostBody = {
   content: string;
 };
 
-const getUserInfo = async (setUserData: React.Dispatch<React.SetStateAction<User | undefined>>) => {
-  try {
-    const response = await callApi('GET', API_PATH.AUTH.GET.PROFILE);
-    if (response.ok) {
-      const data = await response.json();
-      setUserData(data);
-      return;
-    } else return;
-  } catch (err: any) {
-    throw new Error(err);
-  }
-};
-
 // 게시글 생성 스키마 확인
 const PostRegisterButtonContainer = () => {
   const navigate: NavigateFunction = useNavigate();
+  const UserData = useAppSelector((state) => state.UserSlice.user);
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const postTitle = useAppSelector((state) => state.WritePostSlice.postTitle);
   const postContent = useAppSelector((state) => state.WritePostSlice.postContent);
@@ -52,16 +39,13 @@ const PostRegisterButtonContainer = () => {
   const setIsUpdate = (isUpdate: { use: boolean; id: string }) => {
     return dispatch(WritePostSliceActions.setIsUpdate(isUpdate));
   };
-  useEffect(() => {
-    getUserInfo(setUserData);
-  }, []);
-  const [userData, setUserData] = useState<User>();
+
   const [gone, setGone] = useState(false);
   const currTab = tab === '자유게시판' ? 'free' : tab === '후기게시판' ? 'review' : 'gather';
   const register = async () => {
     const data: writePostBody = {
       title: postTitle,
-      author: userData?._id,
+      author: UserData?._id,
       board: currTab,
       content: postContent,
       ...(currTab !== 'free' && { store_id: choiceStoreId }),

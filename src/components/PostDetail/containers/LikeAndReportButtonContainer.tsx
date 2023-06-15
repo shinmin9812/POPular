@@ -5,29 +5,15 @@ import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks'
 import { PostDetailActions } from '../PostDetailSlice';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
-import { User } from '../../../types/user';
 
 export type LikeAndReportBodyType = {
   like?: string[];
   report?: string[];
 };
 
-const getUserInfo = async (setUserData: React.Dispatch<React.SetStateAction<User | undefined>>) => {
-  try {
-    const response = await callApi('GET', API_PATH.AUTH.GET.PROFILE);
-    if (response.ok) {
-      const data = await response.json();
-      setUserData(data);
-      return;
-    } else return;
-  } catch (err: any) {
-    throw new Error(err);
-  }
-};
-
 const LikesAndReportsContainer = () => {
   const postId = useParams().postId;
-  const [userData, setUserData] = useState<User>();
+  const UserData = useAppSelector((state) => state.UserSlice.user);
   const likes = useAppSelector((state) => state.PostDetailSlice.likes);
   const reports = useAppSelector((state) => state.PostDetailSlice.reports);
   const dispatch = useAppDispatch();
@@ -42,15 +28,16 @@ const LikesAndReportsContainer = () => {
   const [checkReport, setCheckReport] = useState<boolean>();
 
   useEffect(() => {
-    getUserInfo(setUserData);
-  }, []);
-  useEffect(() => {
-    userData && setCheckLike(likes.includes(userData._id));
-    userData && setCheckReport(reports.includes(userData._id));
-  }, [userData, likes, reports]);
+    UserData && setCheckLike(likes.includes(UserData._id));
+    UserData && setCheckReport(reports.includes(UserData._id));
+  }, [UserData, likes, reports]);
 
   async function FetchData(isLike: string) {
-    const data = { [isLike]: userData?._id };
+    if (!UserData) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+    const data = { [isLike]: UserData._id };
     const response = await callApi(
       'PATCH',
       `${API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : '')}/${isLike}`,
