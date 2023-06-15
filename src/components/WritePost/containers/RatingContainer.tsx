@@ -3,6 +3,7 @@ import { WritePostSliceActions } from '../WritePostSlice';
 import Rating from '../components/Rating';
 import { useState } from 'react';
 import StarIcon from '../../common/Icons/StarIcon';
+
 const RatingContainer = () => {
   const tab = useAppSelector((state) => state.WritePostSlice.tab);
   const dispatch = useAppDispatch();

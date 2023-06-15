@@ -18,13 +18,12 @@ const FlexDiv = styled.div`
 `;
 const RatingAndRegisterWrap = styled.div`
   display: flex;
-  width: 50%;
+  width: fit-content;
   margin-left: auto;
-  justify-content: space-between;
+  margin-top: 20px;
+  justify-content: flex-end;
+  gap: 20px;
   width: 100%;
-  @media (min-width: 768px) {
-    width: 50%;
-  }
 `;
 
 const WritePostPage = () => {
@@ -37,16 +36,16 @@ const WritePostPage = () => {
       <TabsContainer />
       <PostTitleContainer />
       <PostContentContainer />
-      <RatingAndRegisterWrap>
-        <RatingContainer />
-        <PostRegisterButtonContainer />
-      </RatingAndRegisterWrap>
       {tab !== '자유게시판' && (
         <FlexDiv>
           <ChoiceStoreBoxContainer />
           {selectedStoreId && <SelectedStoreItem storeId={selectedStoreId} />}
         </FlexDiv>
       )}
+      <RatingAndRegisterWrap>
+        <RatingContainer />
+        <PostRegisterButtonContainer />
+      </RatingAndRegisterWrap>
     </Container>
   );
 };

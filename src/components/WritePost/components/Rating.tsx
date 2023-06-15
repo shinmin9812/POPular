@@ -7,7 +7,6 @@ const RatingWrap = styled.div`
 `;
 
 const TitleNameWrap = styled.span`
-  margin: 0 10px;
   font-size: var(--font-medium);
 `;
 

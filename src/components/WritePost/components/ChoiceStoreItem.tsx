@@ -1,15 +1,22 @@
 import styled from 'styled-components';
 
 const Li = styled.li`
+  width: 100%;
+  position: relative;
   display: flex;
   align-items: flex-end;
+  width: 100%;
 `;
 
 const ChoiceButton = styled.button<{ choice: boolean }>`
+  position: absolute;
+  right: 0;
+  padding: 0 5px;
   color: var(--color-white);
   background-color: ${(props) => (props.choice ? 'var(--color-gray)' : 'var(--color-sub)')};
   height: 30px;
-  width: 60px;
+  font-size: 12px;
+  width: fit-content;
   margin-bottom: 20px;
   margin-right: 20px;
   border-radius: 8px;
