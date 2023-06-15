@@ -169,7 +169,7 @@ const Header = () => {
   const { refetch } = useGetLoginuser({
     enabled: false,
     onSuccess: (data: User) => {
-      dispatch(setUser(data));
+      if (data._id) dispatch(setUser(data));
     },
   });
 
