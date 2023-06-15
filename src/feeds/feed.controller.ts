@@ -88,6 +88,15 @@ export class FeedsController {
 		return await this.feedsService.getAllFreeFeeds();
 	}
 
+	@ApiOperation({ summary: '스토어별 후기 게시판 조회' })
+	@ApiOkResponse({
+		description: '스토어별 후기 게시판 조회 성공',
+	})
+	@Get('review/store/:storeId')
+	async getFeedsByStore(@Param('storeId') id: string): Promise<Feed[]> {
+		return await this.feedsService.getFeedsByStore(id);
+	}
+
 	@ApiOperation({ summary: 'ID로 게시글 조회' })
 	@ApiOkResponse({
 		description: 'ID로 게시글 조회 성공',
