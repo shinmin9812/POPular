@@ -38,16 +38,16 @@ const CommentItem = ({ parentId, comment, date }: Props) => {
       {error || !feedTitle ? (
         <Blank>삭제된 글입니다.</Blank>
       ) : (
-        <Link to={`/community/post/${parentId}`}>
-          <Container>
+        <Container>
+          <Link to={`/community/post/${parentId}`}>
             <CommentHeader>
               <BoardTypeTag boardType={board} />
               <PostTitle>{feedTitle}</PostTitle>
             </CommentHeader>
             <CommentContent>{comment}</CommentContent>
             <CommentDate>{date}</CommentDate>
-          </Container>
-        </Link>
+          </Link>
+        </Container>
       )}
     </>
   );
@@ -57,10 +57,8 @@ export default CommentItem;
 
 const Blank = styled.div`
   color: var(--color-gray);
-  width: 95%;
-  height: 120px;
-  padding: 10px 20px;
-  margin: 10px 10px;
+  height: 130px;
+  padding: 20px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,11 +68,11 @@ const Blank = styled.div`
   border-radius: 8px;
 `;
 
-const Container = styled.article`
-  width: 95%;
-  height: 120px;
-  padding: 15px 20px;
-  margin: 10px 10px;
+const Container = styled.div`
+  height: 130px;
+  box-sizing: border-box;
+  padding: 20px 20px;
+  border-bottom: 1px solid var(--color-light-gray);
 
   transition: all 0.3s ease 0s;
   box-shadow: rgb(238, 238, 238) 1px 1px 10px;
@@ -83,6 +81,12 @@ const Container = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  &:hover {
+    cursor: pointer;
+    transform: translateY(-4px);
+    background-color: #fff;
+    filter: brightness(0.97);
+  }
 `;
 
 const CommentHeader = styled.div`
@@ -105,7 +109,7 @@ const CommentContent = styled.h2`
   text-overflow: ellipsis;
   width: 100%;
   height: 20px;
-  margin: 6px 4px;
+  margin: 14px 4px;
 `;
 
 const CommentDate = styled.p`

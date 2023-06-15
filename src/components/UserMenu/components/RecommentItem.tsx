@@ -63,10 +63,8 @@ export default RecommentItem;
 
 const Blank = styled.div`
   color: var(--color-gray);
-  width: 95%;
-  height: 120px;
-  padding: 10px 20px;
-  margin: 10px 10px;
+  height: 130px;
+  padding: 20px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,16 +75,25 @@ const Blank = styled.div`
 `;
 
 const Container = styled.article`
-  width: 95%;
-  height: 120px;
-  padding: 10px 20px;
-  margin: 10px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  height: 130px;
+  box-sizing: border-box;
+  padding: 20px 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--color-light-gray);
+
   transition: all 0.3s ease 0s;
   box-shadow: rgb(238, 238, 238) 1px 1px 10px;
   border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &:hover {
+    cursor: pointer;
+    transform: translateY(-4px);
+    background-color: #fff;
+    filter: brightness(0.97);
+  }
 `;
 
 const CommentHeader = styled.div`
@@ -124,7 +131,7 @@ const RecommentContent = styled.div`
     font-size: var(--font-small);
     color: var(--color-light-black);
     padding: 2px 4px 4px;
-    margin-left: 4px;
+    margin-left: 8px 0 0;
   }
 
   h2 {
@@ -133,12 +140,12 @@ const RecommentContent = styled.div`
     overflow: hidden;
     width: 100%;
     height: 20px;
-    margin: 4px;
+    margin: 8px 4px 0;
   }
 `;
 
 const CommentDate = styled.p`
   text-align: end;
   color: var(--color-gray);
-  margin: 4px 0;
+  margin: 0;
 `;
