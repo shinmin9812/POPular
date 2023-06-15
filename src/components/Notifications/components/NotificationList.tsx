@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 import styled from 'styled-components';
 import AdNotificationItem from './AdNotificationItem';
 import CommentNotificationItem from './CommentNotificationItem';
@@ -9,21 +11,24 @@ import RecommentNotificationItem from './RecommentNotificationItem';
 const NotificationList = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
+  const userData = useSelector((state: RootState) => state.UserSlice.user);
+
   const getUserNotification = async () => {
-    const res = await fetch('http://34.22.81.36:3000/notifications/user/648490f8dde175dd0d146256', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    const data = await res.json();
-    setNotifications(data.reverse());
+    if (userData) {
+      const res = await fetch(`http://34.22.81.36:3000/notifications/user/${userData._id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      const data = await res.json();
+      setNotifications(data.reverse());
+    }
   };
   useEffect(() => {
     getUserNotification();
-    // setNotifications(notificationData);
-  }, []);
+  }, [userData]);
   return (
     <NotificationListContainer>
       {notifications &&

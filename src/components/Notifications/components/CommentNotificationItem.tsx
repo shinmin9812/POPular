@@ -17,7 +17,7 @@ const handleChecked = async (checked: boolean, id: string) => {
     fetch(`http://34.22.81.36:3000/notifications/${id}`, {
       method: 'PATCH',
       headers: {
-        'content-type': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         checked: true,
@@ -30,33 +30,36 @@ const RemoveNotification = async (id: string) => {
   fetch(`http://34.22.81.36:3000/notifications/${id}`, {
     method: 'DELETE',
     headers: {
-      'Content-type': 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
+  location.reload();
 };
 
 const CommentNotificationItem = ({ id, commentData, board, checked }: Props) => {
   return (
-    <>
+    <Container checked={checked}>
       {commentData ? (
-        <Container checked={checked}>
+        <>
           <Link to={`/community/post/${commentData.parent.id}`} onClick={() => handleChecked(checked, id)}>
             <Item>
               <CommentIconMini />
               <Content>
                 <Message>{commentData.author.nickname}님이 댓글을 작성했습니다.</Message>
                 <CommentContainer>
-                  <BoardTypeTag boardType={board} />
+                  <BoardTypeTag boardType={board as BoardTypes} />
                   <CommentContent>{commentData.content}</CommentContent>
                 </CommentContainer>
               </Content>
             </Item>
           </Link>
           <RemoveButton onClick={() => RemoveNotification(id)}>×</RemoveButton>
-        </Container>
-      ) : null}
-    </>
+        </>
+      ) : (
+        <ErrorItem>삭제된 항목입니다.</ErrorItem>
+      )}
+    </Container>
   );
 };
 
@@ -127,4 +130,10 @@ const CommentContent = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const ErrorItem = styled.p`
+  color: var(--color-gray);
+  width: 100%;
+  text-align: center;
 `;

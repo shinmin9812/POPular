@@ -31,13 +31,14 @@ const RemoveNotification = async (id: string) => {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
+  location.reload();
 };
 
 const AdNotificationItem = ({ id, storeData, checked }: Props) => {
   return (
-    <>
+    <Container checked={checked}>
       {storeData ? (
-        <Container checked={checked}>
+        <>
           <Link to={`/store/${storeData._id}`} onClick={() => handleChecked(checked, id)}>
             <ItemContainer>
               <StoreIconMini />
@@ -45,9 +46,11 @@ const AdNotificationItem = ({ id, storeData, checked }: Props) => {
             </ItemContainer>
           </Link>
           <RemoveButton onClick={() => RemoveNotification(id)}>×</RemoveButton>
-        </Container>
-      ) : null}
-    </>
+        </>
+      ) : (
+        <ErrorItem>삭제된 항목입니다.</ErrorItem>
+      )}
+    </Container>
   );
 };
 
@@ -102,5 +105,11 @@ const RemoveButton = styled.span`
     color: var(--color-red);
     transform: scale(1.5);
   }
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
+`;
+
+const ErrorItem = styled.p`
+  color: var(--color-gray);
+  width: 100%;
+  text-align: center;
 `;
