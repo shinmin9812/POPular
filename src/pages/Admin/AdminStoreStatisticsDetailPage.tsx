@@ -18,7 +18,6 @@ const Container = styled.div`
 const AdminStoreStatisticsDetailPage = () => {
   const { storeId } = useParams();
   const { data } = useGetStoreById(storeId!, { cacheTime: 0 });
-
   return (
     <>
       {data ? (
