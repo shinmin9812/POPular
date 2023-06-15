@@ -67,9 +67,9 @@ const PostRegisterButtonContainer = () => {
     try {
       let response: Response;
       if (isUpdate.use) {
-        response = await callApi('PATCH', API_PATH.POST.PUT.replace(':postId', isUpdate.id), data);
+        response = await callApi('PATCH', API_PATH.POST.PUT.replace(':postId', isUpdate.id), JSON.stringify(data));
       } else {
-        response = await callApi('POST', API_PATH.POST.POST, data);
+        response = await callApi('POST', API_PATH.POST.POST, JSON.stringify(data));
       }
       if (response.ok) {
         navigate(CLIENT_PATH.BOARD.replace(':category', currTab));

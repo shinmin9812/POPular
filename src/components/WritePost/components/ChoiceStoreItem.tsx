@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const Li = styled.li`
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
 `;
 
 const ChoiceButton = styled.button<{ choice: boolean }>`
@@ -14,6 +15,15 @@ const ChoiceButton = styled.button<{ choice: boolean }>`
   margin-right: 20px;
   border-radius: 8px;
   cursor: pointer;
+  @media (max-width: 450px) {
+    font-size: var(--font-micro);
+    height: 30px;
+    width: 40px;
+  }
+`;
+
+const Label = styled.label`
+  width: 80%;
 `;
 
 const ChoiceStoreItem = ({
@@ -29,7 +39,7 @@ const ChoiceStoreItem = ({
 }) => {
   return (
     <Li>
-      <label htmlFor={storeId}>{children}</label>
+      <Label htmlFor={storeId}>{children}</Label>
       <ChoiceButton choice={choice} onClick={onClick} id={storeId}>
         {choice ? '취소' : '선택'}
       </ChoiceButton>

@@ -8,10 +8,6 @@ import { PostDetailActions } from '../PostDetailSlice';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
 
-export type CommentDeleteBody = {
-  ids: string[];
-};
-
 const CommentItemContainer = ({ comment }: { comment: Comment }) => {
   const [reCommentInput, setReCommentInput] = useState(false);
   const UserData = useAppSelector((state) => state.UserSlice.user);
@@ -22,7 +18,7 @@ const CommentItemContainer = ({ comment }: { comment: Comment }) => {
   const postId = useParams().postId;
 
   const commentDeleteApi = async (commentId: string) => {
-    const response = await callApi('DELETE', API_PATH.COMMENT.DELETE, { ids: [commentId] });
+    const response = await callApi('DELETE', API_PATH.COMMENT.DELETE, JSON.stringify([commentId]));
     const result = await response.json();
     alert(result.message);
     getComments(postId, setComments);

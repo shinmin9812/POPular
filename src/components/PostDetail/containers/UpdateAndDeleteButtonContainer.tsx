@@ -28,7 +28,7 @@ const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
   const postId = useParams().postId;
 
   async function DeleteFetchData() {
-    const response = await callApi('DELETE', API_PATH.POST.DELETE, { ids: [postId ? postId : ''] });
+    const response = await callApi('DELETE', API_PATH.POST.DELETE, JSON.stringify([postId ? postId : '']));
     const result = await response.json();
     alert(result.message);
     navigate('/community/board');

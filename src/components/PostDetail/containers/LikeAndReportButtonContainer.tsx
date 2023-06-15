@@ -6,11 +6,6 @@ import { PostDetailActions } from '../PostDetailSlice';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
 
-export type LikeAndReportBodyType = {
-  like?: string[];
-  report?: string[];
-};
-
 const LikesAndReportsContainer = () => {
   const postId = useParams().postId;
   const UserData = useAppSelector((state) => state.UserSlice.user);
@@ -41,7 +36,7 @@ const LikesAndReportsContainer = () => {
     const response = await callApi(
       'PATCH',
       `${API_PATH.POST.GET.BY_ID.replace(':postId', postId ? postId : '')}/${isLike}`,
-      data,
+      JSON.stringify(data),
     );
     const result = await response.json();
     isLike === 'like' ? setLikes(result.likes) : setReports(result.reports);

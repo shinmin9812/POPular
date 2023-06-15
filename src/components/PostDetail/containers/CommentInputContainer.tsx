@@ -8,7 +8,7 @@ import { getComments } from '../../../api/CommentApi';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
 
-export type postCommentBody = {
+type postCommentBody = {
   author: string;
   content: string;
   parent: {
@@ -24,7 +24,7 @@ const feedCommentApi = async (
   postId = '',
   setComments: (comments: Comment[]) => void,
 ) => {
-  await callApi('POST', API_PATH.COMMENT.POST, data);
+  await callApi('POST', API_PATH.COMMENT.POST, JSON.stringify(data));
   setInput('');
   getComments(postId, setComments);
 };
