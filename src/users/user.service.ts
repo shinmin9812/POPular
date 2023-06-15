@@ -320,20 +320,16 @@ export class UserService {
 		//user가 작성한 댓글 삭제(comment.service에서 deleteComment를 가져와서 사용해야함)
 		const comments = await this.commentModel.find({ author: _id }).select(_id);
 
-		const commentIds = comments.map(comment => comment._id);
-		if (commentIds.length > 0) {
+		if (comments.length > 0) {
+			const commentIds = comments.map(comment => comment._id);
 			await this.CommentsService.deleteComment(commentIds);
-		} else {
-			throw new NotFoundException("댓글을 찾지 못했습니다.")
 		}
 		// user가 작성한 게시글 삭제(feed.service에서 deleteFeed를 가져와서 사용해야함)
 		const feeds = await this.feedModel.find({ author: _id }).select(_id);
 
-		const feedIds = feeds.map(feed => feed._id);
-		if (feedIds.length > 0) {
+		if (feeds.length > 0) {
+			const feedIds = feeds.map(feed => feed._id);
 			await this.FeedsService.deleteFeed(feedIds);
-		} else {
-			throw new NotFoundException("게시글을 찾지 못했습니다.")
 		}
 
 		// user관련 알림 삭제(notification.service에서 deleteNotification을 가져와서 사용해야함)
