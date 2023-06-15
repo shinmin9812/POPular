@@ -20,7 +20,7 @@ import { FeedsService } from 'src/feeds/feed.service';
 import { BoardType, Feed } from 'src/feeds/feed.schema';
 import { UserService } from 'src/users/user.service';
 import { NotificationsService } from 'src/notifications/notification.service';
-import { NotificationType } from 'src/notifications/notification.schema';
+import { Notification, NotificationType } from 'src/notifications/notification.schema';
 import { User } from 'src/users/user.schema';
 import { Type } from 'class-transformer';
 
@@ -29,6 +29,8 @@ export class CommentsService {
 	constructor(
 		@InjectModel(Comment.name)
 		private readonly commentModel: AggregatePaginateModel<Comment>,
+		@InjectModel(Notification.name)
+		private readonly notificationModel: AggregatePaginateModel<Notification>,
 		@Inject(forwardRef(() => FeedsService)) private feedsService: FeedsService,
 		@Inject(forwardRef(() => UserService)) private UserService: UserService,
 		@Inject(forwardRef(() => NotificationsService))
@@ -215,14 +217,18 @@ export class CommentsService {
 				content_user: null,
 			};
 
-			const createdNotification =
+			if((await generateAncestor(savedComment, this.feedsService, this)).author === savedComment.author) {
+
+			} else {
+				const createdNotification =
 				await this.NotificationsService.createNotification(
 					notificationCreateDto,
 				);
-			await this.UserService.updateNotification(
-				savedComment.author,
-				createdNotification._id,
-			);
+				await this.UserService.updateNotification(
+					savedComment.author,
+					createdNotification._id,
+				);
+			}
 
 			if (savedComment.parent.type === 'Comment') {
 				await this.addRecomment(savedComment.parent.id, savedComment._id);
@@ -312,6 +318,13 @@ export class CommentsService {
 			if (recommentsToDelete.length > 0) {
 				await this.deleteComment(recommentsToDelete);
 			}
+		
+			const notifications = await this.notificationModel.find({ content_comment: { $in: ids } });
+			if(notifications.length > 0) {
+				const notificationsIds = notifications.map(notification => notification._id);
+				await this.NotificationsService.deleteNotifications(notificationsIds);
+			}
+
 
 			const deleteResult = await this.commentModel
 				.deleteMany({ _id: { $in: ids } })

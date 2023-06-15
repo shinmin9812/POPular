@@ -134,4 +134,26 @@ export class NotificationsController {
 		await this.notificationService.deleteNotification(id);
 		return { message: '알림이 삭제되었습니다.' };
 	}
+
+	@ApiOperation({ summary: '알림 삭제하기' })
+	@ApiOkResponse({
+		description: '알림 삭제 성공',
+	})
+	@ApiUnauthorizedResponse({
+		description: '헤더 토큰이 없을 경우',
+	})
+	@ApiNotFoundResponse({
+		description: '해당하는 ID의 알림을 찾지 못한 경우',
+	})
+	@ApiInternalServerErrorResponse({
+		description: '알림 삭제에 실패했을 경우',
+	})
+	@ApiParam({ name: 'id', type: String })
+	@ApiBearerAuth('Authorization')
+	@Delete()
+	@UseGuards(AuthGuard)
+	async deleteNotifications(@Body('ids') ids: string[]) {
+		await this.notificationService.deleteNotifications(ids);
+		return { message: '알림이 삭제되었습니다.' };
+	}
 }

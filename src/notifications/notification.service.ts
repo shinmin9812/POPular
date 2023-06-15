@@ -141,4 +141,28 @@ export class NotificationsService {
 			throw new InternalServerErrorException('알림 삭제에 실패하였습니다.');
 		}
 	}
+
+	async deleteNotifications(ids: string[]): Promise<void> {
+		try {
+			const notifications: Notification[] = await this.notificationModel
+				.find({ _id: {$in: ids} });
+
+			if(notifications.length > 0) {
+				let notificationsToDelete: string[] = [];
+				notifications.forEach(notification => {
+					notificationsToDelete.push(notification.toString());
+				})
+			}
+			const deleteResult = await this.notificationModel
+				.deleteMany({ _id: { $in: ids } })
+				.exec();
+			if (deleteResult.deletedCount === 0) {
+				throw new NotFoundException(
+					`해당 아이디를 가진 알림들을 찾지 못했습니다.`,
+				);
+			}
+		} catch (err) {
+			throw new InternalServerErrorException('알림 삭제에 실패하였습니다.');
+		}
+	}
 }
