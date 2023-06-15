@@ -221,7 +221,7 @@ const Header = () => {
         </nav>
         <div className="sub-links">
           <HeaderSearchBox />
-          {user ? <HeaderProfile src={user.profile} /> : <Login to="/login">LOGIN</Login>}
+          {user ? <HeaderProfile src={user.profile} /> : <HeaderProfile src="/defaultProfile.svg" />}
         </div>
       </div>
     </Container>

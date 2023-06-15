@@ -60,7 +60,7 @@ const CommentList = () => {
   }, []);
 
   const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['feeds'],
+    ['comments'],
     (ctx) => getComments(0, ctx.pageParam, userId),
     {
       getNextPageParam: (lastGroup, groups) => {

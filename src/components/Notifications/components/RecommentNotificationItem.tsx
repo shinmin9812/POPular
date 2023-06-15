@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Comment } from '../../../types/comment';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import CommentIconMini from '../../common/Icons/CommentIconMini';
+import { BoardTypes } from '../../../types/board';
 
 interface Props {
   id: string;
@@ -34,6 +35,7 @@ const RemoveNotification = async (id: string) => {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
+  location.reload();
 };
 
 const RecommentNotificationItem = ({ id, recommentData, board, checked }: Props) => {
@@ -62,7 +64,7 @@ const RecommentNotificationItem = ({ id, recommentData, board, checked }: Props)
               <Content>
                 <Message>{recommentData.author.nickname}님이 대댓글을 작성했습니다.</Message>
                 <CommentContainer>
-                  <BoardTypeTag boardType={board} />
+                  <BoardTypeTag boardType={board as BoardTypes} />
                   <CommentContent>{recommentData.content}</CommentContent>
                 </CommentContainer>
               </Content>
@@ -77,7 +79,7 @@ const RecommentNotificationItem = ({ id, recommentData, board, checked }: Props)
 
 export default RecommentNotificationItem;
 
-const Container = styled.div`
+const Container = styled.div<{ checked: boolean }>`
   width: 95%;
   height: 80px;
   margin: 10px auto;
