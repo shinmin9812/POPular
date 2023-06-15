@@ -3,6 +3,7 @@ import getDateFunc from '../../utils/getDateFunc';
 const today = getDateFunc(new Date().toString());
 
 const initialState = {
+  searchValue: '',
   addressFilter: {
     value: '지역',
     use: false,
@@ -46,6 +47,9 @@ const SearchSlice = createSlice({
     },
     setFilterDurationShow(state, action: PayloadAction<boolean>) {
       state.durationFilter.show = action.payload;
+    },
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
     },
   },
 });
