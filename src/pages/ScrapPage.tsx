@@ -3,38 +3,47 @@ import styled from 'styled-components';
 import MenuList from '../components/UserMenu/components/MenuList';
 import MetaTag from '../components/SEO/MetaTag';
 import { useEffect, useState } from 'react';
+import { CLIENT_PATH } from '../constants/path';
+import MenuItem from '../components/UserMenu/components/MenuItem';
+import { User } from '../types/user';
+import { Store } from '../types/store';
 
-const ScrapPage = () => {
-  const [userId, setUserId] = useState('');
-  const getUserInfo = async () => {
-    try {
-      const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      const data = await response.json();
-      setUserId(data._id);
-    } catch (err: any) {
-      throw new Error(err);
+const ScrapPage = ({ userData }: { userData: User | undefined }) => {
+  const [stores, setStores] = useState<Store[]>([]);
+
+  const fetchStore = async (storeId: string) => {
+    const res = await fetch(`http://34.22.81.36:3000/stores/store/${storeId}`);
+    const data = await res.json();
+    return data;
+  };
+
+  const getStoreData = async () => {
+    if (userData) {
+      const res = await fetch(`http://34.22.81.36:3000/users/${userData._id}/scraps`);
+      const storeIdData = await res.json();
+      const storeData = await Promise.all(
+        storeIdData.map((id: string) => {
+          return fetchStore(id);
+        }),
+      );
+      setStores(storeData);
     }
   };
 
   useEffect(() => {
-    getUserInfo();
-  }, []);
+    getStoreData();
+  }, [userData]);
 
   return (
     <Container>
       <MetaTag title={`POPULAR | 위시리스트`} />
       <MenuListContainer>
+        <NotificationMenu link={CLIENT_PATH.USER_NOTIFICATIONS} title="알림 목록" />
         <MenuList />
       </MenuListContainer>
       <ContentContainer>
         <Title>위시리스트</Title>
-        <StyledStoreList userId={userId} />
+        <StyledStoreList stores={stores} />
       </ContentContainer>
     </Container>
   );
@@ -49,16 +58,29 @@ const Container = styled.div`
 
 const MenuListContainer = styled.div`
   display: none;
+  a {
+    display: block;
+    width: 350px;
+    height: 65px;
+    font-size: var(--font-medium);
+    border-bottom: 0.5px solid var(--color-gray);
+    padding: 20px;
+    margin: 0;
+    cursor: pointer;
+
+    :hover {
+      transition: all 0.1s ease;
+      color: var(--color-main);
+      font-size: calc(var(--font-medium) + 2px);
+    }
+  }
+
   @media screen and (min-width: 768px) {
     margin: 50px 20px;
     display: block;
     width: 200px;
 
-    & > div {
-      width: 200px;
-      position: sticky;
-      top: 100px;
-    }
+    a,
     div > a,
     div > div {
       width: 200px;
@@ -68,6 +90,13 @@ const MenuListContainer = styled.div`
         font-size: calc(var(--font-regular) + 2px);
       }
     }
+  }
+`;
+
+const NotificationMenu = styled(MenuItem)`
+  display: none;
+  @media screen and (min-width: 768px) {
+    display: block;
   }
 `;
 

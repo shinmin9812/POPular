@@ -19,8 +19,7 @@ const NotificationList = () => {
       },
     });
     const data = await res.json();
-    console.log(data);
-    setNotifications(data);
+    setNotifications(data.reverse());
   };
   useEffect(() => {
     getUserNotification();
@@ -28,19 +27,31 @@ const NotificationList = () => {
   }, []);
   return (
     <NotificationListContainer>
-      {notifications.map((data) => {
+      {notifications.map((data, idx) => {
         if (data.type === 'follow')
-          return <FollowNotificationItem follower={data.content_user} checked={data.checked} />;
+          return <FollowNotificationItem key={idx} id={data._id} follower={data.content_user} checked={data.checked} />;
         else if (data.type === 'comment')
           return (
-            <CommentNotificationItem commentData={data.content_comment} board={data.board} checked={data.checked} />
+            <CommentNotificationItem
+              key={idx}
+              id={data._id}
+              commentData={data.content_comment}
+              board={data.board}
+              checked={data.checked}
+            />
           );
         else if (data.type === 'recomment')
           return (
-            <RecommentNotificationItem recommentData={data.content_comment} board={data.board} checked={data.checked} />
+            <RecommentNotificationItem
+              key={idx}
+              id={data._id}
+              recommentData={data.content_comment}
+              board={data.board}
+              checked={data.checked}
+            />
           );
         else if (data.type === 'ad')
-          return <AdNotificationItem storeData={data.content_store} checked={data.checked} />;
+          return <AdNotificationItem key={idx} id={data._id} storeData={data.content_store} checked={data.checked} />;
       })}
     </NotificationListContainer>
   );
@@ -50,6 +61,5 @@ export default NotificationList;
 
 const NotificationListContainer = styled.section`
   width: 100%;
-  height: 100vh;
-  // border: 1px solid tomato;
+  height: 100%;
 `;

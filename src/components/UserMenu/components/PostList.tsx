@@ -99,7 +99,7 @@ const PostList = () => {
               const isLoaderRow = virtualRow.index > allRows.length - 1;
               const post: Post = allRows[virtualRow.index];
               return (
-                <PostItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start}>
+                <PostItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start - 130}>
                   {isLoaderRow ? (
                     hasNextPage ? (
                       <Loading>
@@ -173,5 +173,5 @@ const PostItemContainer = styled.div<PostItemContainerProps>`
   width: 100%;
   height: ${(props) => props.size}px;
   margin: 0;
-  transform: translateY(${(props) => props.size + props.start - 260}px);
+  transform: translateY(${(props) => props.size + props.start}px);
 `;
