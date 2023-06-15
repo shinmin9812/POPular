@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Post } from '../types/post';
 import { Comment } from '../types/comment';
-import { useParams } from 'react-router-dom';
+import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from '../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../components/PostDetail/PostDetailSlice';
@@ -40,13 +40,26 @@ const RatingsWrap = styled.div`
   }
 `;
 
-async function fetchData(postId = '', setPost: React.Dispatch<React.SetStateAction<Post | null>>) {
-  const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId));
-  const result: Post = await response.json();
-  setPost(result);
+async function fetchData(
+  postId = '',
+  setPost: React.Dispatch<React.SetStateAction<Post | null>>,
+  navigate: NavigateFunction,
+) {
+  try {
+    const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId));
+    if (response.status === 404) {
+      throw new Error('해당 페이지가 존재하지 않습니다.');
+    }
+    const result: Post = await response.json();
+    setPost(result);
+  } catch (err: any) {
+    alert(err.message);
+    navigate(-1);
+  }
 }
 
 const PostDetailPage = () => {
+  const navigate = useNavigate();
   const postId = useParams().postId;
   const [post, setPost] = useState<Post | null>(null);
   const comments = useAppSelector((state) => state.PostDetailSlice.comment);
@@ -72,7 +85,7 @@ const PostDetailPage = () => {
   );
 
   useEffect(() => {
-    fetchData(postId, setPost);
+    fetchData(postId, setPost, navigate);
   }, []);
 
   useEffect(() => {

@@ -11,8 +11,16 @@ import filterFunc from '../../../utils/filterFunc';
 import PostItem from '../../common/Post/PostItem';
 import PostList from '../components/PostList';
 
+const searchFilter = (posts: Post[], value: string) => {
+  const normalizedValue = value.normalize(); // 검색어 정규화
+  const regex = new RegExp(normalizedValue, 'i');
+  const newStores = posts.filter((post) => regex.test(post.title));
+  return newStores;
+};
+
 const PostListItemContainer = () => {
   const page = useAppSelector((state) => state.CommunitySlice.page.currPage);
+  const searchValue = useAppSelector((state) => state.CommunitySlice.searchValue);
   const filterCategory = useAppSelector((state) => state.CommunitySlice.categoryFilter);
   const filterAddress = useAppSelector((state) => state.CommunitySlice.addressFilter);
   const filterDate = useAppSelector((state) => state.CommunitySlice.durationFilter);
@@ -24,6 +32,9 @@ const PostListItemContainer = () => {
   // 필터 하나라도 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDate.use;
   const originalPost: Post[] | undefined = useMemo(() => {
+    if (searchValue.length > 0) {
+      return data && searchFilter(data, searchValue);
+    }
     if (useFilter) {
       //스토어만 따로 맵핑
       const stores: Store[] | undefined =
@@ -38,7 +49,7 @@ const PostListItemContainer = () => {
     } else {
       return data;
     }
-  }, [useFilter, data, filterAddress, filterCategory, filterDate]);
+  }, [useFilter, data, filterAddress, filterCategory, filterDate, searchValue]);
 
   const dividedPost: Post[][] = useMemo(() => {
     const post: Post[][] = [];

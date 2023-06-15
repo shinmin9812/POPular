@@ -3,6 +3,7 @@ const today = new Date().toISOString().slice(0, 10);
 
 export interface WritePostInitialState {
   tab: string;
+  searchValue: string;
   postTitle: string;
   postContent: string;
   ratings: number;
@@ -44,6 +45,7 @@ const initialState: WritePostInitialState = {
   postContent: '',
   ratings: 1,
   choiceStoreId: '',
+  searchValue: '',
   addressFilter: {
     value: '지역',
     use: false,
@@ -70,6 +72,9 @@ const WritePostSlice = createSlice({
   reducers: {
     setTab(state, action: PayloadAction<string>) {
       state.tab = action.payload;
+    },
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
     },
     setFilterAddressValue(state, action: PayloadAction<string>) {
       state.addressFilter.value = action.payload;

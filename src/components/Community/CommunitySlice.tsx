@@ -4,6 +4,7 @@ const today = new Date().toISOString().slice(0, 10);
 
 export interface CommunityInitialState {
   tab: string;
+  searchValue: string;
   addressFilter: {
     value: string;
     use: boolean;
@@ -32,6 +33,7 @@ export interface SetFilter {
 
 const initialState: CommunityInitialState = {
   tab: '전체게시판',
+  searchValue: '',
   addressFilter: {
     value: '지역',
     use: false,
@@ -59,6 +61,9 @@ const CommunitySlice = createSlice({
   reducers: {
     setTab(state, action: PayloadAction<string>) {
       state.tab = action.payload;
+    },
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
     },
     setPage(state, action: PayloadAction<number>) {
       state.page.currPage = action.payload;
