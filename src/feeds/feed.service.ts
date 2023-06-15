@@ -370,6 +370,7 @@ export class FeedsService {
 				);
 			}
 		} catch (err) {
+			console.log(err);
 			throw new InternalServerErrorException('글 삭제에 실패하였습니다.');
 		}
 	}
