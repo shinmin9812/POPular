@@ -34,7 +34,7 @@ export class UserService {
 		private NotificationsService: NotificationsService,
 		@Inject(forwardRef(() => FeedsService))
 		private FeedsService: FeedsService,
-	) {}
+	) { }
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -321,12 +321,14 @@ export class UserService {
 		const comments = await this.commentModel.find({ author: _id }).select(_id);
 
 		const commentIds = comments.map(comment => comment._id);
+		console.log(commentIds);
 		await this.CommentsService.deleteComment(commentIds);
 
 		// user가 작성한 게시글 삭제(feed.service에서 deleteFeed를 가져와서 사용해야함)
 		const feeds = await this.feedModel.find({ author: _id }).select(_id);
 
 		const feedIds = feeds.map(feed => feed._id);
+		console.log(feedIds);
 		await this.FeedsService.deleteFeed(feedIds);
 
 		// user관련 알림 삭제(notification.service에서 deleteNotification을 가져와서 사용해야함)
@@ -334,11 +336,12 @@ export class UserService {
 		const userRelatedNotifications = await this.notificationModel.find({ content_user: _id }).select(_id);
 
 		const notifications = [...userNotifications, ...userRelatedNotifications];
-		if(notifications.length > 0) {
+		if (notifications.length > 0) {
 			const notificationsIds = notifications.map(notification => notification._id);
+			console.log(notificationsIds);
 			await this.NotificationsService.deleteNotifications(notificationsIds);
 		}
-		
+
 		return await this.userModel.findByIdAndDelete(_id);
 	}
 
