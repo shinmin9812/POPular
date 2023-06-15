@@ -1,6 +1,6 @@
 import styled from 'styled-components';
+import SearchInputContainer from '../components/Community/containers/SearchInputContainer';
 
-import SearchContainerWrap from '../components/common/SearchInput/SearchInput';
 import TabsContainer from '../components/Community/containers/TabsContainer';
 import FilterContainer from '../components/Community/containers/FilterContainer';
 import WriteButton from '../components/Community/components/WriteButton';
@@ -19,7 +19,7 @@ const CommunityPage = () => {
       <MetaTag title={`POPULAR | 커뮤니티`} />
       <TabsContainer />
       <div>
-        <SearchContainerWrap placeholder="제목을 검색해주세요" />
+        <SearchInputContainer />
         <FilterAndWriteButtonWrapContainer>
           <FilterContainer />
           <WriteButton />
