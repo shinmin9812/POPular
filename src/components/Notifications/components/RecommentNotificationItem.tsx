@@ -5,11 +5,12 @@ import { Comment } from '../../../types/comment';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import CommentIconMini from '../../common/Icons/CommentIconMini';
 import { BoardTypes } from '../../../types/board';
+import { CLIENT_PATH } from '../../../constants/path';
 
 interface Props {
   id: string;
   recommentData: Comment;
-  board: string;
+  board: BoardTypes;
   checked: boolean;
 }
 
@@ -31,7 +32,7 @@ const RemoveNotification = async (id: string) => {
   fetch(`http://34.22.81.36:3000/notifications/${id}`, {
     method: 'DELETE',
     headers: {
-      'Content-type': 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
@@ -46,19 +47,24 @@ const RecommentNotificationItem = ({ id, recommentData, board, checked }: Props)
       const res = await fetch(`http://34.22.81.36:3000/comments/info/${commentId}`);
       const data = await res.json();
       if (data.ancestor) setFeedId(data.ancestor.id);
-    } catch (err) {
-      alert('항목을 찾을 수 없습니다.');
+    } catch (err: any) {
+      throw new Error(err.message);
     }
   };
 
   useEffect(() => {
-    getFeedId(recommentData._id);
+    if (recommentData) {
+      getFeedId(recommentData._id);
+    } else setFeedId;
   }, []);
   return (
-    <>
+    <Container checked={checked}>
       {recommentData ? (
-        <Container checked={checked}>
-          <Link to={`/community/post/${feedId}`} onClick={() => handleChecked(checked, id)}>
+        <>
+          <Link
+            to={feedId ? `/community/post/${feedId}` : CLIENT_PATH.USER_NOTIFICATIONS}
+            onClick={() => handleChecked(checked, id)}
+          >
             <Item>
               <CommentIconMini />
               <Content>
@@ -71,9 +77,11 @@ const RecommentNotificationItem = ({ id, recommentData, board, checked }: Props)
             </Item>
           </Link>
           <RemoveButton onClick={() => RemoveNotification(id)}>×</RemoveButton>
-        </Container>
-      ) : null}
-    </>
+        </>
+      ) : (
+        <ErrorItem>삭제된 항목입니다.</ErrorItem>
+      )}
+    </Container>
   );
 };
 
@@ -123,7 +131,7 @@ const RemoveButton = styled.span`
     color: var(--color-red);
     transform: scale(1.5);
   }
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
 `;
 
 const Content = styled.div`
@@ -147,4 +155,10 @@ const CommentContent = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const ErrorItem = styled.p`
+  color: var(--color-gray);
+  width: 100%;
+  text-align: center;
 `;

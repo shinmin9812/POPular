@@ -128,7 +128,7 @@ export default PostList;
 
 const Container = styled.div`
   position: static;
-  margin-top: 30px;
+  margin-top: 20px;
 `;
 
 const Loading = styled.div`
@@ -144,6 +144,7 @@ const Loading = styled.div`
 `;
 
 const PostContainer = styled.div`
+  width: 100%;
   height: calc(100vh - 165px);
   overflow: auto;
 

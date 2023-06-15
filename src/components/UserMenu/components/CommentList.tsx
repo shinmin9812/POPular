@@ -78,8 +78,8 @@ const CommentList = () => {
   const rowVirtualizer = useVirtualizer({
     count: hasNextPage ? allRows.length + 1 : allRows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 140,
-    overscan: 7,
+    estimateSize: () => 145,
+    overscan: 3,
   });
 
   useEffect(() => {
@@ -108,7 +108,7 @@ const CommentList = () => {
               const comment: Comment = allRows[virtualRow.index];
 
               return (
-                <CommentItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start - 120}>
+                <CommentItemContainer key={virtualRow.index} size={virtualRow.size} start={virtualRow.start - 140}>
                   {isLoaderRow ? (
                     hasNextPage ? (
                       <Loading>
@@ -148,7 +148,7 @@ export default CommentList;
 
 const Container = styled.div`
   position: static;
-  margin-top: 30px;
+  margin-top: 20px;
 `;
 
 const Loading = styled.div`
@@ -164,6 +164,7 @@ const Loading = styled.div`
 `;
 
 const CommentContainer = styled.div`
+  width: 100%;
   height: calc(100vh - 165px);
   overflow: auto;
 
@@ -182,7 +183,7 @@ const CommentContainer = styled.div`
 
 const CommentGetTotalSize = styled.div<CommentGetTotalSizeProps>`
   height: ${(props) => props.height}px;
-  width: 100%;
+  width: 95%;
   margin: 0 auto;
   position: relative;
 `;

@@ -31,23 +31,26 @@ const RemoveNotification = async (id: string) => {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
+  location.reload();
 };
 
 const FollowNotificationItem = ({ id, follower, checked }: Props) => {
   return (
-    <>
+    <Container checked={checked}>
       {follower ? (
-        <Container checked={checked}>
+        <>
           <Link to={`/community/user/${follower._id}`} onClick={() => handleChecked(checked, id)}>
             <ItemContainer>
               <UserIconMini />
               <Message>{follower.nickname}님이 회원님을 팔로우합니다.</Message>
             </ItemContainer>
           </Link>
-          <RemoveButton onClick={() => RemoveNotification(id)}>x</RemoveButton>
-        </Container>
-      ) : null}
-    </>
+          <RemoveButton onClick={() => RemoveNotification(id)}>×</RemoveButton>
+        </>
+      ) : (
+        <ErrorItem>삭제된 항목입니다.</ErrorItem>
+      )}
+    </Container>
   );
 };
 
@@ -66,7 +69,7 @@ const Container = styled.div<{ checked: boolean }>`
   justify-content: space-between;
   align-items: center;
 
-  color: ${(props) => props.checked && 'var(--color-gray)'};
+  opacity: ${(props) => (props.checked ? 0.3 : 1)};
 
   a {
     color: ${(props) => props.checked && 'var(--color-light-black)'};
@@ -102,5 +105,11 @@ const RemoveButton = styled.span`
     color: var(--color-red);
     transform: scale(1.5);
   }
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
+`;
+
+const ErrorItem = styled.p`
+  color: var(--color-gray);
+  width: 100%;
+  text-align: center;
 `;
