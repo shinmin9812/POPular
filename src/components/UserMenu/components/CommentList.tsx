@@ -79,7 +79,7 @@ const CommentList = () => {
     count: hasNextPage ? allRows.length + 1 : allRows.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 145,
-    overscan: 7,
+    overscan: 3,
   });
 
   useEffect(() => {
