@@ -79,7 +79,7 @@ const Container = styled.div<ContainerProps>`
     color: var(--color-main);
 
     @media all and (max-width: 767px) {
-      font-size: var(--font-regular);
+      font-size: 17px;
     }
   }
 

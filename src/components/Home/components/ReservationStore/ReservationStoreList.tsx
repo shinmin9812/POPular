@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import ReservationStoreItem from './ReservationStoreItem';
 import { Store } from '../../../../types/store';
 import { Link } from 'react-router-dom';
+import { LinkHandler } from '../../../../utils/linkHandler';
 
 interface Props {
   stores: Store[];
@@ -15,7 +16,7 @@ const ReservationStoreList = ({ stores, text }: Props) => {
       <ItemsBox>
         {stores.slice(0, 4).map((store) => (
           <Item key={store._id}>
-            <Link to={`/store/${store._id}`}>
+            <Link to={`/store/${store._id}`} onClick={LinkHandler}>
               <ReservationStoreItem store={store} />
             </Link>
           </Item>
@@ -30,6 +31,10 @@ const Container = styled.div`
     font-weight: var(--weight-semi-bold);
     margin-bottom: 20px;
     font-size: var(--font-medium);
+
+    @media all and (max-width: 767px) {
+      font-size: 17px;
+    }
   }
 `;
 

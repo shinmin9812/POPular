@@ -5,6 +5,7 @@ import CasouselSlideItem from './CarouselSlideItem';
 import PrevArrowIcon from '../../../common/Icons/PrevArrowIcon';
 import NextArrowIcon from '../../../common/Icons/NextArrowIcon';
 import { useRef } from 'react';
+import { LinkHandler } from '../../../../utils/linkHandler';
 
 interface Props {
   stores: Store[];
@@ -31,7 +32,7 @@ const CarouselSlideList = ({ stores, text }: Props) => {
       <CarouselList ref={scrollContainerRef}>
         {stores.map((store: Store) => (
           <CarouselItem key={store._id}>
-            <Link to={`/store/${store._id}`}>
+            <Link to={`/store/${store._id}`} onClick={LinkHandler}>
               <CasouselSlideItem store={store} />
             </Link>
           </CarouselItem>
@@ -58,7 +59,7 @@ const CarouselContainer = styled.div`
     margin-bottom: 20px;
 
     @media all and (max-width: 767px) {
-      font-size: var(--font-regular);
+      font-size: 17px;
     }
   }
 
@@ -90,6 +91,10 @@ const CarouselContainer = styled.div`
     top: 50%;
     margin-top: -20px;
   }
+
+  @media all and (max-width: 767px) {
+    margin-top: 60px;
+  }
 `;
 
 const CarouselList = styled.ul`
@@ -106,6 +111,10 @@ const CarouselList = styled.ul`
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  @media all and (max-width: 767px) {
+    column-gap: 15px;
   }
 `;
 

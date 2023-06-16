@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import VerticalStoreItem from './VerticalStoreItem';
 import { Store } from '../../../../types/store';
 import { Link } from 'react-router-dom';
+import { LinkHandler } from '../../../../utils/linkHandler';
 
 interface Props {
   stores: Store[];
@@ -10,14 +11,10 @@ interface Props {
 
 const VerticalStoreList = ({ stores, text }: Props) => {
   const currentDate = new Date();
-  const sortedStores = stores.slice().sort(function (a, b) {
-    let dateA = new Date(a.start_date);
-    let dateB = new Date(b.start_date);
-
-    let diffA = Math.abs(currentDate.getTime() - dateA.getTime());
-    let diffB = Math.abs(currentDate.getTime() - dateB.getTime());
-
-    return diffA - diffB;
+  const sortedStores = stores.slice(0, 10).filter((store) => {
+    const openDate = new Date(store.start_date);
+    const endDate = new Date(store.end_date);
+    return currentDate >= openDate && currentDate <= endDate;
   });
 
   return (
@@ -29,7 +26,7 @@ const VerticalStoreList = ({ stores, text }: Props) => {
             <p className="title-text">{text}</p>
             <p className="sub-text">주간 인기있는 팝업스토어를 확인해보세요!</p>
             <div className="more-view">
-              <Link to={`search`} className="a-link">
+              <Link to={`search`} className="a-link" onClick={LinkHandler}>
                 More View
               </Link>
             </div>
@@ -39,14 +36,14 @@ const VerticalStoreList = ({ stores, text }: Props) => {
         <ItemsBox>
           {sortedStores.slice(0, 4).map((store) => (
             <Item key={store._id}>
-              <Link to={`/store/${store._id}`}>
+              <Link to={`/store/${store._id}`} onClick={LinkHandler}>
                 <VerticalStoreItem store={store}></VerticalStoreItem>
               </Link>
             </Item>
           ))}
 
           <MoreView>
-            <Link className="ItemLink" to={`search`}>
+            <Link className="ItemLink" to={`search`} onClick={LinkHandler}>
               More View
             </Link>
           </MoreView>
@@ -77,8 +74,7 @@ const TitleBox = styled.div`
 
   @media all and (max-width: 767px) {
     display: block;
-
-    font-size: var(--font-regular);
+    font-size: 17px;
   }
 `;
 
