@@ -5,7 +5,10 @@ import { Comment } from '../../../types/comment';
 import styled from 'styled-components';
 import CommentItem from './CommentItem';
 import RecommentItem from './RecommentItem';
-import getDateFunc from '../../../utils/getDateFunc';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import * as dayjs from 'dayjs';
+import callApi from '../../../utils/callApi';
 
 const getComments = async (
   _limit: number,
@@ -13,9 +16,7 @@ const getComments = async (
   userId: string,
 ): Promise<{ rows: Comment[]; nextOffset: number; hasNextPage: boolean }> => {
   try {
-    const res = await fetch(`http://34.22.81.36:3000/comments/user/${userId}?pageIndex=${offset}`, {
-      method: 'GET',
-    });
+    const res = await callApi('GET', `http://34.22.81.36:3000/comments/user/${userId}?pageIndex=${offset}`);
     const data = await res.json();
     const rows: Comment[] = data.docs; // length: 한번에 불러오는 데이터 수
     await new Promise((r) => setTimeout(r, 500));
@@ -37,26 +38,13 @@ type CommentItemContainerProps = {
 
 const CommentList = () => {
   const [userId, setUserId] = useState('');
-  const getUserInfo = async () => {
-    try {
-      const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error('유저 정보를 불러올 수 없습니다.');
-      }
-      const data = await response.json();
-      setUserId(data._id);
-    } catch (err: any) {
-      console.log(err.message);
-    }
-  };
+
+  const userData = useSelector((state: RootState) => state.UserSlice.user);
+
   useEffect(() => {
-    getUserInfo();
+    if (userData) {
+      setUserId(userData._id);
+    }
   }, []);
 
   const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
@@ -79,7 +67,7 @@ const CommentList = () => {
     count: hasNextPage ? allRows.length + 1 : allRows.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 145,
-    overscan: 3,
+    overscan: 0,
   });
 
   useEffect(() => {
@@ -124,13 +112,13 @@ const CommentList = () => {
                       <CommentItem
                         parentId={comment.parent.id}
                         comment={comment.content}
-                        date={getDateFunc(comment.updatedAt)}
+                        date={dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                       />
                     ) : (
                       <RecommentItem
                         parentId={comment.parent.id}
                         recomment={comment.content}
-                        date={getDateFunc(comment.updatedAt)}
+                        date={dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                       />
                     ))
                   )}

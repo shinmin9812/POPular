@@ -5,6 +5,8 @@ import { Post } from '../../../types/post';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PostItem from '../../common/Post/PostItem';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const getFeeds = async (
   _limit: number,
@@ -32,23 +34,13 @@ type PostItemContainerProps = {
 
 const PostList = () => {
   const [userId, setUserId] = useState('');
-  const getUserInfo = async () => {
-    try {
-      const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      const data = await response.json();
-      setUserId(data._id);
-    } catch (err: any) {
-      throw new Error(err);
-    }
-  };
+
+  const userData = useSelector((state: RootState) => state.UserSlice.user);
+
   useEffect(() => {
-    getUserInfo();
+    if (userData) {
+      setUserId(userData._id);
+    }
   }, []);
 
   const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
