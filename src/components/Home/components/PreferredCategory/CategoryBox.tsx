@@ -7,7 +7,6 @@ import { Store } from '../../../../types/store';
 
 interface Props {
   stores: Store[];
-  text: string;
 }
 
 interface ContainerProps {
@@ -15,7 +14,7 @@ interface ContainerProps {
   isCatagory?: boolean;
 }
 
-const CategoryBox = ({ stores, text }: Props) => {
+const CategoryBox = ({ stores }: Props) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [isLogin, setIsLogin] = useState(false);
   const isCatagory =
@@ -53,7 +52,7 @@ const CategoryBox = ({ stores, text }: Props) => {
     <Container isLogin={isLogin} isCatagory={isCatagory}>
       <ContainerBackground isLogin={isLogin} isCatagory={isCatagory}>
         <CategoryInner>
-          <h2>{text}</h2>
+          <h2>{userData?.nickname ?? ''}님에게 추천하는 팝업스토어🐰</h2>
           <CategoryItems />
           {isLogin && isCatagory ? (
             <CategoryRecommend stores={stores} users={userData} />
@@ -84,7 +83,7 @@ const Container = styled.div<ContainerProps>`
   }
 
   @media all and (max-width: 767px) {
-    height: ${(props) => (props.isLogin && props.isCatagory ? '850px' : '240px')};
+    height: ${(props) => (props.isLogin && props.isCatagory ? '800px' : '240px')};
   }
 `;
 
@@ -103,7 +102,7 @@ const ContainerBackground = styled.div<{ isLogin: boolean; isCatagory?: boolean 
     border-radius: 30px;
 
     @media all and (max-width: 767px) {
-      height: ${(props) => (props.isLogin && props.isCatagory ? '850px' : '240px')};
+      height: ${(props) => (props.isLogin && props.isCatagory ? '800px' : '240px')};
       width: 100%;
       border-radius: 0px;
     }

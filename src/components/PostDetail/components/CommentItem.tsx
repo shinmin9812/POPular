@@ -39,6 +39,7 @@ export const CommentAuthorName = styled.div`
   width: fit-content;
   font-size: var(--font-small);
   margin-right: 20px;
+  white-space: nowrap;
 
   a {
     .profile {

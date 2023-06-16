@@ -29,7 +29,7 @@ const HomePage = () => {
       <RecommendStore stores={store} />
       <Line />
       <VerticalStoreList text={'주간 팝업스토어👀'} stores={store} />
-      <CategoryBox text={'엘리스님에게 추천하는 팝업스토어🐰'} stores={store} />
+      <CategoryBox stores={store} />
       <RecentlyOpenStore stores={store} />
       <BeforeEndStore stores={store} />
       <Line />

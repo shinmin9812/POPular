@@ -11,7 +11,8 @@ const RecommendStore = ({ stores }: Props) => {
 
   const sortedData = [...stores]
     .filter((store) => new Date(store.end_date) >= currentDate)
-    .sort((a, b) => b.scraps.length - a.scraps.length);
+    .sort((a, b) => b.scraps.length - a.scraps.length)
+    .slice(0, 20);
 
   return (
     <Container>
