@@ -8,7 +8,6 @@ import FollowNotificationItem from './FollowNotificationItem';
 import { Notification } from '../../../types/notification';
 import RecommentNotificationItem from './RecommentNotificationItem';
 import { Link } from 'react-router-dom';
-import { RootState } from '../../../store';
 
 const NotificationList = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
