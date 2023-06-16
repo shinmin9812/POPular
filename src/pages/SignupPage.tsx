@@ -41,10 +41,12 @@ const SignupContainer = styled.div`
   height: 700px;
   display: flex;
   flex-direction: column;
-  margin-top: 80px;
-  @media (min-width: 768px) {
+  justify-content: center;
+  padding-bottom: 50px;
+  @media screen and (min-width: 768px) {
     flex: 1;
     padding: 0 20px;
+    margin-top: 60px;
   }
 `;
 
