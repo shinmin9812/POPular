@@ -28,6 +28,7 @@ const Container = styled.div`
 
 const Intro = styled.section`
   display: none;
+
   @media (min-width: 850px) {
     display: block;
     height: 800px;
@@ -40,6 +41,7 @@ const Intro = styled.section`
 const IntroImg = styled.img`
   width: 100%;
   border-radius: 15px;
+
   @media screen and (min-width: 850px) {
     flex: 1;
   }
@@ -50,6 +52,7 @@ const SignupContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   @media screen and (min-width: 768px) {
     padding-bottom: 50px;
     flex: 1;

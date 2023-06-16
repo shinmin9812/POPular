@@ -63,9 +63,7 @@ export const deleteFeeds = async (feedIds: string[]): Promise<void> => {
     await fetch(API_PATH.POST.DELETE, {
       headers: { 'Content-Type': 'application/json', authorization: `Bearer ${localStorage.getItem('token')}` },
       method: 'DELETE',
-      body: JSON.stringify({
-        ids: feedIds,
-      }),
+      body: JSON.stringify(feedIds),
     });
   } catch (err) {
     throw new Error('피드 삭제를 실패하였습니다!');

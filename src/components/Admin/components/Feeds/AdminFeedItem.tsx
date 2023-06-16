@@ -21,11 +21,11 @@ const AdminFeedItem = ({ feed }: Props) => {
           </div>
           <div className="feed-title">{feed.title}</div>
           <div className="other">
-            <span>
-              <strong>닉네임</strong> {feed.author.nickname}
+            <span className="nickname">
+              <strong>닉네임</strong> <p>{feed.author.nickname}</p>
             </span>
-            <span>
-              <strong>이름</strong> {feed.author.name}
+            <span className="name">
+              <strong>이름</strong> <p>{feed.author.name}</p>
             </span>
             <span>
               <strong>작성일</strong> {createdAt}
@@ -54,7 +54,7 @@ const Container = styled.div`
     justify-content: space-between;
 
     width: 100%;
-    height: 100px;
+    height: 140px;
 
     padding: 10px;
 
@@ -64,6 +64,7 @@ const Container = styled.div`
 
     strong {
       font-weight: 700;
+      margin-right: 4px;
     }
 
     .info {
@@ -81,19 +82,32 @@ const Container = styled.div`
       }
 
       .feed-title {
+        width: 500px;
+        white-space: no-wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-size: 20px;
         font-weight: 500;
       }
 
       .other {
+        width: 100%;
         display: flex;
         gap: 6px;
         font-size: 12px;
+
+        p {
+          width: 70px;
+        }
+
+        * {
+          display: flex;
+        }
       }
     }
 
     .thumbnail {
-      height: 100%;
+      height: 80%;
       aspect-ratio: 1/1;
     }
   }
