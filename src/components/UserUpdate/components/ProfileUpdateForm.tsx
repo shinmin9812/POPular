@@ -243,7 +243,7 @@ const Container = styled.div`
   margin-top: 40px;
 
   .update-title {
-    font-size: var(--font-reguler);
+    font-size: 17px;
     font-weight: var(--weight-semi-bold);
   }
 

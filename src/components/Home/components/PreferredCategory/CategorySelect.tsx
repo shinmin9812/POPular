@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { LinkHandler } from '../../../../utils/linkHandler';
 
 interface isLogin {
   isLogin: boolean;
@@ -15,7 +16,9 @@ const CategorySelect = ({ isLogin, userId }: isLogin) => {
             <span className="title-point">선호 카테고리</span>가 없습니다.
           </p>
           <p className="text-setting">
-            <Link to={`/user/${userId}/update`}>선호 카테고리 설정하기 +</Link>
+            <Link to={`/user/${userId}/update`} onClick={LinkHandler}>
+              선호 카테고리 설정하기 +
+            </Link>
           </p>
         </SelectCategory>
       ) : (
@@ -24,7 +27,9 @@ const CategorySelect = ({ isLogin, userId }: isLogin) => {
             <span className="title-point">선호 카테고리</span>가 없습니다.
           </p>
           <p className="text-setting">
-            <Link to={'/login'}>선호 카테고리 설정하기 +</Link>
+            <Link to={'/login'} onClick={LinkHandler}>
+              선호 카테고리 설정하기 +
+            </Link>
           </p>
         </SelectCategory>
       )}

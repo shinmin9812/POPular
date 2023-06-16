@@ -109,6 +109,28 @@ const ContentContainer = styled.div`
   & li {
     margin: 10px 20px;
     border-radius: 8px;
+    background-color: var(--color-light-gray);
+    animation: appear-post 1s forwards;
+
+    @keyframes appear-post {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    h1 {
+      margin-left: 0;
+    }
+    li {
+      margin: 10px 0;
+    }
   }
 `;
 

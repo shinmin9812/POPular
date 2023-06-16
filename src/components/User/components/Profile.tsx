@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { User } from '../../../types/user';
-// import { Post } from '../../../types/post';
 import ProfileFollow from './ProfileFollow';
 import ProfileButton from './ProfileButton';
 import { useParams } from 'react-router-dom';
@@ -8,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import MetaTag from '../../SEO/MetaTag';
 import { useGetFeedsByUserId } from '../../../api/feedApi';
+import Follower from './Follower';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -16,6 +16,8 @@ const Profile = () => {
   const [checkFollower, setCheckFollower] = useState(false);
   const [followerCount, setFollowerCount] = useState(0);
   const [isFollowLoading, setIsFollowLoading] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [modalType, setModalType] = useState('');
 
   useEffect(() => {
     getUserInfo();
@@ -23,6 +25,11 @@ const Profile = () => {
   }, [userId, userInfo]);
 
   const { data: feeds } = useGetFeedsByUserId(userId!);
+
+  const modalHandler = (type: string) => {
+    setModal(true);
+    setModalType(type);
+  };
 
   const getUserInfo = async () => {
     try {
@@ -81,7 +88,6 @@ const Profile = () => {
       setCheckFollower(false);
       return;
     }
-
     try {
       await followMutation.mutateAsync();
       setCheckFollower(true);
@@ -131,8 +137,8 @@ const Profile = () => {
         </UserProfile>
         <ProfileList>
           <ProfileFollow title={'게시물'} number={feeds?.totalDocs ? feeds.totalDocs : 0} />
-          <ProfileFollow title={'팔로워'} number={followerCount} />
-          <ProfileFollow title={'팔로잉'} number={user.following.length} />
+          <ProfileFollow title={'팔로워'} number={followerCount} onClick={() => modalHandler('follower')} />
+          <ProfileFollow title={'팔로잉'} number={user.following.length} onClick={() => modalHandler('following')} />
         </ProfileList>
       </ProfileInfo>
       <ProfileDescript>
@@ -152,6 +158,17 @@ const Profile = () => {
           )}
         </div>
       </ProfileDescript>
+      {modal ? (
+        <ModalBackground onClick={() => setModal(false)}>
+          <FollowModal>
+            {modalType === 'follower' ? (
+              <Follower text={'팔로워'} user={user} />
+            ) : modalType === 'following' ? (
+              <Follower text={'팔로잉'} user={user} />
+            ) : null}
+          </FollowModal>
+        </ModalBackground>
+      ) : null}
     </Container>
   );
 };
@@ -213,7 +230,8 @@ const ProfileDescript = styled.div`
   .user-introduce {
     margin-top: 6px;
     font-weight: var(--weight-light);
-    font-size: 13px;
+    font-size: var(--font-small);
+    letter-spacing: 0.5px;
     width: 70%;
     line-height: 18px;
   }
@@ -233,6 +251,60 @@ const ProfileDescript = styled.div`
     .user-nickname {
       font-size: var(--font-small);
     }
+  }
+`;
+const ModalBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 99;
+  backdrop-filter: blur(1.5px);
+`;
+
+const FollowModal = styled.div`
+  width: 400px;
+  height: 500px;
+  border-radius: var(--border-radius-button);
+  box-shadow: #d7cdd726 0px 0px 3px 3px;
+  background-color: var(--color-white);
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: grey;
+  }
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 25%;
+  margin: 0 auto;
+  z-index: 99;
+  animation: modalUP 0.3s;
+
+  @keyframes modalUP {
+    0% {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+
+  @media all and (max-width: 767px) {
+    width: 320px;
+    height: 400px;
   }
 `;
 

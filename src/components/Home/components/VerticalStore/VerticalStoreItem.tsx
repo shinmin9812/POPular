@@ -32,29 +32,43 @@ const InnerContent = styled.div`
   align-items: center;
 
   .text-section {
+    width: 300px;
     .item-title {
       font-weight: var(--weight-semi-bold);
       font-size: var(--font-regular);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 5px 20px 5px 0;
+      box-sizing: border-box;
     }
 
     .item-period {
-      margin-top: 7px;
+      margin-top: 2px;
       font-weight: var(--weight-light);
       font-size: var(--font-small);
       color: var(--color-light-black);
     }
+
+    @media all and (max-width: 767px) {
+      width: 180px;
+
+      .item-title {
+        font-size: 15px;
+      }
+    }
   }
 
   .image-section {
-    width: 140px;
+    width: 120px;
     height: 90px;
-    overflow: hidden;
-    border-radius: 5px;
 
     img {
-      width: 100%;
-      height: 100%;
+      width: 120px;
+      height: 90px;
       object-fit: cover;
+      overflow: hidden;
+      border-radius: 5px;
     }
   }
 `;

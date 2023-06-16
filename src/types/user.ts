@@ -1,4 +1,5 @@
 import { Category } from './category';
+import { Follow } from './follow';
 
 export const enum RoleTypes {
   USER = 'user',
@@ -13,8 +14,8 @@ export interface User {
   name: string;
   nickname: string;
   phone_number: string;
-  follower: string[];
-  following: string[];
+  follower: Follow[];
+  following: Follow[];
   profile: string;
   introduce: string;
   role: RoleTypes;

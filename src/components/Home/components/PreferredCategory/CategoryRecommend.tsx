@@ -43,8 +43,9 @@ const CategoryList = styled.div`
   width: 100%;
   margin: 28px auto;
   display: flex;
-  gap: 10px;
+  gap: 6px;
   justify-content: center;
+  flex-wrap: wrap;
 `;
 
 const CategoryItem = styled.div<CategoryItemProps>`

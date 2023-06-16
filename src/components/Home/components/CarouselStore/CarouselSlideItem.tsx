@@ -38,6 +38,11 @@ const Container = styled.div`
       object-fit: cover;
       transition: all 0.3s;
     }
+
+    @media all and (max-width: 767px) {
+      width: 180px;
+      height: 180px;
+    }
   }
   .item-description {
     margin-top: 10px;
@@ -51,6 +56,10 @@ const Container = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    @media all and (max-width: 767px) {
+      width: 180px;
+    }
   }
 
   .item-period {

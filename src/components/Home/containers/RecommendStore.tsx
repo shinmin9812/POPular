@@ -7,7 +7,12 @@ interface Props {
 }
 
 const RecommendStore = ({ stores }: Props) => {
-  const sortedData = [...stores].sort((a, b) => b.scraps.length - a.scraps.length);
+  const currentDate = new Date();
+
+  const sortedData = [...stores]
+    .filter((store) => new Date(store.end_date) >= currentDate)
+    .sort((a, b) => b.scraps.length - a.scraps.length);
+
   return (
     <Container>
       <CarouselSlideList text={'추천 팝업스토어😍'} stores={sortedData} />

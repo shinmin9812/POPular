@@ -8,15 +8,21 @@ interface Props {
 
 const RecentlyOpenStore = ({ stores }: Props) => {
   const currentDate = new Date();
-  const sortedStores = stores.slice().sort(function (a, b) {
-    let dateA = new Date(a.start_date);
-    let dateB = new Date(b.start_date);
+  const sortedStores = stores
+    .slice(0, 10)
+    .filter((store) => {
+      const openDate = new Date(store.start_date);
+      const endDate = new Date(store.end_date);
+      return currentDate >= openDate && currentDate <= endDate;
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.start_date);
+      const dateB = new Date(b.start_date);
+      const diffA = Math.abs(currentDate.getTime() - dateA.getTime());
+      const diffB = Math.abs(currentDate.getTime() - dateB.getTime());
 
-    let diffA = Math.abs(currentDate.getTime() - dateA.getTime());
-    let diffB = Math.abs(currentDate.getTime() - dateB.getTime());
-
-    return diffA - diffB;
-  });
+      return diffA - diffB;
+    });
 
   return (
     <Container>

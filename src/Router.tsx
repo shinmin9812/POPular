@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ScrollTop from './ScrollTop';
 import Layout from './components/common/Layout';
 import HomePage from './pages/Homepage';
 import { CLIENT_PATH } from './constants/path';
@@ -36,6 +37,7 @@ import AdminFeedDeletePage from './pages/Admin/AdminFeedDeletePage';
 const Router = () => {
   return (
     <BrowserRouter>
+      <ScrollTop />
       <Routes>
         <Route element={<Layout />}>
           <Route path={CLIENT_PATH.HOME} element={<HomePage />}></Route>

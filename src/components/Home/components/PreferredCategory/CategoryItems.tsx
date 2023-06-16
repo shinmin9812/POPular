@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { LinkHandler } from '../../../../utils/linkHandler';
+import { API_PATH } from '../../../../constants/path';
 
 interface Props {
   catecoryList: string;
@@ -14,7 +16,7 @@ const CategoryItems = ({ catecoryList }: Props) => {
 
   const getCategoryItems = async () => {
     try {
-      const response = await fetch(`http://34.22.81.36:3000/stores/category/${catecoryList}`, {
+      const response = await fetch(API_PATH.STORE.GET.CATEGORY.replace(':category', catecoryList), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -27,55 +29,59 @@ const CategoryItems = ({ catecoryList }: Props) => {
     }
   };
 
+  const currentDate = new Date();
+  const sortedCategoryStores = categoryData.filter((store) => {
+    const endDate = new Date(store.end_date);
+    return (
+      endDate.getFullYear() >= currentDate.getFullYear() &&
+      endDate.getMonth() >= currentDate.getMonth() &&
+      endDate.getDate() >= currentDate.getDate()
+    );
+  });
+
   return (
     <Container>
-      <CategoryItemContainer>
-        {categoryData.length > 0 ? (
-          <CategoryItemList>
-            {categoryData.slice(0, 4).map((store) => {
-              const location = store.location.split(' ').slice(0, 2).join(' ');
-              return (
-                <CategoryItem key={store._id}>
-                  <Link to={`/store/${store._id}`}>
-                    <ItemInner>
-                      <div className="item-image">
-                        <img src={store.images[0]} alt={store.title} />
-                      </div>
-                      <div className="item-description">
-                        <p className="item-title">{store.title}</p>
-                        <p className="item-location">{location}</p>
-                        <p className="item-period">
-                          {new Date(store.start_date).toISOString().slice(0, 10)} ~
-                          {new Date(store.end_date).toISOString().slice(0, 10)}
-                        </p>
-                      </div>
-                    </ItemInner>
-                  </Link>
-                </CategoryItem>
-              );
-            })}
-          </CategoryItemList>
-        ) : (
-          <Notice>
-            <TextContianer>
-              <p className="notice-emoji">🥲</p>
-              <p className="notice-message-1">해당 카테고리의 스토어가 없습니다.</p>
-              <p className="notice-message-2">
-                <span className="highlight">다른 카테고리</span>를 이용해주세요.
-              </p>
-            </TextContianer>
-          </Notice>
-        )}
-      </CategoryItemContainer>
+      {categoryData.length > 0 ? (
+        <CategoryItemList>
+          {sortedCategoryStores.slice(0, 4).map((store) => {
+            const location = store.location.split(' ').slice(0, 2).join(' ');
+            return (
+              <CategoryItem key={store._id}>
+                <Link to={`/store/${store._id}`} onClick={LinkHandler}>
+                  <ItemInner>
+                    <div className="item-image">
+                      <img src={store.images[0]} alt={store.title} />
+                    </div>
+                    <div className="item-description">
+                      <p className="item-title">{store.title}</p>
+                      <p className="item-location">{location}</p>
+                      <p className="item-period">
+                        {new Date(store.start_date).toISOString().slice(0, 10)} ~
+                        {new Date(store.end_date).toISOString().slice(0, 10)}
+                      </p>
+                    </div>
+                  </ItemInner>
+                </Link>
+              </CategoryItem>
+            );
+          })}
+        </CategoryItemList>
+      ) : (
+        <Notice>
+          <TextContianer>
+            <p className="notice-emoji">🥲</p>
+            <p className="notice-message-1">해당 카테고리의 스토어가 없습니다.</p>
+            <p className="notice-message-2">
+              <span className="highlight">다른 카테고리</span>를 이용해주세요.
+            </p>
+          </TextContianer>
+        </Notice>
+      )}
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 100%;
-`;
-
-const CategoryItemContainer = styled.div`
   width: 100%;
 `;
 
@@ -98,7 +104,7 @@ const CategoryItem = styled.li`
   width: 49%;
   height: 150px;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: #d7cdd726 0px 0px 3px 3px;
   background-color: var(--color-white);
   animation: Up 1s;
@@ -119,16 +125,19 @@ const CategoryItem = styled.li`
   }
 
   @media all and (max-width: 767px) {
-    width: 95%;
+    width: 97%;
+    height: 130px;
   }
 `;
 
 const ItemInner = styled.div`
   display: flex;
+  height: 100%;
   background-color: var(--color-white);
 
   .item-image {
     width: 50%;
+
     img {
       width: 100%;
       height: 100%;
@@ -159,6 +168,19 @@ const ItemInner = styled.div`
       margin-top: 20px;
       font-size: var(--font-small);
       color: var(--color-light-black);
+    }
+  }
+
+  @media all and (max-width: 767px) {
+    .item-description {
+      .item-title {
+        font-size: var(--font-small);
+      }
+
+      .item-period {
+        margin-top: 10px;
+        font-size: 11px;
+      }
     }
   }
 `;

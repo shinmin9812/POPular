@@ -1,6 +1,6 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useRef, CSSProperties } from 'react';
+import { useEffect, useRef, CSSProperties, useState } from 'react';
 import { Post } from '../../../types/post';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,6 +8,7 @@ import PostItem from '../../common/Post/PostItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { useParams } from 'react-router-dom';
+import { LinkHandler } from '../../../utils/ linkHandler';
 
 async function getFeeds(
   _limit: number,
@@ -37,6 +38,7 @@ type PostItemContainerProps = {
 const PagePostList = () => {
   const filter = useSelector((state: RootState) => state.UserSlice.filter);
   const { userId } = useParams();
+  const [filterLoading, setFilterLoading] = useState(false);
   const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage, refetch } = useInfiniteQuery(
     ['feeds'],
     (ctx) => getFeeds(0, ctx.pageParam, filter, userId),
@@ -68,19 +70,38 @@ const PagePostList = () => {
   }, [hasNextPage, fetchNextPage, allRows.length, isFetchingNextPage, rowVirtualizer.getVirtualItems()]);
 
   useEffect(() => {
-    refetch();
-  }, [filter, refetch]);
+    const fetchData = async () => {
+      try {
+        setFilterLoading(true);
+        await refetch();
+        setFilterLoading(false);
+      } catch (error) {
+        setFilterLoading(false);
+      }
+    };
+    fetchData();
+  }, [filter, refetch, userId]);
+
+  if (filterLoading) {
+    return (
+      <Container>
+        <Loading>
+          <img src="/images/loading.gif" alt="loading" />
+        </Loading>
+      </Container>
+    );
+  }
 
   return (
     <Container>
-      {status === 'loading' ? (
+      {status === 'loading' && !data ? (
         <Loading>
           <img src="/images/loading.gif" alt="loading" />
         </Loading>
       ) : status === 'error' ? (
         <span>Error: {(error as Error).message}</span>
       ) : allRows.length === 0 ? (
-        <NoData>작성한 게시물이 없습니다.</NoData>
+        <NonData>작성한 게시물이 없습니다.</NonData>
       ) : (
         <PostContainer ref={parentRef}>
           <PostgetTotalSize height={rowVirtualizer.getTotalSize()}>
@@ -98,7 +119,7 @@ const PagePostList = () => {
                       'Nothing more to load'
                     )
                   ) : (
-                    <Link to={`/community/post/${post._id}`}>
+                    <Link to={`/community/post/${post._id}`} onClick={LinkHandler}>
                       <PostItem post={post} />
                     </Link>
                   )}
@@ -133,9 +154,10 @@ const Loading = styled.div`
   }
 `;
 
-const NoData = styled.div`
+const NonData = styled.div`
   width: 100%;
   text-align: center;
+  padding: 50px 0px;
 `;
 
 const PostContainer = styled.div`

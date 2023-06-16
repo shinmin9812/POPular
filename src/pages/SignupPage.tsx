@@ -6,7 +6,9 @@ const SignupPage = () => {
   return (
     <Container>
       <MetaTag title={`POPULAR | 회원가입`} />
-      <Intro></Intro>
+      <Intro>
+        <IntroImg src="images/PopularIntro.png" />
+      </Intro>
       <SignupContainer>
         <PageTitle>회원가입</PageTitle>
         <SignupForm></SignupForm>
@@ -26,10 +28,8 @@ const Container = styled.div`
 
 const Intro = styled.section`
   display: none;
-  @media (min-width: 768px) {
+  @media (min-width: 850px) {
     display: block;
-    background: linear-gradient(to bottom right, var(--color-main), var(--color-white));
-    color: var(--color-white);
     height: 800px;
     border-radius: 10px;
     padding: 20px;
@@ -37,12 +37,21 @@ const Intro = styled.section`
   }
 `;
 
+const IntroImg = styled.img`
+  width: 100%;
+  border-radius: 15px;
+  @media screen and (min-width: 850px) {
+    flex: 1;
+  }
+`;
+
 const SignupContainer = styled.div`
   height: 700px;
   display: flex;
   flex-direction: column;
-  margin-top: 80px;
-  @media (min-width: 768px) {
+  justify-content: center;
+  @media screen and (min-width: 768px) {
+    padding-bottom: 50px;
     flex: 1;
     padding: 0 20px;
   }

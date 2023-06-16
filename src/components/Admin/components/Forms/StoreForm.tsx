@@ -3,7 +3,7 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useRef, useState } from 'react';
 import Button from '../../../common/Button/Button';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { PostedStore } from '../../../../types/store';
+import { PostedStore, Store } from '../../../../types/store';
 import { Category } from '../../../../types/category';
 import { SNS } from '../../../../types/sns';
 import { useEditStore, usePostStore } from '../../../../api/storeApi';
@@ -15,6 +15,7 @@ import StoreTitle from '../../../StoreDetail/container/StoreTitle';
 import Modal from '../../../common/Modal/Modal';
 import { useQueryClient } from '@tanstack/react-query';
 import AlertModal from '../../../common/Modals/AlertModal';
+import { postOpenNotificationAllUser, usePostOpenNotificationAllUser } from '../../../../api/notificationApi';
 
 const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
@@ -172,9 +173,9 @@ const StoreForm = ({ defaultData }: Props) => {
     isLoading: postLoading,
     isSuccess: postIsSuccess,
   } = usePostStore({
-    onSuccess: () => {
-      console.log('add');
+    onSuccess: (data: Store) => {
       setModalOpen(true);
+      postOpenNotificationAllUser(data._id);
     },
   });
 
@@ -200,7 +201,10 @@ const StoreForm = ({ defaultData }: Props) => {
                 message: '종료일은 시작일 이후여야합니다!',
               });
             }
-            defaultData ? editMutate({ storeData: data, storeId: storeId as string }) : postMutate(data);
+            if (defaultData) editMutate({ storeData: data, storeId: storeId as string });
+            else {
+              postMutate(data);
+            }
           })}
         >
           <label>

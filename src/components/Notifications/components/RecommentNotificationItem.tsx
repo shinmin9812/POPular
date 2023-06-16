@@ -58,7 +58,7 @@ const RecommentNotificationItem = ({ id, recommentData, board, checked }: Props)
     } else setFeedId;
   }, []);
   return (
-    <Container checked={checked}>
+    <Container data={recommentData} checked={checked}>
       {recommentData ? (
         <>
           <Link
@@ -87,7 +87,7 @@ const RecommentNotificationItem = ({ id, recommentData, board, checked }: Props)
 
 export default RecommentNotificationItem;
 
-const Container = styled.div<{ checked: boolean }>`
+const Container = styled.div<{ data: Comment; checked: boolean }>`
   width: 95%;
   height: 80px;
   margin: 10px auto;
@@ -103,7 +103,7 @@ const Container = styled.div<{ checked: boolean }>`
   display: flex;
   align-items: center;
 
-  opacity: ${(props) => (props.checked ? 0.3 : 1)};
+  opacity: ${(props) => (!props.data || props.checked ? 0.3 : 1)};
 
   a {
     color: ${(props) => props.checked && 'var(--color-light-black)'};
@@ -120,11 +120,9 @@ const Item = styled.div`
 `;
 
 const RemoveButton = styled.span`
-  color: var(--color-light-black);
-  padding: 10px;
-  margin-right: 10px;
   cursor: pointer;
-
+  position: relative;
+  right: 20px;
   :hover {
     transition: all 0.1s ease;
     opacity: 1;
@@ -136,11 +134,15 @@ const RemoveButton = styled.span`
 
 const Content = styled.div`
   margin: 0 18px;
-  flex: 1;
+  width: 100%;
+  display: grid;
 `;
 
 const Message = styled.p`
   margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const CommentContainer = styled.div`
@@ -151,14 +153,14 @@ const CommentContainer = styled.div`
 const CommentContent = styled.p`
   font-size: var(--font-regular);
   margin-left: 10px;
-  flex: 1;
+  width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-const ErrorItem = styled.p`
-  color: var(--color-gray);
+const ErrorItem = styled.div`
+  color: var(--color-light-black);
   width: 100%;
   text-align: center;
 `;

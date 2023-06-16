@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 import styled from 'styled-components';
 import AdNotificationItem from './AdNotificationItem';
 import CommentNotificationItem from './CommentNotificationItem';
@@ -7,7 +8,6 @@ import FollowNotificationItem from './FollowNotificationItem';
 import { Notification } from '../../../types/notification';
 import RecommentNotificationItem from './RecommentNotificationItem';
 import { Link } from 'react-router-dom';
-import { RootState } from '../../../store';
 
 const NotificationList = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);

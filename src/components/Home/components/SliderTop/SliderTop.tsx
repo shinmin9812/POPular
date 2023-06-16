@@ -8,12 +8,21 @@ const SliderTop = () => {
     dots: true,
     infinite: true,
     speed: 1000,
-    //autoplay: true,
+    autoplay: true,
+    autoplaySpeed: 5000,
     slidesToShow: 1,
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: '50px',
     adaptiveHeight: true,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          centerPadding: '0',
+        },
+      },
+    ],
   };
   return (
     <SlideFrame>
@@ -49,7 +58,7 @@ const SliderTop = () => {
               <TextBox>
                 <p className="innertext-1">맛있는 커피와 함께!</p>
                 <p className="innertext-2">'블루보틀' 팝업스토어</p>
-                <p className="innertext-3">MZ세대 최애 '무직타이거' 팝업스토어 오픈</p>
+                <p className="innertext-3">글라스 워터 보틀은 스페셜 한정판으로 만나보세요!</p>
               </TextBox>
               <InnerImage className="image-3"></InnerImage>
               <Object className="object-animation object-3"></Object>
@@ -62,7 +71,11 @@ const SliderTop = () => {
 };
 
 const SlideFrame = styled.div`
-  height: 270px;
+  height: 240px;
+
+  @media all and (max-width: 767px) {
+    height: 220px;
+  }
 `;
 const SlideBox = styled.div`
   width: 100%;
@@ -85,11 +98,17 @@ const SlideContent = styled.div`
   }
 
   &.slide-02 {
-    background-color: lightblue;
+    background-color: #cae3eb;
   }
 
   &.slide-03 {
     background-color: rgb(241 241 241);
+  }
+
+  @media all and (max-width: 767px) {
+    width: 100%;
+    border-radius: 0px;
+    height: 220px;
   }
 `;
 const TextBox = styled.div`
@@ -124,6 +143,14 @@ const TextBox = styled.div`
 
   @media all and (max-width: 767px) {
     left: 6%;
+
+    .innertext-1 {
+      font-size: var(--font-regular);
+    }
+
+    .innertext-2 {
+      margin-top: 7px;
+    }
   }
 `;
 
@@ -140,6 +167,10 @@ const InnerImage = styled.div`
     z-index: 3;
     width: 400px;
     height: 500px;
+
+    @media all and (max-width: 767px) {
+      display: none;
+    }
   }
 
   &.image-2 {
@@ -151,6 +182,11 @@ const InnerImage = styled.div`
     z-index: 3;
     width: 700px;
     height: 500px;
+
+    @media all and (max-width: 767px) {
+      width: 700px;
+      height: 500px;
+    }
   }
 
   &.image-2-1 {
@@ -175,6 +211,10 @@ const InnerImage = styled.div`
     z-index: 3;
     width: 500px;
     height: 400px;
+
+    @media all and (max-width: 767px) {
+      opacity: 0.15;
+    }
   }
 `;
 
@@ -199,6 +239,12 @@ const Object = styled.div`
     bottom: 0;
     right: 20%;
     animation: identifier 0.9s;
+
+    @media all and (max-width: 767px) {
+      width: 140px;
+      height: 140px;
+      right: 5%;
+    }
   }
 
   &.object-2 {
@@ -211,6 +257,13 @@ const Object = styled.div`
     bottom: -40px;
     right: 15%;
     animation: identifier 0.9s;
+
+    @media all and (max-width: 767px) {
+      width: 240px;
+      height: 240px;
+      right: -10%;
+      bottom: -100px;
+    }
   }
 
   &.object-3 {
@@ -224,6 +277,13 @@ const Object = styled.div`
     bottom: 0;
     right: 20%;
     animation: identifier 0.9s;
+
+    @media all and (max-width: 767px) {
+      width: 200px;
+      height: 200px;
+      bottom: 0;
+      right: 0%;
+    }
   }
 
   @media all and (max-width: 767px) {

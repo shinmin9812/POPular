@@ -105,7 +105,7 @@ const Container = styled.div`
   }
 
   .update-title {
-    font-size: var(--font-reguler);
+    font-size: 17px;
     font-weight: var(--weight-semi-bold);
   }
   .update-description {

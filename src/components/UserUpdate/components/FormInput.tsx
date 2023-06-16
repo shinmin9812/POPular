@@ -74,7 +74,11 @@ const Label = styled.label`
   align-items: top;
   margin-top: 5px;
   width: 200px;
-  font-size: var(--font-small);
+  font-size: var(--font-regular);
+
+  @media all and (max-width: 767px) {
+    font-size: var(--font-small);
+  }
 `;
 
 const InputFrame = styled.div`

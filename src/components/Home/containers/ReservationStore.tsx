@@ -8,8 +8,9 @@ interface Props {
 
 const ReservationStore = ({ stores }: Props) => {
   let newArray = [];
+  const currentDate = new Date();
   for (let i = 0; i < stores.length; i++) {
-    if (stores[i].reservation_required === true) {
+    if (stores[i].reservation_required === true && new Date(stores[i].end_date) > currentDate) {
       newArray.push(stores[i]);
     }
   }

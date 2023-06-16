@@ -17,7 +17,7 @@ const CommentItem = ({ parentId, comment, date }: Props) => {
 
   const getFeedData = async (id: string) => {
     try {
-      const response = await fetch(`http://34.22.81.36:3000/feeds/${id}`);
+      const response = await fetch(`http://34.22.81.36:3000/feeds/info/${id}`);
       const data = await response.json();
       setFeedTitle(data.title);
       setBoard(data.board as BoardTypes);
@@ -36,7 +36,9 @@ const CommentItem = ({ parentId, comment, date }: Props) => {
   return (
     <>
       {error || !feedTitle ? (
-        <Blank>삭제된 글입니다.</Blank>
+        <Blank>
+          <img width="40px" src="/images/loading.gif" alt="loading" />
+        </Blank>
       ) : (
         <Container>
           <Link to={`/community/post/${parentId}`}>

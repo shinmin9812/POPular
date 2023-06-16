@@ -93,15 +93,6 @@ const Accodions = [
       },
     ],
   },
-  {
-    title: '알림 관리',
-    list: [
-      {
-        name: '알림 보내기',
-        path: CLIENT_PATH.ADMIN_NOTIFICATION.SEND,
-      },
-    ],
-  },
 ];
 
 const MenuMap = new Map<string, string>([
