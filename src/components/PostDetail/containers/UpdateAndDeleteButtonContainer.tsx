@@ -27,14 +27,10 @@ const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
 
   const postId = useParams().postId;
 
-  async function DeleteFetchData() {
-    await callApi('DELETE', API_PATH.POST.DELETE, JSON.stringify([postId ? postId : '']));
-  }
-
   const isAuthor = post && UserData?._id === post.author._id;
 
-  const deletePost = () => {
-    DeleteFetchData();
+  const deletePost = async () => {
+    await callApi('DELETE', API_PATH.POST.DELETE, JSON.stringify([postId ? postId : '']));
     navigate(-1);
   };
 
