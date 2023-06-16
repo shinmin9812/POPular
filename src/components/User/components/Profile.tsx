@@ -19,7 +19,6 @@ const Profile = () => {
   const [modal, setModal] = useState(false);
   const [modalType, setModalType] = useState('');
 
-  console.log(modal);
   useEffect(() => {
     getUserInfo();
     fetchData();
@@ -160,14 +159,13 @@ const Profile = () => {
         </div>
       </ProfileDescript>
       {modal ? (
-        <ModalBackground>
+        <ModalBackground onClick={() => setModal(false)}>
           <FollowModal>
             {modalType === 'follower' ? (
               <Follower text={'팔로워'} user={user} />
             ) : modalType === 'following' ? (
               <Follower text={'팔로잉'} user={user} />
             ) : null}
-            <ModalClose onClick={() => setModal(false)}>x</ModalClose>
           </FollowModal>
         </ModalBackground>
       ) : null}
@@ -308,20 +306,6 @@ const FollowModal = styled.div`
     width: 320px;
     height: 400px;
   }
-`;
-const ModalClose = styled.div`
-  width: 30px;
-  height: 30px;
-  background-color: var(--color-sub);
-  color: var(--color-white);
-
-  text-align: center;
-  line-height: 28px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  font-weight: var(--weight-semi-bold);
-  cursor: pointer;
 `;
 
 export default Profile;

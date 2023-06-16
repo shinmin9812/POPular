@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import FollowItem from './FollowItem';
 import { User } from '../../../types/user';
+import { Link } from 'react-router-dom';
+import { LinkHandler } from '../../../utils/ linkHandler';
 
 interface Props {
   text: string;
@@ -14,21 +16,21 @@ const Follower = ({ text, user }: Props) => {
       {text === '팔로워' ? (
         <FollowList>
           {user.follower.map((item, i) => (
-            <a href={`/community/user/${item._id}`}>
+            <Link to={`/community/user/${item._id}`} onClick={LinkHandler}>
               <div key={i}>
                 <FollowItem list={item} />
               </div>
-            </a>
+            </Link>
           ))}
         </FollowList>
       ) : text === '팔로잉' ? (
         <FollowList>
           {user.following.map((item, i) => (
-            <a href={`/community/user/${item._id}`}>
+            <Link to={`/community/user/${item._id}`} onClick={LinkHandler}>
               <div key={i}>
                 <FollowItem list={item} />
               </div>
-            </a>
+            </Link>
           ))}
         </FollowList>
       ) : null}

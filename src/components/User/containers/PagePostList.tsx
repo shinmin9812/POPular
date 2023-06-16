@@ -80,7 +80,7 @@ const PagePostList = () => {
       }
     };
     fetchData();
-  }, [filter, refetch]);
+  }, [filter, refetch, userId]);
 
   if (filterLoading) {
     return (
