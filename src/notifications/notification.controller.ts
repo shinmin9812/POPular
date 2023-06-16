@@ -104,9 +104,14 @@ export class NotificationsController {
 	})
 	@ApiBody({ type: NotificationCreateDto })
 	@Post('/all')
-	async createNotificationsForAll(@Body() notificationCreateDto: NotificationCreateDto) {
-			const notifications = await this.notificationService.createNotificationsForAll(notificationCreateDto);
-			return { message: '모든 사용자에게 알림이 생성되었습니다.', notifications };
+	async createNotificationsForAll(
+		@Body() notificationCreateDto: NotificationCreateDto,
+	) {
+		const notifications =
+			await this.notificationService.createNotificationsForAll(
+				notificationCreateDto,
+			);
+		return { message: '모든 사용자에게 알림이 생성되었습니다.', notifications };
 	}
 
 	@ApiOperation({ summary: '알림 수정하기' })

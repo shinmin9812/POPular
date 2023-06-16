@@ -109,12 +109,12 @@ export class NotificationsService {
 	): Promise<Notification[]> {
 		try {
 			const targetUsers = await this.userModel.find().exec();
-			const notificationPromises = targetUsers.map(async (user) => {
-				if(user.allow_notification === false) {
+			const notificationPromises = targetUsers.map(async user => {
+				if (user.allow_notification === false) {
 				} else {
 					const notificationDto = {
 						...notificationCreateDto,
-						user_id: user._id,
+						user_id: user._id.toString(),
 					};
 					return this.createNotification(notificationDto);
 				}
@@ -174,14 +174,15 @@ export class NotificationsService {
 
 	async deleteNotifications(ids: string[]): Promise<void> {
 		try {
-			const notifications: Notification[] = await this.notificationModel
-				.find({ _id: {$in: ids} });
+			const notifications: Notification[] = await this.notificationModel.find({
+				_id: { $in: ids },
+			});
 
-			if(notifications.length > 0) {
+			if (notifications.length > 0) {
 				let notificationsToDelete: string[] = [];
 				notifications.forEach(notification => {
 					notificationsToDelete.push(notification.toString());
-				})
+				});
 			}
 			const deleteResult = await this.notificationModel
 				.deleteMany({ _id: { $in: ids } })
