@@ -31,9 +31,6 @@ const Intro = styled.section`
   display: none;
   @media (min-width: 768px) {
     display: block;
-    // background: linear-gradient(to bottom right, var(--color-main), var(--color-white));
-    // color: var(--color-white);
-    // height: 800px;
     border-radius: 10px;
     padding: 20px;
     flex: 1;
