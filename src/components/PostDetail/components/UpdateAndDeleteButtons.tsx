@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import ConfirmModal from '../../common/Modals/ConfirmModal';
 import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 
 const Button = styled.button<{ update: boolean }>`
   color: var(--color-white);

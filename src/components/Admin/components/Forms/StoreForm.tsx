@@ -12,10 +12,9 @@ import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 import StoreInfo from '../../../StoreDetail/container/StoreInfo';
 import StoreTitle from '../../../StoreDetail/container/StoreTitle';
-import Modal from '../../../common/Modal/Modal';
 import { useQueryClient } from '@tanstack/react-query';
 import AlertModal from '../../../common/Modals/AlertModal';
-import { postOpenNotificationAllUser, usePostOpenNotificationAllUser } from '../../../../api/notificationApi';
+import { postOpenNotificationAllUser } from '../../../../api/notificationApi';
 
 const week = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 

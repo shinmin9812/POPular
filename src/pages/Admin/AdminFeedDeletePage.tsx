@@ -3,7 +3,6 @@ import Card from '../../components/common/Card/Card';
 import { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import { useQueryClient } from '@tanstack/react-query';
-import Modal from '../../components/common/Modal/Modal';
 import AlertModal from '../../components/common/Modals/AlertModal';
 import { useDeleteFeeds, useGetAllFeeds } from '../../api/feedApi';
 import AdminFeedList from '../../components/Admin/components/Feeds/AdminFeedList';

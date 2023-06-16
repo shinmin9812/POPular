@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ScrollTop from './ScrollTop';
 import Layout from './components/common/Layout';
 import HomePage from './pages/Homepage';

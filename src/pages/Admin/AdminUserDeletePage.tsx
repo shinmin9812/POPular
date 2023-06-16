@@ -4,7 +4,6 @@ import { useDeleteUsers, useGetAllUsers } from '../../api/userApi';
 import { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import { useQueryClient } from '@tanstack/react-query';
-import Modal from '../../components/common/Modal/Modal';
 import AlertModal from '../../components/common/Modals/AlertModal';
 import AdminUserList from '../../components/Admin/components/Users/AdminUserList';
 import AdminUserItem from '../../components/Admin/components/Users/AdminUserItem';

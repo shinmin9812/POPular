@@ -13,5 +13,6 @@ export const commentData: Comment[] = [
     },
     recomments: [],
     updatedAt: '2023-06-13',
+    createdAt: '2023-06-13',
   },
 ];

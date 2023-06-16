@@ -7,7 +7,6 @@ import AdminStoreItem from '../../components/Admin/components/Stores/AdminStoreI
 import Button from '../../components/common/Button/Button';
 import { useQueryClient } from '@tanstack/react-query';
 import { Category } from '../../types/category';
-import Modal from '../../components/common/Modal/Modal';
 import AlertModal from '../../components/common/Modals/AlertModal';
 
 const Container = styled.div`

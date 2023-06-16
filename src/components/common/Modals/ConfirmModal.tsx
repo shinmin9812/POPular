@@ -16,7 +16,6 @@ const ConfirmModal = ({ content, onConfirm, onClose }: Props) => {
         <p>{content}</p>
         <div className="btns">
           <Button
-            className="confirm"
             onClick={() => {
               onConfirm();
               onClose(false);
@@ -24,9 +23,7 @@ const ConfirmModal = ({ content, onConfirm, onClose }: Props) => {
           >
             예
           </Button>
-          <Button className="decline" onClick={() => onClose(false)}>
-            아니요
-          </Button>
+          <Button onClick={() => onClose(false)}>아니요</Button>
         </div>
       </Container>
     </Modal>
