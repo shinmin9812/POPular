@@ -18,6 +18,7 @@ const Container = styled.div`
     border: none;
     border-radius: 15px;
 
+    font-size: 20px;
     text-align: center;
 
     box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.39);
@@ -50,7 +51,7 @@ const Container = styled.div`
     background-color: #fff;
 
     font-weight: 500;
-    font-size: 14px;
+    font-size: 18px;
   }
 
   .result-item:hover {
@@ -76,7 +77,7 @@ const SearchBox = ({ searchRef, map, setCenter }: Props) => {
 
   const changeHanlder = () => {
     if (!searchRef.current?.value) return;
-    searchAddress(searchRef.current?.value);
+    setTimeout(() => searchAddress(searchRef.current?.value), 100);
   };
 
   async function searchAddress(query: string) {
@@ -120,7 +121,7 @@ const SearchBox = ({ searchRef, map, setCenter }: Props) => {
           setFocusInput(true);
         }}
         onBlur={() => {
-          setTimeout(() => setFocusInput(false), 100);
+          setTimeout(() => setFocusInput(false), 500);
         }}
       />
       {focusInput && results.length > 0 && (
