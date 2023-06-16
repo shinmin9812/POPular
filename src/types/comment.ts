@@ -14,5 +14,6 @@ export interface Comment {
     id: string;
   };
   updatedAt: string;
+  createdAt: string;
   recomments?: Comment[];
 }

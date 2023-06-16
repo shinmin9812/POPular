@@ -36,7 +36,7 @@ const RemoveNotification = async (id: string) => {
 
 const FollowNotificationItem = ({ id, follower, checked }: Props) => {
   return (
-    <Container checked={checked}>
+    <Container data={follower} checked={checked}>
       {follower ? (
         <>
           <Link to={`/community/user/${follower._id}`} onClick={() => handleChecked(checked, id)}>
@@ -56,7 +56,7 @@ const FollowNotificationItem = ({ id, follower, checked }: Props) => {
 
 export default FollowNotificationItem;
 
-const Container = styled.div<{ checked: boolean }>`
+const Container = styled.div<{ data: User; checked: boolean }>`
   width: 95%;
   height: 80px;
   margin: 8px auto;
@@ -69,7 +69,7 @@ const Container = styled.div<{ checked: boolean }>`
   justify-content: space-between;
   align-items: center;
 
-  opacity: ${(props) => (props.checked ? 0.3 : 1)};
+  opacity: ${(props) => (!props.data || props.checked ? 0.3 : 1)};
 
   a {
     color: ${(props) => props.checked && 'var(--color-light-black)'};
@@ -91,14 +91,13 @@ const Message = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 200px;
 `;
 
 const RemoveButton = styled.span`
-  color: var(--color-light-black);
-  padding: 10px;
-  margin-right: 10px;
   cursor: pointer;
-
+  position: relative;
+  right: 20px;
   :hover {
     transition: all 0.1s ease;
     opacity: 1;
@@ -108,8 +107,8 @@ const RemoveButton = styled.span`
   transition: all 0.2s ease;
 `;
 
-const ErrorItem = styled.p`
-  color: var(--color-gray);
+const ErrorItem = styled.div`
+  color: var(--color-light-black);
   width: 100%;
   text-align: center;
 `;

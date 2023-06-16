@@ -4,45 +4,25 @@ import MenuList from './MenuList';
 import { useEffect, useState } from 'react';
 import MenuItem from './MenuItem';
 import { useNavigate } from 'react-router-dom';
+import callApi from '../../../utils/callApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const MemberMenu = () => {
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState('');
-  const [nickname, setNickname] = useState('');
   const [userId, setUserId] = useState('');
 
-  const getUserInfo = async () => {
-    try {
-      const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      const data = await response.json();
-      setProfileImage(data.profile);
-      setNickname(data.nickname);
-      setUserId(data._id);
-      return data;
-    } catch (err: any) {
-      throw new Error(err);
-    }
-  };
+  const userData = useSelector((state: RootState) => state.UserSlice.user);
 
   useEffect(() => {
-    getUserInfo();
+    if (userData) {
+      setUserId(userData._id);
+    }
   }, []);
 
   const fetchDeleteUser = (userId: string) => {
     try {
-      fetch(`http://34.22.81.36:3000/users/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      callApi('DELETE', `http://34.22.81.36:3000/users/${userId}`);
     } catch (err: any) {
       throw new Error(err);
     }
@@ -61,7 +41,7 @@ const MemberMenu = () => {
 
   return (
     <Container>
-      <UserProfile profileImage={profileImage} nickname={nickname} userId={userId} />
+      <UserProfile />
       <MenuItem link={`/community/user/${userId}`} title="내 프로필 보기" />
       <MenuItem link={`/user/${userId}/update`} title="회원정보 수정" />
       <MenuList />
