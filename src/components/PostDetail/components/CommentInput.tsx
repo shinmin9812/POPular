@@ -46,9 +46,7 @@ const CommentInput = ({
         value={value}
         onCompositionStart={() => setIsComposing(true)}
         onCompositionEnd={() => setIsComposing(false)}
-        onKeyUp={(e) => {
-          console.log(isComposing);
-          if (isComposing) return;
+        onKeyPress={(e) => {
           if (e.key === 'Enter') {
             RegisterComment();
           }
