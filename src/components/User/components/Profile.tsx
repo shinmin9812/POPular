@@ -146,7 +146,7 @@ const Profile = () => {
         <p className="user-introduce">{user.introduce}</p>
         <div className="button-position">
           {userInfo === userId ? (
-            <ProfileButton text={'프로필수정'} type={'profileEdit'} link={`/user/${userId}/update`} />
+            <ProfileButton text={'프로필수정'} type={'profileEdit'} link={`/usermenu/${userId}/update`} />
           ) : (
             <div>
               {checkFollower ? (
