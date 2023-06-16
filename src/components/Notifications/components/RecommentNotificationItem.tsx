@@ -120,11 +120,9 @@ const Item = styled.div`
 `;
 
 const RemoveButton = styled.span`
-  color: var(--color-light-black);
-  padding: 10px;
-  margin-right: 10px;
   cursor: pointer;
-
+  position: relative;
+  right: 20px;
   :hover {
     transition: all 0.1s ease;
     opacity: 1;
@@ -136,11 +134,15 @@ const RemoveButton = styled.span`
 
 const Content = styled.div`
   margin: 0 18px;
-  flex: 1;
+  width: 100%;
+  display: grid;
 `;
 
 const Message = styled.p`
   margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const CommentContainer = styled.div`
@@ -151,7 +153,7 @@ const CommentContainer = styled.div`
 const CommentContent = styled.p`
   font-size: var(--font-regular);
   margin-left: 10px;
-  flex: 1;
+  width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

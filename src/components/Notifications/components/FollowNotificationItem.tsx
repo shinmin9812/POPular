@@ -42,7 +42,7 @@ const FollowNotificationItem = ({ id, follower, checked }: Props) => {
           <Link to={`/community/user/${follower._id}`} onClick={() => handleChecked(checked, id)}>
             <ItemContainer>
               <UserIconMini />
-              <Message>{follower.nickname}님이 회원님을 팔로우합니다.</Message>
+              <Message>{follower.nickname}님이 회원님을 팔로우합니다아아아아아아아아</Message>
             </ItemContainer>
           </Link>
           <RemoveButton onClick={() => RemoveNotification(id)}>×</RemoveButton>
@@ -91,14 +91,13 @@ const Message = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 200px;
 `;
 
 const RemoveButton = styled.span`
-  color: var(--color-light-black);
-  padding: 10px;
-  margin-right: 10px;
   cursor: pointer;
-
+  position: relative;
+  right: 20px;
   :hover {
     transition: all 0.1s ease;
     opacity: 1;
