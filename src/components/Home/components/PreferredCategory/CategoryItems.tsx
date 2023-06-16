@@ -41,7 +41,7 @@ const CategoryItems = ({ catecoryList }: Props) => {
 
   return (
     <Container>
-      {categoryData.length > 0 ? (
+      {sortedCategoryStores.length > 0 ? (
         <CategoryItemList>
           {sortedCategoryStores.slice(0, 4).map((store) => {
             const location = store.location.split(' ').slice(0, 2).join(' ');
