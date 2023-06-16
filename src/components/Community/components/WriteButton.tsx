@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import PenIcon from '../../common/Icons/PenIcon';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CLIENT_PATH } from '../../../constants/path';
+import { useState } from 'react';
+import LoginModal from '../../common/Modals/LoginModal';
 
 const Button = styled.button`
   display: inline-flex;
@@ -17,14 +19,11 @@ const Button = styled.button`
   padding: 10px;
   margin-top: 10px;
   cursor: pointer;
+  font-size: 14px;
+  color: var(--color-white);
 
   @media (max-width: 768px) {
     width: fit-content;
-  }
-  a {
-    font-size: 14px;
-    color: var(--color-white);
-    width: 100%;
   }
 
   span {
@@ -37,12 +36,19 @@ const Button = styled.button`
 
 const WriteButton = () => {
   const token = localStorage.getItem('token');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
+
   return (
-    <Button>
-      <Link to={token ? CLIENT_PATH.WRITE : CLIENT_PATH.LOGIN}>
-        <span>글쓰기</span>
-        <PenIcon />
-      </Link>
+    <Button
+      onClick={() => {
+        if (!token) setIsModalOpen(true);
+        else navigate(CLIENT_PATH.WRITE);
+      }}
+    >
+      <span>글쓰기</span>
+      <PenIcon />
+      {isModalOpen && <LoginModal onClose={setIsModalOpen} />}
     </Button>
   );
 };

@@ -105,6 +105,7 @@ const StoreForm = ({ defaultData }: Props) => {
   const imageRef = useRef<HTMLInputElement | null>(null);
   const targettedStartDate = useRef<HTMLInputElement | null>(null);
   const targettedEndDate = useRef<HTMLInputElement | null>(null);
+  const [overFiveImages, setOverFiveImages] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
@@ -470,6 +471,10 @@ const StoreForm = ({ defaultData }: Props) => {
               ref={imageRef}
               onChange={(e) => {
                 const reader = new FileReader();
+                if (watch().images.length > 4) {
+                  setOverFiveImages(true);
+                  return;
+                }
                 reader.readAsDataURL(e.target.files![0]);
                 reader.onload = (e) => {
                   appendImages(e.target!.result);
@@ -508,16 +513,9 @@ const StoreForm = ({ defaultData }: Props) => {
         <StoreTitle store={{ ...watch(), _id: 'fake' }} />
         <StoreInfo store={{ ...watch(), _id: 'fake' }} />
       </Card>
-      {modalOpen && postIsSuccess && (
-        <Modal>
-          <AlertModal content="스토어가 생성되었습니다!" onClose={setModalOpen} />
-        </Modal>
-      )}
-      {modalOpen && editIsSuccess && (
-        <Modal>
-          <AlertModal content="스토어가 수정되었습니다!" onClose={setModalOpen} />
-        </Modal>
-      )}
+      {postIsSuccess && modalOpen && <AlertModal content="스토어가 생성되었습니다!" onClose={setModalOpen} />}
+      {editIsSuccess && modalOpen && <AlertModal content="스토어가 수정되었습니다!" onClose={setModalOpen} />}
+      {overFiveImages && <AlertModal content="이미지는 최대 5개까지 가능합니다!" onClose={setOverFiveImages} />}
     </Container>
   );
 };

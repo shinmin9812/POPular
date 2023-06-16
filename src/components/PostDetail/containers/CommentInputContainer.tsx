@@ -7,6 +7,7 @@ import { Comment } from '../../../types/comment';
 import { getComments } from '../../../api/CommentApi';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
+import LoginModal from '../../common/Modals/LoginModal';
 
 type postCommentBody = {
   author: string;
@@ -49,9 +50,11 @@ const CommentInputContainer = ({
     setInput(e.target.value.normalize());
   };
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const RegisterComment = () => {
     if (!UserData) {
-      alert('로그인이 필요합니다.');
+      setIsModalOpen(true);
       return;
     }
     const data: postCommentBody = {
@@ -67,13 +70,16 @@ const CommentInputContainer = ({
     setReCommentInput && setReCommentInput();
   };
   return (
-    <CommentInput
-      isComposing={isComposing}
-      setIsComposing={setIsComposing}
-      onChange={onChange}
-      value={input}
-      RegisterComment={RegisterComment}
-    />
+    <>
+      <CommentInput
+        isComposing={isComposing}
+        setIsComposing={setIsComposing}
+        onChange={onChange}
+        value={input}
+        RegisterComment={RegisterComment}
+      />
+      {isModalOpen && <LoginModal onClose={setIsModalOpen} />}
+    </>
   );
 };
 

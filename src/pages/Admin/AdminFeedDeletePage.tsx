@@ -114,11 +114,7 @@ const AdminFeedDeletePage = () => {
           <Button onClick={deleteHandler}>피드 삭제하기</Button>
         </Card>
       )}
-      {isSuccess && isModalOpen && (
-        <Modal>
-          <AlertModal onClose={setIsModalOpen} content="피드가 삭제되었습니다!"></AlertModal>
-        </Modal>
-      )}
+      {isSuccess && isModalOpen && <AlertModal onClose={setIsModalOpen} content="피드가 삭제되었습니다!"></AlertModal>}
     </Container>
   );
 };

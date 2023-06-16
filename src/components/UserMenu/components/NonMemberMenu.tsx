@@ -4,8 +4,7 @@ import LoginLink from './LoginLink';
 import MenuItem from './MenuItem';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import Modal from '../../common/Modal/Modal';
-import AlertModal from '../../common/Modals/AlertModal';
+import LoginModal from '../../common/Modals/LoginModal';
 
 const NonMemberMenu = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -26,11 +25,7 @@ const NonMemberMenu = () => {
           회원가입
         </Link>
       </MenuList>
-      {isModalOpen && (
-        <Modal>
-          <AlertModal onClose={setIsModalOpen} content="로그인을 해주세요!"></AlertModal>
-        </Modal>
-      )}
+      {isModalOpen && <LoginModal onClose={setIsModalOpen} />}
     </>
   );
 };

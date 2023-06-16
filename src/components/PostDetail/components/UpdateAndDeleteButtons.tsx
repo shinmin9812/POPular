@@ -1,4 +1,8 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import ConfirmModal from '../../common/Modals/ConfirmModal';
+import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Button = styled.button<{ update: boolean }>`
   color: var(--color-white);
@@ -23,14 +27,26 @@ const ButtonWrap = styled.div`
 `;
 
 const UpdateAndDelete = ({ deletePost, updatePost }: { deletePost: () => void; updatePost: () => void }) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
   return (
     <ButtonWrap>
       <Button update={true} onClick={updatePost}>
         수정
       </Button>
-      <Button update={false} onClick={deletePost}>
+      <Button update={false} onClick={() => setIsModalOpen(true)}>
         삭제
       </Button>
+      {isModalOpen && (
+        <ConfirmModal
+          onClose={setIsModalOpen}
+          onConfirm={() => {
+            deletePost();
+            navigate('/community/board');
+          }}
+          content="게시글을 삭제하시겠습니까?"
+        />
+      )}
     </ButtonWrap>
   );
 };

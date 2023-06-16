@@ -5,6 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../../Hooks/useSelectorHooks'
 import { PostDetailActions } from '../PostDetailSlice';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
+import LoginModal from '../../common/Modals/LoginModal';
 
 const LikesAndReportsContainer = () => {
   const postId = useParams().postId;
@@ -19,6 +20,8 @@ const LikesAndReportsContainer = () => {
     return dispatch(PostDetailActions.setReports(reports));
   };
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const [checkLike, setCheckLike] = useState<boolean>();
   const [checkReport, setCheckReport] = useState<boolean>();
 
@@ -29,7 +32,7 @@ const LikesAndReportsContainer = () => {
 
   async function FetchData(isLike: string) {
     if (!UserData) {
-      alert('로그인이 필요합니다.');
+      setIsModalOpen(true);
       return;
     }
     const data = { [isLike]: UserData._id };
@@ -43,13 +46,16 @@ const LikesAndReportsContainer = () => {
   }
 
   return (
-    <LikesAndReports
-      checkLike={checkLike}
-      checkReport={checkReport}
-      likes={likes.length}
-      reports={reports.length}
-      onClick={FetchData}
-    ></LikesAndReports>
+    <>
+      <LikesAndReports
+        checkLike={checkLike}
+        checkReport={checkReport}
+        likes={likes.length}
+        reports={reports.length}
+        onClick={FetchData}
+      ></LikesAndReports>
+      {isModalOpen && <LoginModal onClose={setIsModalOpen} />}
+    </>
   );
 };
 

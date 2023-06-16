@@ -6,6 +6,7 @@ import { useGetLoginuser } from '../../../api/userApi';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../User/UserSlice';
 import { User } from '../../../types/user';
+import AlertModal from '../../common/Modals/AlertModal';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -29,9 +30,10 @@ const LoginForm = () => {
     enabled: false,
     onSuccess: (data: User) => {
       dispatch(setUser(data));
-      navigate('/');
     },
   });
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const emailInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const passwordInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -55,7 +57,7 @@ const LoginForm = () => {
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem('token', data.token);
-          alert('반갑습니다💜');
+          setIsModalOpen(true);
           refetch();
         } else {
           setErrorMessage('이메일 또는 비밀번호가 일치하지 않습니다.');
@@ -88,6 +90,15 @@ const LoginForm = () => {
       </FieldContainer>
       <WarningMessage>{errorMessage}</WarningMessage>
       <LoginButton type="submit">로그인</LoginButton>
+      {isModalOpen && (
+        <AlertModal
+          content="반갑습니다💜"
+          onClose={() => {
+            setIsModalOpen(false);
+            navigate('/');
+          }}
+        />
+      )}
     </Form>
   );
 };

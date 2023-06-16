@@ -6,6 +6,7 @@ import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { Post } from '../../../types/post';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
+import { useQueryClient } from '@tanstack/react-query';
 
 const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
   const navigate: NavigateFunction = useNavigate();
@@ -26,12 +27,11 @@ const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
   };
 
   const postId = useParams().postId;
+  const queryClient = useQueryClient();
 
   async function DeleteFetchData() {
-    const response = await callApi('DELETE', API_PATH.POST.DELETE, JSON.stringify([postId ? postId : '']));
-    const result = await response.json();
-    alert(result.message);
-    navigate(-1);
+    await callApi('DELETE', API_PATH.POST.DELETE, JSON.stringify([postId ? postId : '']));
+    await queryClient.refetchQueries(['getPosts', 'free']);
   }
 
   const isAuthor = post && UserData?._id === post.author._id;

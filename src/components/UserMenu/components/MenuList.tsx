@@ -4,16 +4,18 @@ import { CLIENT_PATH } from '../../../constants/path';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../User/UserSlice';
+import { useState } from 'react';
+import AlertModal from '../../common/Modals/AlertModal';
 
 const MenuList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const handleLogout = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     localStorage.removeItem('token');
-    alert('다음에 또 만나요!');
-    dispatch(setUser(null));
-    navigate('/');
+    setIsModalOpen(true);
   };
 
   return (
@@ -26,6 +28,16 @@ const MenuList = () => {
       <div className="logout" onClick={handleLogout}>
         로그아웃
       </div>
+      {isModalOpen && (
+        <AlertModal
+          content="다음에 또 만나요!"
+          onClose={() => {
+            setIsModalOpen(false);
+            dispatch(setUser(null));
+            navigate('/');
+          }}
+        />
+      )}
     </MenuListContainer>
   );
 };

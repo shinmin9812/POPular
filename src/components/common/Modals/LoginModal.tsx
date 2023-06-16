@@ -2,18 +2,25 @@ import React, { Dispatch } from 'react';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   onClose: Dispatch<React.SetStateAction<boolean>>;
-  content: string;
 }
 
-const AlertModal = ({ content, onClose }: Props) => {
+const LoginModal = ({ onClose }: Props) => {
+  const navigate = useNavigate();
+
+  function closeHanlder() {
+    navigate('/login');
+    onClose(false);
+  }
+
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={closeHanlder}>
       <Container>
-        <p>{content}</p>
-        <Button onClick={() => onClose(false)}>확인</Button>
+        <p>로그인을 해주세요!</p>
+        <Button onClick={closeHanlder}>확인</Button>
       </Container>
     </Modal>
   );
@@ -30,4 +37,4 @@ const Container = styled.div`
   }
 `;
 
-export default AlertModal;
+export default LoginModal;

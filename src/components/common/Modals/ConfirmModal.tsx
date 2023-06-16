@@ -1,19 +1,30 @@
 import React, { Dispatch } from 'react';
-import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styled from 'styled-components';
 
 interface Props {
   onClose: Dispatch<React.SetStateAction<boolean>>;
   content: string;
+  onConfirm: () => void;
 }
 
-const AlertModal = ({ content, onClose }: Props) => {
+const ConfirmModal = ({ content, onConfirm, onClose }: Props) => {
   return (
     <Modal onClose={onClose}>
       <Container>
         <p>{content}</p>
-        <Button onClick={() => onClose(false)}>확인</Button>
+        <button
+          className="confirm"
+          onClick={() => {
+            onConfirm();
+            onClose(false);
+          }}
+        >
+          예
+        </button>
+        <button className="decline" onClick={() => onClose(false)}>
+          아니요
+        </button>
       </Container>
     </Modal>
   );
@@ -28,6 +39,9 @@ const Container = styled.div`
   p {
     margin-bottom: 20px;
   }
+
+  button {
+  }
 `;
 
-export default AlertModal;
+export default ConfirmModal;

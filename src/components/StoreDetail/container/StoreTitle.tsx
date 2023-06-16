@@ -33,9 +33,8 @@ const Container = styled.div`
     }
   }
 
-  .share-btn {
-    background-color: #ffffff;
-    pointer: cursor;
+  .slick-arrow::before {
+    color: #000;
   }
 
   .title-img-box {
@@ -44,7 +43,7 @@ const Container = styled.div`
     height: 100%;
     justify-content: center;
     align-items: center;
-    background-color: var(--color-sub);
+    background-color: rgb(219 219 219);
   }
 
   .title-img {
