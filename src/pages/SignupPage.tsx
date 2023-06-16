@@ -28,7 +28,7 @@ const Container = styled.div`
 
 const Intro = styled.section`
   display: none;
-  @media (min-width: 768px) {
+  @media (min-width: 850px) {
     display: block;
     height: 800px;
     border-radius: 10px;
@@ -40,7 +40,7 @@ const Intro = styled.section`
 const IntroImg = styled.img`
   width: 100%;
   border-radius: 15px;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 850px) {
     flex: 1;
   }
 `;
