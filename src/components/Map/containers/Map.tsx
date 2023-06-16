@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import FindCurrentPositon from '../components/FindCurrentPositon';
 import SlideCarousel from '../components/SlideCarousel';
@@ -8,6 +8,7 @@ import { API_PATH } from '../../../constants/path';
 import { Store } from '../../../types/store';
 import StoreSheet from '../components/StoreSheet';
 import KakaoMap from '../components/KakaoMap';
+import SearchBox from '../components/SearchBox';
 
 declare global {
   interface Window {
@@ -56,6 +57,7 @@ const Map = () => {
   });
   const [zoom, setZoom] = useState(3);
   const [distance, setDistance] = useState<number>(0);
+  const searchRef = useRef<HTMLInputElement>();
 
   const {
     data: stores,
@@ -68,6 +70,23 @@ const Map = () => {
     const result = await response.json();
     return result;
   });
+
+  useEffect(() => {
+    if (!map) return;
+    const boundPoint = map.getBounds();
+
+    searchRef.current?.blur();
+
+    const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
+    const distance = getDistance({
+      centerLat: center.lat,
+      centerLng: center.lng,
+      targetLat,
+      targetLng,
+    });
+
+    setDistance(distance);
+  }, [center, zoom]);
 
   // 최초 맵 렌더링
   useEffect(() => {
@@ -85,18 +104,6 @@ const Map = () => {
     window.kakao.maps.event.addListener(createdMap, 'zoom_changed', () => {
       const level = createdMap!.getLevel();
       setZoom(level);
-
-      const boundPoint = createdMap!.getBounds();
-
-      const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
-
-      const distance = getDistance({
-        centerLat: center.lat,
-        centerLng: center.lng,
-        targetLat,
-        targetLng,
-      });
-      setDistance(distance);
     });
 
     window.kakao.maps.event.addListener(createdMap, 'dragend', () => {
@@ -108,18 +115,6 @@ const Map = () => {
       });
     });
 
-    const boundPoint = createdMap!.getBounds();
-
-    const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
-
-    const distance = getDistance({
-      centerLat: center.lat,
-      centerLng: center.lng,
-      targetLat,
-      targetLng,
-    });
-
-    setDistance(distance);
     setMap(createdMap);
   }, []);
 
@@ -198,6 +193,7 @@ const Map = () => {
           refetch();
         }}
       />
+      <SearchBox searchRef={searchRef as React.MutableRefObject<HTMLInputElement>} map={map!} setCenter={setCenter} />
       {stores && <StoreSheet openList={openList} setOpenList={setOpenList} stores={stores} />}
     </Container>
   );
