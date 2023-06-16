@@ -84,6 +84,8 @@ const PostList = () => {
         </Loading>
       ) : status === 'error' ? (
         <span>Error: {(error as Error).message}</span>
+      ) : allRows.length === 0 ? (
+        <NonData>작성한 게시물이 없습니다.</NonData>
       ) : (
         <PostContainer ref={parentRef}>
           <PostgetTotalSize height={rowVirtualizer.getTotalSize()}>
@@ -133,6 +135,19 @@ const Loading = styled.div`
   img {
     width: 100px;
   }
+`;
+
+const NonData = styled.div`
+  font-size: var(--font-medium);
+  margin-top: 50px;
+  margin: 20px;
+  height: 20vh;
+  color: var(--color-light-black);
+  background-color: var(--color-light-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 `;
 
 const PostContainer = styled.div`
