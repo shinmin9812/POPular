@@ -39,7 +39,7 @@ const RemoveNotification = async (id: string) => {
 
 const CommentNotificationItem = ({ id, commentData, board, checked }: Props) => {
   return (
-    <Container checked={checked}>
+    <Container data={commentData} checked={checked}>
       {commentData ? (
         <>
           <Link to={`/community/post/${commentData.parent.id}`} onClick={() => handleChecked(checked, id)}>
@@ -65,7 +65,7 @@ const CommentNotificationItem = ({ id, commentData, board, checked }: Props) => 
 
 export default CommentNotificationItem;
 
-const Container = styled.div<{ checked: boolean }>`
+const Container = styled.div<{ data: Comment; checked: boolean }>`
   width: 95%;
   height: 80px;
   margin: 10px auto;
@@ -78,7 +78,7 @@ const Container = styled.div<{ checked: boolean }>`
   justify-content: space-between;
   align-items: center;
 
-  opacity: ${(props) => (props.checked ? 0.3 : 1)};
+  opacity: ${(props) => (!props.data || props.checked ? 0.3 : 1)};
 
   a {
     color: ${(props) => props.checked && 'var(--color-light-black)'};
@@ -136,8 +136,8 @@ const CommentContent = styled.p`
   text-overflow: ellipsis;
 `;
 
-const ErrorItem = styled.p`
-  color: var(--color-gray);
+const ErrorItem = styled.div`
+  color: var(--color-light-black);
   width: 100%;
   text-align: center;
 `;
