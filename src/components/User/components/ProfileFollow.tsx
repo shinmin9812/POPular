@@ -25,7 +25,7 @@ const Container = styled.div`
 
   .userinfo-num {
     margin-top: 10px;
-    font-size: var(--font-regular);
+    font-size: var(--font-medium);
     font-weight: var(--weight-regular);
   }
 
@@ -33,7 +33,7 @@ const Container = styled.div`
     width: 75px;
 
     .userinfo-num {
-      font-size: var(--font-small);
+      font-size: var(--font-regular);
     }
   }
 `;

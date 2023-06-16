@@ -213,7 +213,8 @@ const ProfileDescript = styled.div`
   .user-introduce {
     margin-top: 6px;
     font-weight: var(--weight-light);
-    font-size: 13px;
+    font-size: var(--font-small);
+    letter-spacing: 0.5px;
     width: 70%;
     line-height: 18px;
   }

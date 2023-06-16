@@ -28,7 +28,8 @@ const Button = styled.div`
     background-color: var(--color-main);
     border-radius: var(--border-radius-input);
     color: #fff;
-    font-size: 12px;
+    font-size: 13px;
+
     cursor: pointer;
 
     &:hover {

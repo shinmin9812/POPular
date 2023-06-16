@@ -20,7 +20,7 @@ const PostItem = ({ post }: Props) => {
           </PostItemCategory>
           <PostItemTitle>{post.title}</PostItemTitle>
           <PostItemBottom>
-            <span>{dayjs(post.updatedAt).format('YYYY-MM-DD')} </span>|
+            <span>{dayjs(post.createdAt).format('YYYY-MM-DD')} </span>|
             <div className="info">
               {typeof post.author === 'object' ? (
                 <>
