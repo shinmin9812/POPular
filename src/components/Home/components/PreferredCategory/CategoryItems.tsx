@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { LinkHandler } from '../../../../utils/linkHandler';
+import { API_PATH } from '../../../../constants/path';
 
 interface Props {
   catecoryList: string;
@@ -15,7 +16,7 @@ const CategoryItems = ({ catecoryList }: Props) => {
 
   const getCategoryItems = async () => {
     try {
-      const response = await fetch(`http://34.22.81.36:3000/stores/category/${catecoryList}`, {
+      const response = await fetch(API_PATH.STORE.GET.CATEGORY.replace(':category', catecoryList), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
