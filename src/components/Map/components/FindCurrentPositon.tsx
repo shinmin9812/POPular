@@ -30,7 +30,7 @@ const Container = styled.button`
   }
 
   @media all and (max-width: 767px) {
-    top: 80px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
   }

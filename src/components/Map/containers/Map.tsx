@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import FindCurrentPositon from '../components/FindCurrentPositon';
 import SlideCarousel from '../components/SlideCarousel';
@@ -57,6 +57,7 @@ const Map = () => {
   });
   const [zoom, setZoom] = useState(3);
   const [distance, setDistance] = useState<number>(0);
+  const searchRef = useRef<HTMLInputElement>();
 
   const {
     data: stores,
@@ -73,6 +74,8 @@ const Map = () => {
   useEffect(() => {
     if (!map) return;
     const boundPoint = map.getBounds();
+
+    searchRef.current?.blur();
 
     const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
     const distance = getDistance({
@@ -190,7 +193,7 @@ const Map = () => {
           refetch();
         }}
       />
-      <SearchBox map={map!} setCenter={setCenter} />
+      <SearchBox searchRef={searchRef as React.MutableRefObject<HTMLInputElement>} map={map!} setCenter={setCenter} />
       {stores && <StoreSheet openList={openList} setOpenList={setOpenList} stores={stores} />}
     </Container>
   );

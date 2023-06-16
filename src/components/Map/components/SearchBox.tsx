@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Coord, Map } from '../containers/Map';
 
@@ -67,11 +66,11 @@ interface Result {
 
 interface Props {
   setCenter(coord: Coord): any;
+  searchRef: React.MutableRefObject<HTMLInputElement>;
   map: Map;
 }
 
-const SearchBox = ({ map, setCenter }: Props) => {
-  const searchRef = useRef<HTMLInputElement>(null);
+const SearchBox = ({ searchRef, map, setCenter }: Props) => {
   const [results, setResults] = useState<Result[]>([]);
   const [focusInput, setFocusInput] = useState<boolean>(false);
 
@@ -113,13 +112,16 @@ const SearchBox = ({ map, setCenter }: Props) => {
   return (
     <Container>
       <input
+        ref={searchRef}
         type="text"
         placeholder="지역명을 입력해주세요"
         onChange={changeHanlder}
         onFocus={() => {
           setFocusInput(true);
         }}
-        ref={searchRef}
+        onBlur={() => {
+          setTimeout(() => setFocusInput(false), 100);
+        }}
       />
       {focusInput && results.length > 0 && (
         <ul>
