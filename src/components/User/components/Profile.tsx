@@ -22,7 +22,7 @@ const Profile = () => {
   useEffect(() => {
     getUserInfo();
     fetchData();
-  }, [userId, userInfo]);
+  }, [userId, userInfo, user]);
 
   const { data: feeds } = useGetFeedsByUserId(userId!);
 

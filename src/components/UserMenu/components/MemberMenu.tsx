@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react';
 import MenuItem from './MenuItem';
 import { useNavigate } from 'react-router-dom';
 import callApi from '../../../utils/callApi';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store';
+import { deleteUser } from '../../User/UserSlice';
 
 const MemberMenu = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userId, setUserId] = useState('');
 
   const userData = useSelector((state: RootState) => state.UserSlice.user);
@@ -35,6 +37,7 @@ const MemberMenu = () => {
       fetchDeleteUser(userId);
       alert('탈퇴가 완료되었습니다.');
       localStorage.removeItem('token');
+      dispatch(deleteUser());
       navigate('/');
     }
   };
