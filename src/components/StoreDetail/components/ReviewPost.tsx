@@ -4,18 +4,24 @@ import { useGetUserById } from '../../../api/userApi';
 
 const Container = styled.article`
   margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #e3e3e3;
 
   .thumbnail-box {
     width: 100%;
     aspect-ratio: 1/1;
+
+    margin-bottom: 20px;
+
     border-radius: 14px;
 
-    background-color: #eeeeee;
+    box-shadow: rgb(238, 238, 238) 1px 1px 10px;
 
     overflow: hidden;
 
     img {
       width: 100%;
+      height: 100%;
       object-fit: cover;
     }
   }
@@ -33,6 +39,8 @@ const Container = styled.article`
         width: 40px;
         aspect-ratio: 1/1;
         margin-right: 6px;
+
+        object-fit: cover;
 
         border-radius: 50%;
       }
@@ -67,8 +75,6 @@ interface Props {
 const ReviewPost = ({ post }: Props) => {
   const { data: user } = useGetUserById(post.author);
 
-  console.log(post);
-
   if (!user) return <></>;
 
   return (
@@ -80,7 +86,7 @@ const ReviewPost = ({ post }: Props) => {
           </figure>
         )}
         <div className="user-info">
-          {user.profile ? <img src="/defaultProfile.svg" /> : <img src={user.profile} />}
+          {user.profile ? <img src={user.profile} /> : <img src="/defaultProfile.svg" />}
           <p className="user-name">{user.nickname}</p>
           <span className="user-followers"> · {user.follower.length} followers</span>
         </div>

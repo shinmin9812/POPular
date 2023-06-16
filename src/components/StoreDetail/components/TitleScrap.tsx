@@ -35,7 +35,6 @@ const TitleScrap = React.memo(({ store }: Props) => {
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      console.log('a');
       refetch();
     }
   }, []);

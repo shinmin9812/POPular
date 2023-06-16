@@ -12,9 +12,7 @@ import PostItem from '../../common/Post/PostItem';
 import PostList from '../components/PostList';
 
 const searchFilter = (posts: Post[], value: string) => {
-  const normalizedValue = value.normalize(); // 검색어 정규화
-  const regex = new RegExp(normalizedValue, 'i');
-  const newStores = posts.filter((post) => regex.test(post.title));
+  const newStores = posts.filter((post) => post.title.includes(value));
   return newStores;
 };
 
@@ -43,7 +41,7 @@ const PostListItemContainer = () => {
       setFilterAddressValue('지역');
     }
   }, [searchValue]);
-  const { data, isFetching, isError } = useGetFeeds(postCategory);
+  const { data, isFetching, isError } = useGetFeeds(postCategory, { cacheTime: 0 });
   // 필터 하나라도 사용 유무
   const useFilter = filterCategory.use || filterAddress.use || filterDate.use;
   const originalPost: Post[] | undefined = useMemo(() => {

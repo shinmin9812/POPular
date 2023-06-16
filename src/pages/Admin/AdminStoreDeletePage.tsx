@@ -7,7 +7,6 @@ import AdminStoreItem from '../../components/Admin/components/Stores/AdminStoreI
 import Button from '../../components/common/Button/Button';
 import { useQueryClient } from '@tanstack/react-query';
 import { Category } from '../../types/category';
-import Modal from '../../components/common/Modal/Modal';
 import AlertModal from '../../components/common/Modals/AlertModal';
 
 const Container = styled.div`
@@ -124,9 +123,7 @@ const AdminStoreDeletePage = () => {
         </Card>
       )}
       {isSuccess && isModalOpen && (
-        <Modal>
-          <AlertModal onClose={setIsModalOpen} content="스토어가 삭제되었습니다!"></AlertModal>
-        </Modal>
+        <AlertModal onClose={setIsModalOpen} content="스토어가 삭제되었습니다!"></AlertModal>
       )}
     </Container>
   );

@@ -3,7 +3,6 @@ import Card from '../../components/common/Card/Card';
 import { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import { useQueryClient } from '@tanstack/react-query';
-import Modal from '../../components/common/Modal/Modal';
 import AlertModal from '../../components/common/Modals/AlertModal';
 import { useDeleteFeeds, useGetAllFeeds } from '../../api/feedApi';
 import AdminFeedList from '../../components/Admin/components/Feeds/AdminFeedList';
@@ -22,7 +21,7 @@ const Container = styled.div`
   }
 
   .delete-feed {
-    width: 500px;
+    width: 700px;
     position: fixed;
     top: 30px;
     left: 360px;
@@ -33,6 +32,10 @@ const Container = styled.div`
 
     z-index: 100;
 
+    .feed-item {
+      width: 100%;
+    }
+
     ::-webkit-scrollbar {
       padding: 10px 0;
     }
@@ -40,8 +43,8 @@ const Container = styled.div`
 
   .selected-feeds {
     position: relative;
-    width: 600px;
-    left: 40px;
+    width: 700px;
+    left: 230px;
     padding-bottom: 60px;
 
     .selected-feed {

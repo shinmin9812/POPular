@@ -52,10 +52,10 @@ const Map = () => {
   const [markers, setMarkers] = useState<Marker[]>([]);
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [center, setCenter] = useState<Coord>({
-    lat: 37.566826,
-    lng: 126.9786567,
+    lat: 37.5783209050878,
+    lng: 126.894689433213,
   });
-  const [zoom, setZoom] = useState(3);
+  const [zoom, setZoom] = useState(5);
   const [distance, setDistance] = useState<number>(0);
   const searchRef = useRef<HTMLInputElement>();
 

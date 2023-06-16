@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PenIcon from '../../common/Icons/PenIcon';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CLIENT_PATH } from '../../../constants/path';
 import { useState } from 'react';
 import LoginModal from '../../common/Modals/LoginModal';

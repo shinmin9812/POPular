@@ -8,8 +8,10 @@ interface Props {
 const StoreScrapChart = ({ stores }: Props) => {
   let sortedStores = stores.sort((a, b) => b.scraps.length - a.scraps.length);
 
+  console.log(sortedStores);
+
   if (sortedStores.length > 10) {
-    sortedStores = sortedStores.slice(sortedStores.length - 10, sortedStores.length);
+    sortedStores = sortedStores.slice(0, 10);
   }
 
   return (

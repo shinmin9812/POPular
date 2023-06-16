@@ -13,7 +13,6 @@ export const getUserById = async (userId: string) => {
 };
 
 export const deleteUsers = async (userIds: string[]): Promise<void> => {
-  console.log(JSON.stringify(userIds));
   try {
     await fetch(API_PATH.USER.DELETE, {
       headers: { 'Content-Type': 'application/json', authorization: `Bearer ${localStorage.getItem('token')}` },

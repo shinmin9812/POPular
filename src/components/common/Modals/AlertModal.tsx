@@ -23,9 +23,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 32px;
+  font-size: 2rem;
 
   p {
+    text-align: center;
     margin-bottom: 20px;
   }
 `;

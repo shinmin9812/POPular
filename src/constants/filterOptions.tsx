@@ -1,3 +1,5 @@
+import { Category } from '../types/category';
+
 export const address = [
   '지역',
   '서울',
@@ -18,4 +20,17 @@ export const address = [
   '제주',
 ];
 
-export const category = ['카테고리', '예술', '식품', '의류', '전자기기', '캐릭터'];
+export const category = [
+  '카테고리',
+  Category.art,
+  Category.character,
+  Category.clothes,
+  Category.design,
+  Category.drink,
+  Category.entertainment,
+  Category.finance,
+  Category.food,
+  Category.sport,
+  Category.tech,
+  Category.other,
+];

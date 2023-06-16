@@ -7,7 +7,7 @@ import CommentItem from './CommentItem';
 import RecommentItem from './RecommentItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import callApi from '../../../utils/callApi';
 
 const getComments = async (
@@ -88,6 +88,8 @@ const CommentList = () => {
         </Loading>
       ) : status === 'error' ? (
         <span>Error: {(error as Error).message}</span>
+      ) : allRows.length === 0 ? (
+        <NonData>작성한 댓글이 없습니다.</NonData>
       ) : (
         <CommentContainer ref={parentRef}>
           <CommentGetTotalSize height={rowVirtualizer.getTotalSize()}>
@@ -149,6 +151,19 @@ const Loading = styled.div`
   img {
     width: 100px;
   }
+`;
+
+const NonData = styled.div`
+  font-size: var(--font-medium);
+  margin-top: 50px;
+  margin: 20px;
+  height: 20vh;
+  color: var(--color-light-black);
+  background-color: var(--color-light-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 `;
 
 const CommentContainer = styled.div`

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Post } from '../../../types/post';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 interface Props {
   post: Post;

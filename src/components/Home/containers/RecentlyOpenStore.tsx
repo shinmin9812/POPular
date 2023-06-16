@@ -9,7 +9,6 @@ interface Props {
 const RecentlyOpenStore = ({ stores }: Props) => {
   const currentDate = new Date();
   const sortedStores = stores
-    .slice(0, 10)
     .filter((store) => {
       const openDate = new Date(store.start_date);
       const endDate = new Date(store.end_date);
@@ -20,9 +19,9 @@ const RecentlyOpenStore = ({ stores }: Props) => {
       const dateB = new Date(b.start_date);
       const diffA = Math.abs(currentDate.getTime() - dateA.getTime());
       const diffB = Math.abs(currentDate.getTime() - dateB.getTime());
-
       return diffA - diffB;
-    });
+    })
+    .slice(0, 10);
 
   return (
     <Container>

@@ -38,6 +38,9 @@ const NotificationList = () => {
         <StyledLink to={`/user/${userData._id}/update`}>알림 설정하러 가기🔔</StyledLink>
       </LinkContainer>
     );
+  if (notifications.length === 0) {
+    return <Empty>알림이 없습니다.</Empty>;
+  }
   return (
     <NotificationListContainer>
       {notifications &&
@@ -101,4 +104,17 @@ const StyledLink = styled(Link)`
 const NotificationListContainer = styled.section`
   width: 100%;
   height: 100%;
+`;
+
+const Empty = styled.h1`
+  font-size: var(--font-medium);
+  margin-top: 50px;
+  margin: 20px;
+  height: 20vh;
+  color: var(--color-light-black);
+  background-color: var(--color-light-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 `;

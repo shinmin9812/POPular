@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 interface Props {
   text: string;
   type: 'follow' | 'profileEdit' | 'unfollow';
-  disabled?: boolean;
   link?: string | undefined;
   onClick?: () => void;
 }
 
-const ProfileButton = ({ text, type, disabled, link, onClick }: Props) => {
+const ProfileButton = ({ text, type, link, onClick }: Props) => {
   const buttonClassName = `ButtonType_${type}`;
   return (
     <>
