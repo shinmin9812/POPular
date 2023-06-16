@@ -38,7 +38,12 @@ export class NotificationCreateDto {
 		example: 'qwer2134',
 		description: '알림 대상 ID',
 	})
-	@ValidateIf(obj => obj.type === NotificationType.COMMENT || obj.type === NotificationType.RECOMMENT || obj.type === NotificationType.FOLLOW)
+	@ValidateIf(
+		obj =>
+			obj.type === NotificationType.COMMENT ||
+			obj.type === NotificationType.RECOMMENT ||
+			obj.type === NotificationType.FOLLOW,
+	)
 	readonly user_id?: Types.ObjectId | User;
 
 	@IsMongoId()

@@ -20,7 +20,10 @@ import { FeedsService } from 'src/feeds/feed.service';
 import { BoardType, Feed } from 'src/feeds/feed.schema';
 import { UserService } from 'src/users/user.service';
 import { NotificationsService } from 'src/notifications/notification.service';
-import { Notification, NotificationType } from 'src/notifications/notification.schema';
+import {
+	Notification,
+	NotificationType,
+} from 'src/notifications/notification.schema';
 import { User } from 'src/users/user.schema';
 import { Type } from 'class-transformer';
 
@@ -164,16 +167,14 @@ export class CommentsService {
 
 	async createComment(commentCreateDto: CommentCreateDto): Promise<Comment> {
 		try {
-			
 			const createdComment = new this.commentModel();
 			createdComment.author = commentCreateDto.author;
 			createdComment.content = commentCreateDto.content;
 			createdComment.parent = commentCreateDto.parent;
 			createdComment.recomments = [];
-			
 
 			const savedComment = await createdComment.save();
-			const user = this.userModel.findById(savedComment.author.toString())
+			const user = this.userModel.findById(savedComment.author.toString());
 
 			async function generateAncestor(
 				savedComment: Comment,
@@ -222,18 +223,20 @@ export class CommentsService {
 				content_user: null,
 			};
 
-			if((await generateAncestor(savedComment, this.feedsService, this)).author === savedComment.author 
-				|| (await user).allow_notification === false) {
-
+			if (
+				(await generateAncestor(savedComment, this.feedsService, this))
+					.author === savedComment.author ||
+				(await user).allow_notification === false
+			) {
 			} else {
 				const createdNotification =
-				await this.NotificationsService.createNotification(
-					notificationCreateDto,
-				);
+					await this.NotificationsService.createNotification(
+						notificationCreateDto,
+					);
 				await this.UserService.updateNotification(
 					savedComment.author,
 					createdNotification._id,
-				)
+				);
 			}
 
 			if (savedComment.parent.type === 'Comment') {
@@ -324,13 +327,16 @@ export class CommentsService {
 			if (recommentsToDelete.length > 0) {
 				await this.deleteComment(recommentsToDelete);
 			}
-		
-			const notifications = await this.notificationModel.find({ content_comment: { $in: ids } });
-			if(notifications.length > 0) {
-				const notificationsIds = notifications.map(notification => notification._id);
+
+			const notifications = await this.notificationModel.find({
+				content_comment: { $in: ids },
+			});
+			if (notifications.length > 0) {
+				const notificationsIds = notifications.map(
+					notification => notification._id,
+				);
 				await this.NotificationsService.deleteNotifications(notificationsIds);
 			}
-
 
 			const deleteResult = await this.commentModel
 				.deleteMany({ _id: { $in: ids } })

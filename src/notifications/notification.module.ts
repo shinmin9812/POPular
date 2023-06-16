@@ -12,9 +12,7 @@ import { User, UserSchema } from 'src/users/user.schema';
 		MongooseModule.forFeature([
 			{ name: Notification.name, schema: NotificationSchema },
 		]),
-		MongooseModule.forFeature([
-			{ name: User.name, schema: UserSchema },
-		]),
+		MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
 		forwardRef(() => CommentsModule),
 		forwardRef(() => UserModule),
 	],
