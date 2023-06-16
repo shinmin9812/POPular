@@ -114,11 +114,7 @@ const AdminUserDeletePage = () => {
           <Button onClick={deleteHandler}>유저 삭제하기</Button>
         </Card>
       )}
-      {isSuccess && isModalOpen && (
-        <Modal>
-          <AlertModal onClose={setIsModalOpen} content="유저가 삭제되었습니다!"></AlertModal>
-        </Modal>
-      )}
+      {isSuccess && isModalOpen && <AlertModal onClose={setIsModalOpen} content="유저가 삭제되었습니다!"></AlertModal>}
     </Container>
   );
 };

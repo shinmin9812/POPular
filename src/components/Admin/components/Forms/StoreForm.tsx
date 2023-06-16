@@ -504,16 +504,8 @@ const StoreForm = ({ defaultData }: Props) => {
         <StoreTitle store={{ ...watch(), _id: 'fake' }} />
         <StoreInfo store={{ ...watch(), _id: 'fake' }} />
       </Card>
-      {modalOpen && postIsSuccess && (
-        <Modal>
-          <AlertModal content="스토어가 생성되었습니다!" onClose={setModalOpen} />
-        </Modal>
-      )}
-      {modalOpen && editIsSuccess && (
-        <Modal>
-          <AlertModal content="스토어가 수정되었습니다!" onClose={setModalOpen} />
-        </Modal>
-      )}
+      {postIsSuccess && <AlertModal content="스토어가 생성되었습니다!" onClose={setModalOpen} />}
+      {editIsSuccess && <AlertModal content="스토어가 수정되었습니다!" onClose={setModalOpen} />}
     </Container>
   );
 };

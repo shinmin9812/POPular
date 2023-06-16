@@ -1,6 +1,7 @@
 import React, { Dispatch } from 'react';
-import styled from 'styled-components';
 import Button from '../Button/Button';
+import Modal from '../Modal/Modal';
+import styled from 'styled-components';
 
 interface Props {
   onClose: Dispatch<React.SetStateAction<boolean>>;
@@ -9,10 +10,12 @@ interface Props {
 
 const AlertModal = ({ content, onClose }: Props) => {
   return (
-    <Container>
-      <p>{content}</p>
-      <Button onClick={() => onClose(false)}>확인</Button>
-    </Container>
+    <Modal onClose={onClose}>
+      <Container>
+        <p>{content}</p>
+        <Button onClick={() => onClose(false)}>확인</Button>
+      </Container>
+    </Modal>
   );
 };
 
@@ -20,15 +23,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 32px;
 
   p {
-    font-size: 2rem;
-    font-weight: 300;
-    margin-bottom: 30px;
-  }
-
-  button {
-    font-size: 20px;
+    margin-bottom: 20px;
   }
 `;
 

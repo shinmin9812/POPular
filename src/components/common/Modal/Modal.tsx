@@ -1,116 +1,60 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Dispatch } from 'react';
 import styled from 'styled-components';
-import ModalContainer from './ModalContainer';
 import Card from '../Card/Card';
+import ModalPortal from './ModalPortal';
 
 interface Props {
+  onClose: Dispatch<React.SetStateAction<boolean>>;
   children: React.ReactNode;
 }
 
-const Modal = ({ children }: Props) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
-
-  const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const target = e.target as HTMLDivElement;
-    if (!target.classList.contains('modal-overlay')) return;
-    modalRef.current?.classList.add('closing');
-    setTimeout(() => {
-      document.body.style.overflow = 'auto';
-      modalRef.current?.classList.remove('closing');
-      modalRef.current?.classList.add('closed');
-    }, 300);
-  };
-
+const Modal = ({ children, onClose }: Props) => {
   return (
-    <ModalContainer>
-      <Overlay onClick={handleClose} ref={modalRef} className="modal-overlay">
-        <Card className="modal-wrapper">
-          <div className="modal-content">{children}</div>
-        </Card>
-      </Overlay>
-    </ModalContainer>
+    <ModalPortal>
+      <Container>
+        <div className="overlay" onClick={() => onClose(false)}></div>
+        <Card className="modal-wrapper">{children}</Card>
+      </Container>
+    </ModalPortal>
   );
 };
 
-const Overlay = styled.div`
+const Container = styled.div`
   position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
+  width: 100vw;
+  height: 100vh;
   left: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 9999;
-  animation: appear-modal-overlay 0.3s ease-out forwards;
-  backdrop-filter: blur(5px);
+  top: 0;
+  z-index: 9999999;
 
-  &.closing {
-    animation: disappear-modal-overlay 0.3s forwards;
-
-    .modal-wrapper {
-      animation: disappear-modal 0.3s forwards;
-    }
-  }
-
-  &.closed {
-    display: none;
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
   }
 
   .modal-wrapper {
-    position: absolute;
-    width: 600px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
     height: fit-content;
     padding: 50px 30px;
     background-color: #fff;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -80%);
-    animation: appear-modal 0.3s forwards;
+    animation: appear-modal 0.3s forwards ease-out;
   }
 
   @keyframes appear-modal {
     0% {
-      opacity: 0;
-      transform: translate(-50%, 500px);
+      transform: translate(-50%, 50%);
     }
     100% {
-      opacity: 1;
       transform: translate(-50%, -50%);
-    }
-  }
-
-  @keyframes disappear-modal {
-    0% {
-      opacity: 0;
-      transform: translate(-50%, -50%);
-    }
-    100% {
-      opacity: 1;
-      transform: translate(-50%, 500px);
-    }
-  }
-
-  @keyframes appear-modal-overlay {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes disappear-modal-overlay {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
     }
   }
 `;

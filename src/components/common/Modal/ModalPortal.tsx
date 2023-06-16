@@ -5,8 +5,8 @@ interface Props {
   children: React.ReactNode;
 }
 
-function ModalContainer({ children }: Props) {
+function ModalPortal({ children }: Props) {
   return createPortal(<>{children}</>, document.getElementById('modal') as HTMLDivElement);
 }
 
-export default ModalContainer;
+export default ModalPortal;
