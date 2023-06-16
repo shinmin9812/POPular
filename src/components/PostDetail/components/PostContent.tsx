@@ -3,7 +3,7 @@ const PostContentWrap = styled.div`
   width: 100%;
   padding: 30px 20px;
   margin: 40px auto;
-
+  line-height: initial;
   h1 {
     display: block;
     font-size: 2em;

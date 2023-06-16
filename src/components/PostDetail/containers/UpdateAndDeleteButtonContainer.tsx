@@ -6,7 +6,6 @@ import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { Post } from '../../../types/post';
 import { API_PATH } from '../../../constants/path';
 import callApi from '../../../utils/callApi';
-import { useQueryClient } from '@tanstack/react-query';
 
 const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
   const navigate: NavigateFunction = useNavigate();
@@ -27,36 +26,26 @@ const UpdateAndDeleteContainer = ({ post }: { post: Post }) => {
   };
 
   const postId = useParams().postId;
-  const queryClient = useQueryClient();
 
   async function DeleteFetchData() {
     await callApi('DELETE', API_PATH.POST.DELETE, JSON.stringify([postId ? postId : '']));
-    await queryClient.refetchQueries(['getPosts', 'free']);
   }
 
   const isAuthor = post && UserData?._id === post.author._id;
 
   const deletePost = () => {
-    if (isAuthor) {
-      DeleteFetchData();
-    } else {
-      alert('작성자가 아닙니다');
-    }
+    DeleteFetchData();
+    navigate(-1);
   };
 
   const updatePost = () => {
-    if (isAuthor) {
-      const currTab = post.board === 'free' ? '자유게시판' : post.board === 'review' ? '후기게시판' : '모집게시판';
-
-      setTab(currTab);
-      setPostContent(post.content);
-      setPostTitle(post.title);
-      post.store_id && setChoiceStoreId(post.store_id._id);
-      setIsUpdate({ use: true, id: post._id });
-      navigate('/community/write');
-    } else {
-      alert('작성자가 아닙니다');
-    }
+    const currTab = post.board === 'free' ? '자유게시판' : post.board === 'review' ? '후기게시판' : '모집게시판';
+    setTab(currTab);
+    setPostContent(post.content);
+    setPostTitle(post.title);
+    post.store_id && setChoiceStoreId(post.store_id._id);
+    setIsUpdate({ use: true, id: post._id });
+    navigate('/community/write');
   };
   return isAuthor ? <UpdateAndDelete deletePost={deletePost} updatePost={updatePost}></UpdateAndDelete> : <div></div>;
 };
