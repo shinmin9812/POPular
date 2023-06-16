@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import ReviewPost, { UnPopulatedPost } from './ReviewPost';
 import Button from '../../common/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import Skeleton from './Skeleton';
 import { Link } from 'react-router-dom';
 
 const Container = styled.section`

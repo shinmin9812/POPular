@@ -12,6 +12,7 @@ export const postData: Post[] = [
     likes: [],
     reports: [],
     views: 0,
+    images: [],
     updatedAt: '2023-05-30 15:17:01',
     createdAt: '2023-05-30 15:17:01',
     comments: [],
@@ -24,6 +25,8 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
 
@@ -38,6 +41,8 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
 
@@ -52,6 +57,8 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
 
@@ -66,6 +73,8 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
 
@@ -80,6 +89,8 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
 
@@ -94,6 +105,8 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
 

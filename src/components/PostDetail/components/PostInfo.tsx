@@ -1,7 +1,6 @@
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
 import { BoardTypes } from '../../../types/board';
 import styled from 'styled-components';
-import getDateFunc from '../../../utils/getDateFunc';
 import { CLIENT_PATH } from '../../../constants/path';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
