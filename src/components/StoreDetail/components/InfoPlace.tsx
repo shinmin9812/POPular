@@ -16,6 +16,7 @@ const Container = styled.div`
 
   .store-location-img {
     width: 100%;
+    height: 300px;
     aspect-ratio: 1/1;
     margin-top: 20px;
   }
