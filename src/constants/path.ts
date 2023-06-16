@@ -91,7 +91,9 @@ export const API_PATH = {
       // 특정 유저의 전체 알림 조회
       BY_USER_ID: '/notification/user/:userId',
     },
-    POST: {},
+    POST: {
+      OPEN_ALL_USER: `${API_BASE_URL}/notifications/all`,
+    },
     PUT: {},
     DELETE: {},
   },
