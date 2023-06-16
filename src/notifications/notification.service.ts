@@ -110,11 +110,14 @@ export class NotificationsService {
 		try {
 			const targetUsers = await this.userModel.find().exec();
 			const notificationPromises = targetUsers.map(async (user) => {
-				const notificationDto = {
-					...notificationCreateDto,
-					user_id: user._id,
-				};
-				return this.createNotification(notificationDto);
+				if(user.allow_notification === false) {
+				} else {
+					const notificationDto = {
+						...notificationCreateDto,
+						user_id: user._id,
+					};
+					return this.createNotification(notificationDto);
+				}
 			});
 			const createdNotifications = await Promise.all(notificationPromises);
 			return createdNotifications;
