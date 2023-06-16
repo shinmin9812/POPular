@@ -87,10 +87,10 @@ export const CommentContent = styled.div`
   font-size: var(--font-small);
 `;
 
-export const CommentUpdateAt = styled.div`
+export const CommentCreateAt = styled.div`
   color: var(--color-gray);
   font-weight: var(--weight-light);
-  width: 10%;
+  width: 80px;
   font-size: var(--font-small);
   text-align: right;
   cursor: pointer;
@@ -149,7 +149,7 @@ const CommentItem = ({
             </Link>
           </CommentAuthorName>
           <CommentContent>{comment.content}</CommentContent>
-          <CommentUpdateAt>{dayjs(comment.updatedAt).format('YYYY-MM-DD HH:mm:ss')}</CommentUpdateAt>
+          <CommentCreateAt>{dayjs(comment.createdAt).format('YYYY-MM-DD HH:mm:ss')}</CommentCreateAt>
         </CommentInfoWrap>
         {comment.author._id === isMember ? (
           <CommentDeleteButton

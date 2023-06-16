@@ -108,8 +108,7 @@ const PostDetailPage = () => {
         profile={post.author.profile}
         follower={post.author.follower.length}
         authorId={post.author._id}
-        updatedAt={post.updatedAt}
-        likes={post.likes.length}
+        createdAt={post.createdAt}
         views={post.views}
         comments={comments.length}
       />
