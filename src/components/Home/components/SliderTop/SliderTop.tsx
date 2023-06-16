@@ -72,6 +72,8 @@ const SliderTop = () => {
 
 const SlideFrame = styled.div`
   height: 240px;
+  opacity: 0;
+  animation: appearOpacity 0.5s forwards;
 
   @media all and (max-width: 767px) {
     height: 220px;

@@ -7,7 +7,7 @@ interface Props {
 }
 
 const ReservationStore = ({ stores }: Props) => {
-  let newArray = [];
+  const newArray = [];
   const currentDate = new Date();
   for (let i = 0; i < stores.length; i++) {
     if (stores[i].reservation_required === true && new Date(stores[i].end_date) > currentDate) {
@@ -22,6 +22,8 @@ const ReservationStore = ({ stores }: Props) => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  animation: appearOpacity 0.5s 1.8s forwards;
+`;
 
 export default ReservationStore;

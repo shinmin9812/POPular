@@ -55,6 +55,8 @@ const VerticalStoreList = ({ stores, text }: Props) => {
 
 const Container = styled.div`
   width: 100%;
+  opacity: 0;
+  animation: appear 0.5s 0.3s forwards;
 `;
 
 const ContentInner = styled.div`

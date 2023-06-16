@@ -69,6 +69,8 @@ const Container = styled.div<ContainerProps>`
   width: 100%;
   margin: 70px 0px;
   height: ${(props) => (props.isLogin && props.isCatagory ? '520px' : '260px')};
+  opacity: 0;
+  animation: appearOpacity 0.5s 0.9s forwards;
 
   h2 {
     font-weight: var(--weight-semi-bold);

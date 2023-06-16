@@ -30,6 +30,8 @@ const RecentlyOpenStore = ({ stores }: Props) => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  animation: appearOpacity 0.5s 1.2s forwards;
+`;
 
 export default RecentlyOpenStore;

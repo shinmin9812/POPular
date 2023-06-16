@@ -33,6 +33,8 @@ const BeforeEndStore = ({ stores }: Props) => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  animation: appearOpacity 0.5s 1.5s forwards;
+`;
 
 export default BeforeEndStore;

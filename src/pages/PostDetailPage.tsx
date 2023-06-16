@@ -95,7 +95,7 @@ const PostDetailPage = () => {
 
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   return (

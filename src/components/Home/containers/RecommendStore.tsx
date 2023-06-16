@@ -21,6 +21,8 @@ const RecommendStore = ({ stores }: Props) => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  animation: appear 0.5s forwards;
+`;
 
 export default RecommendStore;
