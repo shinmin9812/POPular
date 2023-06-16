@@ -20,9 +20,7 @@ const ChoiceButton = styled.button<{ choice: boolean }>`
   border-radius: 8px;
   cursor: pointer;
   @media (max-width: 450px) {
-    font-size: var(--font-small);
-    height: 30px;
-    width: 40px;
+    font-size: var(--font-micro);
   }
 `;
 

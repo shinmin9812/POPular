@@ -35,16 +35,16 @@ const WritePostPage = () => {
       <TabsContainer />
       <PostTitleContainer />
       <PostContentContainer />
+      <RatingAndRegisterWrap>
+        <RatingContainer />
+        <PostRegisterButtonContainer />
+      </RatingAndRegisterWrap>
       {tab !== '자유게시판' && (
         <FlexDiv>
           <ChoiceStoreBoxContainer />
           {selectedStoreId && <SelectedStoreItem storeId={selectedStoreId} />}
         </FlexDiv>
       )}
-      <RatingAndRegisterWrap>
-        <RatingContainer />
-        <PostRegisterButtonContainer />
-      </RatingAndRegisterWrap>
     </Container>
   );
 };
