@@ -16,7 +16,7 @@ const Follower = ({ text, user }: Props) => {
       {text === '팔로워' ? (
         <FollowList>
           {user.follower.map((item, i) => (
-            <Link to={`/community/user/${item._id}`} onClick={LinkHandler}>
+            <Link key={item._id} to={`/community/user/${item._id}`} onClick={LinkHandler}>
               <div key={i}>
                 <FollowItem list={item} />
               </div>
@@ -26,7 +26,7 @@ const Follower = ({ text, user }: Props) => {
       ) : text === '팔로잉' ? (
         <FollowList>
           {user.following.map((item, i) => (
-            <Link to={`/community/user/${item._id}`} onClick={LinkHandler}>
+            <Link key={item._id} to={`/community/user/${item._id}`} onClick={LinkHandler}>
               <div key={i}>
                 <FollowItem list={item} />
               </div>

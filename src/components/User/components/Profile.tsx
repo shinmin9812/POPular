@@ -22,7 +22,11 @@ const Profile = () => {
   useEffect(() => {
     getUserInfo();
     fetchData();
-  }, [userId, userInfo, user]);
+  }, [userId, userInfo]);
+
+  useEffect(() => {
+    fetchData();
+  }, [modalType]);
 
   const { data: feeds } = useGetFeedsByUserId(userId!);
 
@@ -59,26 +63,40 @@ const Profile = () => {
   }, [userId, userInfo]);
 
   // 유저 팔로우
-  const followMutation = useMutation(() => {
-    return fetch(`http://34.22.81.36:3000/users/${userInfo}/follow/${userId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
+  const followMutation = useMutation(
+    () => {
+      return fetch(`http://34.22.81.36:3000/users/${userInfo}/follow/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+    },
+    {
+      onSuccess: () => {
+        fetchData();
       },
-    });
-  });
+    },
+  );
 
   // 유저 언팔로우
-  const unfollowMutation = useMutation(() => {
-    return fetch(`http://34.22.81.36:3000/users/${userInfo}/unfollow/${userId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
+  const unfollowMutation = useMutation(
+    () => {
+      return fetch(`http://34.22.81.36:3000/users/${userInfo}/unfollow/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+    },
+    {
+      onSuccess: () => {
+        fetchData();
       },
-    });
-  });
+    },
+  );
 
   const followHandler = async () => {
     if (isFollowLoading) return;
