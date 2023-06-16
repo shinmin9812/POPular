@@ -9,8 +9,7 @@ interface PostInfoType {
   title: string;
   authorId: string;
   nickName: string;
-  updatedAt: string;
-  likes: number;
+  createdAt: string;
   comments: number;
   views: number;
   profile: string;
@@ -106,8 +105,7 @@ const PostInfo = ({
   authorId,
   profile,
   nickName,
-  updatedAt,
-  likes,
+  createdAt,
   comments,
   follower,
   views,
@@ -128,7 +126,7 @@ const PostInfo = ({
                   <p className="nickname">
                     {nickName} <em>| {follower} Followers</em>
                   </p>
-                  <p className="updated">{`${dayjs(updatedAt).format('YYYY-MM-DD HH:mm:ss')}`}</p>
+                  <p className="created">{`${dayjs(createdAt).format('YYYY-MM-DD HH:mm:ss')}`}</p>
                 </div>
               </div>
             </Link>

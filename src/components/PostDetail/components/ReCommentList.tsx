@@ -5,7 +5,7 @@ import {
   CommentInfoWrap,
   CommentAuthorName,
   CommentContent,
-  CommentUpdateAt,
+  CommentCreateAt,
   CommentDeleteButton,
 } from './CommentItem';
 import { Comment } from '../../../types/comment';
@@ -71,7 +71,7 @@ const ReComment = ({
                 </Link>
               </CommentAuthorName>
               <CommentContent>{reComment.content}</CommentContent>
-              <CommentUpdateAt>{dayjs(reComment.updatedAt).format('YYYY-MM-DD HH:mm:ss')}</CommentUpdateAt>
+              <CommentCreateAt>{dayjs(reComment.createdAt).format('YYYY-MM-DD HH:mm:ss')}</CommentCreateAt>
             </CommentInfoWrap>
             {isMember === reComment.author._id ? (
               <CommentDeleteButton
