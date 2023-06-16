@@ -38,17 +38,34 @@ const Container = styled.div`
     pointer: cursor;
   }
 
+  .title-img-box {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-sub);
+  }
+
   .title-img {
     align-self: center;
-    width: 100%;
-    height: 400px;
-    aspect-ratio: 1/1;
+    width: 300px;
     object-fit: cover;
   }
 
   .slick-slider {
     width: 100%;
     position: relative;
+  }
+
+  @media (min-width: 450px) {
+    .title-img {
+      height: 400px;
+    }
+
+    .slick-slider {
+      width: 300px;
+    }
   }
 
   .slick-dots {
@@ -62,6 +79,7 @@ const StoreTitle = ({ store }: Props) => {
     dots: true,
   };
 
+  console.log(store);
   return (
     <Container>
       <div className="title-head">
@@ -70,11 +88,13 @@ const StoreTitle = ({ store }: Props) => {
           <TitleScrap store={store} />
         </div>
       </div>
-      <Slider {...settings}>
-        {store.images.map((image: string, i: number) => (
-          <img className="title-img" key={i} src={image} alt="브랜드이미지" />
-        ))}
-      </Slider>
+      <div className="title-img-box">
+        <Slider {...settings}>
+          {store.images.map((image: string, i: number) => (
+            <img className="title-img" key={i} src={image} alt="브랜드이미지" />
+          ))}
+        </Slider>
+      </div>
     </Container>
   );
 };

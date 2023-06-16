@@ -7,25 +7,28 @@ const Container = styled.div`
   position: relative;
 
   input {
-    width: 40px;
+    width: 200px;
+    // width: 40px;
     height: 30px;
 
     padding: 0 30px 0 10px;
+    outline: none;
 
     border-radius: 20px;
-    border: 1px solid var(--color-sub);
+    border: 1px solid var(--color-main);
+    // border: 1px solid var(--color-sub);
 
     transition: width 0.5s, transform 0.5s;
     transform-origin: right center;
+    transform: scale(1.2);
 
-    &:focus {
-      width: 200px;
+    // &:focus {
+    //   width: 200px;
+    //   outline: none;
+    //   border: 1px solid var(--color-main);
 
-      outline: none;
-      border: 1px solid var(--color-main);
-
-      transform: scale(1.2);
-    }
+    //   transform: scale(1.2);
+    // }
   }
 
   svg {
@@ -42,13 +45,14 @@ const Container = styled.div`
 `;
 
 const HeaderSearchBox = () => {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState<string>('');
   const movePage = useNavigate();
 
   const handleInputHeaderSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && searchValue) {
       movePage('/search', { state: { value: searchValue } });
       setSearchValue('');
+      window.scrollTo(0, 0);
     }
   };
 
@@ -60,12 +64,19 @@ const HeaderSearchBox = () => {
     if (searchValue) {
       movePage('/search', { state: { value: searchValue } });
       setSearchValue('');
+      window.scrollTo(0, 0);
     }
   };
 
   return (
     <Container>
-      <input type="text" value={searchValue} onKeyPress={handleInputHeaderSearch} onChange={handleChangeHeaderSearch} />
+      <input
+        type="text"
+        value={searchValue}
+        onKeyPress={handleInputHeaderSearch}
+        onChange={handleChangeHeaderSearch}
+        placeholder="스토어를 검색해보세요."
+      />
       <button onClick={handleButtonHeaderSearch}>
         <SearchIcon />
       </button>

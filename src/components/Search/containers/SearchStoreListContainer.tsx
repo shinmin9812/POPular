@@ -25,7 +25,6 @@ const SearchStoreListContainer = () => {
   const setFilterDurationUse = (use: boolean) => dispatch(SearchSliceActions.setFilterDurationUse(use));
   const setFilterCategoryValue = (category: string) => dispatch(SearchSliceActions.setFilterCategoryValue(category));
   const setFilterAddressValue = (address: string) => dispatch(SearchSliceActions.setFilterAddressValue(address));
-
   const searchValue = useAppSelector((state) => state.SearchSlice.searchValue);
 
   useEffect(() => {
