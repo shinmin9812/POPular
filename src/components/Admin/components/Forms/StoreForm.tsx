@@ -104,6 +104,7 @@ const StoreForm = ({ defaultData }: Props) => {
   const imageRef = useRef<HTMLInputElement | null>(null);
   const targettedStartDate = useRef<HTMLInputElement | null>(null);
   const targettedEndDate = useRef<HTMLInputElement | null>(null);
+  const [overFiveImages, setOverFiveImages] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
@@ -167,16 +168,7 @@ const StoreForm = ({ defaultData }: Props) => {
     setValue('coord.coordinates.1', +documents[0].y);
   }
 
-  const {
-    mutate: postMutate,
-    isLoading: postLoading,
-    isSuccess: postIsSuccess,
-  } = usePostStore({
-    onSuccess: () => {
-      console.log('add');
-      setModalOpen(true);
-    },
-  });
+  const { mutate: postMutate, isLoading: postLoading, isSuccess: postIsSuccess } = usePostStore();
 
   const {
     mutate: editMutate,
@@ -466,6 +458,10 @@ const StoreForm = ({ defaultData }: Props) => {
               ref={imageRef}
               onChange={(e) => {
                 const reader = new FileReader();
+                if (watch().images.length > 4) {
+                  setOverFiveImages(true);
+                  return;
+                }
                 reader.readAsDataURL(e.target.files![0]);
                 reader.onload = (e) => {
                   appendImages(e.target!.result);
@@ -506,6 +502,7 @@ const StoreForm = ({ defaultData }: Props) => {
       </Card>
       {postIsSuccess && <AlertModal content="스토어가 생성되었습니다!" onClose={setModalOpen} />}
       {editIsSuccess && <AlertModal content="스토어가 수정되었습니다!" onClose={setModalOpen} />}
+      {overFiveImages && <AlertModal content="이미지는 최대 5개까지 가능합니다!" onClose={setOverFiveImages} />}
     </Container>
   );
 };
