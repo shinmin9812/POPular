@@ -3,7 +3,6 @@ import { Post } from '../../../types/post';
 import { useGetUserById } from '../../../api/userApi';
 
 const Container = styled.article`
-  width: 95%;
   margin-bottom: 20px;
   border-radius: 10px;
   border: 1px solid #e3e3e3;
@@ -22,6 +21,7 @@ const Container = styled.article`
 
     img {
       width: 100%;
+      height: 100%;
       object-fit: cover;
     }
   }
@@ -39,6 +39,8 @@ const Container = styled.article`
         width: 40px;
         aspect-ratio: 1/1;
         margin-right: 6px;
+
+        object-fit: cover;
 
         border-radius: 50%;
       }
