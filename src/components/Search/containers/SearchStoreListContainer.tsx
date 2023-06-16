@@ -7,6 +7,7 @@ import filterFunc from '../../../utils/filterFunc';
 import { Link } from 'react-router-dom';
 import searchFilter from '../../../utils/SearchFilter';
 import { SearchSliceActions } from '../SearchSlice';
+import styled from 'styled-components';
 
 async function fetchData(setStores: (stores: Store[]) => void) {
   const response = await fetch(API_PATH.STORE.GET.ALL);
@@ -48,7 +49,7 @@ const SearchStoreListContainer = () => {
   }
 
   return (
-    <ul>
+    <Container>
       {array ? (
         array.map((store: Store) => (
           <li key={store._id}>
@@ -58,10 +59,24 @@ const SearchStoreListContainer = () => {
           </li>
         ))
       ) : (
-        <li>loading...</li>
+        <div className="loading-box">
+          <img src="/images/loading.gif" alt="loading" className="loading" />
+        </div>
       )}
-    </ul>
+    </Container>
   );
 };
+
+const Container = styled.ul`
+  .loading-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    .loading {
+      margin: 0 auto;
+      transform: scale(0.5);
+    }
+  }
+`;
 
 export default SearchStoreListContainer;

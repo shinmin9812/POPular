@@ -16,7 +16,7 @@ const CategorySelect = ({ isLogin, userId }: isLogin) => {
             <span className="title-point">선호 카테고리</span>가 없습니다.
           </p>
           <p className="text-setting">
-            <Link to={`/user/${userId}/update`} onClick={LinkHandler}>
+            <Link to={`/usermenu/${userId}/update`} onClick={LinkHandler}>
               선호 카테고리 설정하기 +
             </Link>
           </p>
