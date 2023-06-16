@@ -36,18 +36,19 @@ const CommentInputContainer = ({
   commentId?: string;
   setReCommentInput?: () => void;
 }) => {
+  const postId = useParams().postId;
   const [input, setInput] = useState('');
+  const [isComposing, setIsComposing] = useState(false);
   const dispatch = useAppDispatch();
   const UserData = useAppSelector((state) => state.UserSlice.user);
   const setComments = (comments: Comment[]) => {
     return dispatch(PostDetailActions.setComment(comments));
   };
 
-  const postId = useParams().postId;
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value.normalize());
   };
+
   const RegisterComment = () => {
     if (!UserData) {
       alert('로그인이 필요합니다.');
@@ -65,7 +66,15 @@ const CommentInputContainer = ({
     feedCommentApi(data, setInput, postId, setComments);
     setReCommentInput && setReCommentInput();
   };
-  return <CommentInput onChange={onChange} value={input} RegisterComment={RegisterComment} />;
+  return (
+    <CommentInput
+      isComposing={isComposing}
+      setIsComposing={setIsComposing}
+      onChange={onChange}
+      value={input}
+      RegisterComment={RegisterComment}
+    />
+  );
 };
 
 export default CommentInputContainer;

@@ -44,6 +44,14 @@ async function fetchData(
   postId = '',
   setPost: React.Dispatch<React.SetStateAction<Post | null>>,
   navigate: NavigateFunction,
+  setLikes: (likes: string[]) => {
+    payload: string[];
+    type: 'PostDetail/setLikes';
+  },
+  setReports: (reports: string[]) => {
+    payload: string[];
+    type: 'PostDetail/setReports';
+  },
 ) {
   try {
     const response = await fetch(API_PATH.POST.GET.BY_ID.replace(':postId', postId));
@@ -52,6 +60,8 @@ async function fetchData(
     }
     const result: Post = await response.json();
     setPost(result);
+    setLikes(result.likes);
+    setReports(result.reports);
   } catch (err: any) {
     alert(err.message);
     navigate(-1);
@@ -64,18 +74,12 @@ const PostDetailPage = () => {
   const [post, setPost] = useState<Post | null>(null);
   const comments = useAppSelector((state) => state.PostDetailSlice.comment);
   const dispatch = useAppDispatch();
-  const setComments = useCallback(
-    (comments: Comment[]) => {
-      return dispatch(PostDetailActions.setComment(comments));
-    },
-    [dispatch],
-  );
-  const setLikes = useCallback(
-    (likes: string[]) => {
-      return dispatch(PostDetailActions.setLikes(likes));
-    },
-    [dispatch],
-  );
+  const setComments = useCallback((comments: Comment[]) => {
+    return dispatch(PostDetailActions.setComment(comments));
+  }, []);
+  const setLikes = (likes: string[]) => {
+    return dispatch(PostDetailActions.setLikes(likes));
+  };
 
   const setReports = useCallback(
     (reports: string[]) => {
@@ -85,20 +89,9 @@ const PostDetailPage = () => {
   );
 
   useEffect(() => {
-    fetchData(postId, setPost, navigate);
-  }, []);
-
-  useEffect(() => {
+    fetchData(postId, setPost, navigate, setLikes, setReports);
     getComments(postId, setComments);
-  }, [postId, setComments]);
-
-  // fetch함수 안에서 처리하기
-  useEffect(() => {
-    if (post) {
-      setLikes(post.likes);
-      setReports(post.reports);
-    }
-  }, [setLikes, setReports, post]);
+  }, []);
 
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {
