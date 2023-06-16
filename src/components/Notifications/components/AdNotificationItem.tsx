@@ -48,7 +48,10 @@ const AdNotificationItem = ({ id, storeData, checked }: Props) => {
           <RemoveButton onClick={() => RemoveNotification(id)}>×</RemoveButton>
         </>
       ) : (
-        <ErrorItem>삭제된 항목입니다.</ErrorItem>
+        <ErrorItem>
+          <p>삭제된 항목입니다.</p>
+          <ErrorRemoveButton onClick={() => RemoveNotification(id)}>×</ErrorRemoveButton>
+        </ErrorItem>
       )}
     </Container>
   );
@@ -91,6 +94,8 @@ const Message = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 200px;
+  height: 20px;
 `;
 
 const RemoveButton = styled.span`
@@ -111,5 +116,21 @@ const RemoveButton = styled.span`
 const ErrorItem = styled.div`
   color: var(--color-light-black);
   width: 100%;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20px;
+`;
+
+const ErrorRemoveButton = styled.div`
+  cursor: pointer;
+  position: relative;
+  left: 100;
+  z-index: 1;
+  :hover {
+    transition: all 0.1s ease;
+    opacity: 1;
+    color: var(--color-red);
+    transform: scale(1.5);
+  }
+  transition: all 0.1s ease;
 `;

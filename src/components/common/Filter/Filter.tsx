@@ -4,7 +4,7 @@ const Select = styled.select<{ width: number }>`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url('../../../../public/chevronDownIcon.png') no-repeat 95% 50%/13px auto;
+  background: url('/chevronDownIcon.png') no-repeat 95% 50%/13px auto;
   ${(props) => `width: ${props.width}%;`}
   height: 39px;
   background-color: var(--color-white);

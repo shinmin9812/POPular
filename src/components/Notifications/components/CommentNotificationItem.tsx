@@ -57,7 +57,10 @@ const CommentNotificationItem = ({ id, commentData, board, checked }: Props) => 
           <RemoveButton onClick={() => RemoveNotification(id)}>×</RemoveButton>
         </>
       ) : (
-        <ErrorItem>삭제된 항목입니다.</ErrorItem>
+        <ErrorItem>
+          <p>삭제된 항목입니다.</p>
+          <ErrorRemoveButton onClick={() => RemoveNotification(id)}>×</ErrorRemoveButton>
+        </ErrorItem>
       )}
     </Container>
   );
@@ -115,10 +118,11 @@ const Content = styled.div`
 `;
 
 const Message = styled.p`
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 18px;
 `;
 
 const CommentContainer = styled.div`
@@ -127,6 +131,7 @@ const CommentContainer = styled.div`
 `;
 
 const CommentContent = styled.p`
+  height: 18px;
   font-size: var(--font-regular);
   margin-left: 10px;
   flex: 1;
@@ -139,5 +144,21 @@ const CommentContent = styled.p`
 const ErrorItem = styled.div`
   color: var(--color-light-black);
   width: 100%;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20px;
+`;
+
+const ErrorRemoveButton = styled.div`
+  cursor: pointer;
+  position: relative;
+  left: 100;
+  z-index: 1;
+  :hover {
+    transition: all 0.1s ease;
+    opacity: 1;
+    color: var(--color-red);
+    transform: scale(1.5);
+  }
+  transition: all 0.1s ease;
 `;
