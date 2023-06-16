@@ -6,9 +6,13 @@ import { useEffect, useState } from 'react';
 import { Store } from '../types/store';
 import { CLIENT_PATH } from '../constants/path';
 import MenuItem from '../components/UserMenu/components/MenuItem';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const RecentListPage = () => {
   const [existingStores, setExistingStores] = useState<Store[]>();
+
+  const userData = useSelector((state: RootState) => state.UserSlice.user);
 
   async function checkStorage(array: Store[]): Promise<Store[]> {
     const storageStores: Store[] = [];
@@ -45,8 +49,17 @@ const RecentListPage = () => {
     <Container>
       <MetaTag title={`POPULAR | 최근 본 스토어`} />
       <MenuListContainer>
-        <NotificationMenu link={CLIENT_PATH.USER_NOTIFICATIONS} title="알림 목록" />
-        <MenuList />
+        {userData ? (
+          <>
+            <NotificationMenu link={CLIENT_PATH.USER_NOTIFICATIONS} title="알림 목록" />
+            <MenuList />
+          </>
+        ) : (
+          <>
+            <MenuItem link={CLIENT_PATH.USER_RECENT} title="최근 본 스토어" />
+            <MenuItem link={CLIENT_PATH.LOGIN} title="로그인" />
+          </>
+        )}
       </MenuListContainer>
       <ContentContainer>
         <Title>최근 본 스토어</Title>
