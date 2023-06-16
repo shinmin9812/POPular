@@ -70,6 +70,21 @@ const Map = () => {
     return result;
   });
 
+  useEffect(() => {
+    if (!map) return;
+    const boundPoint = map.getBounds();
+
+    const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
+    const distance = getDistance({
+      centerLat: center.lat,
+      centerLng: center.lng,
+      targetLat,
+      targetLng,
+    });
+
+    setDistance(distance);
+  }, [center, zoom]);
+
   // 최초 맵 렌더링
   useEffect(() => {
     const container = document.getElementById('map'); // 지도를 표시할 div
@@ -86,18 +101,6 @@ const Map = () => {
     window.kakao.maps.event.addListener(createdMap, 'zoom_changed', () => {
       const level = createdMap!.getLevel();
       setZoom(level);
-
-      const boundPoint = createdMap!.getBounds();
-
-      const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
-
-      const distance = getDistance({
-        centerLat: center.lat,
-        centerLng: center.lng,
-        targetLat,
-        targetLng,
-      });
-      setDistance(distance);
     });
 
     window.kakao.maps.event.addListener(createdMap, 'dragend', () => {
@@ -109,18 +112,6 @@ const Map = () => {
       });
     });
 
-    const boundPoint = createdMap!.getBounds();
-
-    const { La: targetLng, Ma: targetLat } = boundPoint.getSouthWest();
-
-    const distance = getDistance({
-      centerLat: center.lat,
-      centerLng: center.lng,
-      targetLat,
-      targetLng,
-    });
-
-    setDistance(distance);
     setMap(createdMap);
   }, []);
 

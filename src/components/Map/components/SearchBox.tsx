@@ -70,11 +70,10 @@ interface Props {
   map: Map;
 }
 
-const SearchBox = ({ setCenter, map }: Props) => {
+const SearchBox = ({ map, setCenter }: Props) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const [results, setResults] = useState<Result[]>([]);
   const [focusInput, setFocusInput] = useState<boolean>(false);
-  const dispatch = useDispatch();
 
   const changeHanlder = () => {
     if (!searchRef.current?.value) return;
@@ -129,6 +128,7 @@ const SearchBox = ({ setCenter, map }: Props) => {
               <li key={result.address_name}>
                 <div
                   onClick={() => {
+                    setCenter({ lat: +result.y, lng: +result.x });
                     const position = new window.kakao.maps.LatLng(+result.y, result.x);
                     searchRef.current!.value = result.address_name;
                     map.setCenter(position);
