@@ -46,7 +46,7 @@ const CommentInputContainer = ({
   const postId = useParams().postId;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
+    setInput(e.target.value.normalize());
   };
   const RegisterComment = () => {
     if (!UserData) {

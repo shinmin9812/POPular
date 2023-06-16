@@ -17,11 +17,11 @@ const Select = styled.select<{ width: number }>`
   cursor: pointer;
 
   + select {
-    margin-left: 9px;
+    margin-left: 5px;
   }
 
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 11px;
     padding: 6px;
   }
 `;

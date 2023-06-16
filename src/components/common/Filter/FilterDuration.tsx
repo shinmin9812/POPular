@@ -20,7 +20,7 @@ const Duration = styled.button`
 
   @media (max-width: 768px) {
     padding: 6px;
-    font-size: 12px;
+    font-size: 11px;
   }
 `;
 
@@ -29,7 +29,7 @@ const Wrap = styled.div`
   flex-direction: column;
   width: 33%;
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 5px;
   position: relative;
 `;
 

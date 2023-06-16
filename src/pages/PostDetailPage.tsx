@@ -92,13 +92,13 @@ const PostDetailPage = () => {
     getComments(postId, setComments);
   }, [postId, setComments]);
 
+  // fetch함수 안에서 처리하기
   useEffect(() => {
     if (post) {
-      setPost(post);
       setLikes(post.likes);
       setReports(post.reports);
     }
-  }, [setPost, setLikes, setReports, post]);
+  }, [setLikes, setReports, post]);
 
   // post가 null일 경우 로딩 상태를 표시
   if (post === null) {

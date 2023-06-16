@@ -103,7 +103,7 @@ const PostRegisterButtonContainer = () => {
         isUpdate={true}
         onClick={() => {
           alert('이전 페이지로 돌아갑니다.');
-          navigate(CLIENT_PATH.BOARD.replace(':category', currTab));
+          navigate(-1);
         }}
       >
         취소
