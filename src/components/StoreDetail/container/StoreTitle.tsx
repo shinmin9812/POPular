@@ -78,7 +78,6 @@ const StoreTitle = ({ store }: Props) => {
     dots: true,
   };
 
-  console.log(store);
   return (
     <Container>
       <div className="title-head">

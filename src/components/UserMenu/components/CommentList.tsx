@@ -7,7 +7,7 @@ import CommentItem from './CommentItem';
 import RecommentItem from './RecommentItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import callApi from '../../../utils/callApi';
 
 const getComments = async (

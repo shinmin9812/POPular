@@ -35,8 +35,6 @@ const StoreLocationChart = ({ stores }: Props) => {
     data = data.slice(data.length - 6, data.length);
   }
 
-  console.log(data);
-
   return (
     <Container>
       <PieChart width={400} height={300}>

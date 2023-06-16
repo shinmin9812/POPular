@@ -9,9 +9,8 @@ interface Props {
 const BeforeEndStore = ({ stores }: Props) => {
   const currentDate = new Date();
   const sortedStores = stores
-    .slice(0, 10)
     .filter((store) => {
-      let endDate = new Date(store.end_date);
+      const endDate = new Date(store.end_date);
       return (
         endDate.getFullYear() >= currentDate.getFullYear() &&
         endDate.getMonth() >= currentDate.getMonth() &&
@@ -19,12 +18,13 @@ const BeforeEndStore = ({ stores }: Props) => {
       );
     })
     .sort((a, b) => {
-      let dateA = new Date(a.end_date);
-      let dateB = new Date(b.end_date);
-      let diffA = Math.abs(currentDate.getTime() - dateA.getTime());
-      let diffB = Math.abs(currentDate.getTime() - dateB.getTime());
+      const dateA = new Date(a.end_date);
+      const dateB = new Date(b.end_date);
+      const diffA = Math.abs(currentDate.getTime() - dateA.getTime());
+      const diffB = Math.abs(currentDate.getTime() - dateB.getTime());
       return diffA - diffB;
-    });
+    })
+    .slice(0, 10);
 
   return (
     <Container>

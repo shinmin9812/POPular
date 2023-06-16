@@ -43,7 +43,6 @@ const Container = styled.div`
 
 const AdminCard = () => {
   const { data } = useGetLoginuser();
-  console.log(data);
 
   return (
     <Container>
