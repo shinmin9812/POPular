@@ -43,7 +43,7 @@ const MemberMenu = () => {
     <Container>
       <UserProfile />
       <MenuItem link={`/community/user/${userId}`} title="내 프로필 보기" />
-      <MenuItem link={`/user/${userId}/update`} title="회원정보 수정" />
+      <MenuItem link={`/usermenu/${userId}/update`} title="회원정보 수정" />
       <MenuList />
       <div className="deleteUser" onClick={handleDeleteUser}>
         회원탈퇴

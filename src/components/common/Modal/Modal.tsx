@@ -49,6 +49,12 @@ const Container = styled.div`
     animation: appear-modal 0.3s forwards ease-out;
   }
 
+  @media (max-width: 768px) {
+    .modal-wrapper {
+      width: 90vw;
+    }
+  }
+
   @keyframes appear-modal {
     0% {
       transform: translate(-50%, 50%);

@@ -124,9 +124,7 @@ const AdminStoreDeletePage = () => {
         </Card>
       )}
       {isSuccess && isModalOpen && (
-        <Modal>
-          <AlertModal onClose={setIsModalOpen} content="스토어가 삭제되었습니다!"></AlertModal>
-        </Modal>
+        <AlertModal onClose={setIsModalOpen} content="스토어가 삭제되었습니다!"></AlertModal>
       )}
     </Container>
   );

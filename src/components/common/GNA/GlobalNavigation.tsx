@@ -101,13 +101,13 @@ const GlobalNavigation = () => {
             <p>홈</p>
           </div>
         </NavLink>
-        <NavLink to={CLIENT_PATH.BOARD_ALL} className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink to={CLIENT_PATH.COMMUNITY} className={({ isActive }) => (isActive ? 'active' : '')}>
           <div className="nav_link">
             <CommunityIcon />
             <p>커뮤니티</p>
           </div>
         </NavLink>
-        <NavLink to={`${CLIENT_PATH.USER_MENU}`} end className={({ isActive }) => (isActive ? 'active' : '')}>
+        <NavLink to={`${CLIENT_PATH.USER_MENU}`} className={({ isActive }) => (isActive ? 'active' : '')}>
           <div className="nav_link">
             <UserIcon />
             <p>마이페이지</p>

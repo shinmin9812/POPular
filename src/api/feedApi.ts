@@ -84,8 +84,8 @@ export const useGetAllReviewFeeds = (option?: object) => {
   return useQuery<Post[]>(['reviewFeeds'], () => getAllReviewFeeds(), option);
 };
 
-export const useGetFeeds = (postCategory = '') => {
-  return useQuery<Post[]>(['getPosts', postCategory], () => fetchData(postCategory));
+export const useGetFeeds = (postCategory = '', option?: object) => {
+  return useQuery<Post[]>(['getPosts', postCategory], () => fetchData(postCategory), option);
 };
 
 export const useGetFeedsByUserId = (userId: string, option?: object) => {

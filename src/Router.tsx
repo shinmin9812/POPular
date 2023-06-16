@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import ScrollTop from './ScrollTop';
 import Layout from './components/common/Layout';
 import HomePage from './pages/Homepage';
@@ -44,6 +44,7 @@ const Router = () => {
           <Route path={CLIENT_PATH.POST} element={<PostDetailPage />}></Route>
           <Route path={CLIENT_PATH.MAP} element={<MapPage />}></Route>
           <Route path={CLIENT_PATH.SEARCH} element={<SearchPage />}></Route>
+          <Route path={CLIENT_PATH.COMMUNITY} element={<Navigate to="./board" />}></Route>
           <Route path={CLIENT_PATH.BOARD_ALL} element={<CommunityPage />}></Route>
           <Route path={CLIENT_PATH.BOARD} element={<CommunityPage />}></Route>
           <Route path={CLIENT_PATH.USER_MENU} element={<UserMenuPage />}></Route>

@@ -110,6 +110,7 @@ export const CLIENT_PATH = {
 
   MAP: '/map',
 
+  COMMUNITY: '/community',
   SEARCH: '/search',
   BOARD_ALL: '/community/board',
   BOARD: '/community/board/:category',
@@ -128,7 +129,7 @@ export const CLIENT_PATH = {
   USER_POSTS: '/usermenu/posts',
   USER_COMMENTS: '/usermenu/comments',
   USER_NOTIFICATIONS: '/usermenu/notifications',
-  USER_UPDATE: '/user/:userId/update',
+  USER_UPDATE: '/usermenu/:userId/update',
 
   ADMIN: '/admin',
 
