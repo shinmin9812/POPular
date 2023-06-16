@@ -7,7 +7,9 @@ const LoginPage = () => {
   return (
     <Container>
       <MetaTag title="POPULAR" url="www.popular.com" />
-      <Intro>모든 트렌드가 모이는 곳 팝업스토어!</Intro>
+      <Intro>
+        <IntroImg src="images/PopularIntro.png" />
+      </Intro>
       <LoginContainer>
         <PageTitle>로그인</PageTitle>
         <LoginForm />
@@ -29,22 +31,30 @@ const Intro = styled.section`
   display: none;
   @media (min-width: 768px) {
     display: block;
-    background: linear-gradient(to bottom right, var(--color-main), var(--color-white));
-    color: var(--color-white);
-    flex-grow: 1.5;
-    height: 800px;
+    // background: linear-gradient(to bottom right, var(--color-main), var(--color-white));
+    // color: var(--color-white);
+    // height: 800px;
     border-radius: 10px;
     padding: 20px;
+    flex: 1;
   }
 `;
 
+const IntroImg = styled.img`
+  width: 100%;
+  border-radius: 15px;
+`;
+
 const LoginContainer = styled.div`
-  height: 700px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   margin-top: 170px;
-  @media (min-width: 768px) {
-    flex-grow: 1;
+
+  @media screen and (min-width: 768px) {
+    margin-top: 0;
+    width: 100%;
+    flex: 1;
   }
 `;
 
