@@ -31,6 +31,8 @@ export class CommentsService {
 		private readonly commentModel: AggregatePaginateModel<Comment>,
 		@InjectModel(Notification.name)
 		private readonly notificationModel: AggregatePaginateModel<Notification>,
+		@InjectModel(User.name)
+		private readonly userModel: AggregatePaginateModel<User>,
 		@Inject(forwardRef(() => FeedsService)) private feedsService: FeedsService,
 		@Inject(forwardRef(() => UserService)) private UserService: UserService,
 		@Inject(forwardRef(() => NotificationsService))
@@ -162,13 +164,16 @@ export class CommentsService {
 
 	async createComment(commentCreateDto: CommentCreateDto): Promise<Comment> {
 		try {
+			
 			const createdComment = new this.commentModel();
 			createdComment.author = commentCreateDto.author;
 			createdComment.content = commentCreateDto.content;
 			createdComment.parent = commentCreateDto.parent;
 			createdComment.recomments = [];
+			
 
 			const savedComment = await createdComment.save();
+			const user = this.userModel.findById(savedComment.author.toString())
 
 			async function generateAncestor(
 				savedComment: Comment,
@@ -217,7 +222,8 @@ export class CommentsService {
 				content_user: null,
 			};
 
-			if((await generateAncestor(savedComment, this.feedsService, this)).author === savedComment.author) {
+			if((await generateAncestor(savedComment, this.feedsService, this)).author === savedComment.author 
+				|| (await user).allow_notification === false) {
 
 			} else {
 				const createdNotification =
@@ -227,7 +233,7 @@ export class CommentsService {
 				await this.UserService.updateNotification(
 					savedComment.author,
 					createdNotification._id,
-				);
+				)
 			}
 
 			if (savedComment.parent.type === 'Comment') {

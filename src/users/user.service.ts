@@ -121,6 +121,10 @@ export class UserService {
 
 		if (body.allow_notification !== undefined) {
 			user.allow_notification = body.allow_notification;
+			if(body.allow_notification === false){
+				const notifications = (await this.notificationModel.find({user_id: user._id})).map(notification => notification._id);
+				await this.NotificationsService.deleteNotifications(notifications);
+			}
 		}
 
 		return user.save();
@@ -244,18 +248,22 @@ export class UserService {
 			target.save();
 		}
 
-		const notificationCreatDto = {
-			type: NotificationType.FOLLOW,
-			board: null,
-			user_id: target._id.toString(),
-			content_comment: null,
-			content_store: null,
-			content_user: new Types.ObjectId(user._id),
-		};
+		if(target.allow_notification === false) {
 
-		const createdNotification =
-			await this.NotificationsService.createNotification(notificationCreatDto);
-		await this.updateNotification(target._id, createdNotification._id);
+		} else {
+			const notificationCreatDto = {
+				type: NotificationType.FOLLOW,
+				board: null,
+				user_id: target._id.toString(),
+				content_comment: null,
+				content_store: null,
+				content_user: new Types.ObjectId(user._id),
+			};
+	
+			const createdNotification =
+				await this.NotificationsService.createNotification(notificationCreatDto);
+			await this.updateNotification(target._id, createdNotification._id);
+		}
 
 		return user;
 	}
