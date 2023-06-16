@@ -8,6 +8,7 @@ import { API_PATH } from '../../../constants/path';
 import { Store } from '../../../types/store';
 import StoreSheet from '../components/StoreSheet';
 import KakaoMap from '../components/KakaoMap';
+import SearchBox from '../components/SearchBox';
 
 declare global {
   interface Window {
@@ -198,6 +199,7 @@ const Map = () => {
           refetch();
         }}
       />
+      <SearchBox map={map!} setCenter={setCenter} />
       {stores && <StoreSheet openList={openList} setOpenList={setOpenList} stores={stores} />}
     </Container>
   );
