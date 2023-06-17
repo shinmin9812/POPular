@@ -90,7 +90,7 @@ const ReviewPost = ({ post }: Props) => {
           <p className="user-name">{user.nickname}</p>
           <span className="user-followers"> · {user.follower.length} followers</span>
         </div>
-        <p className="content">{post.content.replace(/<[^>]*>?/g, '')}</p>
+        <p className="content">{post.content.replace(/<[^>]*>?/g, '').substring(0, 75)}...</p>
       </div>
     </Container>
   );
