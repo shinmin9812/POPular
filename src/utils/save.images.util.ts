@@ -3,7 +3,7 @@ import { join } from 'path';
 
 export async function saveImage(
 	base64String: string,
-	targetPAth: string,
+	targetPath: string,
 ): Promise<void> {
 	const match = base64String.match(/data:(.*);base64,(.*)/);
 	if (!match) {
@@ -13,5 +13,8 @@ export async function saveImage(
 	const imageData = match[2];
 	const buffer = Buffer.from(imageData, 'base64');
 
-	await fsPromises.writeFile(targetPAth, buffer);
+	const directoryPath = join(targetPath, '..');
+
+	await fsPromises.mkdir(directoryPath, { recursive: true });
+	await fsPromises.writeFile(targetPath, buffer);
 }

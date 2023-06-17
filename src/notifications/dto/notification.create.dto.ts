@@ -9,6 +9,7 @@ import { NotificationType } from '../notification.schema';
 import { BoardType } from 'src/feeds/feed.schema';
 import { Types } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from 'src/users/user.schema';
 
 export class NotificationCreateDto {
 	@IsEnum(NotificationType)
@@ -32,14 +33,18 @@ export class NotificationCreateDto {
 	})
 	readonly board: BoardType;
 
-	@IsNotEmpty()
 	@IsMongoId()
 	@ApiProperty({
 		example: 'qwer2134',
 		description: '알림 대상 ID',
-		required: true,
 	})
-	readonly user_id: Types.ObjectId;
+	@ValidateIf(
+		obj =>
+			obj.type === NotificationType.COMMENT ||
+			obj.type === NotificationType.RECOMMENT ||
+			obj.type === NotificationType.FOLLOW,
+	)
+	readonly user_id?: Types.ObjectId | User;
 
 	@IsMongoId()
 	@ApiProperty({

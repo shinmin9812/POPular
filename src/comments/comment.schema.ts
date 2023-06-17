@@ -5,8 +5,9 @@ import {
 	Schema as MongooseSchema,
 	Types,
 } from 'mongoose';
-import { Feed } from 'src/feeds/feed.schema';
+import { BoardType, Feed } from 'src/feeds/feed.schema';
 import { User } from 'src/users/user.schema';
+import mongooseAggregatePaginate = require('mongoose-aggregate-paginate-v2');
 
 const options: SchemaOptions = {
 	timestamps: true,
@@ -26,6 +27,14 @@ export class parentinfo {
 	id: Types.ObjectId;
 }
 
+export class ancestorinfo {
+	@Prop({ required: true })
+	type: BoardType;
+
+	@Prop({ required: true })
+	id: Types.ObjectId;
+}
+
 @Schema(options)
 export class Comment extends Document {
 	@Prop({ type: Types.ObjectId, ref: 'User', required: true })
@@ -37,6 +46,9 @@ export class Comment extends Document {
 	@Prop({ required: true })
 	parent: parentinfo;
 
+	@Prop()
+	ancestor?: ancestorinfo;
+
 	@Prop({
 		type: [{ type: Types.ObjectId, ref: 'Comment' }],
 		default: [],
@@ -44,4 +56,6 @@ export class Comment extends Document {
 	recomments: Types.ObjectId[];
 }
 
-export const CommentSchema = SchemaFactory.createForClass(Comment);
+const schema = SchemaFactory.createForClass(Comment);
+schema.plugin(mongooseAggregatePaginate);
+export const CommentSchema = schema;

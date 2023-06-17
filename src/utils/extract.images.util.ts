@@ -6,6 +6,9 @@ export function extractImages(content: string): string[] {
 
 	$('img').each((index, element) => {
 		const src = $(element).attr('src');
+		if (src && src.startsWith('http://')) {
+			images.push(src);
+		}
 		if (src && src.startsWith('data:image/')) {
 			images.push(src);
 		}
