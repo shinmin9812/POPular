@@ -27,7 +27,7 @@ export class FeedsService {
 		private readonly feedModel: AggregatePaginateModel<Feed>,
 		@Inject(forwardRef(() => CommentsService))
 		private commentsService: CommentsService,
-	) { }
+	) {}
 
 	async getAllFeeds(): Promise<Feed[]> {
 		try {
@@ -260,10 +260,14 @@ export class FeedsService {
 				const exceptImages = await handleImages(originalImages);
 
 				//기존 이미지 배열
-				const httpImages = originalImages.filter(image => image.startsWith('http://'));
+				const httpImages = originalImages.filter(image =>
+					image.startsWith('http://'),
+				);
 
 				//추가 이미지 배열
-				const base64Images = originalImages.filter(image => image.startsWith('data:image/'))
+				const base64Images = originalImages.filter(image =>
+					image.startsWith('data:image/'),
+				);
 				const imageMapping = await handleImages(base64Images);
 				const transformImages = Object.values(imageMapping);
 

@@ -12,7 +12,7 @@ export class StoreService {
 	constructor(
 		@InjectModel(Store.name) private readonly storeModel: PaginateModel<Store>,
 		@InjectModel(User.name) private readonly userModel: Model<User>,
-	) { }
+	) {}
 
 	async getAllStores(): Promise<Store[]> {
 		return await this.storeModel.find();
@@ -32,7 +32,7 @@ export class StoreService {
 	async getStoreById(_id: string): Promise<Store> {
 		const result = await this.storeModel.findById(_id);
 		if (!result) {
-			throw new NotFoundException("해당하는 스토어가 존재하지 않습니다.");
+			throw new NotFoundException('해당하는 스토어가 존재하지 않습니다.');
 		}
 		return result;
 	}

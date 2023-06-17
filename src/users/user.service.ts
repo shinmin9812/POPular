@@ -15,7 +15,10 @@ import { UserUpdateDto } from './dto/user.update.dto';
 import { hashPassword } from '../utils/hassing.util';
 import { handleImage } from 'src/utils/handle.image.util';
 import { NotificationsService } from 'src/notifications/notification.service';
-import { Notification, NotificationType } from 'src/notifications/notification.schema';
+import {
+	Notification,
+	NotificationType,
+} from 'src/notifications/notification.schema';
 import { CommentsService } from 'src/comments/comment.service';
 import { Comment } from 'src/comments/comment.schema';
 import { FeedsService } from 'src/feeds/feed.service';
@@ -27,14 +30,15 @@ export class UserService {
 		@InjectModel(Store.name) private readonly storeModel: Model<Store>,
 		@InjectModel(Feed.name) private readonly feedModel: Model<Feed>,
 		@InjectModel(Comment.name) private readonly commentModel: Model<Comment>,
-		@InjectModel(Notification.name) private readonly notificationModel: Model<Notification>,
+		@InjectModel(Notification.name)
+		private readonly notificationModel: Model<Notification>,
 		@Inject(forwardRef(() => CommentsService))
 		private CommentsService: CommentsService,
 		@Inject(forwardRef(() => NotificationsService))
 		private NotificationsService: NotificationsService,
 		@Inject(forwardRef(() => FeedsService))
 		private FeedsService: FeedsService,
-	) { }
+	) {}
 
 	async getAllUsers(): Promise<User[]> {
 		return await this.userModel.find();
@@ -121,8 +125,10 @@ export class UserService {
 
 		if (body.allow_notification !== undefined) {
 			user.allow_notification = body.allow_notification;
-			if(body.allow_notification === false){
-				const notifications = (await this.notificationModel.find({user_id: user._id})).map(notification => notification._id);
+			if (body.allow_notification === false) {
+				const notifications = (
+					await this.notificationModel.find({ user_id: user._id })
+				).map(notification => notification._id);
 				await this.NotificationsService.deleteNotifications(notifications);
 			}
 		}
@@ -248,8 +254,7 @@ export class UserService {
 			target.save();
 		}
 
-		if(target.allow_notification === false) {
-
+		if (target.allow_notification === false) {
 		} else {
 			const notificationCreatDto = {
 				type: NotificationType.FOLLOW,
@@ -259,9 +264,11 @@ export class UserService {
 				content_store: null,
 				content_user: new Types.ObjectId(user._id),
 			};
-	
+
 			const createdNotification =
-				await this.NotificationsService.createNotification(notificationCreatDto);
+				await this.NotificationsService.createNotification(
+					notificationCreatDto,
+				);
 			await this.updateNotification(target._id, createdNotification._id);
 		}
 
@@ -341,12 +348,18 @@ export class UserService {
 		}
 
 		// user관련 알림 삭제(notification.service에서 deleteNotification을 가져와서 사용해야함)
-		const userNotifications = await this.notificationModel.find({ user_id: _id }).select(_id);
-		const userRelatedNotifications = await this.notificationModel.find({ content_user: _id }).select(_id);
+		const userNotifications = await this.notificationModel
+			.find({ user_id: _id })
+			.select(_id);
+		const userRelatedNotifications = await this.notificationModel
+			.find({ content_user: _id })
+			.select(_id);
 
 		const notifications = [...userNotifications, ...userRelatedNotifications];
 		if (notifications.length > 0) {
-			const notificationsIds = notifications.map(notification => notification._id);
+			const notificationsIds = notifications.map(
+				notification => notification._id,
+			);
 			console.log(notificationsIds);
 			await this.NotificationsService.deleteNotifications(notificationsIds);
 		}

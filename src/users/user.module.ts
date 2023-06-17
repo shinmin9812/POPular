@@ -9,7 +9,10 @@ import { NotificationsModule } from 'src/notifications/notification.module';
 import { Feed, FeedSchema } from 'src/feeds/feed.schema';
 import { Comment, CommentSchema } from 'src/comments/comment.schema';
 import { FeedsModule } from 'src/feeds/feed.module';
-import { Notification, NotificationSchema } from 'src/notifications/notification.schema';
+import {
+	Notification,
+	NotificationSchema,
+} from 'src/notifications/notification.schema';
 
 @Module({
 	imports: [
@@ -17,7 +20,9 @@ import { Notification, NotificationSchema } from 'src/notifications/notification
 		MongooseModule.forFeature([{ name: Store.name, schema: StoreSchema }]),
 		MongooseModule.forFeature([{ name: Feed.name, schema: FeedSchema }]),
 		MongooseModule.forFeature([{ name: Comment.name, schema: CommentSchema }]),
-		MongooseModule.forFeature([{ name: Notification.name, schema: NotificationSchema }]),
+		MongooseModule.forFeature([
+			{ name: Notification.name, schema: NotificationSchema },
+		]),
 		forwardRef(() => CommentsModule),
 		forwardRef(() => NotificationsModule),
 		forwardRef(() => FeedsModule),
