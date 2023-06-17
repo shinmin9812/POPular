@@ -45,7 +45,7 @@ const CommentList = () => {
     if (userData) {
       setUserId(userData._id);
     }
-  }, []);
+  }, [userData]);
 
   const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['comments'],
@@ -58,6 +58,12 @@ const CommentList = () => {
       enabled: !!userId,
     },
   );
+
+  useEffect(() => {
+    if (status === 'success' && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [status, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const allRows: Comment[] = data ? data.pages.flatMap<Comment>((d) => d.rows) : [];
 

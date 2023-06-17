@@ -41,7 +41,7 @@ const PostList = () => {
     if (userData) {
       setUserId(userData._id);
     }
-  }, []);
+  }, [userData]);
 
   const { status, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['feeds'],
@@ -54,6 +54,12 @@ const PostList = () => {
       enabled: !!userId,
     },
   );
+
+  useEffect(() => {
+    if (status === 'success' && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [status, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const allRows: Post[] = data ? data.pages.flatMap<Post>((d) => d.rows) : [];
 

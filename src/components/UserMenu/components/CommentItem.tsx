@@ -89,6 +89,19 @@ const Container = styled.div`
     background-color: #fff;
     filter: brightness(0.97);
   }
+
+  animation: appear-post 1s forwards;
+
+  @keyframes appear-post {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 const CommentHeader = styled.div`
