@@ -10,7 +10,7 @@ interface Props {
 const StoreList = ({ stores }: Props) => {
   return (
     <Container className="store-list">
-      {stores?.length > 0 ? (
+      {stores.length > 0 ? (
         <ul>
           {stores.map((store) => (
             <li key={store._id}>
