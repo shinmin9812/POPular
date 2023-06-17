@@ -24,14 +24,16 @@ const handleChecked = async (checked: boolean, id: string) => {
 };
 
 const RemoveNotification = async (id: string) => {
-  fetch(`http://34.22.81.36:3000/notifications/${id}`, {
+  const res = await fetch(`http://34.22.81.36:3000/notifications/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
-  location.reload();
+  if (res.ok) {
+    location.reload();
+  } else alert('삭제에 실패했습니다.');
 };
 
 const FollowNotificationItem = ({ id, follower, checked }: Props) => {

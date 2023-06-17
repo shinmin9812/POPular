@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
 const ScrapPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [stores, setStores] = useState<Store[]>([]);
 
   const fetchStore = async (storeId: string) => {
@@ -30,6 +31,7 @@ const ScrapPage = () => {
         }),
       );
       setStores(storeData);
+      setIsLoading(false);
     }
   };
 
@@ -38,6 +40,12 @@ const ScrapPage = () => {
   }, [userData]);
 
   return (
+    // <>
+    //   {isLoading ? (
+    // <Loading>
+    //   <img src="/images/loading.gif" alt="loading" width="100px" />
+    // </Loading>
+    //   ) : (
     <Container>
       <MetaTag title={`POPULAR | 위시리스트`} />
       <MenuListContainer>
@@ -46,9 +54,17 @@ const ScrapPage = () => {
       </MenuListContainer>
       <ContentContainer>
         <Title>위시리스트</Title>
-        <StyledStoreList stores={stores} />
+        {isLoading ? (
+          <Loading>
+            <img src="/images/loading.gif" alt="loading" width="100px" />
+          </Loading>
+        ) : (
+          <StyledStoreList stores={stores} />
+        )}
       </ContentContainer>
     </Container>
+    // )}
+    // </>
   );
 };
 
@@ -147,4 +163,10 @@ const StyledStoreList = styled(StoreList)`
       width: 50%;
     }
   }
+`;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 `;

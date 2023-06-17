@@ -10,6 +10,7 @@ import RecommentNotificationItem from './RecommentNotificationItem';
 import { Link } from 'react-router-dom';
 
 const NotificationList = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   const userData = useSelector((state: RootState) => state.UserSlice.user);
@@ -25,17 +26,26 @@ const NotificationList = () => {
       });
       const data = await res.json();
       setNotifications(data.reverse());
+      setIsLoading(false);
     }
   };
   useEffect(() => {
     getUserNotification();
   }, [userData]);
 
+  if (isLoading) {
+    return (
+      <Loading>
+        <img src="/images/loading.gif" alt="loading" width="100px" />
+      </Loading>
+    );
+  }
+
   if (userData && !userData.allow_notification)
     return (
       <LinkContainer>
         <p>알림 설정을 허용해주세요!</p>
-        <StyledLink to={`/user/${userData._id}/update`}>알림 설정하러 가기🔔</StyledLink>
+        <StyledLink to={`/usermenu/${userData._id}/update`}>알림 설정하러 가기🔔</StyledLink>
       </LinkContainer>
     );
   if (notifications.length === 0) {
@@ -91,19 +101,35 @@ const LinkContainer = styled.div`
   border-radius: 8px;
 
   p {
-    font-size: 25px;
+    font-size: var(--font-medium);
   }
 `;
 
 const StyledLink = styled(Link)`
   font-size: 25px;
   margin: 20px 0;
-  text-decoration: underline;
+  padding: 10px;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: var(--color-light-black) 1px 1px 10px;
 `;
 
 const NotificationListContainer = styled.section`
   width: 100%;
   height: 100%;
+
+  animation: appear-post 1s forwards;
+
+  @keyframes appear-post {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 const Empty = styled.h1`
@@ -117,4 +143,10 @@ const Empty = styled.h1`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+`;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 `;

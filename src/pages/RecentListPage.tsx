@@ -10,24 +10,26 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
 const RecentListPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [existingStores, setExistingStores] = useState<Store[]>();
 
   const userData = useSelector((state: RootState) => state.UserSlice.user);
 
   async function checkStorage(array: Store[]): Promise<Store[]> {
     const storageStores: Store[] = [];
-
-    for (const item of array) {
-      try {
-        const response = await fetch(`http://34.22.81.36:3000/stores/store/${item._id}`);
-        if (response.ok) {
-          storageStores.push(item);
+    if (array) {
+      for (const item of array) {
+        try {
+          const response = await fetch(`http://34.22.81.36:3000/stores/store/${item._id}`);
+          if (response.ok) {
+            storageStores.push(item);
+          }
+        } catch (err: any) {
+          throw new Error(err.message);
         }
-      } catch (err: any) {
-        throw new Error(err.message);
       }
-    }
-    return storageStores;
+      return storageStores;
+    } else return [];
   }
 
   const item = localStorage.getItem('store');
@@ -36,9 +38,12 @@ const RecentListPage = () => {
   useEffect(() => {
     checkStorage(objectArray)
       .then((result) => {
-        localStorage.setItem('store', JSON.stringify(result));
-        setExistingStores(result);
+        if (result) {
+          localStorage.setItem('store', JSON.stringify(result));
+          setExistingStores(result);
+        }
       })
+      .then(() => setIsLoading(false))
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -62,7 +67,11 @@ const RecentListPage = () => {
       </MenuListContainer>
       <ContentContainer>
         <Title>최근 본 스토어</Title>
-        {existingStores ? (
+        {isLoading ? (
+          <Loading>
+            <img src="/images/loading.gif" alt="loading" width="100px" />
+          </Loading>
+        ) : existingStores ? (
           <StoreList stores={existingStores} />
         ) : (
           <div className="nothing">
@@ -181,4 +190,10 @@ const Title = styled.h1`
   color: var(--color-main);
   margin-bottom: 20px;
   margin-left: 20px;
+`;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 `;
