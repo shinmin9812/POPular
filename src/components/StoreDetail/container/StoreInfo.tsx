@@ -21,12 +21,14 @@ const Container = styled.div`
   }
 
   .store-description {
-    padding-top: 20px;
+    width: 100%;
+    padding: 20px 0;
 
     font-size: 18px;
     font-weight: 300;
 
     word-break: keep-all;
+    white-space: pre-line;
     line-height: 1.3;
     letter-spacing: 0.02em;
   }
@@ -104,9 +106,15 @@ const Container = styled.div`
 
 interface Props {
   store: Store;
+  isLoading?: boolean;
+  isError?: boolean;
 }
 
-const StoreInfo = ({ store }: Props) => {
+const StoreInfo = ({ store, isLoading, isError }: Props) => {
+  if (isLoading) return <div>Loding...</div>;
+
+  if (isError) return <div>Error</div>;
+
   return (
     <>
       <Container>

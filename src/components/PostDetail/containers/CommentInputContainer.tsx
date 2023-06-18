@@ -1,71 +1,64 @@
 import CommentInput from '../components/CommentInput';
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../../Hooks/useSelectorHooks';
+import { useAppDispatch, useAppSelector } from '../../../Hooks/useSelectorHooks';
 import { PostDetailActions } from '../PostDetailSlice';
 import { Comment } from '../../../types/comment';
+import { getComments } from '../../../api/CommentApi';
+import { API_PATH } from '../../../constants/path';
+import callApi from '../../../utils/callApi';
+import LoginModal from '../../common/Modals/LoginModal';
 
-type aa = {
+type postCommentBody = {
   author: string;
   content: string;
   parent: {
     type: string;
     id: string;
   };
-  recomments: aa[];
+  recomments: postCommentBody[];
 };
 
 const feedCommentApi = async (
-  data: aa,
-  addComment: (comment: Comment) => void,
+  data: postCommentBody,
   setInput: Dispatch<SetStateAction<string>>,
+  postId = '',
+  setComments: (comments: Comment[]) => void,
 ) => {
-  const response = await fetch(`http://34.22.81.36:3000/comments`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-    body: JSON.stringify(data),
-  });
-  const result = await response.json();
-  addComment(result);
+  await callApi('POST', API_PATH.COMMENT.POST, JSON.stringify(data));
   setInput('');
+  getComments(postId, setComments);
 };
 
-const getUserInfo = async (setIsMember: React.Dispatch<React.SetStateAction<string | undefined>>) => {
-  try {
-    const response = await fetch('http://34.22.81.36:3000/auth/profile', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    const data = await response.json();
-    setIsMember(data._id);
-  } catch (err: any) {
-    throw new Error(err);
-  }
-};
-
-const CommentInputContainer = ({ commentId }: { commentId?: string }) => {
-  const [input, setInput] = useState('');
-  const [isMember, setIsMember] = useState<string>();
-  const dispatch = useAppDispatch();
-  const addComment = (comment: Comment) => {
-    return dispatch(PostDetailActions.addComment(comment));
-  };
+const CommentInputContainer = ({
+  commentId,
+  setReCommentInput,
+}: {
+  commentId?: string;
+  setReCommentInput?: () => void;
+}) => {
   const postId = useParams().postId;
-  useEffect(() => {
-    getUserInfo(setIsMember);
-  }, []);
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
+  const [input, setInput] = useState('');
+  const [isComposing, setIsComposing] = useState(false);
+  const dispatch = useAppDispatch();
+  const UserData = useAppSelector((state) => state.UserSlice.user);
+  const setComments = (comments: Comment[]) => {
+    return dispatch(PostDetailActions.setComment(comments));
   };
-  const onClick = () => {
-    const data: aa = {
-      author: isMember ? isMember : '',
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value.normalize());
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const RegisterComment = () => {
+    if (!UserData) {
+      setIsModalOpen(true);
+      return;
+    }
+    const data: postCommentBody = {
+      author: UserData?._id,
       content: input,
       parent: {
         type: commentId ? 'Comment' : 'Feed',
@@ -73,9 +66,21 @@ const CommentInputContainer = ({ commentId }: { commentId?: string }) => {
       },
       recomments: [],
     };
-    feedCommentApi(data, addComment, setInput);
+    feedCommentApi(data, setInput, postId, setComments);
+    setReCommentInput && setReCommentInput();
   };
-  return <CommentInput onChange={onChange} value={input} onClick={onClick} />;
+  return (
+    <>
+      <CommentInput
+        isComposing={isComposing}
+        setIsComposing={setIsComposing}
+        onChange={onChange}
+        value={input}
+        RegisterComment={RegisterComment}
+      />
+      {isModalOpen && <LoginModal onClose={setIsModalOpen} />}
+    </>
+  );
 };
 
 export default CommentInputContainer;

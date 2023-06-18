@@ -36,7 +36,8 @@ const Container = styled.div`
     padding: 5px 15px;
     position: absolute;
     right: 10px;
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
+    font-weight: var(--weight-regular);
   }
 `;
 

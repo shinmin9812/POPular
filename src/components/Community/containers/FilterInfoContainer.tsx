@@ -23,7 +23,7 @@ const FilterInfoContainer = () => {
       setFilterCategoryUse={setFilterCategoryUse}
       setFilterDurationUse={setFilterDurationUse}
       durationFilterUse={durationFilter.use}
-      startDate={durationFilter.StartDate}
+      startDate={durationFilter.startDate}
       endDate={durationFilter.endDate}
     />
   );

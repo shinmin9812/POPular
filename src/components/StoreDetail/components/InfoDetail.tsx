@@ -1,10 +1,20 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { Store } from '../../../types/store';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
   store: Store;
 };
+
+interface HoursData {
+  start: string | null;
+  end: string | null;
+}
+
+interface Hours {
+  [key: string]: HoursData;
+}
 
 const Container = styled.div`
   width: 100%;
@@ -34,6 +44,38 @@ const Container = styled.div`
     font-size: 16px;
     font-weight: 500;
     margin-left: 20px;
+    margin-right: 10px;
+  }
+
+  .week-btn {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: #ffffff;
+  }
+
+  .hours-list {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0 20px 45px;
+
+    li + li {
+      margin-top: 8px;
+    }
+  }
+
+  .hours-item {
+    letter-spacing: 1px;
+  }
+
+  .businessOff {
+    color: var(--color-red);
+  }
+
+  .businessOn {
+    color: var(--color-sub);
   }
 
   .store-sns-title {
@@ -100,7 +142,74 @@ function getPeriod(period: string) {
   return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
 }
 
+function businessHours(hours: Hours) {
+  const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+  const koreanDays = ['월', '화', '수', '목', '금', '토', '일'];
+  const openHours: string[] = [];
+
+  Object.entries(hours).forEach(([day, time]) => {
+    const start = time.start;
+    const end = time.end;
+    const dayIndex = days.indexOf(day);
+    const koreanDay = koreanDays[dayIndex];
+
+    if (!start || !end) {
+      return openHours.push(`${koreanDay} 휴무일`);
+    }
+
+    openHours.push(`${koreanDay} ${start} ~ ${end}`);
+  });
+
+  return (
+    <ul className="hours-list">
+      {openHours.map((hour: string, i: number) => (
+        <li className="hours-item" key={i}>
+          {hour}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function checkedOpen(hours: Hours) {
+  const nowDate = new Date();
+  const day = nowDate.getDay() === 0 ? 7 : nowDate.getDay();
+  const time = nowDate.getHours();
+
+  const currentDayKey = Object.keys(hours)[day - 1];
+  const currentDay = hours[currentDayKey];
+
+  if (currentDay.start === null || currentDay.end === null) {
+    return (
+      <p className="item-info">
+        <span className="businessOff">영업 종료</span> 휴무일
+      </p>
+    );
+  }
+
+  if (parseInt(currentDay.start) > time || parseInt(currentDay.end) <= time) {
+    return (
+      <p className="item-info">
+        <span className="businessOff">영업 종료</span> {currentDay.start} ~ {currentDay.end}
+      </p>
+    );
+  }
+
+  return (
+    <p className="item-info">
+      <span className="businessOn">영업 중</span> {currentDay.start} ~ {currentDay.end}
+    </p>
+  );
+}
+
 const InfoDetail = ({ store }: Props) => {
+  const [week, setWeek] = useState<boolean>(false);
+  const gather = useNavigate();
+  const toGather = () => {
+    gather('/community/board/gather');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <Container>
       <ul className="store-detail-info-list">
@@ -113,31 +222,45 @@ const InfoDetail = ({ store }: Props) => {
         </li>
         <li className="store-detail-info-item">
           <img className="item-ico" src="/images/clock.svg" alt="" />
-          <p className="item-info">
-            영업중 {store.hours.mon.start} - {store.hours.mon.end}
-          </p>
+          {checkedOpen(store.hours)}
+          <button className="week-btn" onClick={() => setWeek(!week)}>
+            <img
+              src="/images/angle-down.svg"
+              alt=""
+              style={week ? { transform: 'rotate(180deg)' } : { transform: 'rotate(0)' }}
+            />
+          </button>
         </li>
+        {week && businessHours(store.hours)}
         <li className="store-detail-info-item">
           <img className="item-ico" src="/images/place.svg" alt="" />
           <p className="item-info">{store.location}</p>
         </li>
         <li className="store-detail-info-item">
           <img className="item-ico" src="/images/won.svg" alt="" />
-          <p className="item-info">입장료 {store.price.toLocaleString()}원</p>
+          <p className="item-info">입장료 {!store.price ? '무료' : `${store.price.toLocaleString()}원`}</p>
         </li>
         <div className="store-sns-title">SNS</div>
         {store.sns.length > 0 && (
           <>
             <ul className="store-sns-list">
-              <li className="store-sns-item">
-                <div className="sns-info">
-                  <img className="sns-ico" src="/images/instagram.svg" alt="" />
-                  <p className="sns-title">{store.sns[0].link_title}</p>
-                </div>
-                <a className="sns-link" href={store.sns[0].link_url}>
-                  {store.sns[0].link_type}
-                </a>
-              </li>
+              {store.sns.map((item, i) => {
+                return (
+                  <li className="store-sns-item" key={i}>
+                    <div className="sns-info">
+                      {item.link_type === 'insta' ? (
+                        <img className="sns-ico" src="/images/instagram.svg" alt="" />
+                      ) : (
+                        <img className="sns-ico" src="/images/globe.svg" alt="" />
+                      )}
+                      <p className="sns-title">{item.link_title}</p>
+                    </div>
+                    <a className="sns-link" href={item.link_url} target="blank">
+                      {item.link_type}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </>
         )}
@@ -150,7 +273,14 @@ const InfoDetail = ({ store }: Props) => {
           >
             예약하기
           </button>
-          <button className="recruiment-btn">모집하기</button>
+          <button
+            onClick={() => {
+              toGather();
+            }}
+            className="recruiment-btn"
+          >
+            모집하기
+          </button>
         </div>
       </ul>
     </Container>

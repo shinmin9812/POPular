@@ -19,7 +19,7 @@ const Button = styled.button<Props>`
   text-align: center;
   padding: 6px 12px;
   border-radius: var(--border-radius-input);
-  font-size: var(--font-micro);
+  font-size: 13px;
   display: inline-block;
   cursor: pointer;
 

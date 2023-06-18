@@ -8,7 +8,6 @@ const Container = styled.div`
   height: fit-content;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
   border-radius: 10px;
   box-shadow: 0px 0px 22px -6px rgba(0, 0, 0, 0.2);
   animation: appear-card 0.8s forwards;

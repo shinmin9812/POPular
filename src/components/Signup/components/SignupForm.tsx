@@ -154,7 +154,7 @@ const SignupForm = () => {
 
     let error = '';
     if (!isPasswordValid.test(value) && value.length > 0) {
-      error = '8~15자, 특수문자, 문자, 숫자를 포함해야 합니다.';
+      error = '특수문자, 문자, 숫자 포함 8~15자';
     }
     setErrors((prevState) => ({ ...prevState, password: error }));
   };
@@ -291,16 +291,16 @@ const FieldContainer = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: var(--font-small);
-  padding-left: 8px;
+  font-size: var(--font-regular);
+  padding-left: 4px;
   margin: 8px 0;
   display: flex;
   justify-content: space-between;
 `;
 
 const Input = styled.input`
-  width: 270px;
-  height: 30px;
+  width: 300px;
+  height: 35px;
   padding: 8px;
   box-sizing: border-box;
   border: 1px solid var(--color-sub);
@@ -319,24 +319,26 @@ const Input = styled.input`
 `;
 
 const ErrorMessage = styled.span`
-  font-size: var(--font-micro);
+  font-size: 12px;
   color: var(--color-red);
   display: flex;
   align-items: center;
 `;
 
 const CheckboxContainer = styled.div`
-  width: 270px;
+  width: 300px;
   display: flex;
 `;
 
 const Checkbox = styled.input`
-  font-size: var(--font-small);
+  width: 16px;
+  height: 16px;
+  margin: auto 0;
   accent-color: var(--color-main);
 `;
 
 const SignupButton = styled.button`
-  width: 270px;
+  width: 300px;
   height: 40px;
   color: var(--color-white);
   background-color: var(--color-main);

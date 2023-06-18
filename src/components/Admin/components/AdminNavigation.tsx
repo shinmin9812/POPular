@@ -75,14 +75,6 @@ const Accodions = [
         path: CLIENT_PATH.ADMIN_USER.STATISTICS,
       },
       {
-        name: '유저 추가',
-        path: CLIENT_PATH.ADMIN_USER.ADD,
-      },
-      {
-        name: '유저 수정',
-        path: CLIENT_PATH.ADMIN_USER.EDIT,
-      },
-      {
         name: '유저 삭제',
         path: CLIENT_PATH.ADMIN_USER.DELETE,
       },
@@ -96,25 +88,8 @@ const Accodions = [
         path: CLIENT_PATH.ADMIN_FEED.STATISTICS,
       },
       {
-        name: '피드 수정',
-        path: CLIENT_PATH.ADMIN_FEED.EDIT,
-      },
-      {
         name: '피드 삭제',
         path: CLIENT_PATH.ADMIN_FEED.DELETE,
-      },
-    ],
-  },
-  {
-    title: '알림 관리',
-    list: [
-      {
-        name: '알림 보내기',
-        path: CLIENT_PATH.ADMIN_NOTIFICATION.SEND,
-      },
-      {
-        name: '알림 수정',
-        path: CLIENT_PATH.ADMIN_NOTIFICATION.EDIT,
       },
     ],
   },

@@ -2,6 +2,11 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useGetLoginuser } from '../../../api/userApi';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../User/UserSlice';
+import { User } from '../../../types/user';
+import AlertModal from '../../common/Modals/AlertModal';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -18,6 +23,17 @@ const LoginForm = () => {
       setErrorMessage('');
     }
   };
+
+  const dispatch = useDispatch();
+
+  const { refetch } = useGetLoginuser({
+    enabled: false,
+    onSuccess: (data: User) => {
+      dispatch(setUser(data));
+    },
+  });
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const emailInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const passwordInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -41,8 +57,8 @@ const LoginForm = () => {
         if (response.ok) {
           const data = await response.json();
           localStorage.setItem('token', data.token);
-          alert('반갑습니다💜');
-          navigate('/');
+          setIsModalOpen(true);
+          refetch();
         } else {
           setErrorMessage('이메일 또는 비밀번호가 일치하지 않습니다.');
           throw new Error('로그인에 실패했습니다.');
@@ -74,6 +90,15 @@ const LoginForm = () => {
       </FieldContainer>
       <WarningMessage>{errorMessage}</WarningMessage>
       <LoginButton type="submit">로그인</LoginButton>
+      {isModalOpen && (
+        <AlertModal
+          content="반갑습니다💜"
+          onClose={() => {
+            setIsModalOpen(false);
+            navigate('/');
+          }}
+        />
+      )}
     </Form>
   );
 };
@@ -88,7 +113,7 @@ const Form = styled.form`
 
 const FieldContainer = styled.div`
   display: flex;
-  width: 300px;
+  width: 350px;
   justify-content: space-between;
   padding: 10px 0;
 
@@ -96,12 +121,12 @@ const FieldContainer = styled.div`
     justify-content: center;
     display: flex;
     align-items: center;
-    width: 70px;
+    width: 65px;
   }
 
   input {
-    width: 220px;
-    height: 30px;
+    width: 270px;
+    height: 40px;
     padding: 8px;
     margin: 0;
     box-sizing: border-box;
@@ -123,14 +148,15 @@ const FieldContainer = styled.div`
 `;
 
 const WarningMessage = styled.p`
-  font-size: var(--font-small);
+  font-size: var(--font-regular);
   color: var(--color-red);
   padding-top: 10px;
 `;
 
 const LoginButton = styled.button`
-  width: 300px;
-  height: 40px;
+  width: 350px;
+  height: 50px;
+  font-size: var(--font-medium);
   color: var(--color-white);
   background-color: var(--color-main);
   border-radius: var(--border-radius-button);

@@ -1,34 +1,15 @@
 import { Store } from '../../../../types/store';
-import dayjs from 'dayjs';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
+import getDataByCreatedAt from '../../../../utils/getDataByCreatedAt';
 
 interface Props {
   stores: Store[];
 }
 const StoreAddChart = ({ stores }: Props) => {
-  const daymap = new Map();
-  stores.forEach((store) => {
-    store.createdAt = dayjs(store.createdAt).format('YYYY/MM/DD');
-  });
+  const BAR_KEY = '추가된 점포';
 
-  stores.forEach((store) => {
-    if (daymap.has(store.createdAt)) daymap.set(store.createdAt, [...daymap.get(store.createdAt), store]);
-    else daymap.set(store.createdAt, [store]);
-  });
-
-  let data = [];
-
-  for (const key of daymap.keys()) {
-    data.push({
-      name: key,
-      '추가된 점포': daymap.get(key).length,
-    });
-  }
-
-  if (data.length > 10) {
-    data = data.slice(data.length - 10, data.length);
-  }
+  const data = getDataByCreatedAt(BAR_KEY, stores);
 
   return (
     <Container>
@@ -39,7 +20,7 @@ const StoreAddChart = ({ stores }: Props) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="추가된 점포" stackId="a" fill="#891baa" barSize={40} />
+          <Bar dataKey={BAR_KEY} stackId="a" fill="#891baa" barSize={40} />
         </BarChart>
       </ResponsiveContainer>
     </Container>

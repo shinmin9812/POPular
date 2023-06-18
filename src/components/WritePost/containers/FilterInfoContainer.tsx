@@ -3,7 +3,6 @@ import FilterInfo from '../../common/Filter/FilterInfo';
 import { WritePostSliceActions } from '../WritePostSlice';
 const FilterInfoContainer = () => {
   const dispatch = useAppDispatch();
-
   const addressFilter = useAppSelector((state) => state.WritePostSlice.addressFilter);
   const categoryFilter = useAppSelector((state) => state.WritePostSlice.categoryFilter);
   const durationFilter = useAppSelector((state) => state.WritePostSlice.durationFilter);
@@ -22,7 +21,7 @@ const FilterInfoContainer = () => {
       setFilterCategoryUse={setFilterCategoryUse}
       setFilterDurationUse={setFilterDurationUse}
       durationFilterUse={durationFilter.use}
-      startDate={durationFilter.StartDate}
+      startDate={durationFilter.startDate}
       endDate={durationFilter.endDate}
     />
   );

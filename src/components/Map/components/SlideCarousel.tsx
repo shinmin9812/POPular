@@ -5,7 +5,6 @@ import { Coord, Map } from '../containers/Map';
 
 const Container = styled.div<{ currentIdx: number }>`
   position: fixed;
-  bottom: -100%;
 
   display: flex;
   align-items: center;
@@ -18,7 +17,7 @@ const Container = styled.div<{ currentIdx: number }>`
   transform: ${(props) => `translateX(-${props.currentIdx > 0 && 320 * props.currentIdx}px)`};
   transition: all 1s;
 
-  margin-left: 20vw;
+  margin-left: 30vw;
 
   animation: appear 1s forwards;
 
@@ -27,7 +26,7 @@ const Container = styled.div<{ currentIdx: number }>`
       bottom: -100%;
     }
     100% {
-      bottom: 150px;
+      bottom: 7.5rem;
     }
   }
 

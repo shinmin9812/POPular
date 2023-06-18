@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+const today = new Date().toISOString().slice(0, 10);
+
 export interface CommunityInitialState {
   tab: string;
+  searchValue: string;
   addressFilter: {
     value: string;
     use: boolean;
@@ -13,27 +16,14 @@ export interface CommunityInitialState {
   durationFilter: {
     show: boolean;
     use: boolean;
-    StartDate: {
-      year: number;
-      month: number;
-      day: number;
-    };
-    endDate: {
-      year: number;
-      month: number;
-      day: number;
-    };
+    startDate: string;
+    endDate: string;
   };
   page: {
     currPage: number;
+    pageGroup: number[];
     totalPage: number[];
   };
-}
-
-export interface SetDate {
-  year: number;
-  month: number;
-  day: number;
 }
 
 export interface SetFilter {
@@ -41,10 +31,9 @@ export interface SetFilter {
   use: boolean;
 }
 
-const Today: Date = new Date();
-
 const initialState: CommunityInitialState = {
-  tab: '전체',
+  tab: '전체게시판',
+  searchValue: '',
   addressFilter: {
     value: '지역',
     use: false,
@@ -56,11 +45,12 @@ const initialState: CommunityInitialState = {
   durationFilter: {
     show: false,
     use: false,
-    StartDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
-    endDate: { year: Today.getFullYear(), month: Today.getMonth() + 1, day: Today.getDate() },
+    startDate: today,
+    endDate: today,
   },
   page: {
     currPage: 1,
+    pageGroup: [1],
     totalPage: [1],
   },
 };
@@ -72,8 +62,14 @@ const CommunitySlice = createSlice({
     setTab(state, action: PayloadAction<string>) {
       state.tab = action.payload;
     },
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
+    },
     setPage(state, action: PayloadAction<number>) {
       state.page.currPage = action.payload;
+    },
+    setPageGroup(state, action: PayloadAction<number[]>) {
+      state.page.pageGroup = action.payload;
     },
     setTotalPage(state, action: PayloadAction<number[]>) {
       state.page.totalPage = action.payload;
@@ -90,10 +86,10 @@ const CommunitySlice = createSlice({
     setFilterCategoryUse(state, action: PayloadAction<boolean>) {
       state.categoryFilter.use = action.payload;
     },
-    setFilterStartDate(state, action: PayloadAction<SetDate>) {
-      state.durationFilter.StartDate = action.payload;
+    setFilterStartDate(state, action: PayloadAction<string>) {
+      state.durationFilter.startDate = action.payload;
     },
-    setFilterEndDate(state, action: PayloadAction<SetDate>) {
+    setFilterEndDate(state, action: PayloadAction<string>) {
       state.durationFilter.endDate = action.payload;
     },
     setFilterDurationUse(state, action: PayloadAction<boolean>) {

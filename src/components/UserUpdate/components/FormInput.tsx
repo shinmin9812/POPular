@@ -63,7 +63,7 @@ const Container = styled.div`
     box-sizing: border-box;
     border: 1px solid var(--color-sub);
     border-radius: var(--border-radius-input);
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
     color: var(--color-black);
     resize: none;
   }
@@ -74,7 +74,11 @@ const Label = styled.label`
   align-items: top;
   margin-top: 5px;
   width: 200px;
-  font-size: 12px;
+  font-size: var(--font-regular);
+
+  @media all and (max-width: 767px) {
+    font-size: var(--font-small);
+  }
 `;
 
 const InputFrame = styled.div`
@@ -89,7 +93,7 @@ const Input = styled.input`
   box-sizing: border-box;
   border: 1px solid var(--color-sub);
   border-radius: var(--border-radius-input);
-  font-size: var(--font-micro);
+  font-size: var(--font-small);
   color: var(--color-black);
   ${(props) =>
     props.type === 'number' &&

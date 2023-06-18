@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Store } from '../../../types/store';
 import Tag from '../Tag/Tag';
+import dayjs from 'dayjs';
 
 interface Props {
   store: Store;
@@ -8,6 +9,8 @@ interface Props {
 }
 
 const Container = styled.article`
+  position: relative;
+
   display: flex;
   width: 100%;
   min-width: 300px;
@@ -65,6 +68,27 @@ const Container = styled.article`
       width: fit-content;
       font-size: var(--font-small);
     }
+
+    .scraps {
+      position: absolute;
+      right: 30px;
+      bottom: 30px;
+      color: #adadad;
+      font-weight: 600;
+    }
+  }
+
+  animation: appear-post 1s forwards;
+
+  @keyframes appear-post {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   &:hover {
@@ -73,9 +97,6 @@ const Container = styled.article`
 `;
 
 const StoreItem = ({ store, onClick }: Props) => {
-  // 주소지에서 상위 2단계만 추출
-  const location = store.location.split(' ').slice(0, 2).join(' ');
-
   return (
     <Container onClick={onClick}>
       <figure>
@@ -83,10 +104,18 @@ const StoreItem = ({ store, onClick }: Props) => {
       </figure>
       <div className="store-info">
         <h3 className="store-title">{store.title}</h3>
-        <p className="store-location">{location}</p>
-        <p className="store-date">
-          {store.start_date} - {store.end_date}
+        <p className="store-location">
+          {store.postcode.sido} {store.postcode.sigungu}
         </p>
+        <p className="store-date">
+          {dayjs(store.start_date).format('YYYY/MM/DD')} - {dayjs(store.end_date).format('YYYY/MM/DD')}
+        </p>
+        <div className="scraps">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#adadad" width="16" height="14" viewBox="0 0 24 20">
+            <path d="M19 24l-7-6-7 6v-24h14v24z" />
+          </svg>
+          {store.scraps.length}
+        </div>
         <Tag>{store.category}</Tag>
       </div>
     </Container>

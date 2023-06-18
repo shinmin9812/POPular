@@ -1,9 +1,10 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ProfileUploadButton from './ProfileUploadButton';
 import ProfileButton from './ProfileButton';
 import { User } from '../../../types/user';
 import { useParams } from 'react-router-dom';
+import { API_PATH } from '../../../constants/path';
 
 interface Props {
   user: User;
@@ -13,6 +14,13 @@ const ProfileImageModify = ({ user }: Props) => {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
   const [userProfile, setUserProfile] = useState<string | null>(null);
+  const profileImageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (userProfile && profileImageRef.current) {
+      profileImageRef.current.src = userProfile;
+    }
+  }, [userProfile]);
 
   const fileHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -38,25 +46,19 @@ const ProfileImageModify = ({ user }: Props) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://34.22.81.36:3000/users/${userId}`, {
+      if (!userId) return;
+      const response = await fetch(API_PATH.USER.PATCH.replace(':userId', userId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          pw: user.pw,
           profile: userProfile,
-          introduce: user.introduce,
-          nickname: user.nickname,
-          phone_number: user.phone_number,
-          interested_category: user.interested_category,
-          allow_notification: user.allow_notification,
         }),
       });
 
       if (response.ok) {
-        // const data = await response.json();
         alert('회원정보 수정이 완료되었습니다.');
       } else {
         throw new Error('회원정보 수정에 실패했습니다.');
@@ -77,14 +79,14 @@ const ProfileImageModify = ({ user }: Props) => {
               {user.profile === '' ? (
                 <img src={'/defaultProfile.svg'} className="default-style" />
               ) : (
-                <img src={user.profile} alt={user.nickname} className="profile-style" />
+                <img src={user.profile} alt={user.nickname} className="profile-style" ref={profileImageRef} />
               )}
             </div>
           </ProfilImage>
           <ProfileButtonList>
             <ProfileUploadButton text={'프로필 선택'} name={'profile'} onChange={fileHandler} multiple={true} />
             <ProfileButton className="button-gap" text={'변경'} theme={'submit'} />
-            <ProfileButton className="button-gap" text={'제거'} theme={'blank'} onClick={fileDelete} />
+            <ProfileButton className="button-gap" text={'기본 이미지'} theme={'blank'} onClick={fileDelete} />
           </ProfileButtonList>
         </ProfileContents>
       </FormContainer>
@@ -103,11 +105,11 @@ const Container = styled.div`
   }
 
   .update-title {
-    font-size: var(--font-small);
+    font-size: 17px;
     font-weight: var(--weight-semi-bold);
   }
   .update-description {
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
     color: var(--color-light-black);
     margin-top: 7px;
   }
@@ -123,8 +125,8 @@ const ProfileContents = styled.div`
 `;
 const ProfilImage = styled.div`
   .profile-frame {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background-color: #fff;
     border-radius: 50%;
     overflow: hidden;
@@ -135,11 +137,9 @@ const ProfilImage = styled.div`
     }
 
     .profile-style {
-      width: 100px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 `;

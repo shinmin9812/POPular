@@ -32,6 +32,7 @@ const Container = styled.div`
 
   h2 {
     font-weight: var(--weight-semi-bold);
+    font-size: var(--font-medium);
     margin-bottom: 20px;
   }
 

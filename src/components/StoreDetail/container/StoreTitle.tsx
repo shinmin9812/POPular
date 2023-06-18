@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import Slider from 'react-slick';
+import TitleScrap from '../components/TitleScrap';
 import { Store } from '../../../types/store';
+
+type Props = {
+  store: Store;
+};
 
 const Container = styled.div`
   display: flex;
@@ -28,17 +33,22 @@ const Container = styled.div`
     }
   }
 
-  .scrap-btn,
-  .share-btn {
-    background-color: #ffffff;
-    pointer: cursor;
+  .slick-arrow::before {
+    color: #000;
+  }
+
+  .title-img-box {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(219 219 219);
   }
 
   .title-img {
     align-self: center;
-    width: 100%;
-    height: 400px;
-    aspect-ratio: 1/1;
+    width: 300px;
     object-fit: cover;
   }
 
@@ -47,15 +57,21 @@ const Container = styled.div`
     position: relative;
   }
 
+  @media (min-width: 450px) {
+    .title-img {
+      height: 400px;
+    }
+
+    .slick-slider {
+      width: 300px;
+    }
+  }
+
   .slick-dots {
     position: absolute;
     bottom: 20px;
   }
 `;
-
-interface Props {
-  store: Store;
-}
 
 const StoreTitle = ({ store }: Props) => {
   const settings = {
@@ -67,19 +83,16 @@ const StoreTitle = ({ store }: Props) => {
       <div className="title-head">
         <p className="title">{store.title}</p>
         <div className="title-btns">
-          <button className="scrap-btn">
-            <img src="/images/scrap.svg" alt="" />
-          </button>
-          <button className="share-btn">
-            <img src="/images/share.svg" alt="" />
-          </button>
+          <TitleScrap store={store} />
         </div>
       </div>
-      <Slider {...settings}>
-        {store.images.map((image: string, i: number) => (
-          <img className="title-img" key={i} src={image} alt="브랜드이미지" />
-        ))}
-      </Slider>
+      <div className="title-img-box">
+        <Slider {...settings}>
+          {store.images.map((image: string, i: number) => (
+            <img className="title-img" key={i} src={image} alt="브랜드이미지" />
+          ))}
+        </Slider>
+      </div>
     </Container>
   );
 };

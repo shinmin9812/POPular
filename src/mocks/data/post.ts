@@ -1,6 +1,5 @@
 import { BoardTypes } from '../../types/board';
 import { Post } from '../../types/post';
-import { commentData } from './comment';
 import { userData } from './user';
 
 export const postData: Post[] = [
@@ -13,8 +12,10 @@ export const postData: Post[] = [
     likes: [],
     reports: [],
     views: 0,
+    images: [],
     updatedAt: '2023-05-30 15:17:01',
-    comments: [commentData[0]],
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
   },
   {
     _id: '12346',
@@ -24,9 +25,13 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
   },
   {
     _id: '75648',
@@ -36,9 +41,13 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
   },
   {
     _id: '373685',
@@ -48,9 +57,13 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
   },
   {
     _id: '7543567',
@@ -60,9 +73,13 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
   },
   {
     _id: '624526',
@@ -72,9 +89,13 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
   },
   {
     _id: '52432',
@@ -84,8 +105,12 @@ export const postData: Post[] = [
     content: '<p>안녕하세요</p>',
     likes: [],
     reports: [],
+
+    images: [],
     views: 0,
     updatedAt: '2023-03-21',
-    comments: [commentData[0]],
+
+    createdAt: '2023-05-30 15:17:01',
+    comments: [],
   },
 ];

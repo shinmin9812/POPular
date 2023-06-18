@@ -6,7 +6,11 @@ import { NavLink } from 'react-router-dom';
 import HeaderSearchBox from './HeaderSearchBox';
 import HeaderProfile from './HeaderProfile';
 import { useEffect, useState } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { useGetLoginuser } from '../../../api/userApi';
+import { setUser } from '../../User/UserSlice';
+import { User } from '../../../types/user';
 const Container = styled.header`
   position: fixed;
   top: 0;
@@ -72,7 +76,7 @@ const Container = styled.header`
   @media all and (min-width: 768px) {
     .inner {
       justify-content: flex-start;
-      align-items: end;
+      align-items: center;
       height: fit-content;
 
       .prev-btn {
@@ -85,14 +89,16 @@ const Container = styled.header`
         font-size: 30px;
 
         color: var(--color-main);
+
+        img {
+          width: 150px;
+        }
       }
 
       nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-        flex-grow: 1;
 
         .links {
           display: flex;
@@ -133,6 +139,12 @@ const Container = styled.header`
   }
 
   @media all and (max-width: 767px) {
+    .logo {
+      width: 200px;
+      img {
+        width: 100%;
+      }
+    }
     .prev-btn {
       display: block;
     }
@@ -146,9 +158,19 @@ const Container = styled.header`
 const Header = () => {
   const isHome = useLocation().pathname === CLIENT_PATH.HOME;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state: RootState) => state.UserSlice.user);
 
   const [position, setPosition] = useState(window.pageYOffset);
   const [visible, setVisible] = useState(true);
+
+  const { refetch } = useGetLoginuser({
+    enabled: false,
+    onSuccess: (data: User) => {
+      if (data._id) dispatch(setUser(data));
+    },
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -163,6 +185,12 @@ const Header = () => {
     };
   }, [position]);
 
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      refetch();
+    }
+  }, []);
+
   return (
     <Container className={`${visible ? '' : 'hide'}${position === 0 ? 'top' : ''}`}>
       <div className="inner">
@@ -172,7 +200,7 @@ const Header = () => {
           </button>
         )}
         <Link className="logo" to={CLIENT_PATH.HOME}>
-          POPular
+          <img src="/images/logo.png" alt="POPULAR" />
         </Link>
 
         <nav>
@@ -180,17 +208,19 @@ const Header = () => {
             <NavLink to={CLIENT_PATH.MAP} className={({ isActive }) => (isActive ? 'active' : '')}>
               지도
             </NavLink>
-            <NavLink to={'/community/board/all'} className={({ isActive }) => (isActive ? 'active' : '')}>
+            <NavLink to={CLIENT_PATH.BOARD_ALL} className={({ isActive }) => (isActive ? 'active' : '')}>
               커뮤니티
             </NavLink>
-            <NavLink to={'/admin'} target="_blank">
-              관리자
-            </NavLink>
+            {user?.role === 'admin' && (
+              <NavLink to={'/admin'} target="_blank">
+                관리자
+              </NavLink>
+            )}
           </div>
         </nav>
         <div className="sub-links">
           <HeaderSearchBox />
-          <HeaderProfile />
+          {user ? <HeaderProfile src={user.profile} /> : <HeaderProfile src="/defaultProfile.svg" />}
         </div>
       </div>
     </Container>

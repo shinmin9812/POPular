@@ -9,11 +9,12 @@ export interface Post {
   author: User;
   board: BoardTypes;
   content: string;
-  images?: string[];
+  images: string[];
   store_id?: Store;
   ratings?: number;
   likes: string[];
   reports: string[];
+  createdAt: string;
   updatedAt: string;
   comments: Comment[];
   views: number;

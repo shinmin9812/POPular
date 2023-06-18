@@ -14,6 +14,7 @@ const boardMap = new Map<string, boardMapType>([
 ]);
 
 const BoardTypeTag = React.memo(({ boardType }: { boardType: BoardTypes }) => {
+  if (!boardType) return <></>;
   const { name, color } = boardMap.get(boardType) as boardMapType;
   return <TagContainer color={color}>{name}</TagContainer>;
 });

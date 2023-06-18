@@ -10,9 +10,10 @@ export interface Comment {
   author: User;
   content: string;
   parent: {
-    type: CommentParentType;
-    _id: string;
+    type: string;
+    id: string;
   };
   updatedAt: string;
+  createdAt: string;
   recomments?: Comment[];
 }

@@ -4,9 +4,6 @@ import StoreForm from '../../components/Admin/components/Forms/StoreForm';
 import { useGetStoreById } from '../../api/storeApi';
 
 const Container = styled.div`
-  display: flex;
-  gap: 30px;
-
   .title {
     margin-bottom: 20px;
 
@@ -19,7 +16,7 @@ const AdminStoreEditPageDetail = () => {
   const { storeId } = useParams();
   const { data } = useGetStoreById(storeId!, { cacheTime: 0 });
 
-  return <Container>{data ? <StoreForm defaultData={data} /> : <div>Loading</div>}</Container>;
+  return <Container>{data ? <StoreForm defaultData={data} /> : <></>}</Container>;
 };
 
 export default AdminStoreEditPageDetail;

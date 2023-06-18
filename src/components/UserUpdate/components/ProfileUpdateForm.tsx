@@ -6,6 +6,7 @@ import CheckboxInput from './CheckboxInput';
 import { User } from '../../../types/user';
 import { useParams } from 'react-router-dom';
 import { isEqual } from '../../../utils/correctArrayCheck';
+import { API_PATH } from '../../../constants/path';
 import autoHyphen from '../../../utils/autoHyphen';
 
 interface Props {
@@ -36,8 +37,6 @@ const ProfileUpdateForm = ({ user }: Props) => {
   const { userId } = useParams();
   const token = localStorage.getItem('token');
   const [inputs, setInputs] = useState({
-    profile: user.profile,
-    pw: user.pw,
     introduce: user.introduce,
     nickname: '',
     phone_number: '',
@@ -60,7 +59,7 @@ const ProfileUpdateForm = ({ user }: Props) => {
   // 닉네임 중복 체크
   const checkingNickname = async (nickname: string) => {
     try {
-      const response = await fetch('http://34.22.81.36:3000/users/checknickname', {
+      const response = await fetch(API_PATH.USER.POST.CHECK_NICKNAME, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -158,15 +157,14 @@ const ProfileUpdateForm = ({ user }: Props) => {
     }
 
     try {
-      const response = await fetch(`http://34.22.81.36:3000/users/${userId}`, {
+      if (!userId) return;
+      const response = await fetch(API_PATH.USER.PATCH.replace(':userId', userId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          profile: user.profile,
-          pw: user.pw,
           introduce: introduce,
           nickname: nickname || user.nickname,
           phone_number: phone_number || user.phone_number,
@@ -176,8 +174,15 @@ const ProfileUpdateForm = ({ user }: Props) => {
       });
 
       if (response.ok) {
-        // const data = await response.json();
+        const data = await response.json();
         alert('회원정보 수정이 완료되었습니다.');
+        setInputs({
+          introduce: data.introduce,
+          nickname: '',
+          phone_number: '',
+          interested_category: data.interested_category,
+          allow_notification: data.allow_notification,
+        });
       } else {
         throw new Error('회원정보 수정에 실패했습니다.');
       }
@@ -215,6 +220,7 @@ const ProfileUpdateForm = ({ user }: Props) => {
             defaultData={preferCategory}
             onChange={handleChange}
           />
+          {/* <input type="checkbox" onChange={handleChange}/> */}
           <CheckboxInput
             type={'allow_notification'}
             value={allow_notification}
@@ -234,15 +240,15 @@ const Container = styled.div`
   width: 70%;
   margin: 0 auto;
   transition: all 0.3s;
-  margin-top: 30px;
+  margin-top: 40px;
 
   .update-title {
-    font-size: var(--font-small);
+    font-size: 17px;
     font-weight: var(--weight-semi-bold);
   }
 
   .update-description {
-    font-size: var(--font-micro);
+    font-size: var(--font-small);
     color: var(--color-light-black);
     margin-top: 7px;
   }
@@ -256,12 +262,12 @@ const Container = styled.div`
 const FormContainer = styled.form``;
 
 const FormInner = styled.div`
-  padding-top: 20px;
+  padding-top: 30px;
 `;
 
 const NicknameMessage = styled.div`
   text-align: right;
-  font-size: var(--font-micro);
+  font-size: var(--font-small);
   color: ${(props) =>
     props.color === 'red' &&
     css`
@@ -271,7 +277,7 @@ const NicknameMessage = styled.div`
 
 const ErrorNotice = styled.div`
   text-align: right;
-  font-size: var(--font-micro);
+  font-size: var(--font-small);
 `;
 const FormButton = styled.div`
   margin-top: 30px;

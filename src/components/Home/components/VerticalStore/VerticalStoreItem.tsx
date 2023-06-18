@@ -12,7 +12,8 @@ const VerticalStoreItem = ({ store }: Props) => {
         <div className={'text-section'}>
           <p className={'item-title'}>{store.title}</p>
           <p className={'item-period'}>
-            {store.start_date} ~ {store.end_date}
+            {new Date(store.start_date).toISOString().slice(0, 10)}~
+            {new Date(store.end_date).toISOString().slice(0, 10)}
           </p>
         </div>
         <div className={'image-section'}>
@@ -31,27 +32,43 @@ const InnerContent = styled.div`
   align-items: center;
 
   .text-section {
+    width: 300px;
     .item-title {
       font-weight: var(--weight-semi-bold);
-      font-size: var(--font-small);
+      font-size: var(--font-regular);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 5px 20px 5px 0;
+      box-sizing: border-box;
     }
 
     .item-period {
-      margin-top: 5px;
-      font-weight: var(--weight-regular);
-      font-size: var(--font-micro);
-      color: var(--color-gray);
+      margin-top: 2px;
+      font-weight: var(--weight-light);
+      font-size: var(--font-small);
+      color: var(--color-light-black);
+    }
+
+    @media all and (max-width: 767px) {
+      width: 180px;
+
+      .item-title {
+        font-size: 15px;
+      }
     }
   }
 
   .image-section {
-    width: 110px;
-    height: 70px;
-    overflow: hidden;
-    border-radius: 5px;
+    width: 120px;
+    height: 90px;
 
     img {
-      width: 100%;
+      width: 120px;
+      height: 90px;
+      object-fit: cover;
+      overflow: hidden;
+      border-radius: 5px;
     }
   }
 `;

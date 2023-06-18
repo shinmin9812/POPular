@@ -21,48 +21,55 @@ export const API_PATH = {
       RESERVATOIN_REQUIRED: `${API_BASE_URL}/stores/recent/reservation_required`,
       // 좌표 기반 조회
       BY_COORD: `${API_BASE_URL}/stores/coord`,
+      // 카테고리 조회
+      CATEGORY: `${API_BASE_URL}/stores/category/:category`,
     },
     POST: `${API_BASE_URL}/stores`,
-    PUT: `${API_BASE_URL}/stores/:storeId`,
-    DELETE: {},
+    PATCH: `${API_BASE_URL}/stores/:storeId`,
+    DELETE: `${API_BASE_URL}/stores`,
   },
 
   USER: {
     GET: {
-      ALL: '/user/all',
-      BY_ID: '/user/id/:userId',
-      BY_NICKNAME: '/user/nickname/:userNickname',
+      ALL: `${API_BASE_URL}/users`,
+      BY_ID: `${API_BASE_URL}/users/:userId`,
     },
     POST: {
       LOGIN: '/login',
+      CHECK_NICKNAME: `${API_BASE_URL}/users/checknickname`,
     },
     PUT: {},
-    DELETE: {},
+    DELETE: `${API_BASE_URL}/users`,
+    PATCH: `${API_BASE_URL}/users/:userId`,
   },
 
   POST: {
     GET: {
-      ALL: '/post/all',
+      ALL: `${API_BASE_URL}/feeds`,
       // 포스트 ID 조회
-      BY_ID: '/post/id/:postId',
+      BY_ID: `${API_BASE_URL}/feeds/:postId`,
       // 특정 유저의 전체 포스트 조회
-      BY_USER: '/post/user/:userId',
+      BY_USER: `${API_BASE_URL}/feeds/user/:userId`,
       // 포스트 게시판 조회
       BY_BOARD: '/post/board/:boardId',
       // 특정 스토어의 후기 조회
-      REVIEW_BY_STORE: '/post/review/:storeId',
+      REVIEW_BY_STORE: `${API_BASE_URL}/feeds/review/store/:storeId`,
+      // 자유 게시판 스토 조회
+      ALL_FREE_FEEDS: `${API_BASE_URL}/feeds/free`,
       // 후기 게시판 스토 조회
       ALL_REVIEW_FEEDS: `${API_BASE_URL}/feeds/review`,
+      // 모집 게시판 스토 조회
+      ALL_GATHER_FEEDS: `${API_BASE_URL}/feeds/gather`,
     },
-    POST: {},
-    PUT: {},
-    DELETE: {},
+    POST: `${API_BASE_URL}/feeds/`,
+    PUT: `${API_BASE_URL}/feeds/:postId`,
+    DELETE: `${API_BASE_URL}/feeds`,
   },
 
   COMMENT: {
     GET: {
       // 검색 옵션은 쿼리스트링으로 판별 ex) /comment?author=elice
-      ALL: '/comment/all',
+      ALL: `${API_BASE_URL}/comments`,
       // 코멘트 ID 조회
       BY_ID: '/comment/id/:comentId',
       // 특정 유저의 전체 코멘트
@@ -70,26 +77,32 @@ export const API_PATH = {
       // 특정 포스트의 전체 코멘트
       BY_POST: '/comment/post/:postId',
     },
-    POST: {},
+    POST: `${API_BASE_URL}/comments`,
     PUT: {},
-    DELETE: {},
+    DELETE: `${API_BASE_URL}/comments/`,
   },
 
   NOTIFICATION: {
     GET: {
       // 모든 알림 조회
       ALL: '/notification/all',
-      // 특정 id 알림 조회
+      // 특정 id 알림 조회adsdsa
       BY_ID: '/notification/id/:notificationId',
       // 특정 유저의 전체 알림 조회
       BY_USER_ID: '/notification/user/:userId',
     },
-    POST: {},
+    POST: {
+      OPEN_ALL_USER: `${API_BASE_URL}/notifications/all`,
+    },
     PUT: {},
     DELETE: {},
   },
 
-  AUTH: {},
+  AUTH: {
+    GET: {
+      PROFILE: `${API_BASE_URL}/auth/profile`,
+    },
+  },
 };
 
 export const CLIENT_PATH = {
@@ -97,11 +110,13 @@ export const CLIENT_PATH = {
 
   MAP: '/map',
 
+  COMMUNITY: '/community',
   SEARCH: '/search',
-
+  BOARD_ALL: '/community/board',
   BOARD: '/community/board/:category',
   POST: '/community/post/:postId',
   WRITE: '/community/write',
+  PROFILE: '/community/user/:userId',
 
   STORE_DETAIL: '/store/:storeId',
 
@@ -114,9 +129,7 @@ export const CLIENT_PATH = {
   USER_POSTS: '/usermenu/posts',
   USER_COMMENTS: '/usermenu/comments',
   USER_NOTIFICATIONS: '/usermenu/notifications',
-
-  USER_DETAIL: '/user/:userId',
-  USER_UPDATE: '/user/:userId/update',
+  USER_UPDATE: '/usermenu/:userId/update',
 
   ADMIN: '/admin',
 

@@ -1,8 +1,13 @@
 import { Store } from '../../../../types/store';
 import styled from 'styled-components';
 import AdminStoreItem from './AdminStoreItem';
-import { Dispatch, SetStateAction } from 'react';
-import StoreFilter from './StoreFilter';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import StoreFilter, { SearchTypeCase, defaultFilterSetting } from './StoreFilter';
+import { FilterSettingValues } from '../../../../pages/Admin/AdminStoreDeletePage';
+
+export const enum StoreItemMode {
+  delete = 'delete',
+}
 
 interface Props {
   stores: Store[];
@@ -12,14 +17,47 @@ interface Props {
 }
 
 const AdminStoreList = ({ stores, selectMode, selectedId, setSelectedId }: Props) => {
+  const [filterSetting, setFilterSetting] = useState<FilterSettingValues>(defaultFilterSetting);
+  const [searchedStores, setSearchedStores] = useState<Store[]>(stores);
+
+  function clickFilter() {
+    if (!stores) return;
+    let result = stores;
+
+    if (filterSetting.searchValue) {
+      result = stores.filter((store) => {
+        if (filterSetting.searchType === SearchTypeCase.id) {
+          return store._id === filterSetting.searchValue;
+        } else if (filterSetting.searchType === SearchTypeCase.title) {
+          return store.title.includes(filterSetting.searchValue);
+        }
+      });
+    }
+
+    if (filterSetting.location) {
+      result = result.filter((store) => store.location.includes(filterSetting.location));
+    }
+
+    if (filterSetting.categories.length > 0) {
+      result = result.filter((store) => filterSetting.categories.includes(store.category));
+    }
+
+    setSearchedStores(result);
+  }
+
+  useEffect(() => {
+    clickFilter();
+  }, [stores]);
+
   return (
     <Container>
-      <StoreFilter />
+      <StoreFilter setFilterSetting={setFilterSetting} clickFilter={clickFilter} filterSetting={filterSetting} />
       <ul>
-        {stores.map((store) =>
+        {searchedStores.map((store) =>
           selectMode ? (
             <label key={store._id}>
               <input
+                checked={selectedId!.includes(store._id) ? true : false}
                 type="checkbox"
                 onChange={(e) => {
                   e.target.checked

@@ -13,13 +13,17 @@ const PageList = styled.ul`
 const PageItem = styled.li<{ active: boolean }>`
   padding: 5px;
   width: 25px;
+  line-height: 15px;
   text-align: center;
+  margin: 0 3px;
+  cursor: pointer;
+
   ${(props) =>
     props.active &&
     css`
       color: var(--color-white);
       background-color: var(--color-main);
-      border-radius: 60px;
+      border-radius: 100%;
     `};
 `;
 
@@ -27,15 +31,18 @@ const MovementButton = styled.button`
   color: var(--color-gray);
   background: none;
   margin: 0 10px;
+  cursor: pointer;
 `;
 
 const Pagination = ({
   currPage,
   setPage,
+  pageGroup,
   totalPage,
 }: {
   currPage: number;
   setPage: (page: number) => void;
+  pageGroup: number[];
   totalPage: number[];
 }) => {
   return (
@@ -48,17 +55,20 @@ const Pagination = ({
         }}
       >{`< Prev`}</MovementButton>
       <PageList>
-        {totalPage.map((page) => (
-          <PageItem
-            key={page}
-            onClick={() => {
-              setPage(page);
-            }}
-            active={page === currPage}
-          >
-            {page}
-          </PageItem>
-        ))}
+        {pageGroup.map(
+          (page) =>
+            page > 0 && (
+              <PageItem
+                key={page}
+                onClick={() => {
+                  setPage(page);
+                }}
+                active={page === currPage}
+              >
+                {page}
+              </PageItem>
+            ),
+        )}
       </PageList>
       <MovementButton
         onClick={() => {

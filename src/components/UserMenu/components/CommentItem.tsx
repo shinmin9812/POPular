@@ -1,91 +1,134 @@
 import styled from 'styled-components';
-import { Comment } from '../../../types/comment';
 import BoardTypeTag from '../../common/Board/BoardTypeTag';
-import { BoardTypes } from '../../../types/board';
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { BoardTypes } from '../../../types/board';
+import { Link } from 'react-router-dom';
 
 interface Props {
-  comment: Comment;
-  parentType: string;
   parentId: string;
+  comment: string;
+  date: string;
 }
 
-const fetchFeedData = async (id: string) => {
-  const response = await fetch(`http://34.22.81.36:3000/feeds/${id}`);
-  const data = await response.json();
-  return data;
-};
+const CommentItem = ({ parentId, comment, date }: Props) => {
+  const [feedTitle, setFeedTitle] = useState(null);
+  const [board, setBoard] = useState<BoardTypes>(BoardTypes.free);
+  const [error, setError] = useState(false);
 
-const CommentItem = ({ comment, parentType, parentId }: Props) => {
-  const [feedTitle, setFeedTitle] = useState('');
-  const { isLoading, error, data } = useQuery(['feedData'], () => fetchFeedData(parentId), {
-    enabled: parentType === 'Feed' && !!parentId,
-  });
+  const getFeedData = async (id: string) => {
+    try {
+      const response = await fetch(`http://34.22.81.36:3000/feeds/info/${id}`);
+      const data = await response.json();
+      setFeedTitle(data.title);
+      setBoard(data.board as BoardTypes);
+      if (!data._id) setFeedTitle(null);
+      return data;
+    } catch (err: any) {
+      setError(true);
+      throw new Error(err.message);
+    }
+  };
 
   useEffect(() => {
-    if (parentType === 'Feed' && !isLoading && !error && data) {
-      setFeedTitle(data.title);
-    }
-  }, [parentType, parentId, isLoading, error, data]);
+    getFeedData(parentId);
+  }, []);
 
   return (
-    <Container>
-      <div className="comment-header">
-        <BoardTypeTag boardType={'free' as BoardTypes} />
-        <p className="comment-post-title">{feedTitle}</p>
-      </div>
-      <div className="comment-content">
-        <h2>{comment.content}</h2>
-      </div>
-      <div className="comment-date">
-        <p>2023-03-02</p>
-      </div>
-    </Container>
+    <>
+      {error || !feedTitle ? (
+        <Blank>
+          <img width="40px" src="/images/loading.gif" alt="loading" />
+        </Blank>
+      ) : (
+        <Container>
+          <Link to={`/community/post/${parentId}`}>
+            <CommentHeader>
+              <BoardTypeTag boardType={board} />
+              <PostTitle>{feedTitle}</PostTitle>
+            </CommentHeader>
+            <CommentContent>{comment}</CommentContent>
+            <CommentDate>{date}</CommentDate>
+          </Link>
+        </Container>
+      )}
+    </>
   );
 };
 
 export default CommentItem;
 
-const Container = styled.article`
+const Blank = styled.div`
+  color: var(--color-gray);
+  height: 130px;
+  padding: 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.3s ease 0s;
+  box-shadow: rgb(238, 238, 238) 1px 1px 10px;
+  border-radius: 8px;
+`;
+
+const Container = styled.div`
+  height: 130px;
+  box-sizing: border-box;
+  padding: 20px 20px;
+  border-bottom: 1px solid var(--color-light-gray);
+
+  transition: all 0.3s ease 0s;
+  box-shadow: rgb(238, 238, 238) 1px 1px 10px;
+  border-radius: 8px;
+
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  justify-content: space-between;
+  &:hover {
+    cursor: pointer;
+    transform: translateY(-4px);
+    background-color: #fff;
+    filter: brightness(0.97);
+  }
+
+  animation: appear-post 1s forwards;
+
+  @keyframes appear-post {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+
+const CommentHeader = styled.div`
+  display: flex;
   width: 100%;
+  margin: 3px 0;
+`;
 
-  padding: 20px 0;
+const PostTitle = styled.p`
+  color: var(--color-light-black);
+  padding-left: 10px;
+  flex: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
 
-  border-bottom: 2px solid var(--color-light-gray);
+const CommentContent = styled.h2`
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  height: 20px;
+  margin: 14px 4px;
+`;
 
-  .comment-header {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-
-    margin-bottom: 6px;
-
-    .comment-post-title {
-      color: var(--color-gray);
-    }
-  }
-
-  .comment-content {
-    width: 100%;
-    flex: 1;
-    display: flex;
-    align-items: center;
-
-    h2 {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-
-  .comment-date {
-    text-align: end;
-    p {
-      color: var(--color-gray);
-    }
-  }
+const CommentDate = styled.p`
+  text-align: end;
+  color: var(--color-gray);
+  margin: 4px 0;
 `;
