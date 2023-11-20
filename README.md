@@ -47,7 +47,9 @@
 
 |                Backend (Leader)                 |                Backend                         |
 | :---------------------------------------------: | :---------------------------------------------: |
-| <img src="https://avatars.githubusercontent.com/u/83534757?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/608리   |                커뮤니티 API <br> 알림 API <br> 댓글 API                   |  
+| <img src="https://avatars.githubusercontent.com/u/83534757?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/60848529?v=4" width="150" height="150"> |
+|  [신민석](https://github.com/shinmin9812)     |  [황반석](https://github.com/baansuk)    |  
+|  사용자 API <br> 스토어 API <br> 프로젝트 배포 및 관리   |                커뮤니티 API <br> 알림 API <br> 댓글 API                   | 
 
 <br>
 
